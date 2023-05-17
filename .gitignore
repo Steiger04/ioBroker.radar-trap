@@ -1,0 +1,14 @@
+# No dot-directories except github/vscode
+.*/
+!.vscode/
+!.github/
+
+node_modules
+data
+
+# npm package files
+iobroker.*.tgz
+
+# i18n intermediate files
+admin/i18n/flat.txt
+admin/i18n/*/flat.txt

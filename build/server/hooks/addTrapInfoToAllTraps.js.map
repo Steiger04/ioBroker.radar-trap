@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/hooks/addTrapInfoToAllTraps.ts"],
+  "sourcesContent": ["import { featureCollection } from \"@turf/helpers\";\nimport { prepareTraps } from \"./prepareTraps\";\n\nconst addTrapInfoToAllTraps = (data: radarTrap.Area): void => {\n\tif (data.areaTraps === undefined) {\n\t\treturn;\n\t}\n\n\tdata.trapsFeatureCollection = featureCollection(\n\t\tprepareTraps(data.areaTraps),\n\t);\n};\n\nexport { addTrapInfoToAllTraps };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qBAAkC;AAClC,0BAA6B;AAE7B,MAAM,wBAAwB,CAAC,SAA+B;AAC7D,MAAI,KAAK,cAAc,QAAW;AACjC;AAAA,EACD;AAEA,OAAK,6BAAyB;AAAA,QAC7B,kCAAa,KAAK,SAAS;AAAA,EAC5B;AACD;",
+  "names": []
+}

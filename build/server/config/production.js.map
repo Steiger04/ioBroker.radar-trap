@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/config/production.ts"],
+  "sourcesContent": ["module.exports = {\n\tnedb: \"../data\",\n};\n"],
+  "mappings": ";AAAA,OAAO,UAAU;AAAA,EAChB,MAAM;AACP;",
+  "names": []
+}

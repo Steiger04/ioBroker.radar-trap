@@ -1,0 +1,1 @@
+export { AreaAccordion } from "./AreaAccordion";

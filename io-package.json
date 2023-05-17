@@ -1,0 +1,95 @@
+{
+	"common": {
+		"name": "radar-trap",
+		"version": "1.0.0",
+		"news": {},
+		"title": "Radar Trap",
+		"titleLang": {
+			"en": "Radar Trap",
+			"de": "Radarfalle",
+			"ru": "Радарная ловушка",
+			"pt": "Armadilha de radar",
+			"nl": "Radarval",
+			"fr": "Piège radar",
+			"it": "Trappola radar",
+			"es": "Trampa de radar",
+			"pl": "Pułapka radarowa",
+			"zh-cn": "雷达陷阱",
+			"uk": "Радарна пастка"
+		},
+		"desc": {
+			"en": "Detect speed traps and obstacles on routes",
+			"de": "Radarfallen und Hindernisse auf Strecken erkennen",
+			"ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
+			"pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
+			"nl": "Detecteer snelheidscontroles en obstakels op routes",
+			"fr": "Détecter les radars et les obstacles sur les routes",
+			"it": "Rileva autovelox e ostacoli sui percorsi",
+			"es": "Detecta trampas de velocidad y obstáculos en las rutas",
+			"pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
+			"zh-cn": "检测路线上的速度陷阱和障碍物",
+			"uk": "Виявляйте радари та перешкоди на маршрутах"
+		},
+		"authors": ["Steiger04 <steiger04@posteo.de>"],
+		"keywords": ["speed traps", "obstacles on routes"],
+		"license": "MIT",
+		"stopBeforeUpdate": true,
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "radar-trap.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
+		"readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
+		"loglevel": "info",
+		"restartAdapters": ["vis"],
+		"ereaseUpload": true,
+		"mode": "daemon",
+		"type": "geoposition",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"materialize": true,
+		"singletonHost": true,
+		"supportCustoms": false,
+		"jsonCustom": false,
+		"eraseOnUpload": true,
+		"dependencies": [
+			{
+				"js-controller": ">=2.0.0"
+			},
+			"vis"
+		]
+	},
+	"native": {
+		"settings": {
+			"httpsEnabled": false,
+			"domains": "localhost",
+			"feathersPort": 3040,
+			"mbxAccessToken": ""
+		}
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Feathers-Server started",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": true
+			},
+			"native": {}
+		}
+	]
+}

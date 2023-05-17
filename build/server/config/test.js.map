@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/config/test.ts"],
+  "sourcesContent": ["module.exports = {};\n"],
+  "mappings": ";AAAA,OAAO,UAAU,CAAC;",
+  "names": []
+}

@@ -1,0 +1,3 @@
+module.exports = {
+	nedb: "../data",
+};

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/hooks/index.ts"],
+  "sourcesContent": ["export { convertPolylineToGeojson } from \"./convertPolylineToGeojson\";\nexport { patchOrCreateArea } from \"./patchOrCreateArea\";\nexport { patchOrCreateRoute } from \"./patchOrCreateRoute\";\nexport { setActiveProfile } from \"./setActiveProfile\";\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sCAAyC;AACzC,+BAAkC;AAClC,gCAAmC;AACnC,8BAAiC;",
+  "names": []
+}

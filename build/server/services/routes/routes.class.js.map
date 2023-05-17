@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/server/services/routes/routes.class.ts"],
+  "sourcesContent": ["import { NedbServiceOptions, Service } from \"feathers-nedb\";\nimport type { Application } from \"../../declarations\";\n\nexport class Routes extends Service<radarTrap.Route> {\n\t// eslint-disable-next-line @typescript-eslint/no-unused-vars\n\tconstructor(options: Partial<NedbServiceOptions>, app: Application) {\n\t\tsuper(options);\n\t}\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,2BAA4C;AAGrC,MAAM,eAAe,6BAAyB;AAAA,EAEpD,YAAY,SAAsC,KAAkB;AACnE,UAAM,OAAO;AAAA,EACd;AACD;",
+  "names": []
+}

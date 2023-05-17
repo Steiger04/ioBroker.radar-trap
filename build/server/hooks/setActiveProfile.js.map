@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/hooks/setActiveProfile.ts"],
+  "sourcesContent": ["const setActiveProfile = (data: radarTrap.Route): void => {\n\tdata.activeProfile = data.profiles.find((profile) => profile.active);\n};\n\nexport { setActiveProfile };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,MAAM,mBAAmB,CAAC,SAAgC;AACzD,OAAK,gBAAgB,KAAK,SAAS,KAAK,CAAC,YAAY,QAAQ,MAAM;AACpE;",
+  "names": []
+}

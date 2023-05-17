@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/middleware/index.ts"],
+  "sourcesContent": ["import type { Application } from \"../declarations\";\n\n// Don't remove this comment. It's needed to format import lines nicely.\n\n// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function\nexport default function (app: Application): void {}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAKe,SAAR,mBAAkB,KAAwB;AAAC;",
+  "names": []
+}

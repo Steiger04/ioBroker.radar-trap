@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/config/default.ts"],
+  "sourcesContent": ["module.exports = {\n\thost: \"localhost\",\n\tpublic: \"public\",\n\tpaginate: {\n\t\tdefault: 10,\n\t\tmax: 50,\n\t},\n\tnedb: \"data\",\n};\n"],
+  "mappings": ";AAAA,OAAO,UAAU;AAAA,EAChB,MAAM;AAAA,EACN,QAAQ;AAAA,EACR,UAAU;AAAA,IACT,SAAS;AAAA,IACT,KAAK;AAAA,EACN;AAAA,EACA,MAAM;AACP;",
+  "names": []
+}

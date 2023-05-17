@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/server/app.hooks.ts"],
+  "sourcesContent": ["// Application hooks that run for every service\n// Don't remove this comment. It's needed to format import lines nicely.\n\nexport default {\n\tbefore: {\n\t\tall: [],\n\t\tfind: [],\n\t\tget: [],\n\t\tcreate: [],\n\t\tupdate: [],\n\t\tpatch: [],\n\t\tremove: [],\n\t},\n\n\tafter: {\n\t\tall: [],\n\t\tfind: [],\n\t\tget: [],\n\t\tcreate: [],\n\t\tupdate: [],\n\t\tpatch: [],\n\t\tremove: [],\n\t},\n\n\terror: {\n\t\tall: [],\n\t\tfind: [],\n\t\tget: [],\n\t\tcreate: [],\n\t\tupdate: [],\n\t\tpatch: [],\n\t\tremove: [],\n\t},\n};\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAGA,IAAO,oBAAQ;AAAA,EACd,QAAQ;AAAA,IACP,KAAK,CAAC;AAAA,IACN,MAAM,CAAC;AAAA,IACP,KAAK,CAAC;AAAA,IACN,QAAQ,CAAC;AAAA,IACT,QAAQ,CAAC;AAAA,IACT,OAAO,CAAC;AAAA,IACR,QAAQ,CAAC;AAAA,EACV;AAAA,EAEA,OAAO;AAAA,IACN,KAAK,CAAC;AAAA,IACN,MAAM,CAAC;AAAA,IACP,KAAK,CAAC;AAAA,IACN,QAAQ,CAAC;AAAA,IACT,QAAQ,CAAC;AAAA,IACT,OAAO,CAAC;AAAA,IACR,QAAQ,CAAC;AAAA,EACV;AAAA,EAEA,OAAO;AAAA,IACN,KAAK,CAAC;AAAA,IACN,MAAM,CAAC;AAAA,IACP,KAAK,CAAC;AAAA,IACN,QAAQ,CAAC;AAAA,IACT,QAAQ,CAAC;AAAA,IACT,OAAO,CAAC;AAAA,IACR,QAAQ,CAAC;AAAA,EACV;AACD;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/httpsOrHttp/getCertificate.ts"],
+  "sourcesContent": ["import type * as utils from \"@iobroker/adapter-core\";\n\nconst getCertificate = async (\n\tthat: utils.AdapterInstance,\n): Promise<{ certificate: string; privateKey: string }> => {\n\tconst obj = await that.getForeignObjectAsync(\"system.certificates\");\n\n\treturn {\n\t\tcertificate: obj?.native.certificates.defaultPublic,\n\t\tprivateKey: obj?.native.certificates.defaultPrivate,\n\t};\n};\n\nexport { getCertificate };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAEA,MAAM,iBAAiB,OACtB,SAC0D;AAC1D,QAAM,MAAM,MAAM,KAAK,sBAAsB,qBAAqB;AAElE,SAAO;AAAA,IACN,aAAa,2BAAK,OAAO,aAAa;AAAA,IACtC,YAAY,2BAAK,OAAO,aAAa;AAAA,EACtC;AACD;",
+  "names": []
+}

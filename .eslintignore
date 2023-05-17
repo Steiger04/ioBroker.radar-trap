@@ -1,0 +1,7 @@
+.*/
+node_modules/
+admin/build/
+build/
+widgets/
+.prettierrc.js
+**/.eslintrc.js

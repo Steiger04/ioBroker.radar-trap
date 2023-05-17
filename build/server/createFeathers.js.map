@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/server/createFeathers.ts"],
+  "sourcesContent": ["import type * as utils from \"@iobroker/adapter-core\";\nimport app from \"./app\";\nimport logger from \"./logger\";\n\nimport type { Server } from \"http\";\n\n// console.log(\"### CREATEFEATHERS.TS ###\");\n\nlet server: Server;\n\nfunction provideFeathers(that: utils.AdapterInstance, port: number): void {\n\t// console.log(\"NODE_CONFIG_DIR\");\n\n\t// Const port = app.get('port');\n\tserver = app.listen(port);\n\n\tserver.on(\"listening\", () => {\n\t\tlogger.info(\n\t\t\t\"Feathers application started on http://%s:%d\",\n\t\t\tapp.get(\"host\"),\n\t\t\tport,\n\t\t);\n\n\t\tthat.setStateAsync(\"info.connection\", true, true).catch((ex) =>\n\t\t\tconsole.log(ex),\n\t\t);\n\t});\n}\n\nexport { app as feathers, server, provideFeathers };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA,6BAAAA;AAAA,EAAA;AAAA;AAAA;AAAA;AACA,iBAAgB;AAChB,oBAAmB;AAMnB,IAAI;AAEJ,SAAS,gBAAgB,MAA6B,MAAoB;AAIzE,WAAS,WAAAA,QAAI,OAAO,IAAI;AAExB,SAAO,GAAG,aAAa,MAAM;AAC5B,kBAAAC,QAAO;AAAA,MACN;AAAA,MACA,WAAAD,QAAI,IAAI,MAAM;AAAA,MACd;AAAA,IACD;AAEA,SAAK,cAAc,mBAAmB,MAAM,IAAI,EAAE;AAAA,MAAM,CAAC,OACxD,QAAQ,IAAI,EAAE;AAAA,IACf;AAAA,EACD,CAAC;AACF;",
+  "names": ["app", "logger"]
+}
