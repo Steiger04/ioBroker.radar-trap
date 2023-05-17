@@ -27,7 +27,7 @@ radar-trap visualizes regional reports on speed traps, accidents, breakdowns, tr
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.1 (2023-05-17)
 * (Steiger04) initial release
 
 ## License
