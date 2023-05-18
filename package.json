@@ -1,6 +1,6 @@
 {
   "name": "iobroker.radar-trap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Detect speed traps and obstacles on routes",
   "author": {
     "name": "Steiger04",

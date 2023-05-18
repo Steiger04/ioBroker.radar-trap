@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "news": {
+      "1.0.2": {
+        "en": "Added Documentation",
+        "de": "Dokumentation hinzugefügt",
+        "ru": "Добавлена документация",
+        "pt": "Documentação adicionada",
+        "nl": "Toegevoegd Document",
+        "fr": "Ajout de la documentation",
+        "it": "Documentazione aggiunta",
+        "es": "Documentación adicional",
+        "pl": "Dokumentacja Adddition",
+        "uk": "Документація",
+        "zh-cn": "文件"
+      },
       "1.0.1": {
         "en": "initial release",
         "de": "erstausstrahlung",
