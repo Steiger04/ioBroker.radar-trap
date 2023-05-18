@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "news": {
+      "1.0.3": {
+        "en": "Changed testmatrix in test-and-release.yml",
+        "de": "Geänderte Testmatrix in Test-und-Release.yml",
+        "ru": "Измененный testmatrix в test-and-release.yml",
+        "pt": "Testmatrix alterado em test-and-release.yml",
+        "nl": "Veranderde testmatrix in test-en-release",
+        "fr": "Testmatrix modifié dans test-and-release.yml",
+        "it": "Matrice di prova modificata in test-and-release.yml",
+        "es": "Cambia de testmatrix en test-and-release.yml",
+        "pl": "Changed testmatrix in test-and-release (ang.)",
+        "uk": "Змінений тестматриця в тест-і-випускі.yml",
+        "zh-cn": "A. 试验和重新定位的试验模式"
+      },
       "1.0.2": {
         "en": "Added Documentation",
         "de": "Dokumentation hinzugefügt",
