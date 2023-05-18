@@ -27,6 +27,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) Changed testmatrix in test-and-release.yml
+
 ### 1.0.2 (2023-05-18)
 * (Steiger04) Added Documentation
 
