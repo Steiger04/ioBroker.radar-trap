@@ -17,8 +17,8 @@
 
 <h2 align="center">radar-trap for ioBroker</h2>
 
-radar-trap visualizes regional reports on speed traps, accidents, breakdowns, traffic jams, hazards, and construction sites. Through the adapter configuration, it is possible to define any routes and areas that will then contain the information about the reports. For each created route and area, a cron job is defined to set the update interval. In VIS, the routes and areas can be displayed with many configuration options.
-
+## Documentation
+[radar-trap Wiki](https://github.com/Steiger04/ioBroker.radar-trap/wiki/radar-trap-Adapter)
 
 ---
 
