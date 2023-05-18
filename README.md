@@ -27,6 +27,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) Added Documentation
+
 ### 1.0.1 (2023-05-17)
 * (Steiger04) initial release
 
