@@ -18,7 +18,9 @@
 <h2 align="center">radar-trap for ioBroker</h2>
 
 ## Documentation
-[radar-trap Wiki](https://github.com/Steiger04/ioBroker.radar-trap/wiki/radar-trap-Adapter)
+[German radar-trap Wiki](https://github.com/Steiger04/ioBroker.radar-trap/wiki/radar-trap-Adapter-(deutsch))
+
+[English radar-trap Wiki](https://github.com/Steiger04/ioBroker.radar-trap/wiki/radar-trap-Adapter-(english))
 
 ---
 
@@ -27,11 +29,15 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+* (Steiger04) Added english documentation
+
 ### 1.0.3 (2023-05-18)
 * (Steiger04) Changed testmatrix in test-and-release.yml
 
 ### 1.0.2 (2023-05-18)
-* (Steiger04) Added Documentation
+* (Steiger04) Added documentation
 
 ### 1.0.1 (2023-05-17)
 * (Steiger04) initial release
