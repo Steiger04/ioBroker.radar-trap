@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "news": {
+      "1.0.4": {
+        "en": "Added english documentation",
+        "de": "Englische Dokumentation",
+        "ru": "Добавлена русская документация",
+        "pt": "Adicionado documentação Inglês",
+        "nl": "Vertaling:",
+        "fr": "Ajout de la documentation anglaise",
+        "it": "Aggiunto documentazione inglese",
+        "es": "Documentación inglesa agregada",
+        "pl": "Added english documentation",
+        "uk": "Додано документацію",
+        "zh-cn": "增加文件"
+      },
       "1.0.3": {
         "en": "Changed testmatrix in test-and-release.yml",
         "de": "Geänderte Testmatrix in Test-und-Release.yml",
