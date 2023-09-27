@@ -60,7 +60,7 @@
     "gsap": "^3.12.2",
     "helmet": "^6.1.5",
     "lodash": "^4.17.21",
-    "nanoid": "^5.0.1",
+    "nanoid": "^4.0.2",
     "react-map-gl": "^7.1.6",
     "react-router-dom": "^6.16.0",
     "rxjs": "^7.8.1",
