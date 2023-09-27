@@ -18,10 +18,10 @@ const RadarTrapTextField: FC<RadarTrapTextFieldProps> = ({
 	label,
 	type,
 }): ReactElement => {
-	const { register, getFieldState } = useFormContext<
+	const { register, getFieldState, formState } = useFormContext<
 		radarTrap.Route | radarTrap.Area
 	>();
-	const { error } = getFieldState(name);
+	const { error } = getFieldState(name, formState);
 
 	return (
 		<Box sx={{ flex: "0 1 auto" }}>

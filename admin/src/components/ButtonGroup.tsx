@@ -68,7 +68,7 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
 			</Typography>
 
 			<Box sx={{ flexGrow: 1 }} />
-			{isValid && !isDirty && (
+			{!isDirty && isValid && (
 				<Box sx={{ display: "flex", flexGrow: 0 }}>
 					<Box sx={{ ml: 1, flexGrow: 0, alignSelf: "center" }}>
 						<IconButton

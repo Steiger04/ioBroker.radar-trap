@@ -921,7 +921,10 @@ vis.binds["radar-trap"] = {
 									if (error) throw error;
 
 									map.addImage(image, mapimage, {
-										sdf: false,
+										sdf:
+											image !== "icon-traffic-closure"
+												? true
+												: false,
 									});
 								},
 							);
@@ -1439,3 +1442,4 @@ vis.binds["radar-trap"] = {
 
 vis.binds["radar-trap"].showVersion();
 vis.binds["radar-trap"].initRadarTrap();
+//# sourceMappingURL=radar-trap.js.map

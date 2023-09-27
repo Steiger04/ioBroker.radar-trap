@@ -11,6 +11,11 @@ const getAreaSchema = (language: string) => () => {
 		description: string().required(() =>
 			I18n.t("Description is a required field"),
 		),
+		areaPolygons: object().test({
+			name: "areaPolygonsCheck",
+			test: (value) => Object.keys(value!).length > 0,
+			exclusive: false,
+		}),
 		cron: string()
 			.required(() => I18n.t("Cron pattern is a required field"))
 			.test({

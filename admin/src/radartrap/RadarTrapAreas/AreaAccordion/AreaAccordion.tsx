@@ -1,5 +1,6 @@
 import PublicIcon from "@mui/icons-material/Public";
 import { Box, IconButton } from "@mui/material";
+import { red } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { FC, ReactElement, useState } from "react";
 import { FormProvider } from "react-hook-form";
@@ -13,6 +14,8 @@ import type {
 	UseFieldArrayRemove,
 	UseFieldArrayUpdate,
 } from "react-hook-form";
+
+const Red = red[700];
 
 interface AreaAccordionProps {
 	expanded: UseAccordionExpanded["expanded"];
@@ -40,7 +43,9 @@ const AreaAccordion: FC<AreaAccordionProps> = ({
 	} = useAreaAccordion({ index, field, remove, update });
 
 	const {
+		trigger,
 		resetField,
+		getFieldState,
 		formState: { isValid, isDirty },
 	} = methods;
 
@@ -90,8 +95,18 @@ const AreaAccordion: FC<AreaAccordionProps> = ({
 								<IconButton
 									onClick={() => {
 										resetField("areaPolygons");
+										trigger();
 										setOpenModal(true);
 									}}
+									sx={[
+										() => ({
+											color: getFieldState("areaPolygons")
+												.invalid
+												? Red
+												: undefined,
+										}),
+										{ p: 0, mr: 1 },
+									]}
 									edge="end"
 									size="small"
 								>

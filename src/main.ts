@@ -92,7 +92,7 @@ class RadarTrap2 extends utils.Adapter {
 			console.log(ex),
 		);
 
-		const DCS = this.idToDCS(id);
+		const DCS = this.idToDCS(id)!;
 
 		switch (DCS.state) {
 			case "pause":
