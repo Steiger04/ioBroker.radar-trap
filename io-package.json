@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "news": {
+      "1.0.6": {
+        "en": "nanoid downgraded to 4.0.2",
+        "de": "nanoid reduziert auf 4,0.2",
+        "ru": "наноид пониженный до 4.0.2",
+        "pt": "nanoide degradado para 4.0.2",
+        "nl": "nanoid gedegradeerd tot 4.0.2",
+        "fr": "nanoid dégradé à 4.0.2",
+        "it": "nanoide degradato a 4.0.2",
+        "es": "nanoide degradado a 4.0.2",
+        "pl": "nanoid upgradowany do 4.0.2",
+        "uk": "наноідний знижений до 4.0.2",
+        "zh-cn": "纳迪降到4.0.2"
+      },
       "1.0.5": {
         "en": "UI optimized and packages updated",
         "de": "UI optimiert und Pakete aktualisiert",

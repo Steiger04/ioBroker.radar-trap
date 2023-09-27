@@ -29,7 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.6 (2023-09-27)
 * (Steiger04) nanoid downgraded to 4.0.2
 
 ### 1.0.5 (2023-09-27)
