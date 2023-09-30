@@ -126,7 +126,7 @@
 	data-vis-attrs4="group.Traps;fixed-trap[true]/checkbox;speed-trap[true]/checkbox;mobile-trap[true]/checkbox;traffic-jam[true]/checkbox;"
 	data-vis-attrs5="accident[true]/checkbox;road-work[true]/checkbox;object[true]/checkbox;"
 	data-vis-attrs6="sleekness[true]/checkbox;fog[true]/checkbox;police-news[true]/checkbox;"
-	data-vis-attrs7="closed-congested-road[true]/checkbox;animate-closed-congested-road[false]/checkbox;"
+	data-vis-attrs7="closed-congested-road[true]/checkbox;animate-closed-congested-road/checkbox;"
 	data-vis-set="radar-trap"
 	data-vis-type="map"
 	data-vis-update-style="true"
@@ -184,9 +184,10 @@
 	class="vis-tpl"
 	data-vis-prev="<img src='widgets/radar-trap/img/Prev_tplMapboxList.png'></img>"
 	data-vis-attrs="areaorroute[]/custom,radar-trap.selectAllId;noNothingInfo[true]/checkbox;symbolColor[#000000]/color;"
-	data-vis-attrs0="group.Traps;fixed-trap[true]/checkbox;speed-trap[true]/checkbox;mobile-trap[true]/checkbox;traffic-jam[true]/checkbox;"
-	data-vis-attrs1="accident[true]/checkbox;road-work[true]/checkbox;object[true]/checkbox;"
-	data-vis-attrs2="sleekness[true]/checkbox;fog[true]/checkbox;police-news[true]/checkbox;"
+	data-vis-attrs0="groupHeadline[true]/checkbox;trapHeadline[true]/checkbox;"
+	data-vis-attrs1="group.Traps;fixed-trap[true]/checkbox;speed-trap[true]/checkbox;mobile-trap[true]/checkbox;traffic-jam[true]/checkbox;"
+	data-vis-attrs2="accident[true]/checkbox;road-work[true]/checkbox;object[true]/checkbox;"
+	data-vis-attrs3="sleekness[true]/checkbox;fog[true]/checkbox;police-news[true]/checkbox;"
 	data-vis-set="radar-trap"
 	data-vis-type="list"
 	data-vis-update-style="true"
@@ -214,11 +215,15 @@
 			<%if(!!this.data.attr('trapsFeatureGroups')) {%>
 				<%# console.log("trapsFeatureGroups", this.data.attr('trapsFeatureGroups').attr()) %>
 				<div class="radar-trap-info">
+				<% let isTrap = false %>
 				<% for( const [trapsGroupName, trapsFeature] of Object.entries(this.data.attr('trapsFeatureGroups').attr())) { %>
 					<% if(!!trapsFeature.length) { %>
 						<ul>
 							<% if(this.data.attr(trapsFeature[0].properties['trapInfo'].typeName)) { %>
-								<div><%= _(trapsGroupName) %></div>
+								<% isTrap = true %>
+								<% if(this.data.attr("groupHeadline")) { %>
+									<div><%= _(trapsGroupName) %></div>
+								<%}%>
 							<%}%>
 							<% trapsFeature.forEach(({geometry: {coordinates}, properties: {trapInfo}}) => { %>
 							<% if(this.data.attr(trapInfo.typeName)) { %>
@@ -232,7 +237,9 @@
 												filter: opacity(.5) drop-shadow(0 0 0 <%= this.data.attr("symbolColor") %>);"
 												src="widgets/radar-trap/img/mapbox/map-icons/<%= this.data.attr("mapImages").attr(trapInfo.typeName) %>"
 										/>
-										<h6><%= trapInfo.typeText %></h6>
+										<% if(this.data.attr("trapHeadline")) { %>
+											<h6><%= trapInfo.typeText %></h6>
+										<%}%>
 									</div>
 									<div  style="clear: both; padding: 5px 0 20px 0;">
 										<%== trapInfo.vmax ?  `<span><b>Höchstgeschwindigkeit: </b>${trapInfo.vmax} km/h</span><br/>` : null %>
@@ -256,6 +263,10 @@
 							<div class="radar-trap-info"><%= _(trapsGroupName) %>: keine</div>
 						<% } %>
 					<% } %>
+				<% } %>
+
+				<% if(!isTrap) { %>
+					<div class="radar-trap-info"><%= _("noTrapInfo") %></div>
 				<% } %>
 				</div>
 			<% } %>

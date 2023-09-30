@@ -101,6 +101,14 @@ if (vis.editMode) {
 			en: "show traps",
 			de: "Traps anzeigen",
 		},
+		groupHeadline: {
+			en: "headline category",
+			de: "Kategorie-Überschrift",
+		},
+		trapHeadline: {
+			en: "trap title",
+			de: "Hindernis-Name",
+		},
 	});
 }
 
@@ -160,6 +168,10 @@ $.extend(true, systemDictionary, {
 	"no radar-trap instance active": {
 		en: "No radar-trap instance active",
 		de: "Keine radar-trap Instanz aktiv",
+	},
+	noTrapInfo: {
+		en: "Currently there are no messages available",
+		de: "Aktuell sind keine Meldungen vorhanden",
 	},
 });
 
