@@ -29,7 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.7 (2023-09-30)
 * (Steiger04) Added features for vis-widgets
 * (Steiger04) Added states for counting traps
 

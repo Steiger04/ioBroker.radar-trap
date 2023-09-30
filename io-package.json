@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "news": {
+      "1.0.7": {
+        "en": "Added features for vis-widgets\nAdded states for counting traps",
+        "de": "Zusätzliche Funktionen für vis-widgets\nHinzugefügte Zustände zum Zählen von Fallen",
+        "ru": "Добавлены функции для vis-widgets\nДобавлены государства для подсчета ловушек",
+        "pt": "Adicionado recursos para vis-widgets\nAdicionados estados para contar armadilhas",
+        "nl": "Geadresseerde kenmerken voor vis-widgets\nVermeld staat voor het tellen van vallen",
+        "fr": "Ajout de fonctionnalités pour vis-widgets\nÉtat ajouté pour le comptage des pièges",
+        "it": "Caratteristiche aggiuntive per vis-widgets\nStati aggiunti per il conteggio delle trappole",
+        "es": "Funciones adicionales para vis-widgets\nEstados adicionales para contar trampas",
+        "pl": "Addd for visual Widget\nPaństwa dopasowane do liczenia pułapek",
+        "uk": "Додані функції для vis-widgets\nДодані стани для підрахунку пасток",
+        "zh-cn": "A. 植被增加的特点\n增购装置的国家"
+      },
       "1.0.6": {
         "en": "nanoid downgraded to 4.0.2",
         "de": "nanoid reduziert auf 4,0.2",
