@@ -18,7 +18,6 @@ import {
 } from "react-router-dom";
 import { useAppData } from "../App";
 import { TabCard } from "../components";
-// import { useAccordionDisabled, useRadarTrapEnabled } from "../lib";
 import { useAccordionDisabled, useRadarTrapEnabled } from "../lib";
 import { RadarTrapAreas } from "./RadarTrapAreas/RadarTrapAreas";
 import { RadarTrapMaps } from "./RadarTrapMaps/RadarTrapMaps";
@@ -126,7 +125,9 @@ const RadarTrapTabs: FC = (): ReactElement => {
 			<RadarTrapActiveInfo />
 
 			{/* {true && ( */}
-			{radarTrapEnabled && (
+			{(process.env.NODE_ENV === "development" ||
+				(process.env.NODE_ENV === "production" &&
+					radarTrapEnabled)) && (
 				<Router>
 					<TrapTabs />
 

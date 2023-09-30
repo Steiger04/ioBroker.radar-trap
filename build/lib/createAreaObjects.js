@@ -23,7 +23,7 @@ __export(createAreaObjects_exports, {
 module.exports = __toCommonJS(createAreaObjects_exports);
 var import_createCronJob = require("./createCronJob");
 const createAreaObjects = async (that, area) => {
-  that.setObjectAsync(area._id, {
+  await that.setObjectAsync(area._id, {
     type: "device",
     common: { name: area.description },
     native: { type: "AREA" }
@@ -40,7 +40,7 @@ const createAreaObjects = async (that, area) => {
     type: "string",
     role: "text"
   }).then(
-    async () => await that.setStateAsync(
+    () => that.setStateAsync(
       `${area._id}.area-infos.description`,
       `${area.description}`,
       true
@@ -49,6 +49,7 @@ const createAreaObjects = async (that, area) => {
   await that.createChannelAsync(`${area._id}`, "area", {
     name: "Area"
   });
+  let totalTrapsCount = 0;
   for (const [trapName, traps] of Object.entries(area.areaTraps)) {
     const newTraps = traps.map((trap) => {
       var _a;
@@ -58,6 +59,7 @@ const createAreaObjects = async (that, area) => {
         properties: { ...(_a = trap.properties) == null ? void 0 : _a.trapInfo }
       };
     });
+    totalTrapsCount += newTraps.length;
     await that.createStateAsync(`${area._id}`, `area`, `${trapName}`, {
       name: `${trapName}`,
       defAck: true,
@@ -66,13 +68,41 @@ const createAreaObjects = async (that, area) => {
       type: "array",
       role: "list"
     }).then(
-      async () => await that.setStateAsync(
+      () => that.setStateAsync(
         `${area._id}.area.${trapName}`,
         JSON.stringify(newTraps),
         true
       )
     );
+    await that.createStateAsync(`${area._id}`, `area`, `${trapName}Count`, {
+      name: `${trapName} Count`,
+      defAck: true,
+      read: true,
+      write: false,
+      type: "number",
+      role: "value"
+    }).then(
+      () => that.setStateAsync(
+        `${area._id}.area.${trapName}Count`,
+        newTraps.length,
+        true
+      )
+    );
   }
+  await that.createStateAsync(`${area._id}`, "area-infos", "totalTrapsCount", {
+    name: "totalTraps Count",
+    defAck: true,
+    read: true,
+    write: false,
+    type: "number",
+    role: "value"
+  }).then(
+    () => that.setStateAsync(
+      `${area._id}.area-infos.totalTrapsCount`,
+      totalTrapsCount,
+      true
+    )
+  );
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -9,7 +9,7 @@ const RadarTrapActiveInfo: FC = (): ReactElement | null => {
 	const { enabled: radarTrapEnabled } = useRadarTrapEnabled();
 
 	useEffect(() => {
-		if (!radarTrapEnabled) {
+		if (!radarTrapEnabled && process.env.NODE_ENV === "production") {
 			feathers.io.disconnect();
 			// feathers.io.connect();
 		} else {
@@ -18,7 +18,7 @@ const RadarTrapActiveInfo: FC = (): ReactElement | null => {
 	}, [radarTrapEnabled]);
 
 	/* return radarTrapEnabled ? ( */
-	return !radarTrapEnabled ? (
+	return !radarTrapEnabled && process.env.NODE_ENV === "production" ? (
 		<Message
 			message={`${I18n.t(
 				"For the configuration the radar-trap instance must be started",
