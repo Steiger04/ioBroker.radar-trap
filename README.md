@@ -29,6 +29,10 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) Install vis-widgets only for using vis
+* (Steiger04) vis must not be installed for using radar-trap
+
 ### 1.0.7 (2023-09-30)
 * (Steiger04) Added features for vis-widgets
 * (Steiger04) Added states for counting traps
