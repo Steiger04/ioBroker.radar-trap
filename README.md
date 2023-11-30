@@ -29,7 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.9 (2023-11-30)
 * (Steiger04) Bugfix for using vis
 
 ### 1.0.8 (2023-11-29)
