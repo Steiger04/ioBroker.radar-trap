@@ -1,193 +1,193 @@
 {
-  "common": {
-    "name": "radar-trap",
-    "version": "1.0.9",
-    "news": {
-      "1.0.9": {
-        "en": "Bugfix for using vis",
-        "de": "Bugfix für die Verwendung von vis",
-        "ru": "Bugfix для использования vis",
-        "pt": "Bugfix para usar vis",
-        "nl": "Bugfix gebruikt vis",
-        "fr": "Bugfix pour l'utilisation vis",
-        "it": "Bugfix per l'utilizzo di vis",
-        "es": "Bugfix para usar vis",
-        "pl": "Bugfix",
-        "uk": "Виправлення помилок",
-        "zh-cn": "Bugfix"
-      },
-      "1.0.8": {
-        "en": "Install vis-widgets only for using vis\nvis must not be installed for using radar-trap",
-        "de": "Installieren Sie vis-widgets nur für die Verwendung von vis\nvis darf nicht für die verwendung von radar-trap installiert werden",
-        "ru": "Установите vis-widgets только для использования vis\nvis не должен быть установлен для использования радар-трапа",
-        "pt": "Instalar vis-widgets apenas para usar vis\nvis não deve ser instalado para usar radar-trap",
-        "nl": "Install fish-widgets alleen voor gebruik van vis\nvis moet niet geïnstalleerd worden voor gebruik van radar-trap",
-        "fr": "Installer les vis-widgets uniquement pour utiliser les vis\nvis ne doit pas être installé pour l'utilisation de radar-trap",
-        "it": "Installare vis-widgets solo per l'utilizzo vis\nvis non deve essere installato per l'utilizzo di radar-trap",
-        "es": "Instalar vis-widgets sólo para usar vis\nvis no debe ser instalado para el uso de radar-trap",
-        "pl": "Instalacja wizardowych dla użycia jedynie wizów\nwiza nie została zainstalowana na radarach",
-        "uk": "Встановити в'язниці тільки для використання в'язнів\nне повинні бути встановлені для використання радіолокаторів",
-        "zh-cn": "在最小的眼下,只使用眼光\n绝不能安装使用雷达-塔拉布的雷达。"
-      },
-      "1.0.7": {
-        "en": "Added features for vis-widgets\nAdded states for counting traps",
-        "de": "Zusätzliche Funktionen für vis-widgets\nHinzugefügte Zustände zum Zählen von Fallen",
-        "ru": "Добавлены функции для vis-widgets\nДобавлены государства для подсчета ловушек",
-        "pt": "Adicionado recursos para vis-widgets\nAdicionados estados para contar armadilhas",
-        "nl": "Geadresseerde kenmerken voor vis-widgets\nVermeld staat voor het tellen van vallen",
-        "fr": "Ajout de fonctionnalités pour vis-widgets\nÉtat ajouté pour le comptage des pièges",
-        "it": "Caratteristiche aggiuntive per vis-widgets\nStati aggiunti per il conteggio delle trappole",
-        "es": "Funciones adicionales para vis-widgets\nEstados adicionales para contar trampas",
-        "pl": "Addd for visual Widget\nPaństwa dopasowane do liczenia pułapek",
-        "uk": "Додані функції для vis-widgets\nДодані стани для підрахунку пасток",
-        "zh-cn": "A. 植被增加的特点\n增购装置的国家"
-      },
-      "1.0.6": {
-        "en": "nanoid downgraded to 4.0.2",
-        "de": "nanoid reduziert auf 4,0.2",
-        "ru": "наноид пониженный до 4.0.2",
-        "pt": "nanoide degradado para 4.0.2",
-        "nl": "nanoid gedegradeerd tot 4.0.2",
-        "fr": "nanoid dégradé à 4.0.2",
-        "it": "nanoide degradato a 4.0.2",
-        "es": "nanoide degradado a 4.0.2",
-        "pl": "nanoid upgradowany do 4.0.2",
-        "uk": "наноідний знижений до 4.0.2",
-        "zh-cn": "纳迪降到4.0.2"
-      },
-      "1.0.5": {
-        "en": "UI optimized and packages updated",
-        "de": "UI optimiert und Pakete aktualisiert",
-        "ru": "UI оптимизирован и пакеты обновлены",
-        "pt": "UI otimizado e pacotes atualizados",
-        "nl": "UI optimistisch en verpakkingen",
-        "fr": "UI optimisé et les paquets mis à jour",
-        "it": "UI ottimizzato e pacchetti aggiornati",
-        "es": "UI optimizado y los paquetes actualizados",
-        "pl": "UI optymalizowało i pakiety aktualizowane",
-        "uk": "UI оптимізовані та оновлені пакети",
-        "zh-cn": "A. 优化和更新的一揽子方案"
-      },
-      "1.0.4": {
-        "en": "Added english documentation",
-        "de": "Englische Dokumentation",
-        "ru": "Добавлена русская документация",
-        "pt": "Adicionado documentação Inglês",
-        "nl": "Vertaling:",
-        "fr": "Ajout de la documentation anglaise",
-        "it": "Aggiunto documentazione inglese",
-        "es": "Documentación inglesa agregada",
-        "pl": "Added english documentation",
-        "uk": "Додано документацію",
-        "zh-cn": "增加文件"
-      },
-      "1.0.3": {
-        "en": "Changed testmatrix in test-and-release.yml",
-        "de": "Geänderte Testmatrix in Test-und-Release.yml",
-        "ru": "Измененный testmatrix в test-and-release.yml",
-        "pt": "Testmatrix alterado em test-and-release.yml",
-        "nl": "Veranderde testmatrix in test-en-release",
-        "fr": "Testmatrix modifié dans test-and-release.yml",
-        "it": "Matrice di prova modificata in test-and-release.yml",
-        "es": "Cambia de testmatrix en test-and-release.yml",
-        "pl": "Changed testmatrix in test-and-release (ang.)",
-        "uk": "Змінений тестматриця в тест-і-випускі.yml",
-        "zh-cn": "A. 试验和重新定位的试验模式"
-      }
-    },
-    "title": "Radar Trap",
-    "titleLang": {
-      "en": "Radar Trap",
-      "de": "Radarfalle",
-      "ru": "Радарная ловушка",
-      "pt": "Armadilha de radar",
-      "nl": "Radarval",
-      "fr": "Piège radar",
-      "it": "Trappola radar",
-      "es": "Trampa de radar",
-      "pl": "Pułapka radarowa",
-      "zh-cn": "雷达陷阱",
-      "uk": "Радарна пастка"
-    },
-    "desc": {
-      "en": "Detect speed traps and obstacles on routes",
-      "de": "Radarfallen und Hindernisse auf Strecken erkennen",
-      "ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
-      "pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
-      "nl": "Detecteer snelheidscontroles en obstakels op routes",
-      "fr": "Détecter les radars et les obstacles sur les routes",
-      "it": "Rileva autovelox e ostacoli sui percorsi",
-      "es": "Detecta trampas de velocidad y obstáculos en las rutas",
-      "pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
-      "zh-cn": "检测路线上的速度陷阱和障碍物",
-      "uk": "Виявляйте радари та перешкоди на маршрутах"
-    },
-    "authors": [
-      "Steiger04 <steiger04@posteo.de>"
-    ],
-    "keywords": [
-      "speed traps",
-      "obstacles on routes"
-    ],
-    "license": "MIT",
-    "stopBeforeUpdate": true,
-    "platform": "Javascript/Node.js",
-    "main": "build/main.js",
-    "icon": "radar-trap.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
-    "readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
-    "loglevel": "info",
-    "ereaseUpload": true,
-    "mode": "daemon",
-    "type": "geoposition",
-    "compact": true,
-    "connectionType": "cloud",
-    "dataSource": "poll",
-    "materialize": true,
-    "singletonHost": true,
-    "supportCustoms": false,
-    "jsonCustom": false,
-    "eraseOnUpload": true,
-    "dependencies": [
-      {
-        "js-controller": ">=5.0.0"
-      }
-    ],
-    "adminUI": {
-      "config": "materialize"
-    }
-  },
-  "native": {
-    "settings": {
-      "httpsEnabled": false,
-      "domains": "localhost",
-      "feathersPort": 3040,
-      "mbxAccessToken": ""
-    }
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": "Information"
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "role": "indicator.connected",
-        "name": "Feathers-Server started",
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": true
-      },
-      "native": {}
-    }
-  ]
+	"common": {
+		"name": "radar-trap",
+		"version": "1.0.9",
+		"news": {
+			"1.0.9": {
+				"en": "Bugfix for using vis",
+				"de": "Bugfix für die Verwendung von vis",
+				"ru": "Bugfix для использования vis",
+				"pt": "Bugfix para usar vis",
+				"nl": "Bugfix gebruikt vis",
+				"fr": "Bugfix pour l'utilisation vis",
+				"it": "Bugfix per l'utilizzo di vis",
+				"es": "Bugfix para usar vis",
+				"pl": "Bugfix",
+				"uk": "Виправлення помилок",
+				"zh-cn": "Bugfix"
+			},
+			"1.0.8": {
+				"en": "Install vis-widgets only for using vis\nvis must not be installed for using radar-trap",
+				"de": "Installieren Sie vis-widgets nur für die Verwendung von vis\nvis darf nicht für die verwendung von radar-trap installiert werden",
+				"ru": "Установите vis-widgets только для использования vis\nvis не должен быть установлен для использования радар-трапа",
+				"pt": "Instalar vis-widgets apenas para usar vis\nvis não deve ser instalado para usar radar-trap",
+				"nl": "Install fish-widgets alleen voor gebruik van vis\nvis moet niet geïnstalleerd worden voor gebruik van radar-trap",
+				"fr": "Installer les vis-widgets uniquement pour utiliser les vis\nvis ne doit pas être installé pour l'utilisation de radar-trap",
+				"it": "Installare vis-widgets solo per l'utilizzo vis\nvis non deve essere installato per l'utilizzo di radar-trap",
+				"es": "Instalar vis-widgets sólo para usar vis\nvis no debe ser instalado para el uso de radar-trap",
+				"pl": "Instalacja wizardowych dla użycia jedynie wizów\nwiza nie została zainstalowana na radarach",
+				"uk": "Встановити в'язниці тільки для використання в'язнів\nне повинні бути встановлені для використання радіолокаторів",
+				"zh-cn": "在最小的眼下,只使用眼光\n绝不能安装使用雷达-塔拉布的雷达。"
+			},
+			"1.0.7": {
+				"en": "Added features for vis-widgets\nAdded states for counting traps",
+				"de": "Zusätzliche Funktionen für vis-widgets\nHinzugefügte Zustände zum Zählen von Fallen",
+				"ru": "Добавлены функции для vis-widgets\nДобавлены государства для подсчета ловушек",
+				"pt": "Adicionado recursos para vis-widgets\nAdicionados estados para contar armadilhas",
+				"nl": "Geadresseerde kenmerken voor vis-widgets\nVermeld staat voor het tellen van vallen",
+				"fr": "Ajout de fonctionnalités pour vis-widgets\nÉtat ajouté pour le comptage des pièges",
+				"it": "Caratteristiche aggiuntive per vis-widgets\nStati aggiunti per il conteggio delle trappole",
+				"es": "Funciones adicionales para vis-widgets\nEstados adicionales para contar trampas",
+				"pl": "Addd for visual Widget\nPaństwa dopasowane do liczenia pułapek",
+				"uk": "Додані функції для vis-widgets\nДодані стани для підрахунку пасток",
+				"zh-cn": "A. 植被增加的特点\n增购装置的国家"
+			},
+			"1.0.6": {
+				"en": "nanoid downgraded to 4.0.2",
+				"de": "nanoid reduziert auf 4,0.2",
+				"ru": "наноид пониженный до 4.0.2",
+				"pt": "nanoide degradado para 4.0.2",
+				"nl": "nanoid gedegradeerd tot 4.0.2",
+				"fr": "nanoid dégradé à 4.0.2",
+				"it": "nanoide degradato a 4.0.2",
+				"es": "nanoide degradado a 4.0.2",
+				"pl": "nanoid upgradowany do 4.0.2",
+				"uk": "наноідний знижений до 4.0.2",
+				"zh-cn": "纳迪降到4.0.2"
+			},
+			"1.0.5": {
+				"en": "UI optimized and packages updated",
+				"de": "UI optimiert und Pakete aktualisiert",
+				"ru": "UI оптимизирован и пакеты обновлены",
+				"pt": "UI otimizado e pacotes atualizados",
+				"nl": "UI optimistisch en verpakkingen",
+				"fr": "UI optimisé et les paquets mis à jour",
+				"it": "UI ottimizzato e pacchetti aggiornati",
+				"es": "UI optimizado y los paquetes actualizados",
+				"pl": "UI optymalizowało i pakiety aktualizowane",
+				"uk": "UI оптимізовані та оновлені пакети",
+				"zh-cn": "A. 优化和更新的一揽子方案"
+			},
+			"1.0.4": {
+				"en": "Added english documentation",
+				"de": "Englische Dokumentation",
+				"ru": "Добавлена русская документация",
+				"pt": "Adicionado documentação Inglês",
+				"nl": "Vertaling:",
+				"fr": "Ajout de la documentation anglaise",
+				"it": "Aggiunto documentazione inglese",
+				"es": "Documentación inglesa agregada",
+				"pl": "Added english documentation",
+				"uk": "Додано документацію",
+				"zh-cn": "增加文件"
+			},
+			"1.0.3": {
+				"en": "Changed testmatrix in test-and-release.yml",
+				"de": "Geänderte Testmatrix in Test-und-Release.yml",
+				"ru": "Измененный testmatrix в test-and-release.yml",
+				"pt": "Testmatrix alterado em test-and-release.yml",
+				"nl": "Veranderde testmatrix in test-en-release",
+				"fr": "Testmatrix modifié dans test-and-release.yml",
+				"it": "Matrice di prova modificata in test-and-release.yml",
+				"es": "Cambia de testmatrix en test-and-release.yml",
+				"pl": "Changed testmatrix in test-and-release (ang.)",
+				"uk": "Змінений тестматриця в тест-і-випускі.yml",
+				"zh-cn": "A. 试验和重新定位的试验模式"
+			}
+		},
+		"title": "Radar Trap",
+		"titleLang": {
+			"en": "Radar Trap",
+			"de": "Radarfalle",
+			"ru": "Радарная ловушка",
+			"pt": "Armadilha de radar",
+			"nl": "Radarval",
+			"fr": "Piège radar",
+			"it": "Trappola radar",
+			"es": "Trampa de radar",
+			"pl": "Pułapka radarowa",
+			"zh-cn": "雷达陷阱",
+			"uk": "Радарна пастка"
+		},
+		"desc": {
+			"en": "Detect speed traps and obstacles on routes",
+			"de": "Radarfallen und Hindernisse auf Strecken erkennen",
+			"ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
+			"pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
+			"nl": "Detecteer snelheidscontroles en obstakels op routes",
+			"fr": "Détecter les radars et les obstacles sur les routes",
+			"it": "Rileva autovelox e ostacoli sui percorsi",
+			"es": "Detecta trampas de velocidad y obstáculos en las rutas",
+			"pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
+			"zh-cn": "检测路线上的速度陷阱和障碍物",
+			"uk": "Виявляйте радари та перешкоди на маршрутах"
+		},
+		"authors": ["Steiger04 <steiger04@posteo.de>"],
+		"keywords": ["speed traps", "obstacles on routes"],
+		"license": "MIT",
+		"stopBeforeUpdate": true,
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "radar-trap.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
+		"readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
+		"loglevel": "info",
+		"ereaseUpload": true,
+		"mode": "daemon",
+		"type": "geoposition",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"materialize": true,
+		"singletonHost": true,
+		"supportCustoms": false,
+		"jsonCustom": false,
+		"eraseOnUpload": true,
+		"restartAdapters": ["vis"],
+		"dependencies": [
+			{
+				"js-controller": ">=5.0.17"
+			}
+		],
+		"adminUI": {
+			"config": "materialize"
+		},
+		"visWidgets": {
+			"ignoreInVersions": [2]
+		},
+		"installedFrom": "D:\\dev-workspace\\ioBroker.radar-trap"
+	},
+	"native": {
+		"settings": {
+			"httpsEnabled": false,
+			"domains": "localhost",
+			"feathersPort": 3040,
+			"mbxAccessToken": ""
+		}
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Feathers-Server started",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": true
+			},
+			"native": {}
+		}
+	]
 }
