@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "news": {
+      "1.0.10": {
+        "en": "io-package.json changed (ignoreInVersions)",
+        "de": "io-package.json geändert (ignoreInVersions)",
+        "ru": "io-package.json изменен (ignoreInVersions)",
+        "pt": "io-package.json mudou (ignoreInVersions)",
+        "nl": "json is veranderd",
+        "fr": "io-package.json a changé (ignoreInVersions)",
+        "it": "io-package.json cambiato (ignoreInVersions)",
+        "es": "io-package.json cambió (ignoreInVersions)",
+        "pl": "io-package album został zmieniony (ignoreInVersions)",
+        "uk": "io-package.json змінив (ignoreInVersions)",
+        "zh-cn": "碘酒(乙型肝炎)变化"
+      },
       "1.0.9": {
         "en": "Bugfix for using vis",
         "de": "Bugfix für die Verwendung von vis",
@@ -80,19 +93,6 @@
         "pl": "Added english documentation",
         "uk": "Додано документацію",
         "zh-cn": "增加文件"
-      },
-      "1.0.3": {
-        "en": "Changed testmatrix in test-and-release.yml",
-        "de": "Geänderte Testmatrix in Test-und-Release.yml",
-        "ru": "Измененный testmatrix в test-and-release.yml",
-        "pt": "Testmatrix alterado em test-and-release.yml",
-        "nl": "Veranderde testmatrix in test-en-release",
-        "fr": "Testmatrix modifié dans test-and-release.yml",
-        "it": "Matrice di prova modificata in test-and-release.yml",
-        "es": "Cambia de testmatrix en test-and-release.yml",
-        "pl": "Changed testmatrix in test-and-release (ang.)",
-        "uk": "Змінений тестматриця в тест-і-випускі.yml",
-        "zh-cn": "A. 试验和重新定位的试验模式"
       }
     },
     "title": "Radar Trap",
