@@ -29,6 +29,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) io-package.json changed (ignoreInVersions)
+
 ### 1.0.9 (2023-11-30)
 * (Steiger04) Bugfix for using vis
 
