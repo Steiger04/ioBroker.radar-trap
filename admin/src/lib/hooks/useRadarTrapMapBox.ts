@@ -90,25 +90,6 @@ const useRadarTrapMapBox = (
 		}
 	}, [routeSourceStatus]);
 
-	/* useEffect(() => {
-		console.log(
-			"useRadarTrapMapBox() -> areaSourceStatus:",
-			areaSourceStatus,
-		);
-		console.log("useRadarTrapMapBox() -> areaPolygons:", areaPolygons);
-	}, [areaSourceStatus]); */
-
-	/* useEffect(() => {
-		console.log(
-			"useRadarTrapMapBox() -> routeSourceStatus:",
-			routeSourceStatus,
-		);
-		console.log(
-			"useRadarTrapMapBox() -> directionsFeatureCollection:",
-			directionsFeatureCollection,
-		);
-	}, [routeSourceStatus]); */
-
 	return { status, directionsBox };
 };
 

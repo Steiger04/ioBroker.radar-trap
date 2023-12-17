@@ -21,14 +21,14 @@ import {
 	useMapImages,
 	// useRadarTrapSource,
 	useRadarTrapSource2,
-	useResizeMap,
+	useResizeMap2,
 } from "../../lib";
 import { TrapInfo } from "./TrapInfo";
 
 import type { FC, ReactElement } from "react";
 
 const RadarTrapMaps: FC = (): ReactElement => {
-	const { feathers: feathersClient, savedNative } = useAppData();
+	const { feathers, savedNative } = useAppData();
 	const mapRef = useRef<MapRef>(null);
 
 	useMapImages(mapRef);
@@ -37,13 +37,9 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 	const [trapInfo, setTrapInfo] = useState<radarTrap.trapInfo | null>(null);
 
-	/* const {
-		source: { directionsFeatureCollection, trapsFeatureCollection, polysFeatureCollection, areaPolygons },
-	} = useRadarTrapSource(routeId); */
-
 	const {
 		source: { directionsFeatureCollection, trapsFeatureCollection, polysFeatureCollection, areaPolygons },
-	} = useRadarTrapSource2(routeId, feathersClient);
+	} = useRadarTrapSource2(routeId, feathers);
 
 	const [cursor, setCursor] = useState<string>("");
 
@@ -160,14 +156,14 @@ const RadarTrapMaps: FC = (): ReactElement => {
 		}
 	};
 
-	const { resizeMap } = useResizeMap({
+	const { resizeMap } = useResizeMap2({
 		_id: routeId,
 		map: mapRef,
-		animate: true,
+		feathers,
 	});
 
 	useEffect(() => {
-		resizeMap();
+		resizeMap(true);
 	}, [resizeMap]);
 
 	return (

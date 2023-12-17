@@ -16,7 +16,7 @@ import { MapList } from "./MapList";
 interface MapMenuProps {
 	routeId: null | string;
 	setRouteId: Dispatch<SetStateAction<string | null>>;
-	resizeMap: () => void;
+	resizeMap: (animate: boolean) => void;
 }
 
 const MapMenu: FC<MapMenuProps> = ({ routeId, setRouteId, resizeMap }): ReactElement => {
@@ -89,7 +89,7 @@ const MapMenu: FC<MapMenuProps> = ({ routeId, setRouteId, resizeMap }): ReactEle
 							sx={{ opacity: 0.7, mr: 1 }}
 							size={upSmall ? "medium" : "small"}
 							color="primary"
-							onClick={resizeMap}
+							onClick={() => resizeMap(true)}
 						>
 							<ZoomOutMap />
 						</Fab>

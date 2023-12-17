@@ -3,14 +3,14 @@ import { Feature, featureCollection } from "@turf/helpers";
 import { FC, ReactElement, useCallback, useEffect, useRef } from "react";
 import Map, { MapRef, ScaleControl } from "react-map-gl";
 import { useAppData } from "../../App";
-import { useResizeMap } from "../../lib";
+import { useResizeMap2 } from "../../lib";
 import { DrawControl } from "./DrawControl";
 
 import type { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
 import { useFormContext } from "react-hook-form";
 
 const AreaTrapMap: FC = (): ReactElement => {
-	const { savedNative } = useAppData();
+	const { savedNative, feathers } = useAppData();
 	const mapRef = useRef<MapRef>(null);
 	const drawRef = useRef<MapboxDraw>(null);
 	const { setValue, getValues } = useFormContext<radarTrap.Area>();
@@ -54,9 +54,10 @@ const AreaTrapMap: FC = (): ReactElement => {
 		});
 	}, []);
 
-	const { resizeMap, boxStatus } = useResizeMap({
+	const { resizeMap, boxStatus } = useResizeMap2({
 		_id: getValues("_id"),
 		map: mapRef,
+		feathers,
 	});
 
 	useEffect(() => {
@@ -72,7 +73,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 			drawRef.current.add(featureCollection(Object.values(areaPolygons!)));
 		}
 
-		resizeMap();
+		resizeMap(true);
 	}, [drawRef.current, resizeMap, boxStatus]);
 
 	return (

@@ -51,6 +51,7 @@ const useRadarTrapAreas = (): UseRadarTrapAreas => {
 	});
 
 	useEffect(() => {
+		console.log("useRadarTrapAreas", { status, data });
 		status === "success" && reset({ areas: data as radarTrap.Areas });
 	}, [status]);
 
