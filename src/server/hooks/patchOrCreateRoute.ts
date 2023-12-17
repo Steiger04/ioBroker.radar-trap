@@ -86,16 +86,12 @@ const patchOrCreateRoute = (): Hook => {
 				.send()
 				.then((response) => response.body)
 				.catch((ex) => {
-					console.log(
-						"Error in directionsService.getDirections()",
-						ex,
-					);
+					console.log("Error in directionsService.getDirections()", ex);
 				});
 
 			data!.directions = [];
 
-			for (const route of (directions as DirectionsResponse<string>)
-				.routes) {
+			for (const route of (directions as DirectionsResponse<string>).routes) {
 				try {
 					const startTime = performance.now();
 					const traps = await getTrapsFromDirection({
@@ -104,11 +100,7 @@ const patchOrCreateRoute = (): Hook => {
 					});
 					const endTime = performance.now();
 
-					console.log(
-						`getTrapsFrom() dauerte: ${
-							(endTime - startTime) / 1_000
-						} Sekunden`,
-					);
+					console.log(`getTrapsFrom() dauerte: ${(endTime - startTime) / 1_000} Sekunden`);
 
 					route.duration = matrix.durations![0][1];
 					data!.directions.push({ direction: route, traps, matrix });
@@ -119,14 +111,10 @@ const patchOrCreateRoute = (): Hook => {
 		}
 
 		if (record !== undefined) {
-			context.result = await service.patch(
-				_id,
-				data as Partial<radarTrap.Route>,
-				{
-					...params,
-					publishEvent: false,
-				},
-			);
+			context.result = await service.patch(_id, data as Partial<radarTrap.Route>, {
+				...params,
+				publishEvent: false,
+			});
 
 			// Console.log('context.result', context.result);
 			// service.emit('status', { _id: data._id, status: 'success' });

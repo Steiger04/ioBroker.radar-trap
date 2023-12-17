@@ -1,9 +1,6 @@
 import type * as utils from "@iobroker/adapter-core";
 
-const createCronJobAsync = async (
-	that: utils.AdapterInstance,
-	_id: string,
-): Promise<void> => {
+const createCronJobAsync = async (that: utils.AdapterInstance, _id: string): Promise<void> => {
 	await that.createChannelAsync(`${_id}`, "cron-job", {
 		name: "Cron Job",
 	});

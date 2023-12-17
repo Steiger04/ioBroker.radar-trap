@@ -83,10 +83,7 @@ const patchOrCreateRoute = () => {
           }
         ]
       }).send().then((response) => response.body).catch((ex) => {
-        console.log(
-          "Error in directionsService.getDirections()",
-          ex
-        );
+        console.log("Error in directionsService.getDirections()", ex);
       });
       data.directions = [];
       for (const route of directions.routes) {
@@ -97,9 +94,7 @@ const patchOrCreateRoute = () => {
             maxTrapDistance
           });
           const endTime = import_perf_hooks.performance.now();
-          console.log(
-            `getTrapsFrom() dauerte: ${(endTime - startTime) / 1e3} Sekunden`
-          );
+          console.log(`getTrapsFrom() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
           route.duration = matrix.durations[0][1];
           data.directions.push({ direction: route, traps, matrix });
         } catch (error) {
@@ -108,14 +103,10 @@ const patchOrCreateRoute = () => {
       }
     }
     if (record !== void 0) {
-      context.result = await service.patch(
-        _id,
-        data,
-        {
-          ...params,
-          publishEvent: false
-        }
-      );
+      context.result = await service.patch(_id, data, {
+        ...params,
+        publishEvent: false
+      });
       return context;
     }
     return context;

@@ -58,10 +58,7 @@ const patchOrCreateArea = () => {
       const areaPolygon = Object.values(data.areaPolygons)[0];
       const areaBox = (0, import_bbox.default)(areaPolygon);
       const squareBox = (0, import_square.default)(areaBox);
-      const squareBoxPolygon = (0, import_transform_scale.default)(
-        (0, import_bbox_polygon.default)(squareBox),
-        1.3
-      );
+      const squareBoxPolygon = (0, import_transform_scale.default)((0, import_bbox_polygon.default)(squareBox), 1.3);
       const sideLength = Math.sqrt((0, import_area.default)(squareBoxPolygon)) / 1e3;
       let sideLengthDivisor = 0;
       if (sideLength > 3e3) {
@@ -77,10 +74,7 @@ const patchOrCreateArea = () => {
       } else {
         sideLengthDivisor = 10;
       }
-      const squareBoxGrid = (0, import_square_grid.default)(
-        (0, import_bbox.default)(squareBoxPolygon),
-        sideLength / sideLengthDivisor
-      );
+      const squareBoxGrid = (0, import_square_grid.default)((0, import_bbox.default)(squareBoxPolygon), sideLength / sideLengthDivisor);
       const reducedSquareBoxGrid = (0, import_helpers.featureCollection)(
         squareBoxGrid.features.filter((feature2) => {
           return (0, import_boolean_overlap.default)(areaPolygon, feature2) || (0, import_boolean_contains.default)(areaPolygon, feature2);
@@ -106,31 +100,20 @@ const patchOrCreateArea = () => {
         resultTraps = resultTraps.concat(gridTraps);
         resultPolyPoints = resultPolyPoints.concat(polyPoints);
       }
-      resultTraps = (0, import_points_within_polygon.default)(
-        (0, import_helpers.featureCollection)(resultTraps),
-        areaPolygon
-      ).features;
-      resultPolyPoints = (0, import_points_within_polygon.default)(
-        (0, import_helpers.featureCollection)(resultPolyPoints),
-        areaPolygon
-      ).features;
+      resultTraps = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultTraps), areaPolygon).features;
+      resultPolyPoints = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultPolyPoints), areaPolygon).features;
       resultTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultTraps);
       const endTime = performance.now();
-      import_console.default.log(
-        `patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`
-      );
+      import_console.default.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
       data.areaTraps = resultTraps;
       resultPolyLines = (0, import_meta.featureReduce)(
         (0, import_helpers.featureCollection)(resultPolyPoints),
         (features, tmpFeature) => {
           features.push(tmpFeature);
           features.push(
-            (0, import_helpers.feature)(
-              import_polyline.default.toGeoJSON(
-                tmpFeature.properties.polyline
-              ),
-              { ...tmpFeature.properties }
-            )
+            (0, import_helpers.feature)(import_polyline.default.toGeoJSON(tmpFeature.properties.polyline), {
+              ...tmpFeature.properties
+            })
           );
           return features;
         },
@@ -139,14 +122,10 @@ const patchOrCreateArea = () => {
       data.polysFeatureCollection = (0, import_helpers.featureCollection)(resultPolyLines);
     }
     if (record !== void 0) {
-      context.result = await service.patch(
-        _id,
-        data,
-        {
-          ...params,
-          publishEvent: false
-        }
-      );
+      context.result = await service.patch(_id, data, {
+        ...params,
+        publishEvent: false
+      });
       return context;
     }
     return context;

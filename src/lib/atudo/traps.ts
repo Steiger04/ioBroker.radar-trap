@@ -20,8 +20,7 @@ type Poi = {
 	polyline: string;
 };
 
-const trapBase =
-	"0,1,2,3,4,5,6,20,21,22,23,24,25,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts,vwd";
+const trapBase = "0,1,2,3,4,5,6,20,21,22,23,24,25,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts,vwd";
 
 const traps = async (
 	minPos: { lng: number; lat: number },
@@ -42,41 +41,32 @@ const traps = async (
 		.then((res) => res.json())
 		.catch((ex) => console.log(ex));
 
-	const polyPoints = polys.reduce(
-		(list: Feature<Point, Properties>[], poly: any) => {
-			let polyPoint;
+	const polyPoints = polys.reduce((list: Feature<Point, Properties>[], poly: any) => {
+		let polyPoint;
 
-			if (poly.type === "sc") return list;
+		if (poly.type === "sc") return list;
 
-			if (poly.type === "closure") {
-				polyPoint = point<Properties>([+poly.pos.lng, +poly.pos.lat], {
-					...poly,
-				});
-			} else {
-				polyPoint = point<Properties>(
-					[+poly.showdelay_pos.lng, +poly.showdelay_pos.lat],
-					{ ...poly },
-				);
-			}
+		if (poly.type === "closure") {
+			polyPoint = point<Properties>([+poly.pos.lng, +poly.pos.lat], {
+				...poly,
+			});
+		} else {
+			polyPoint = point<Properties>([+poly.showdelay_pos.lng, +poly.showdelay_pos.lat], { ...poly });
+		}
 
-			list.push(polyPoint);
+		list.push(polyPoint);
 
-			return list;
-		},
-		[],
-	);
+		return list;
+	}, []);
 
-	const trapPoints = pois.reduce(
-		(list: Feature<Point, Properties>[], poi: Poi) => {
-			const trapPoint = point<Properties>([+poi.lng, +poi.lat]);
+	const trapPoints = pois.reduce((list: Feature<Point, Properties>[], poi: Poi) => {
+		const trapPoint = point<Properties>([+poi.lng, +poi.lat]);
 
-			trapPoint.properties = poi;
-			list.push(trapPoint);
+		trapPoint.properties = poi;
+		list.push(trapPoint);
 
-			return list;
-		},
-		[],
-	);
+		return list;
+	}, []);
 
 	return { trapPoints, polyPoints };
 };

@@ -10,10 +10,7 @@ import {
 	UseFieldArrayUpdate,
 	useForm,
 } from "react-hook-form";
-import {
-	useAccordionExpanded,
-	UseAccordionExpanded,
-} from "./useAccordionExpanded";
+import { useAccordionExpanded, UseAccordionExpanded } from "./useAccordionExpanded";
 
 const getDefault = (): radarTrap.Route => ({
 	_id: nanoid(),
@@ -24,25 +21,13 @@ const getDefault = (): radarTrap.Route => ({
 		{
 			name: "driving",
 			active: true,
-			allowedExclusion: [
-				"motorway",
-				"toll",
-				"ferry",
-				"unpaved",
-				"cash_only_tolls",
-			],
+			allowedExclusion: ["motorway", "toll", "ferry", "unpaved", "cash_only_tolls"],
 			actualExclusion: [],
 		},
 		{
 			name: "driving-traffic",
 			active: false,
-			allowedExclusion: [
-				"motorway",
-				"toll",
-				"ferry",
-				"unpaved",
-				"cash_only_tolls",
-			],
+			allowedExclusion: ["motorway", "toll", "ferry", "unpaved", "cash_only_tolls"],
 			actualExclusion: [],
 		},
 		{
@@ -81,15 +66,7 @@ const useRadarTrapRoutes = (): UseRadarTrapRoutes => {
 		realtime: "refetch",
 		query: {
 			/* $sort: { description: 1 }, */
-			$select: [
-				"_id",
-				"description",
-				"src",
-				"dst",
-				"profiles",
-				"cron",
-				"maxTrapDistance",
-			],
+			$select: ["_id", "description", "src", "dst", "profiles", "cron", "maxTrapDistance"],
 		},
 	});
 

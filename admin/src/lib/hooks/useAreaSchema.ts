@@ -8,9 +8,7 @@ const getAreaSchema = (language: string) => () => {
 	const _areaSchema = object<radarTrap.Area>({
 		id: string(),
 		_id: string().required(),
-		description: string().required(() =>
-			I18n.t("Description is a required field"),
-		),
+		description: string().required(() => I18n.t("Description is a required field")),
 		areaPolygons: object().test({
 			name: "areaPolygonsCheck",
 			test: (value) => Object.keys(value!).length > 0,
@@ -32,7 +30,7 @@ const getAreaSchema = (language: string) => () => {
 const useAreaSchema = (): ObjectSchema<object, radarTrap.Area, object, ""> => {
 	const { language } = useAppData();
 
-	const [areaSchema, setAreaSchema] = useState(getAreaSchema(language));
+	const [areaSchema, setAreaSchema] = useState(getAreaSchema(language!));
 
 	useEffect(() => {
 		setAreaSchema(getAreaSchema(language));

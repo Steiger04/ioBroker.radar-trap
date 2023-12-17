@@ -15,15 +15,9 @@ function provideFeathers(that: utils.AdapterInstance, port: number): void {
 	server = app.listen(port);
 
 	server.on("listening", () => {
-		logger.info(
-			"Feathers application started on http://%s:%d",
-			app.get("host"),
-			port,
-		);
+		logger.info("Feathers application started on http://%s:%d", app.get("host"), port);
 
-		that.setStateAsync("info.connection", true, true).catch((ex) =>
-			console.log(ex),
-		);
+		that.setStateAsync("info.connection", true, true).catch((ex) => console.log(ex));
 	});
 }
 

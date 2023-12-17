@@ -38,37 +38,23 @@ class RadarTrap2 extends utils.Adapter {
     this.on("unload", this.onUnload.bind(this));
   }
   async onReady() {
-    process.on(
-      "unhandledRejection",
-      (reason, p) => import_logger.default.error("Unhandled Rejection at: Promise ", p, reason)
-    );
+    process.on("unhandledRejection", (reason, p) => import_logger.default.error("Unhandled Rejection at: Promise ", p, reason));
     process.env.MAPBOX_TOKEN = this.config.settings.mbxAccessToken;
-    (0, import_createFeathers.provideFeathers)(
-      this,
-      this.config.settings.feathersPort
-    );
-    await (0, import_createAllAreaAndRouteObjects.createAllAreaAndRouteObjects)(this, import_createFeathers.feathers).catch(
-      (ex) => console.log(ex)
-    );
+    (0, import_createFeathers.provideFeathers)(this, this.config.settings.feathersPort);
+    await (0, import_createAllAreaAndRouteObjects.createAllAreaAndRouteObjects)(this, import_createFeathers.feathers).catch((ex) => console.log(ex));
     import_Scheduler.Scheduler.addThat(this);
     await import_Scheduler.Scheduler.scheduleAll().catch((ex) => console.log(ex));
     (0, import_routeServiceListener.routeServiceListener)(this, import_createFeathers.feathers);
     (0, import_areaServiceListener.areaServiceListener)(this, import_createFeathers.feathers);
-    await this.subscribeStatesAsync("*.pause").catch(
-      (ex) => console.log(ex)
-    );
-    await this.subscribeStatesAsync("*.resume").catch(
-      (ex) => console.log(ex)
-    );
+    await this.subscribeStatesAsync("*.pause").catch((ex) => console.log(ex));
+    await this.subscribeStatesAsync("*.resume").catch((ex) => console.log(ex));
     await this.subscribeStatesAsync("*.run").catch((ex) => console.log(ex));
   }
   onStateChange(id, state) {
     if (!state || state.ack) {
       return;
     }
-    this.setStateAsync(id, { val: state.val, ack: true }).catch(
-      (ex) => console.log(ex)
-    );
+    this.setStateAsync(id, { val: state.val, ack: true }).catch((ex) => console.log(ex));
     const DCS = this.idToDCS(id);
     switch (DCS.state) {
       case "pause":
@@ -113,9 +99,7 @@ class RadarTrap2 extends utils.Adapter {
       import_Scheduler.Scheduler.deleteAll();
       this.unsubscribeStatesAsync("*").catch((ex) => console.log(ex));
       import_createFeathers.server.close();
-      this.setStateAsync("info.connection", false, true).catch(
-        (ex) => console.log(ex)
-      );
+      this.setStateAsync("info.connection", false, true).catch((ex) => console.log(ex));
       callback();
     } catch {
       callback();

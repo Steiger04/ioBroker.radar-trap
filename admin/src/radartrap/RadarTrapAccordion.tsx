@@ -4,14 +4,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { grey } from "@mui/material/colors";
 import { gsap } from "gsap";
-import {
-	FC,
-	ReactElement,
-	SyntheticEvent,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { FC, ReactElement, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { ButtonGroup } from "../components/ButtonGroup";
 
 import type { UseAccordionExpanded } from "../lib";
@@ -46,9 +39,7 @@ const RadarTrapAccordion: FC<RadarTrapAccordionProps> = ({
 }): ReactElement => {
 	const accordionRef = useRef<HTMLDivElement>(null);
 
-	const [disabled, setDisabled] = useState<boolean | undefined>(
-		accordionDisabledMap.get(_id),
-	);
+	const [disabled, setDisabled] = useState<boolean | undefined>(accordionDisabledMap.get(_id));
 
 	useEffect(() => {
 		setDisabled(accordionDisabledMap.get(_id));

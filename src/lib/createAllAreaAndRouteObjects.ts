@@ -3,10 +3,7 @@ import type { Application } from "../server/declarations";
 import { createAreaObjects } from "./createAreaObjects";
 import { createRouteObjects } from "./createRouteObjects";
 
-const createAllAreaAndRouteObjects = async (
-	that: utils.AdapterInstance,
-	feathers: Application,
-): Promise<void> => {
+const createAllAreaAndRouteObjects = async (that: utils.AdapterInstance, feathers: Application): Promise<void> => {
 	// console.log("createAllAreaAndRouteObjects");
 
 	const routes = await feathers.service("routes").find({

@@ -14,7 +14,7 @@ const SaveCloseButtonsWrapper: FC = ({ children }): ReactElement => {
 
 		if (
 			saveType === "Save" &&
-			native.settings?.mbxAccessToken /* &&
+			native.settings!.mbxAccessToken /* &&
 			native.settings?.mbxAccessToken !==
 				savedNative.settings.mbxAccessToken */
 		) {
@@ -25,13 +25,10 @@ const SaveCloseButtonsWrapper: FC = ({ children }): ReactElement => {
 						.then((instanceObj) => {
 							if (instanceObj) {
 								that.geocodingService = Geocoding({
-									accessToken:
-										native.settings!.mbxAccessToken,
+									accessToken: native.settings!.mbxAccessToken,
 								});
 
-								that.socket
-									.setObject(that.instanceId, instanceObj)
-									.catch((ex) => console.log(ex));
+								that.socket.setObject(that.instanceId, instanceObj).catch((ex) => console.log(ex));
 							}
 						})
 						.catch((ex) => console.log(ex)),
@@ -50,17 +47,12 @@ const IbrFooter: FC = (): ReactElement => {
 		<Box
 			component="footer"
 			sx={{
-				flex: () =>
-					that.state.bottomButtons
-						? { xs: "0 1 56px", sm: "0 1 64px" }
-						: "0 1 auto",
+				flex: () => (that!.state.bottomButtons ? { xs: "0 1 56px", sm: "0 1 64px" } : "0 1 auto"),
 			}}
 		>
 			{/* {that.renderError()}
 			{that.renderToast()} */}
-			<SaveCloseButtonsWrapper>
-				{that.renderSaveCloseButtons()}
-			</SaveCloseButtonsWrapper>
+			<SaveCloseButtonsWrapper>{that!.renderSaveCloseButtons()}</SaveCloseButtonsWrapper>
 		</Box>
 	);
 };

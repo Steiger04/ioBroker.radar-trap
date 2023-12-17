@@ -5,11 +5,7 @@ import { Path } from "react-hook-form";
 import { App } from "../../admin/src/App";
 
 import type { MatrixResponse } from "@mapbox/mapbox-sdk/services/matrix";
-import type {
-	FeatureCollection,
-	LineString,
-	Point,
-} from "@turf/helpers/dist/js/lib/geojson";
+import type { FeatureCollection, LineString, Point } from "@turf/helpers/dist/js/lib/geojson";
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
@@ -30,11 +26,7 @@ declare global {
 		interface IAppContext {
 			that: App;
 			savedNative: INative;
-			updateNativeValue: (
-				attr: nativeKeys,
-				value: any,
-				cb?: () => void,
-			) => void;
+			updateNativeValue: (attr: nativeKeys, value: any, cb?: () => void) => void;
 			native: INative | Partial<INative>;
 			feathers: createApplication.Application<any> & {
 				io: SocketIOClient.Socket;
@@ -58,12 +50,7 @@ declare global {
 			status: GenericStatus;
 		}
 
-		type Exclusions =
-			| "motorway"
-			| "toll"
-			| "ferry"
-			| "unpaved"
-			| "cash_only_tolls";
+		type Exclusions = "motorway" | "toll" | "ferry" | "unpaved" | "cash_only_tolls";
 
 		interface Profile {
 			active: boolean;
@@ -76,10 +63,7 @@ declare global {
 			direction: MapBoxRoute<string> & {
 				directionFeature?: GeoJSON.Feature<GeoJSON.LineString>;
 			};
-			traps: Record<
-				string,
-				GeoJSON.Feature<GeoJSON.LineString | GeoJSON.Point>[]
-			>;
+			traps: Record<string, GeoJSON.Feature<GeoJSON.LineString | GeoJSON.Point>[]>;
 			matrix: MatrixResponse;
 		}
 
@@ -95,9 +79,7 @@ declare global {
 			maxTrapDistance: number;
 			directions?: Direction[] | null;
 			directionsFeatureCollection?: GeoJSON.FeatureCollection<GeoJSON.LineString> | null;
-			trapsFeatureCollection?: GeoJSON.FeatureCollection<
-				GeoJSON.Point | GeoJSON.LineString
-			> | null;
+			trapsFeatureCollection?: GeoJSON.FeatureCollection<GeoJSON.Point | GeoJSON.LineString> | null;
 		}
 
 		type Routes = Route[];
@@ -143,12 +125,8 @@ declare global {
 			cron: string;
 			areaPolygons: AreaPolygons | null;
 			areaTraps?: Record<string, Feature<LineString | Point>[]>;
-			trapsFeatureCollection?: FeatureCollection<
-				Point | LineString
-			> | null;
-			polysFeatureCollection?: FeatureCollection<
-				Point | LineString
-			> | null;
+			trapsFeatureCollection?: FeatureCollection<Point | LineString> | null;
+			polysFeatureCollection?: FeatureCollection<Point | LineString> | null;
 		}
 
 		type Areas = Area[];

@@ -43,15 +43,11 @@ const determineTrapTypes = (
 ): Record<string, GeoJSON.Feature<GeoJSON.Point>[]> =>
 	trapTypes.reduce(
 		(list, resultTrap) => {
-			if (
-				resultTrap.properties!.type === "1" &&
-				resultTrap.properties!.info.partly_fixed === "1"
-			) {
+			if (resultTrap.properties!.type === "1" && resultTrap.properties!.info.partly_fixed === "1") {
 				resultTrap.properties!.type = "ts";
 			}
 
-			resultTrap.properties!.type_text =
-				type_text[resultTrap.properties!.type];
+			resultTrap.properties!.type_text = type_text[resultTrap.properties!.type];
 
 			/* if (resultTrap.properties!.info !== "false") {
 				resultTrap.properties!.info = JSON.parse(
@@ -61,16 +57,12 @@ const determineTrapTypes = (
 
 			if (resultTrap.properties!.polyline !== "") {
 				resultTrap.properties!.polyline = feature(
-					polyline.toGeoJSON(
-						resultTrap.properties!.polyline as string,
-					),
+					polyline.toGeoJSON(resultTrap.properties!.polyline as string),
 				);
 
 				resultTrap.properties!.polyline.properties!.linetrap = true;
-				resultTrap.properties!.polyline.properties!.lat =
-					resultTrap.properties!.lat;
-				resultTrap.properties!.polyline.properties!.lng =
-					resultTrap.properties!.lng;
+				resultTrap.properties!.polyline.properties!.lat = resultTrap.properties!.lat;
+				resultTrap.properties!.polyline.properties!.lng = resultTrap.properties!.lng;
 			}
 
 			if (
@@ -96,11 +88,7 @@ const determineTrapTypes = (
 				list.fixedTraps.push(resultTrap);
 			}
 
-			if (
-				["0", "1", "2", "3", "4", "5", "6"].includes(
-					resultTrap.properties!.type,
-				)
-			) {
+			if (["0", "1", "2", "3", "4", "5", "6"].includes(resultTrap.properties!.type)) {
 				resultTrap.properties!.type_name = "mobile-trap";
 				list.mobileTraps.push(resultTrap);
 			}

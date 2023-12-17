@@ -30,27 +30,7 @@ const useRadarTrapSource = (id: null | string): UseRadarTrapSource => {
 		},
 	});
 
-	/* useEffect(() => {
-		console.log(
-			"useRadarTrapSource() -> routeData:",
-			routeStatus,
-			routeIsFetching,
-			routeData,
-		);
-	}, [routeData, routeStatus, routeIsFetching]);
-
-	useEffect(() => {
-		console.log(
-			"useRadarTrapSource() -> areaData:",
-			areaStatus,
-			areaIsFetching,
-			areaData,
-		);
-	}, [areaData, areaStatus, areaIsFetching]); */
-
-	const [source, setSource] = useState<
-		Partial<radarTrap.Route & radarTrap.Area>
-	>({
+	const [source, setSource] = useState<Partial<radarTrap.Route & radarTrap.Area>>({
 		directions: null,
 		directionsFeatureCollection: featureCollection([]),
 		trapsFeatureCollection: featureCollection([]),
@@ -58,19 +38,13 @@ const useRadarTrapSource = (id: null | string): UseRadarTrapSource => {
 		areaPolygons: null,
 	});
 
-	const [areaSourceStatus, setAreaSourceStatus] =
-		useState<radarTrap.GenericStatus>("idle");
+	const [areaSourceStatus, setAreaSourceStatus] = useState<radarTrap.GenericStatus>("idle");
 
-	const [routeSourceStatus, setRouteSourceStatus] =
-		useState<radarTrap.GenericStatus>("idle");
+	const [routeSourceStatus, setRouteSourceStatus] = useState<radarTrap.GenericStatus>("idle");
 
 	useEffect(() => {
 		if (routeStatus === "success" && routeIsFetching === false) {
-			const {
-				directions,
-				directionsFeatureCollection,
-				trapsFeatureCollection,
-			} = routeData!;
+			const { directions, directionsFeatureCollection, trapsFeatureCollection } = routeData!;
 
 			setSource({
 				directions,
@@ -98,11 +72,7 @@ const useRadarTrapSource = (id: null | string): UseRadarTrapSource => {
 
 	useEffect(() => {
 		if (areaStatus === "success" && areaIsFetching === false) {
-			const {
-				areaPolygons,
-				trapsFeatureCollection,
-				polysFeatureCollection,
-			} = areaData!;
+			const { areaPolygons, trapsFeatureCollection, polysFeatureCollection } = areaData!;
 
 			setSource({
 				directions: null,

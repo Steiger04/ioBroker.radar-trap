@@ -12,11 +12,6 @@
 		"lib": ["es2018", "DOM"],
 		"esModuleInterop": true
 	},
-	"include": [
-		"./**/*.ts",
-		"./**/*.tsx",
-		"../src/lib/adapter-config.d.ts",
-		"../src/lib/figbird.d.ts"
-	],
+	"include": ["./**/*.ts", "./**/*.tsx", "../src/lib/adapter-config.d.ts", "../src/lib/figbird.d.ts"],
 	"exclude": ["./**/*.test.ts", "./**/*.test.tsx"]
 }

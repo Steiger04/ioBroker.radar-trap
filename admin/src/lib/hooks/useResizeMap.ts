@@ -21,15 +21,6 @@ const useResizeMap = ({
 
 	const resizeMap = useCallback(() => {
 		setTimeout(() => {
-			/* console.log(
-				"useResizeMap() -> resizeMap() -> boxStatus:",
-				boxStatus,
-			); */
-			/* console.log(
-				"useResizeMap() -> resizeMap() -> directionsBox:",
-				directionsBox,
-			); */
-
 			if (Boolean(map.current) && boxStatus === "success") {
 				map.current!.fitBounds(
 					[
@@ -52,7 +43,7 @@ const useResizeMap = ({
 			}, 100);
 		};
 
-		window.removeEventListener("resize", handleResize);
+		// window.removeEventListener("resize", handleResize);
 		window.addEventListener("resize", handleResize);
 
 		return (): void => window.removeEventListener("resize", handleResize);

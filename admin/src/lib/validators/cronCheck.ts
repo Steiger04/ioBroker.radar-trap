@@ -1,9 +1,6 @@
 import cronstrue from "cronstrue/i18n";
 
-const cronCheck = (
-	cron: string,
-	language: string,
-): Partial<radarTrap.CronResult> => {
+const cronCheck = (cron: string, language: string): Partial<radarTrap.CronResult> => {
 	const cronResult: Partial<radarTrap.CronResult> = {};
 
 	try {
@@ -14,10 +11,7 @@ const cronCheck = (
 		const errorText = ex as string;
 
 		cronResult.text = "";
-		cronResult.errorText = errorText.substring(
-			"Error: ".length,
-			errorText.length,
-		);
+		cronResult.errorText = errorText.substring("Error: ".length, errorText.length);
 		cronResult.isValid = false;
 	}
 

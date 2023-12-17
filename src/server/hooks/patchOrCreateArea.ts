@@ -3,14 +3,7 @@ import bbox from "@turf/bbox";
 import bboxPolygon from "@turf/bbox-polygon";
 import booleanContains from "@turf/boolean-contains";
 import booleanOverlap from "@turf/boolean-overlap";
-import {
-	feature,
-	Feature,
-	featureCollection,
-	LineString,
-	Point,
-	Properties,
-} from "@turf/helpers";
+import { feature, Feature, featureCollection, LineString, Point, Properties } from "@turf/helpers";
 import pointsWithinPolygon from "@turf/points-within-polygon";
 import square from "@turf/square";
 import squareGrid from "@turf/square-grid";
@@ -50,10 +43,7 @@ const patchOrCreateArea = (): Hook => {
 			const squareBox = square(areaBox);
 			// console.log("squareBox", squareBox);
 
-			const squareBoxPolygon = transformScale(
-				bboxPolygon(squareBox),
-				1.3,
-			);
+			const squareBoxPolygon = transformScale(bboxPolygon(squareBox), 1.3);
 			// console.log("squareBoxPolygon", squareBoxPolygon);
 
 			const sideLength = Math.sqrt(area(squareBoxPolygon)) / 1e3;
@@ -75,19 +65,13 @@ const patchOrCreateArea = (): Hook => {
 				sideLengthDivisor = 10;
 			}
 
-			const squareBoxGrid = squareGrid(
-				bbox(squareBoxPolygon),
-				sideLength / sideLengthDivisor,
-			);
+			const squareBoxGrid = squareGrid(bbox(squareBoxPolygon), sideLength / sideLengthDivisor);
 			// console.log("squareBoxGrid", squareBoxGrid.features.length);
 
 			const reducedSquareBoxGrid = featureCollection(
 				squareBoxGrid.features.filter((feature) => {
 					// console.log("feature::", feature.geometry!.coordinates);
-					return (
-						booleanOverlap(areaPolygon, feature) ||
-						booleanContains(areaPolygon, feature)
-					);
+					return booleanOverlap(areaPolygon, feature) || booleanContains(areaPolygon, feature);
 				}),
 			);
 
@@ -96,9 +80,7 @@ const patchOrCreateArea = (): Hook => {
 				reducedSquareBoxGrid.features.length,
 			); */
 
-			let resultTraps:
-				| Feature<Point>[]
-				| Record<string, Feature<Point, Properties>[]> = [];
+			let resultTraps: Feature<Point>[] | Record<string, Feature<Point, Properties>[]> = [];
 
 			let resultPolyPoints: Feature<Point>[] = [];
 			let resultPolyLines: Feature<Point | LineString>[] = [];
@@ -118,8 +100,7 @@ const patchOrCreateArea = (): Hook => {
 					},
 				);
 
-				if (gridTraps.length > 499)
-					console.log("gridTraps >>>", gridTraps.length);
+				if (gridTraps.length > 499) console.log("gridTraps >>>", gridTraps.length);
 
 				resultTraps = resultTraps.concat(gridTraps);
 				resultPolyPoints = resultPolyPoints.concat(polyPoints);
@@ -129,15 +110,9 @@ const patchOrCreateArea = (): Hook => {
 			// console.log("resultTraps", resultTraps.length);
 			// console.log("resultTraps", JSON.stringify(resultTraps, null, 4));
 
-			resultTraps = pointsWithinPolygon(
-				featureCollection(resultTraps),
-				areaPolygon,
-			).features;
+			resultTraps = pointsWithinPolygon(featureCollection(resultTraps), areaPolygon).features;
 
-			resultPolyPoints = pointsWithinPolygon(
-				featureCollection(resultPolyPoints),
-				areaPolygon,
-			).features;
+			resultPolyPoints = pointsWithinPolygon(featureCollection(resultPolyPoints), areaPolygon).features;
 
 			/* console.log(
 				"resultPolyPoints after reduction",
@@ -150,11 +125,7 @@ const patchOrCreateArea = (): Hook => {
 			// console.log("resultTraps", JSON.stringify(resultTraps, null, 4));
 
 			const endTime = performance.now();
-			console.log(
-				`patchOrCreateArea() dauerte: ${
-					(endTime - startTime) / 1_000
-				} Sekunden`,
-			);
+			console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1_000} Sekunden`);
 
 			data!.areaTraps = resultTraps;
 
@@ -162,18 +133,12 @@ const patchOrCreateArea = (): Hook => {
 
 			resultPolyLines = featureReduce(
 				featureCollection(resultPolyPoints),
-				(
-					features: Feature<Point | LineString, Properties>[],
-					tmpFeature,
-				) => {
+				(features: Feature<Point | LineString, Properties>[], tmpFeature) => {
 					features.push(tmpFeature);
 					features.push(
-						feature<LineString, Properties>(
-							polyline.toGeoJSON(
-								tmpFeature.properties!.polyline as string,
-							),
-							{ ...tmpFeature.properties! },
-						),
+						feature<LineString, Properties>(polyline.toGeoJSON(tmpFeature.properties!.polyline as string), {
+							...tmpFeature.properties!,
+						}),
 					);
 
 					return features;
@@ -185,14 +150,10 @@ const patchOrCreateArea = (): Hook => {
 		}
 
 		if (record !== undefined) {
-			context.result = await service.patch(
-				_id,
-				data as Partial<radarTrap.Area>,
-				{
-					...params,
-					publishEvent: false,
-				},
-			);
+			context.result = await service.patch(_id, data as Partial<radarTrap.Area>, {
+				...params,
+				publishEvent: false,
+			});
 
 			return context;
 		}

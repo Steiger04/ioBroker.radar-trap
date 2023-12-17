@@ -42,13 +42,10 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
 	const cronHandler = (event: SyntheticEvent, name: string) => {
 		event.stopPropagation();
 		that.socket
-			.setState(
-				`${that.adapterName}.${that.instance}.${_id}.cron-job.${name}`,
-				{
-					val: true,
-					ack: false,
-				},
-			)
+			.setState(`${that.adapterName}.${that.instance}.${_id}.cron-job.${name}`, {
+				val: true,
+				ack: false,
+			})
 			.catch((ex) => console.log(ex));
 	};
 
@@ -118,9 +115,7 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
 
 			<Box sx={{ ml: 1, flexGrow: 0, alignSelf: "center" }}>
 				<IconButton
-					disabled={
-						!isValid || !isDirty || accordionDisabledMap.get(_id)
-					}
+					disabled={!isValid || !isDirty || accordionDisabledMap.get(_id)}
 					sx={{ color: Green, mr: 1, p: 0 }}
 					onClick={createHandler}
 				>

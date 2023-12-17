@@ -32,9 +32,7 @@ const useRadarTrapMapBox = (
 				.then(async (response) => response.json())
 				.catch((ex) => {
 					setStatus("error");
-					console.log(
-						`useRadarTrapMapBox() -> fetch(): url=${url} -> Error: ${ex}`,
-					);
+					console.log(`useRadarTrapMapBox() -> fetch(): url=${url} -> Error: ${ex}`);
 				});
 
 			cache.set(url, json);
@@ -57,18 +55,14 @@ const useRadarTrapMapBox = (
 		if (areaSourceStatus === "error" && routeSourceStatus === "error") {
 			fetchData().catch((ex) => {
 				setStatus("error");
-				console.log(
-					`useRadarTrapMapBox() -> fetchData() -> Error: ${ex}`,
-				);
+				console.log(`useRadarTrapMapBox() -> fetchData() -> Error: ${ex}`);
 			});
 		}
 	}, [areaSourceStatus, routeSourceStatus]);
 
 	useEffect(() => {
 		if (areaSourceStatus === "success") {
-			setDirectionsBox(
-				bbox(featureCollection(Object.values(areaPolygons!))),
-			);
+			setDirectionsBox(bbox(featureCollection(Object.values(areaPolygons!))));
 			setStatus("success");
 
 			return;

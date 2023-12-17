@@ -8,9 +8,7 @@ const useAccordionDisabled = (): {
 	const { _id: id, status } = usePatchOrCreateSourceStatus();
 	const [disabled, setDisabled] = useState(false);
 
-	const [accordionDisabledMap, setAccordionDisabledMap] = useState(
-		new Map<string, boolean>(),
-	);
+	const [accordionDisabledMap, setAccordionDisabledMap] = useState(new Map<string, boolean>());
 
 	const updateMap = (key: string | null, value: boolean): void => {
 		if (key) {
@@ -23,11 +21,7 @@ const useAccordionDisabled = (): {
 	}, [id, status]);
 
 	useEffect(() => {
-		if (
-			Object.values(
-				Object.fromEntries(accordionDisabledMap.entries()),
-			).includes(true)
-		) {
+		if (Object.values(Object.fromEntries(accordionDisabledMap.entries())).includes(true)) {
 			setDisabled(true);
 		} else {
 			setDisabled(false);

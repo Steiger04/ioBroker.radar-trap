@@ -8,11 +8,7 @@ import {
 	paramsFromClient,
 } from "feathers-hooks-common";
 import { Scheduler } from "../../../lib/Scheduler";
-import {
-	convertPolylineToGeojson,
-	patchOrCreateRoute,
-	setActiveProfile,
-} from "../../hooks";
+import { convertPolylineToGeojson, patchOrCreateRoute, setActiveProfile } from "../../hooks";
 
 import type { HookContext } from "@feathersjs/feathers";
 
@@ -21,8 +17,7 @@ export default {
 		all: [],
 		find: [
 			iff(
-				(ctx: HookContext) =>
-					isProvider("server")(ctx) || isProvider("rest")(ctx),
+				(ctx: HookContext) => isProvider("server")(ctx) || isProvider("rest")(ctx),
 				(ctx: HookContext) => {
 					if (ctx.params.query) {
 						ctx.params.query.$limit = -1;
@@ -38,11 +33,7 @@ export default {
 			disallow("rest"),
 			iffElse(
 				isProvider("external"),
-				[
-					alterItems(setActiveProfile),
-					paramsFromClient("patchSourceFromClient"),
-					patchOrCreateRoute(),
-				],
+				[alterItems(setActiveProfile), paramsFromClient("patchSourceFromClient"), patchOrCreateRoute()],
 				[patchOrCreateRoute()],
 			),
 		],

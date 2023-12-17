@@ -12,24 +12,13 @@ interface RadarTrapCronFieldProps {
 	cronDefault: string;
 }
 
-const RadarTrapCronField: FC<RadarTrapCronFieldProps> = ({
-	disabled,
-	cronDefault,
-}): ReactElement => {
+const RadarTrapCronField: FC<RadarTrapCronFieldProps> = ({ disabled, cronDefault }): ReactElement => {
 	const cron = useCronCheck(cronDefault);
 
 	return (
 		<Box>
-			<RadarTrapTextField
-				disabled={disabled}
-				name="cron"
-				label="Cron pattern"
-				type="text"
-			/>
-			<Typography
-				sx={[disabled && { color: "text.disabled" }]}
-				variant="subtitle2"
-			>
+			<RadarTrapTextField disabled={disabled} name="cron" label="Cron pattern" type="text" />
+			<Typography sx={[disabled && { color: "text.disabled" }]} variant="subtitle2">
 				{cron.isValid && cron.text}
 			</Typography>
 			<Link

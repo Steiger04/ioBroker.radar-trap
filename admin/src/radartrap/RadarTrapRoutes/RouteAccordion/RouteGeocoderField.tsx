@@ -25,14 +25,13 @@ const RouteGeocoderField: FC<RouteGeocoderFieldProps> = ({
 	geometryPath,
 }): ReactElement => {
 	const { that, language } = useAppData();
-	const [geocoderAddressAndGeometry, setGeocoderAddressAndGeometry] =
-		useState<{
-			address: string | null;
-			geometry: Point | null;
-		}>({
-			address: "",
-			geometry: defaultGeometry,
-		});
+	const [geocoderAddressAndGeometry, setGeocoderAddressAndGeometry] = useState<{
+		address: string | null;
+		geometry: Point | null;
+	}>({
+		address: "",
+		geometry: defaultGeometry,
+	});
 	const { setValue } = useFormContext<radarTrap.Route>();
 
 	const watchAddress = useWatch({
@@ -41,9 +40,7 @@ const RouteGeocoderField: FC<RouteGeocoderFieldProps> = ({
 	});
 
 	useEffect(() => {
-		if (
-			geocoderAddressAndGeometry.address?.trim() === watchAddress.trim()
-		) {
+		if (geocoderAddressAndGeometry.address?.trim() === watchAddress.trim()) {
 			setGeocoderAddressAndGeometry({
 				address: null,
 				geometry: null,
@@ -116,9 +113,7 @@ const RouteGeocoderField: FC<RouteGeocoderFieldProps> = ({
 				label={label}
 				type="text"
 			/>
-			<Typography variant="subtitle2">
-				{geocoderAddressAndGeometry.address}
-			</Typography>
+			<Typography variant="subtitle2">{geocoderAddressAndGeometry.address}</Typography>
 		</Box>
 	);
 };

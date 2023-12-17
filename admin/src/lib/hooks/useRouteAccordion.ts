@@ -82,10 +82,7 @@ const useRouteAccordion = ({
 				data,
 				paramsForServer({
 					patchSourceFromClient: Boolean(
-						dirtyFields.src ||
-							dirtyFields.dst ||
-							dirtyFields.profiles ||
-							dirtyFields.maxTrapDistance,
+						dirtyFields.src || dirtyFields.dst || dirtyFields.profiles || dirtyFields.maxTrapDistance,
 					),
 				}),
 			).catch((ex) => console.log("Error in createRoute", ex));

@@ -13,13 +13,8 @@ type GetTrapsFromAtude = { direction: string; maxTrapDistance: number };
 const getTrapsFromDirection = async ({
 	direction,
 	maxTrapDistance,
-}: GetTrapsFromAtude): Promise<
-	Record<string, GeoJSON.Feature<GeoJSON.Point>[]>
-> => {
-	const directionLine = feature<
-		GeoJSON.LineString,
-		GeoJSON.GeoJsonProperties
-	>(polyline.toGeoJSON(direction));
+}: GetTrapsFromAtude): Promise<Record<string, GeoJSON.Feature<GeoJSON.Point>[]>> => {
+	const directionLine = feature<GeoJSON.LineString, GeoJSON.GeoJsonProperties>(polyline.toGeoJSON(direction));
 
 	let resultTraps: GeoJSON.Feature<GeoJSON.Point>[] = [];
 	const directionSteps = Math.trunc(length(directionLine) / 6);
@@ -48,34 +43,26 @@ const getTrapsFromDirection = async ({
 			},
 		);
 
-		if (clusterTraps.length > 499)
-			console.log("clusterTraps >>>", clusterTraps.length);
+		if (clusterTraps.length > 499) console.log("clusterTraps >>>", clusterTraps.length);
 
 		resultTraps = [...resultTraps, ...clusterTraps];
 	}
 
-	resultTraps = uniqWith(
-		resultTraps,
-		(trapA, trapB) =>
-			trapA.properties!.content === trapB.properties!.content,
-	);
+	resultTraps = uniqWith(resultTraps, (trapA, trapB) => trapA.properties!.content === trapB.properties!.content);
 
-	resultTraps = resultTraps.reduce<GeoJSON.Feature<GeoJSON.Point>[]>(
-		(list, trapPoint) => {
-			const trapDistance = pointToLineDistance(trapPoint, directionLine, {
-				units: "meters",
-			});
+	resultTraps = resultTraps.reduce<GeoJSON.Feature<GeoJSON.Point>[]>((list, trapPoint) => {
+		const trapDistance = pointToLineDistance(trapPoint, directionLine, {
+			units: "meters",
+		});
 
-			if (trapDistance <= maxTrapDistance) {
-				// console.log("Treffer->Distanz:", trapDistance);
-				trapPoint.properties!.distance = trapDistance;
-				list.push(trapPoint);
-			}
+		if (trapDistance <= maxTrapDistance) {
+			// console.log("Treffer->Distanz:", trapDistance);
+			trapPoint.properties!.distance = trapDistance;
+			list.push(trapPoint);
+		}
 
-			return list;
-		},
-		[],
-	);
+		return list;
+	}, []);
 
 	return determineTrapTypes(resultTraps);
 };

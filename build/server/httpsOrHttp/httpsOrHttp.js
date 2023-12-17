@@ -57,34 +57,25 @@ const httpsOrHttp = async (options, callback) => {
     certificate = void 0;
   }
   if (certificate) {
-    import_http2.default.createSecureServer(
-      { key: certificate.privateKey, cert: certificate.certificate },
-      options.app
-    ).listen(options.ports.https, () => {
+    import_http2.default.createSecureServer({ key: certificate.privateKey, cert: certificate.certificate }, options.app).listen(options.ports.https, () => {
       const redirectApp = (0, import_express.default)();
       redirectApp.get(/.*/u, (req, res) => {
         res.redirect(
-          `https://${req.headers.host.replace(
-            `:${options.ports.http}`,
-            `:${options.ports.https}`
-          )}${req.url}`
+          `https://${req.headers.host.replace(`:${options.ports.http}`, `:${options.ports.https}`)}${req.url}`
         );
       });
-      import_http.default.createServer(redirectApp).listen(
-        options.ports.http,
-        () => {
-          callback(null, {
-            app: {
-              protocol: "https",
-              port: options.ports.https
-            },
-            redirect: {
-              protocol: "http",
-              port: options.ports.http
-            }
-          });
-        }
-      );
+      import_http.default.createServer(redirectApp).listen(options.ports.http, () => {
+        callback(null, {
+          app: {
+            protocol: "https",
+            port: options.ports.https
+          },
+          redirect: {
+            protocol: "http",
+            port: options.ports.http
+          }
+        });
+      });
     });
     return;
   }

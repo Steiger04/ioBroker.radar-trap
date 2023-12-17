@@ -17,8 +17,7 @@ export default {
 		all: [],
 		find: [
 			iff(
-				(ctx: HookContext) =>
-					isProvider("server")(ctx) || isProvider("rest")(ctx),
+				(ctx: HookContext) => isProvider("server")(ctx) || isProvider("rest")(ctx),
 				(ctx: HookContext) => {
 					if (ctx.params.query) {
 						ctx.params.query.$limit = -1;
@@ -34,10 +33,7 @@ export default {
 			disallow("rest"),
 			iffElse(
 				isProvider("external"),
-				[
-					paramsFromClient("patchSourceFromClient"),
-					patchOrCreateArea(),
-				],
+				[paramsFromClient("patchSourceFromClient"), patchOrCreateArea()],
 				[patchOrCreateArea()],
 			),
 		],

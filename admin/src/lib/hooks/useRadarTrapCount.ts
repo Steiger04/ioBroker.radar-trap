@@ -16,17 +16,13 @@ const useRadarTrapCount = (): UseRadarTrapCount => {
 		total: 0,
 	});
 
-	const { status: areasStatus, total: areasTotal } = useFind<radarTrap.Area>(
-		"areas",
-		{
-			query: { $limit: 0 },
-		},
-	);
+	const { status: areasStatus, total: areasTotal } = useFind<radarTrap.Area>("areas", {
+		query: { $limit: 0 },
+	});
 
-	const { status: routesStatus, total: routesTotal } =
-		useFind<radarTrap.Route>("routes", {
-			query: { $limit: 0 },
-		});
+	const { status: routesStatus, total: routesTotal } = useFind<radarTrap.Route>("routes", {
+		query: { $limit: 0 },
+	});
 
 	useEffect(() => {
 		if (areasStatus === "success" && routesStatus === "success") {

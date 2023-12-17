@@ -35,14 +35,8 @@ let server;
 function provideFeathers(that, port) {
   server = import_app.default.listen(port);
   server.on("listening", () => {
-    import_logger.default.info(
-      "Feathers application started on http://%s:%d",
-      import_app.default.get("host"),
-      port
-    );
-    that.setStateAsync("info.connection", true, true).catch(
-      (ex) => console.log(ex)
-    );
+    import_logger.default.info("Feathers application started on http://%s:%d", import_app.default.get("host"), port);
+    that.setStateAsync("info.connection", true, true).catch((ex) => console.log(ex));
   });
 }
 // Annotate the CommonJS export names for ESM import in node:

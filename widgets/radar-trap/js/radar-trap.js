@@ -201,10 +201,7 @@ vis.binds["radar-trap"] = {
 							val.type === "device" &&
 							widAttr.toUpperCase() === val.native.type,
 					)
-					.map(
-						([key, value]) =>
-							value.common.name + " | " + key.split(".")[2],
-					),
+					.map(([key, value]) => value.common.name + " | " + key.split(".")[2]),
 			],
 			true,
 		);
@@ -215,15 +212,8 @@ vis.binds["radar-trap"] = {
 			[
 				"",
 				...Object.entries(vis.objects)
-					.filter(
-						([key, val]) =>
-							key.split(".")[0] === "radar-trap" &&
-							val.type === "device",
-					)
-					.map(
-						([key, value]) =>
-							value.common.name + " | " + key.split(".")[2],
-					),
+					.filter(([key, val]) => key.split(".")[0] === "radar-trap" && val.type === "device")
+					.map(([key, value]) => value.common.name + " | " + key.split(".")[2]),
 			],
 			true,
 		);
@@ -236,13 +226,9 @@ vis.binds["radar-trap"] = {
 			return;
 		}
 
-		vis.conn._socket.emit(
-			"getObject",
-			"system.config",
-			function (err, res) {
-				vis.binds["radar-trap"].language = res.common.language;
-			},
-		);
+		vis.conn._socket.emit("getObject", "system.config", function (err, res) {
+			vis.binds["radar-trap"].language = res.common.language;
+		});
 
 		vis.conn._socket.emit(
 			"getObjectView",
@@ -255,8 +241,7 @@ vis.binds["radar-trap"] = {
 			function (err, res) {
 				if (res.rows.length > 0) {
 					// instance found
-					vis.binds["radar-trap"].isInstanceEnabled =
-						res.rows[0].value.common.enabled;
+					vis.binds["radar-trap"].isInstanceEnabled = res.rows[0].value.common.enabled;
 
 					vis.binds["radar-trap"].native = {
 						...res.rows[0].value.native,
@@ -271,10 +256,7 @@ vis.binds["radar-trap"] = {
 				if (!vis.binds["radar-trap"].isInstanceEnabled) return; // no instance enabled
 
 				let socket;
-				if (
-					vis.binds["radar-trap"].native.settings.httpsEnabled ===
-					true
-				) {
+				if (vis.binds["radar-trap"].native.settings.httpsEnabled === true) {
 					socket = io(
 						`https://${vis.binds["radar-trap"].url.hostname}:${vis.binds["radar-trap"].native.settings.feathersPort}`,
 						{
@@ -291,25 +273,15 @@ vis.binds["radar-trap"] = {
 				}
 
 				vis.binds["radar-trap"].feathersClient = feathers();
-				vis.binds["radar-trap"].feathersClient.configure(
-					feathers.socketio(socket, { timeout: 60_000 }),
-				);
+				vis.binds["radar-trap"].feathersClient.configure(feathers.socketio(socket, { timeout: 60_000 }));
 
-				vis.binds["radar-trap"].routesService =
-					vis.binds["radar-trap"].feathersClient.service("routes");
+				vis.binds["radar-trap"].routesService = vis.binds["radar-trap"].feathersClient.service("routes");
 
-				vis.binds["radar-trap"].routesService.on(
-					"created",
-					vis.binds["radar-trap"].onUpdatedListener("ROUTE"),
-				);
+				vis.binds["radar-trap"].routesService.on("created", vis.binds["radar-trap"].onUpdatedListener("ROUTE"));
 
-				vis.binds["radar-trap"].areasService =
-					vis.binds["radar-trap"].feathersClient.service("areas");
+				vis.binds["radar-trap"].areasService = vis.binds["radar-trap"].feathersClient.service("areas");
 
-				vis.binds["radar-trap"].areasService.on(
-					"created",
-					vis.binds["radar-trap"].onUpdatedListener("AREA"),
-				);
+				vis.binds["radar-trap"].areasService.on("created", vis.binds["radar-trap"].onUpdatedListener("AREA"));
 			},
 		);
 	},
@@ -320,30 +292,19 @@ vis.binds["radar-trap"] = {
 		$data.each(function () {
 			if ($(this).data("_id") === updatedData._id) {
 				if (type === "ROUTE") {
-					$(this).data(
-						"directionsFeatureCollection",
-						updatedData.directionsFeatureCollection,
-					);
+					$(this).data("directionsFeatureCollection", updatedData.directionsFeatureCollection);
 				}
 
 				if (type === "AREA") {
-					$(this).data(
-						"polysFeatureCollection",
-						updatedData.polysFeatureCollection,
-					);
+					$(this).data("polysFeatureCollection", updatedData.polysFeatureCollection);
 
 					$(this).data(
 						"areaPolygonsFeatureCollection",
-						turf.featureCollection(
-							Object.values(updatedData.areaPolygons),
-						).features[0],
+						turf.featureCollection(Object.values(updatedData.areaPolygons)).features[0],
 					);
 				}
 
-				$(this).data(
-					"trapsFeatureCollection",
-					updatedData.trapsFeatureCollection,
-				);
+				$(this).data("trapsFeatureCollection", updatedData.trapsFeatureCollection);
 
 				$mapboxes.push($(this));
 			}
@@ -359,22 +320,16 @@ vis.binds["radar-trap"] = {
 		$trapsinfos2.each(function () {
 			const wid = $(this).data("wid");
 
-			if (
-				updatedData._id ===
-				vis.widgets[wid].data.attr("areaorroute").split("|")[1].trim()
-			) {
+			if (updatedData._id === vis.widgets[wid].data.attr("areaorroute").split("|")[1].trim()) {
 				// vis.widgets[wid].data.removeAttr("trapsFeatureGroups");
 
-				const trapsFeature =
-					updatedData.trapsFeatureCollection.features.filter(
-						(feature) => feature.properties.trapInfo !== null,
-					);
+				const trapsFeature = updatedData.trapsFeatureCollection.features.filter(
+					(feature) => feature.properties.trapInfo !== null,
+				);
 
 				const trapsFeatureGroups = trapsFeature.reduce(
 					(groups, trapFeature) => {
-						groups[trapFeature.properties.type_name].push(
-							trapFeature,
-						);
+						groups[trapFeature.properties.type_name].push(trapFeature);
 						return groups;
 					},
 					{
@@ -390,14 +345,9 @@ vis.binds["radar-trap"] = {
 						"police-news": [],
 					},
 				);
-				vis.widgets[wid].data.attr(
-					"trapsFeatureGroups",
-					trapsFeatureGroups,
-				);
+				vis.widgets[wid].data.attr("trapsFeatureGroups", trapsFeatureGroups);
 
-				vis.binds["radar-trap"].trapsInfo.bindListClickEventHandler(
-					$(this),
-				);
+				vis.binds["radar-trap"].trapsInfo.bindListClickEventHandler($(this));
 			}
 		});
 	},
@@ -422,13 +372,7 @@ vis.binds["radar-trap"] = {
 					id: "speed-traps",
 					type: "circle",
 					source: "clustertraps",
-					filter: [
-						"match",
-						["get", "type_name"],
-						"speed-trap",
-						true,
-						false,
-					],
+					filter: ["match", ["get", "type_name"], "speed-trap", true, false],
 					paint: {
 						"circle-opacity": 0.3,
 						"circle-color": [
@@ -438,33 +382,18 @@ vis.binds["radar-trap"] = {
 							80,
 							data["symbolColor"],
 						],
-						"circle-radius": [
-							"step",
-							["to-number", ["get", "vmax"]],
-							15,
-							99,
-							18,
-						],
+						"circle-radius": ["step", ["to-number", ["get", "vmax"]], 15, 99, 18],
 					},
 				},
 				speedTrapsVmax: {
 					id: "speed-traps-vmax",
 					type: "symbol",
 					source: "clustertraps",
-					filter: [
-						"match",
-						["get", "type_name"],
-						"speed-trap",
-						true,
-						false,
-					],
+					filter: ["match", ["get", "type_name"], "speed-trap", true, false],
 					layout: {
 						"text-allow-overlap": true,
 						"text-field": "{vmax}",
-						"text-font": [
-							"DIN Offc Pro Medium",
-							"Arial Unicode MS Bold",
-						],
+						"text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
 						"text-size": 12,
 					},
 				},
@@ -497,19 +426,7 @@ vis.binds["radar-trap"] = {
 							"icon-police-news",
 							"",
 						],
-						"icon-size": [
-							"interpolate",
-							["linear"],
-							["zoom"],
-							0,
-							0.4,
-							8,
-							0.8,
-							10,
-							1.2,
-							14,
-							1.6,
-						],
+						"icon-size": ["interpolate", ["linear"], ["zoom"], 0, 0.4, 8, 0.8, 10, 1.2, 14, 1.6],
 					},
 					paint: {
 						"icon-color": data["symbolColor"],
@@ -532,15 +449,7 @@ vis.binds["radar-trap"] = {
 							750,
 							data["clusterColor"],
 						],
-						"circle-radius": [
-							"step",
-							["get", "point_count"],
-							12,
-							9,
-							15,
-							99,
-							18,
-						],
+						"circle-radius": ["step", ["get", "point_count"], 12, 9, 15, 99, 18],
 					},
 				},
 				clusterTrapsCount: {
@@ -551,10 +460,7 @@ vis.binds["radar-trap"] = {
 					layout: {
 						"text-allow-overlap": true,
 						"text-field": "{point_count_abbreviated}",
-						"text-font": [
-							"DIN Offc Pro Medium",
-							"Arial Unicode MS Bold",
-						],
+						"text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
 						"text-size": 12,
 					},
 				},
@@ -608,13 +514,7 @@ vis.binds["radar-trap"] = {
 					source: "polys",
 					paint: {
 						/* "line-color": "red", */
-						"line-color": [
-							"match",
-							["get", "type"],
-							"20",
-							"red",
-							"white",
-						],
+						"line-color": ["match", ["get", "type"], "20", "red", "white"],
 						"line-width": 6,
 						"line-dasharray": [0, 4, 3],
 					},
@@ -623,25 +523,11 @@ vis.binds["radar-trap"] = {
 					id: "traffic-closure",
 					type: "symbol",
 					source: "polys",
-					filter: [
-						"all",
-						["==", "type", "closure"],
-						["==", "$type", "Point"],
-					],
+					filter: ["all", ["==", "type", "closure"], ["==", "$type", "Point"]],
 					layout: {
 						"icon-allow-overlap": true,
 						"icon-image": "icon-traffic-closure",
-						"icon-size": [
-							"interpolate",
-							["linear"],
-							["zoom"],
-							6,
-							0.2,
-							10,
-							0.3,
-							14,
-							0.4,
-						],
+						"icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.2, 10, 0.3, 14, 0.4],
 					},
 					paint: {
 						"icon-opacity": 0.7,
@@ -660,10 +546,7 @@ vis.binds["radar-trap"] = {
 				const coordinates = [];
 
 				for (let i = 0; i < 4; i++) {
-					coordinates.push(
-						turf.destination(center, cross, (i * -360) / 4 + 45, {})
-							.geometry.coordinates,
-					);
+					coordinates.push(turf.destination(center, cross, (i * -360) / 4 + 45, {}).geometry.coordinates);
 				}
 				coordinates.push(coordinates[0]);
 
@@ -676,11 +559,7 @@ vis.binds["radar-trap"] = {
 				} else {
 					const json = await fetch(url)
 						.then((response) => response.json())
-						.catch((err) =>
-							console.log(
-								`getTrapsBoxAsync() -> fetch(): url=${url} -> Error: ${err}`,
-							),
-						);
+						.catch((err) => console.log(`getTrapsBoxAsync() -> fetch(): url=${url} -> Error: ${err}`));
 
 					const coord = Object.values(json);
 					const box = turf.bbox(square(coord, 10));
@@ -702,13 +581,7 @@ vis.binds["radar-trap"] = {
 
 			if (!$div.length) {
 				setTimeout(function () {
-					vis.binds["radar-trap"].mapbox.initAsync(
-						wid,
-						view,
-						data,
-						style,
-						type,
-					);
+					vis.binds["radar-trap"].mapbox.initAsync(wid, view, data, style, type);
 				}, 300);
 				return;
 			}
@@ -732,25 +605,15 @@ vis.binds["radar-trap"] = {
 				if (!!data.attr("route")) {
 					const routeId = data.attr("route").split("|")[1].trim();
 
-					const {
-						directionsFeatureCollection,
-						trapsFeatureCollection,
-					} = await vis.binds["radar-trap"].routesService.get(
-						routeId,
-						{
-							query: { $select: ["directions"] },
-						},
-					);
+					const { directionsFeatureCollection, trapsFeatureCollection } = await vis.binds[
+						"radar-trap"
+					].routesService.get(routeId, {
+						query: { $select: ["directions"] },
+					});
 
 					$mapbox.data("_id", routeId);
-					$mapbox.data(
-						"directionsFeatureCollection",
-						directionsFeatureCollection,
-					);
-					$mapbox.data(
-						"trapsFeatureCollection",
-						trapsFeatureCollection,
-					);
+					$mapbox.data("directionsFeatureCollection", directionsFeatureCollection);
+					$mapbox.data("trapsFeatureCollection", trapsFeatureCollection);
 				} else {
 					$mapbox.data("_id", null);
 					$mapbox.data("directionsFeatureCollection", null);
@@ -762,34 +625,21 @@ vis.binds["radar-trap"] = {
 				if (!!data.attr("area")) {
 					const areaId = data.attr("area").split("|")[1].trim();
 
-					const {
-						areaPolygons,
-						trapsFeatureCollection,
-						polysFeatureCollection,
-					} = await vis.binds["radar-trap"].areasService.get(areaId, {
+					const { areaPolygons, trapsFeatureCollection, polysFeatureCollection } = await vis.binds[
+						"radar-trap"
+					].areasService.get(areaId, {
 						query: {
-							$select: [
-								"areaPolygons",
-								"areaTraps",
-								"polysFeatureCollection",
-							],
+							$select: ["areaPolygons", "areaTraps", "polysFeatureCollection"],
 						},
 					});
 
 					$mapbox.data("_id", areaId);
 					$mapbox.data(
 						"areaPolygonsFeatureCollection",
-						turf.featureCollection(Object.values(areaPolygons))
-							.features[0],
+						turf.featureCollection(Object.values(areaPolygons)).features[0],
 					);
-					$mapbox.data(
-						"trapsFeatureCollection",
-						trapsFeatureCollection,
-					);
-					$mapbox.data(
-						"polysFeatureCollection",
-						polysFeatureCollection,
-					);
+					$mapbox.data("trapsFeatureCollection", trapsFeatureCollection);
+					$mapbox.data("polysFeatureCollection", polysFeatureCollection);
 				} else {
 					$mapbox.data("_id", null);
 					$mapbox.data("areaPolygonsFeatureCollection", null);
@@ -802,45 +652,25 @@ vis.binds["radar-trap"] = {
 				const result = turf.featureReduce(
 					$mapbox.data("trapsFeatureCollection"),
 					(features, feature) => {
-						if (
-							Boolean(
-								data.attr(
-									feature.properties["trapInfo"].typeName,
-								),
-							)
-						)
-							features.push(feature);
+						if (Boolean(data.attr(feature.properties["trapInfo"].typeName))) features.push(feature);
 
 						return features;
 					},
 					[],
 				);
 
-				$mapbox.data(
-					"trapsFeatureCollection",
-					turf.featureCollection(result),
-				);
+				$mapbox.data("trapsFeatureCollection", turf.featureCollection(result));
 			}
 
 			$mapbox.data(
 				"map",
-				await vis.binds["radar-trap"].mapbox.showmapAsync(
-					`mapbox_${wid}`,
-					$mapbox,
-					data,
-					type,
-				),
+				await vis.binds["radar-trap"].mapbox.showmapAsync(`mapbox_${wid}`, $mapbox, data, type),
 			);
 		},
 		showmapAsync: async function (divId, $mapbox, data, type) {
 			if (!!!data.attr("styleSelect")) {
 				setTimeout(() => {
-					vis.binds["radar-trap"].mapbox.showmapAsync(
-						divId,
-						$mapbox,
-						data,
-						type,
-					);
+					vis.binds["radar-trap"].mapbox.showmapAsync(divId, $mapbox, data, type);
 				}, 100);
 
 				return;
@@ -849,9 +679,7 @@ vis.binds["radar-trap"] = {
 			if (type === "ROUTE") {
 				$mapbox.data(
 					"trapsBox",
-					await vis.binds["radar-trap"].mapbox.getTrapsBoxAsync(
-						$mapbox.data("directionsFeatureCollection"),
-					),
+					await vis.binds["radar-trap"].mapbox.getTrapsBoxAsync($mapbox.data("directionsFeatureCollection")),
 				);
 			} else if (type === "AREA") {
 				$mapbox.data(
@@ -862,15 +690,12 @@ vis.binds["radar-trap"] = {
 				);
 			}
 
-			$mapbox
-				.css("border-radius", $mapbox.parent().css("border-radius"))
-				.css("overflow", "hidden");
+			$mapbox.css("border-radius", $mapbox.parent().css("border-radius")).css("overflow", "hidden");
 
 			const map = new mapboxgl.Map({
 				logoPosition: "bottom-right",
 				attributionControl: false,
-				accessToken:
-					vis.binds["radar-trap"].native.settings.mbxAccessToken,
+				accessToken: vis.binds["radar-trap"].native.settings.mbxAccessToken,
 				container: divId,
 				style: `mapbox://styles/mapbox/${data.attr("styleSelect")}`,
 				bounds: $mapbox.data("trapsBox"),
@@ -884,20 +709,15 @@ vis.binds["radar-trap"] = {
 			map.addControl(scale);
 
 			if (!vis.editMode && data.attr("fitButton")) {
-				$(`#mapbox_button_${data.attr("wid")}`).on(
-					"click",
-					function () {
-						map.fitBounds($mapbox.data("trapsBox"), {
-							padding: 10,
-						});
-					},
-				);
+				$(`#mapbox_button_${data.attr("wid")}`).on("click", function () {
+					map.fitBounds($mapbox.data("trapsBox"), {
+						padding: 10,
+					});
+				});
 			}
 
 			if (!data.attr("fitButton")) {
-				$(`#mapbox_button_${data.attr("wid")}`).addClass(
-					"radar-trap-button-hidden",
-				);
+				$(`#mapbox_button_${data.attr("wid")}`).addClass("radar-trap-button-hidden");
 			}
 
 			let doFit = true;
@@ -933,10 +753,7 @@ vis.binds["radar-trap"] = {
 									if (error) throw error;
 
 									map.addImage(image, mapimage, {
-										sdf:
-											image !== "icon-traffic-closure"
-												? true
-												: false,
+										sdf: image !== "icon-traffic-closure" ? true : false,
 									});
 								},
 							);
@@ -949,30 +766,11 @@ vis.binds["radar-trap"] = {
 								type: "geojson",
 								data: $mapbox.data("polysFeatureCollection"),
 							});
-							map.addLayer(
-								vis.binds["radar-trap"].mapbox.getMapStyle(
-									"lineBackground",
-									data,
-								),
-							);
-							map.addLayer(
-								vis.binds["radar-trap"].mapbox.getMapStyle(
-									"lineDashed",
-									data,
-								),
-							);
-							map.addLayer(
-								vis.binds["radar-trap"].mapbox.getMapStyle(
-									"trafficClosure",
-									data,
-								),
-							);
+							map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("lineBackground", data));
+							map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("lineDashed", data));
+							map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("trafficClosure", data));
 
-							if (
-								Boolean(
-									data.attr("animate-closed-congested-road"),
-								)
-							) {
+							if (Boolean(data.attr("animate-closed-congested-road"))) {
 								const dashArraySequence = [
 									[0, 4, 3],
 									[0.5, 4, 2.5],
@@ -995,17 +793,10 @@ vis.binds["radar-trap"] = {
 								function animateDashArray(timestamp) {
 									// Update line-dasharray using the next value in dashArraySequence. The
 									// divisor in the expression `timestamp / 50` controls the animation speed.
-									const newStep = parseInt(
-										(timestamp / 50) %
-											dashArraySequence.length,
-									);
+									const newStep = parseInt((timestamp / 50) % dashArraySequence.length);
 
 									if (newStep !== step) {
-										map.setPaintProperty(
-											"line-dashed",
-											"line-dasharray",
-											dashArraySequence[step],
-										);
+										map.setPaintProperty("line-dashed", "line-dasharray", dashArraySequence[step]);
 										step = newStep;
 									}
 
@@ -1021,22 +812,10 @@ vis.binds["radar-trap"] = {
 						if (Boolean(data.attr("showPolygon"))) {
 							map.addSource("areasurface", {
 								type: "geojson",
-								data: $mapbox.data(
-									"areaPolygonsFeatureCollection",
-								),
+								data: $mapbox.data("areaPolygonsFeatureCollection"),
 							});
-							map.addLayer(
-								vis.binds["radar-trap"].mapbox.getMapStyle(
-									"areaSurface",
-									data,
-								),
-							);
-							map.addLayer(
-								vis.binds["radar-trap"].mapbox.getMapStyle(
-									"areaSurfaceBorder",
-									data,
-								),
-							);
+							map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("areaSurface", data));
+							map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("areaSurfaceBorder", data));
 						}
 					}
 
@@ -1045,24 +824,14 @@ vis.binds["radar-trap"] = {
 							type: "geojson",
 							data: $mapbox.data("directionsFeatureCollection"),
 						});
-						map.addLayer(
-							vis.binds["radar-trap"].mapbox.getMapStyle(
-								"route",
-								data,
-							),
-						);
+						map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("route", data));
 					}
 
 					map.addSource("traps", {
 						type: "geojson",
 						data: $mapbox.data("trapsFeatureCollection"),
 					});
-					map.addLayer(
-						vis.binds["radar-trap"].mapbox.getMapStyle(
-							"lineTraps",
-							data,
-						),
-					);
+					map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("lineTraps", data));
 
 					map.addSource("clustertraps", {
 						type: "geojson",
@@ -1071,48 +840,20 @@ vis.binds["radar-trap"] = {
 						clusterMaxZoom: 14,
 						clusterRadius: 50,
 					});
-					map.addLayer(
-						vis.binds["radar-trap"].mapbox.getMapStyle(
-							"traps",
-							data,
-						),
-					);
-					map.addLayer(
-						vis.binds["radar-trap"].mapbox.getMapStyle(
-							"speedTraps",
-							data,
-						),
-					);
-					map.addLayer(
-						vis.binds["radar-trap"].mapbox.getMapStyle(
-							"speedTrapsVmax",
-							data,
-						),
-					);
+					map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("traps", data));
+					map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("speedTraps", data));
+					map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("speedTrapsVmax", data));
 
 					if (Boolean(data.attr("showCluster"))) {
-						map.addLayer(
-							vis.binds["radar-trap"].mapbox.getMapStyle(
-								"clusterTraps",
-								data,
-							),
-						);
-						map.addLayer(
-							vis.binds["radar-trap"].mapbox.getMapStyle(
-								"clusterTrapsCount",
-								data,
-							),
-						);
+						map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("clusterTraps", data));
+						map.addLayer(vis.binds["radar-trap"].mapbox.getMapStyle("clusterTrapsCount", data));
 					}
 
 					map.getStyle().layers.forEach((layer) => {
 						if (layer.id.indexOf("-label") > 0) {
 							map.setLayoutProperty(layer.id, "text-field", [
 								"coalesce",
-								[
-									"get",
-									`name_${vis.binds["radar-trap"].language}`,
-								],
+								["get", `name_${vis.binds["radar-trap"].language}`],
 								["get", "name"],
 							]);
 						}
@@ -1124,41 +865,23 @@ vis.binds["radar-trap"] = {
 							closeOnClick: false,
 						});
 
-						map.on(
-							"mouseenter",
-							["traps", "speed-traps"],
-							(event) => {
-								map.getCanvas().style.cursor = "pointer";
-								const feature =
-									event.features && event.features[0];
+						map.on("mouseenter", ["traps", "speed-traps"], (event) => {
+							map.getCanvas().style.cursor = "pointer";
+							const feature = event.features && event.features[0];
 
-								const coordinates =
-									feature.geometry.coordinates.slice();
-								while (
-									Math.abs(
-										event.lngLat.lng - coordinates[0],
-									) > 180
-								) {
-									coordinates[0] +=
-										event.lngLat.lng > coordinates[0]
-											? 360
-											: -360;
-								}
+							const coordinates = feature.geometry.coordinates.slice();
+							while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
+								coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
+							}
 
-								const trapInfo = JSON.parse(
-									feature.properties.trapInfo,
-								);
+							const trapInfo = JSON.parse(feature.properties.trapInfo);
 
-								popup
-									.setLngLat(coordinates)
-									.setHTML(
-										`<div>
+							popup
+								.setLngLat(coordinates)
+								.setHTML(
+									`<div>
 										<div><b>${trapInfo.typeText}</b></div>
-										<div>${
-											trapInfo.vmax
-												? `Höchstgeschwindigkeit: ${trapInfo.vmax} km/h`
-												: ""
-										}</div>
+										<div>${trapInfo.vmax ? `Höchstgeschwindigkeit: ${trapInfo.vmax} km/h` : ""}</div>
 										<div>${trapInfo.reason ? `Grund: ${trapInfo.reason}` : ""}</div>
 										<div>${trapInfo.length ? `Staulänge: ${trapInfo.length} km` : ""}</div>
 										<div>${trapInfo.duration ? `Dauer: ${trapInfo.duration} min.` : ""}</div>
@@ -1167,17 +890,12 @@ vis.binds["radar-trap"] = {
 										<div>${trapInfo.confirmDate ? `bestätigt: ${trapInfo.confirmDate}` : ""}</div>
 										<div>${trapInfo.state ? `Bundesland: ${trapInfo.state}` : ""}</div>
 										<div>${trapInfo.street ? `Straße: ${trapInfo.street}` : ""}</div>
-										<div>${
-											trapInfo.zipCode && trapInfo.city
-												? `Ort: ${trapInfo.zipCode} ${trapInfo.city}`
-												: ""
-										}</div>
+										<div>${trapInfo.zipCode && trapInfo.city ? `Ort: ${trapInfo.zipCode} ${trapInfo.city}` : ""}</div>
 										<div>${trapInfo.cityDistrict ? `Stadtteil: ${trapInfo.cityDistrict}` : ""}</div>
 									</div>`,
-									)
-									.addTo(map);
-							},
-						);
+								)
+								.addTo(map);
+						});
 
 						map.on("mouseenter", ["traffic-closure"], (event) => {
 							map.getCanvas().style.cursor = "pointer";
@@ -1186,21 +904,12 @@ vis.binds["radar-trap"] = {
 
 							const feature = event.features && event.features[0];
 
-							const coordinates =
-								feature.geometry.coordinates.slice();
-							while (
-								Math.abs(event.lngLat.lng - coordinates[0]) >
-								180
-							) {
-								coordinates[0] +=
-									event.lngLat.lng > coordinates[0]
-										? 360
-										: -360;
+							const coordinates = feature.geometry.coordinates.slice();
+							while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
+								coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
 							}
 
-							const address = JSON.parse(
-								feature.properties.address,
-							);
+							const address = JSON.parse(feature.properties.address);
 
 							const trapInfo = {
 								typeText: "Verkehrssperrung",
@@ -1217,24 +926,16 @@ vis.binds["radar-trap"] = {
 									<div><b>${trapInfo.typeText}</b></div>									
 									<div>${trapInfo.country ? `Land: ${trapInfo.country}` : ""}</div>
 									<div>${trapInfo.street ? `Straße: ${trapInfo.street}` : ""}</div>
-									<div>${
-										trapInfo.zipCode && trapInfo.city
-											? `Ort: ${trapInfo.zipCode} ${trapInfo.city}`
-											: ""
-									}</div>									
+									<div>${trapInfo.zipCode && trapInfo.city ? `Ort: ${trapInfo.zipCode} ${trapInfo.city}` : ""}</div>									
 								</div>`,
 								)
 								.addTo(map);
 						});
 
-						map.on(
-							"mouseleave",
-							["traps", "speed-traps", "traffic-closure"],
-							() => {
-								map.getCanvas().style.cursor = "";
-								popup.remove();
-							},
-						);
+						map.on("mouseleave", ["traps", "speed-traps", "traffic-closure"], () => {
+							map.getCanvas().style.cursor = "";
+							popup.remove();
+						});
 					}
 
 					if (!vis.editMode && Boolean(data.attr("showCluster"))) {
@@ -1247,17 +948,14 @@ vis.binds["radar-trap"] = {
 
 							const mapboxSource = map.getSource(sourceId);
 
-							mapboxSource.getClusterExpansionZoom(
-								clusterId,
-								(err, zoom) => {
-									if (err) return;
+							mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
+								if (err) return;
 
-									map.easeTo({
-										center: feature.geometry.coordinates,
-										zoom: zoom,
-									});
-								},
-							);
+								map.easeTo({
+									center: feature.geometry.coordinates,
+									zoom: zoom,
+								});
+							});
 						});
 
 						map.on("mouseenter", "cluster-traps", () => {
@@ -1278,15 +976,7 @@ vis.binds["radar-trap"] = {
 				const result = turf.featureReduce(
 					$mapbox.data("trapsFeatureCollection"),
 					(features, feature) => {
-						if (
-							Boolean(
-								$mapbox
-									.data("widgetData")
-									.attr(
-										feature.properties["trapInfo"].typeName,
-									),
-							)
-						)
+						if (Boolean($mapbox.data("widgetData").attr(feature.properties["trapInfo"].typeName)))
 							features.push(feature);
 
 						return features;
@@ -1294,24 +984,15 @@ vis.binds["radar-trap"] = {
 					[],
 				);
 
-				$mapbox.data(
-					"trapsFeatureCollection",
-					turf.featureCollection(result),
-				);
+				$mapbox.data("trapsFeatureCollection", turf.featureCollection(result));
 			}
 
-			map.getSource("traps").setData(
-				$mapbox.data("trapsFeatureCollection"),
-			);
-			map.getSource("clustertraps").setData(
-				$mapbox.data("trapsFeatureCollection"),
-			);
+			map.getSource("traps").setData($mapbox.data("trapsFeatureCollection"));
+			map.getSource("clustertraps").setData($mapbox.data("trapsFeatureCollection"));
 
 			let collection = null;
 			if (type === "AREA") {
-				map.getSource("polys").setData(
-					$mapbox.data("polysFeatureCollection"),
-				);
+				map.getSource("polys").setData($mapbox.data("polysFeatureCollection"));
 
 				collection = $mapbox.data("areaPolygonsFeatureCollection");
 				map.getSource("areasurface").setData(collection);
@@ -1322,9 +1003,7 @@ vis.binds["radar-trap"] = {
 				map.getSource("route").setData(collection);
 			}
 
-			const trapsBox = await vis.binds[
-				"radar-trap"
-			].mapbox.getTrapsBoxAsync(collection);
+			const trapsBox = await vis.binds["radar-trap"].mapbox.getTrapsBoxAsync(collection);
 			map.fitBounds(trapsBox, { padding: 20 });
 
 			$mapbox.data("trapsBox", trapsBox);
@@ -1334,32 +1013,20 @@ vis.binds["radar-trap"] = {
 		bindListClickEventHandler: function ($div) {
 			$div.find("li").each(function () {
 				$(this).bind("click", () => {
-					Object.entries(vis.views[vis.activeView].widgets).forEach(
-						([key, { tpl, data: widgetData }]) => {
-							if (
-								tpl !== "tplMapboxArea" &&
-								tpl !== "tplMapboxRoute"
-							)
-								return;
+					Object.entries(vis.views[vis.activeView].widgets).forEach(([key, { tpl, data: widgetData }]) => {
+						if (tpl !== "tplMapboxArea" && tpl !== "tplMapboxRoute") return;
 
-							const areaOrRouteId = (
-								widgetData["area"] || widgetData["route"]
-							)
-								.split("|")[1]
-								.trim();
+						const areaOrRouteId = (widgetData["area"] || widgetData["route"]).split("|")[1].trim();
 
-							if (
-								$(this).data("areaorrouteId") === areaOrRouteId
-							) {
-								const map = $(`#mapbox_${key}`).data("map");
+						if ($(this).data("areaorrouteId") === areaOrRouteId) {
+							const map = $(`#mapbox_${key}`).data("map");
 
-								map.jumpTo({
-									center: $(this).data("position"),
-									zoom: 15,
-								});
-							}
-						},
-					);
+							map.jumpTo({
+								center: $(this).data("position"),
+								zoom: 15,
+							});
+						}
+					});
 				});
 			});
 		},
@@ -1377,12 +1044,7 @@ vis.binds["radar-trap"] = {
 
 			if (!$div.length) {
 				setTimeout(function () {
-					vis.binds["radar-trap"].trapsInfo.initAsync(
-						wid,
-						view,
-						data,
-						style,
-					);
+					vis.binds["radar-trap"].trapsInfo.initAsync(wid, view, data, style);
 				}, 100);
 				return;
 			}
@@ -1413,12 +1075,9 @@ vis.binds["radar-trap"] = {
 				});
 
 			if (!!!result) {
-				result = await vis.binds["radar-trap"].areasService.get(
-					areaOrRouteId,
-					{
-						query: { $select: ["areaTraps"] },
-					},
-				);
+				result = await vis.binds["radar-trap"].areasService.get(areaOrRouteId, {
+					query: { $select: ["areaTraps"] },
+				});
 			}
 
 			const { trapsFeatureCollection } = result;

@@ -35,17 +35,13 @@ class Scheduler {
     this.dataType = type;
     this.routeData = routeData;
     this.cronJob = new import_croner.Cron(pattern.trim(), () => {
-      console.log(
-        `Cron-Job with id ${id} and pattern ${pattern.trim()} scheduled`
-      );
+      console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} scheduled`);
       Scheduler.run(id);
     });
     this.interval = setInterval(() => {
       Scheduler.#adapter.setStateAsync(`${id}.cron-job.timer`, this.next, true).catch((ex) => console.log(ex));
     }, 1e3);
-    console.log(
-      `Cron-Job with id ${id} and pattern ${pattern.trim()} created.`
-    );
+    console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} created.`);
   }
   get next() {
     const next = this.cronJob.msToNext();
@@ -87,14 +83,7 @@ class Scheduler {
     const routes = await Scheduler.#routesService.find({
       query: {
         $limit: -1,
-        $select: [
-          "_id",
-          "src",
-          "dst",
-          "activeProfile",
-          "maxTrapDistance",
-          "cron"
-        ]
+        $select: ["_id", "src", "dst", "activeProfile", "maxTrapDistance", "cron"]
       }
     });
     const areas = await Scheduler.#areasService.find({

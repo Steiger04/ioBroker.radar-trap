@@ -2,9 +2,7 @@
 // import configuration from '@feathersjs/configuration';
 
 import express from "@feathersjs/express";
-import feathers, {
-	HookContext as FeathersHookContext,
-} from "@feathersjs/feathers";
+import feathers, { HookContext as FeathersHookContext } from "@feathersjs/feathers";
 import socketio from "@feathersjs/socketio";
 import compress from "compression";
 import cors from "cors";

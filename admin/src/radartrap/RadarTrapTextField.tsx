@@ -11,16 +11,8 @@ interface RadarTrapTextFieldProps {
 	label: string;
 	type: HTMLInputTypeAttribute;
 }
-const RadarTrapTextField: FC<RadarTrapTextFieldProps> = ({
-	inputProps,
-	disabled,
-	name,
-	label,
-	type,
-}): ReactElement => {
-	const { register, getFieldState, formState } = useFormContext<
-		radarTrap.Route | radarTrap.Area
-	>();
+const RadarTrapTextField: FC<RadarTrapTextFieldProps> = ({ inputProps, disabled, name, label, type }): ReactElement => {
+	const { register, getFieldState, formState } = useFormContext<radarTrap.Route | radarTrap.Area>();
 	const { error } = getFieldState(name, formState);
 
 	return (

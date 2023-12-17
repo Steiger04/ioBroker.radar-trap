@@ -16,12 +16,12 @@
 		"jsx": "react-jsx",
 		// "jsx": "react-native",
 		// Avoid runtime imports that are unnecessary
-		"importsNotUsedAsValues": "error",
+		// "importsNotUsedAsValues": "error",
 		// Required for TS debugging
 		"sourceMap": true,
 		"inlineSourceMap": false,
 		// watch=true breaks CI build steps
-		"watch": false,
+		// "watch": false,
 		"module": "CommonJS"
 		// yup
 		// "strictNullChecks": false,

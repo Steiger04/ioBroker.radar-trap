@@ -6,11 +6,7 @@ import { useAppData } from "../../App";
 import { useResizeMap } from "../../lib";
 import { DrawControl } from "./DrawControl";
 
-import type {
-	DrawCreateEvent,
-	DrawDeleteEvent,
-	DrawUpdateEvent,
-} from "@mapbox/mapbox-gl-draw";
+import type { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
 import { useFormContext } from "react-hook-form";
 
 const AreaTrapMap: FC = (): ReactElement => {
@@ -23,10 +19,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 		(e: DrawUpdateEvent | DrawCreateEvent) => {
 			// console.log("event Update", e);
 
-			const tmpFeature = e.features[0] as Feature<
-				GeoJSON.Polygon,
-				GeoJSON.GeoJsonProperties
-			>;
+			const tmpFeature = e.features[0] as Feature<GeoJSON.Polygon, GeoJSON.GeoJsonProperties>;
 
 			const newFeatures = { ...getValues("areaPolygons") };
 
@@ -76,9 +69,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 				drawRef.current,
 			); */
 
-			drawRef.current.add(
-				featureCollection(Object.values(areaPolygons!)),
-			);
+			drawRef.current.add(featureCollection(Object.values(areaPolygons!)));
 		}
 
 		resizeMap();

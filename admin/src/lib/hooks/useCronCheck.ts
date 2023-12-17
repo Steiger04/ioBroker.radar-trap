@@ -7,9 +7,7 @@ const useCronCheck = (defaultValue: string): Partial<radarTrap.CronResult> => {
 	const { language } = useAppData();
 	const watchCron = useWatch({ name: "cron", defaultValue });
 
-	const [cron, setCron] = useState<Partial<radarTrap.CronResult>>(() =>
-		cronCheck(watchCron, language),
-	);
+	const [cron, setCron] = useState<Partial<radarTrap.CronResult>>(() => cronCheck(watchCron, language));
 
 	useEffect(() => {
 		setCron(cronCheck(watchCron, language));

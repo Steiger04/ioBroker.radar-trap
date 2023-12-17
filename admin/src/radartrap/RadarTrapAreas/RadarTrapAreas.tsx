@@ -6,16 +6,7 @@ import { AreaAccordion } from "./AreaAccordion";
 import type { FC, ReactElement } from "react";
 
 const RadarTrapAreas: FC = (): ReactElement => {
-	const {
-		status,
-		fields,
-		prepend,
-		update,
-		remove,
-		getDefault,
-		expanded,
-		handleChange,
-	} = useRadarTrapAreas();
+	const { status, fields, prepend, update, remove, getDefault, expanded, handleChange } = useRadarTrapAreas();
 
 	useInvisibleBottomButtons();
 
@@ -33,17 +24,10 @@ const RadarTrapAreas: FC = (): ReactElement => {
 				}}
 			/>
 		))
-		.sort((a, b) =>
-			a.props.field.description!.localeCompare(
-				b.props.field.description!,
-			),
-		);
+		.sort((a, b) => a.props.field.description!.localeCompare(b.props.field.description!));
 
 	return status === "success" ? (
-		<AreaAndRouteCard
-			label={I18n.t("Add area")}
-			buttonClickHandler={() => prepend(getDefault())}
-		>
+		<AreaAndRouteCard label={I18n.t("Add area")} buttonClickHandler={() => prepend(getDefault())}>
 			{renderAreaAccordion}
 		</AreaAndRouteCard>
 	) : (

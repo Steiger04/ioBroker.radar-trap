@@ -11,12 +11,7 @@ interface IbrTextFieldProps {
 	type: HTMLInputTypeAttribute;
 }
 
-const IbrTextField: FC<IbrTextFieldProps> = ({
-	methods,
-	name,
-	label,
-	type,
-}): ReactElement => {
+const IbrTextField: FC<IbrTextFieldProps> = ({ methods, name, label, type }): ReactElement => {
 	const { register, getFieldState } = methods;
 
 	const { error } = getFieldState(name);

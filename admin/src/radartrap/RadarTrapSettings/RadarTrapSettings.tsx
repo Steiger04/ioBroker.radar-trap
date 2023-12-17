@@ -31,19 +31,13 @@ const RadarTrapSettings: FC = (): ReactElement => {
 
 	useEffect(() => {
 		handleSubmit(
-			(data: ioBroker.INative) =>
-				!isValidating &&
-				isValid &&
-				updateNativeValue("settings", { ...data.settings }),
+			(data: ioBroker.INative) => !isValidating && isValid && updateNativeValue("settings", { ...data.settings }),
 			() => that.setState({ changed: false }),
 		)().catch((ex) => console.log(ex));
 	}, [isValidating, isValid]);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const watchHttpsEnabled = watch(
-		"settings.httpsEnabled",
-		native.settings!.httpsEnabled,
-	);
+	const watchHttpsEnabled = watch("settings.httpsEnabled", native!.settings?.httpsEnabled);
 
 	return (
 		<Box
@@ -69,19 +63,9 @@ const RadarTrapSettings: FC = (): ReactElement => {
 							type="text"
 						/>
 					)} */}
-				<IbrTextField
-					methods={methods}
-					name="settings.feathersPort"
-					label="Feathers Port"
-					type="number"
-				/>
+				<IbrTextField methods={methods} name="settings.feathersPort" label="Feathers Port" type="number" />
 				<Box>
-					<IbrTextField
-						methods={methods}
-						name="settings.mbxAccessToken"
-						label="Mapbox Token"
-						type="text"
-					/>
+					<IbrTextField methods={methods} name="settings.mbxAccessToken" label="Mapbox Token" type="text" />
 					<Link
 						variant="subtitle2"
 						target="_blank"

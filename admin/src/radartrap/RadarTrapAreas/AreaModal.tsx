@@ -23,20 +23,12 @@ interface AreaModalProps {
 	openModal: boolean;
 	setOpenModal: Dispatch<React.SetStateAction<boolean>>;
 }
-const AreaModal: FC<AreaModalProps> = ({
-	children,
-	openModal,
-	setOpenModal,
-}): ReactElement => {
+const AreaModal: FC<AreaModalProps> = ({ children, openModal, setOpenModal }): ReactElement => {
 	const handleClose = () => setOpenModal(false);
 
 	return (
 		<div>
-			<Modal
-				sx={{ bgcolor: "background.paper" }}
-				open={openModal}
-				onClose={handleClose}
-			>
+			<Modal sx={{ bgcolor: "background.paper" }} open={openModal} onClose={handleClose}>
 				<Fade in={openModal} timeout={1000}>
 					<Box sx={style}>{children}</Box>
 				</Fade>

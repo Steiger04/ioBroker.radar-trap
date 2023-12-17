@@ -10,10 +10,7 @@ import {
 	UseFieldArrayUpdate,
 	useForm,
 } from "react-hook-form";
-import {
-	useAccordionExpanded,
-	UseAccordionExpanded,
-} from "./useAccordionExpanded";
+import { useAccordionExpanded, UseAccordionExpanded } from "./useAccordionExpanded";
 
 const getDefault = (): radarTrap.Area => ({
 	_id: nanoid(),

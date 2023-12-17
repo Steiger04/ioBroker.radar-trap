@@ -1,11 +1,7 @@
 import Utils from "@iobroker/adapter-react/Components/Utils";
 import theme from "@iobroker/adapter-react/Theme";
 import CssBaseline from "@mui/material/CssBaseline";
-import {
-	adaptV4Theme,
-	DeprecatedThemeOptions,
-	ThemeProvider,
-} from "@mui/material/styles";
+import { adaptV4Theme, DeprecatedThemeOptions, ThemeProvider } from "@mui/material/styles";
 import ReactDOM from "react-dom";
 import { App } from "./App";
 

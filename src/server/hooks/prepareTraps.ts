@@ -18,55 +18,30 @@ const prepareTraps = (
 
 				trapInfo.typeName = properties!.type_name;
 
-				const info =
-					properties!.info === "false" ? false : properties!.info;
+				const info = properties!.info === "false" ? false : properties!.info;
 
 				trapInfo.reason =
 					(Boolean(info) && Boolean(info.reason) && info.reason) ||
 					(Boolean(properties!.reason) && properties!.reason);
-				trapInfo.length =
-					Boolean(info) && info.length > 0 && info.length;
-				trapInfo.duration =
-					Boolean(info) &&
-					Boolean(info.duration) &&
-					Math.round(Number(info.duration) / 60);
-				trapInfo.delay =
-					Boolean(info) &&
-					Boolean(info.delay) &&
-					Math.round(Number(info.delay) / 60);
+				trapInfo.length = Boolean(info) && info.length > 0 && info.length;
+				trapInfo.duration = Boolean(info) && Boolean(info.duration) && Math.round(Number(info.duration) / 60);
+				trapInfo.delay = Boolean(info) && Boolean(info.delay) && Math.round(Number(info.delay) / 60);
 
-				trapInfo.createDate =
-					properties!.create_date !== "01.01.1970" &&
-					properties!.create_date;
-				trapInfo.confirmDate =
-					properties!.confirm_date !== "01.01.1970" &&
-					properties!.confirm_date;
+				trapInfo.createDate = properties!.create_date !== "01.01.1970" && properties!.create_date;
+				trapInfo.confirmDate = properties!.confirm_date !== "01.01.1970" && properties!.confirm_date;
 
 				trapInfo.vmax =
 					Boolean(properties!.vmax) &&
 					properties!.vmax !== "?" &&
 					properties!.vmax !== "/" &&
 					properties!.vmax;
-				trapInfo.typeText =
-					Boolean(properties!.type_text) && properties!.type_text;
-				trapInfo.country =
-					Boolean(properties!.address.country) &&
-					properties!.address.country;
-				trapInfo.state =
-					Boolean(properties!.address.state) &&
-					properties!.address.state;
-				trapInfo.zipCode =
-					Boolean(properties!.address.zip_code) &&
-					properties!.address.zip_code;
-				trapInfo.city =
-					Boolean(properties!.address.city) &&
-					properties!.address.city;
-				trapInfo.cityDistrict =
-					Boolean(properties!.address.city_district) &&
-					properties!.address.city_district;
-				trapInfo.street =
-					Boolean(properties!.address.street) &&
-					properties!.address.street;
+				trapInfo.typeText = Boolean(properties!.type_text) && properties!.type_text;
+				trapInfo.country = Boolean(properties!.address.country) && properties!.address.country;
+				trapInfo.state = Boolean(properties!.address.state) && properties!.address.state;
+				trapInfo.zipCode = Boolean(properties!.address.zip_code) && properties!.address.zip_code;
+				trapInfo.city = Boolean(properties!.address.city) && properties!.address.city;
+				trapInfo.cityDistrict = Boolean(properties!.address.city_district) && properties!.address.city_district;
+				trapInfo.street = Boolean(properties!.address.street) && properties!.address.street;
 
 				properties!.trapInfo = trapInfo;
 			});

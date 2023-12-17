@@ -2,10 +2,7 @@ export { cronCounter$ } from "./helpers/cronCounterStream";
 export { mapStyles } from "./helpers/mapStyles";
 export { square } from "./helpers/square";
 export { useAccordionDisabled } from "./hooks/useAccordionDisabled";
-export {
-	useAccordionExpanded,
-	UseAccordionExpanded,
-} from "./hooks/useAccordionExpanded";
+export { useAccordionExpanded, UseAccordionExpanded } from "./hooks/useAccordionExpanded";
 export { useAnimationFrame } from "./hooks/useAnimationFrame";
 export { useAreaAccordion } from "./hooks/useAreaAccordion";
 export { useAreaSchema } from "./hooks/useAreaSchema";
@@ -20,6 +17,7 @@ export { useRadarTrapEnabled } from "./hooks/useRadarTrapEnabled";
 export { useRadarTrapMapBox } from "./hooks/useRadarTrapMapBox";
 export { useRadarTrapRoutes } from "./hooks/useRadarTrapRoutes";
 export { useRadarTrapSource } from "./hooks/useRadarTrapSource";
+export { useRadarTrapSource2 } from "./hooks/useRadarTrapSource2";
 export { useResizeMap } from "./hooks/useResizeMap";
 export { useRouteAccordion } from "./hooks/useRouteAccordion";
 export { useRouteSchema } from "./hooks/useRouteSchema";

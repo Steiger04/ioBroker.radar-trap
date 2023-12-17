@@ -6,9 +6,7 @@ const addTrapInfoToAllTraps = (data: radarTrap.Area): void => {
 		return;
 	}
 
-	data.trapsFeatureCollection = featureCollection(
-		prepareTraps(data.areaTraps),
-	);
+	data.trapsFeatureCollection = featureCollection(prepareTraps(data.areaTraps));
 };
 
 export { addTrapInfoToAllTraps };

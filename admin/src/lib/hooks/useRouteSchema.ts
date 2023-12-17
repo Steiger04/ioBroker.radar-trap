@@ -8,22 +8,16 @@ const getRouteSchema = (language: string) => () => {
 	const _routeSchema = object<radarTrap.Route>({
 		id: string(),
 		_id: string().required(),
-		description: string().required(() =>
-			I18n.t("Description is a required field"),
-		),
+		description: string().required(() => I18n.t("Description is a required field")),
 		src: object({
-			address: string().required(() =>
-				I18n.t("Start is a required field"),
-			),
+			address: string().required(() => I18n.t("Start is a required field")),
 			geometry: object<GeoJSON.Point>({
 				type: string<"Point">(),
 				coordinates: array<GeoJSON.Position>().length(2),
 			}),
 		}),
 		dst: object({
-			address: string().required(() =>
-				I18n.t("Destination is a required field"),
-			),
+			address: string().required(() => I18n.t("Destination is a required field")),
 			geometry: object<GeoJSON.Point>({
 				type: string<"Point">(),
 				coordinates: array<GeoJSON.Position>().length(2),
@@ -47,14 +41,8 @@ const getRouteSchema = (language: string) => () => {
 	return _routeSchema;
 };
 
-const useRouteSchema = (): ObjectSchema<
-	object,
-	radarTrap.Route,
-	object,
-	""
-> => {
+const useRouteSchema = (): ObjectSchema<object, radarTrap.Route, object, ""> => {
 	const { language } = useAppData();
-
 	const [routeSchema, setRouteSchema] = useState(getRouteSchema(language));
 
 	useEffect(() => {

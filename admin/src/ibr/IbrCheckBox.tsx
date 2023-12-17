@@ -12,12 +12,7 @@ interface IbrCheckBoxProps {
 	label: string;
 }
 
-const IbrCheckBox: FC<IbrCheckBoxProps> = ({
-	sx = [],
-	control,
-	name,
-	label,
-}): ReactElement => {
+const IbrCheckBox: FC<IbrCheckBoxProps> = ({ sx = [], control, name, label }): ReactElement => {
 	const {
 		field: { value, onBlur, onChange, ref },
 	} = useController({
@@ -29,13 +24,7 @@ const IbrCheckBox: FC<IbrCheckBoxProps> = ({
 		<Box sx={[{ flex: "0 1 auto" }, ...(Array.isArray(sx) ? sx : [sx])]}>
 			<FormControlLabel
 				control={
-					<Checkbox
-						name={name}
-						checked={Boolean(value)}
-						ref={ref}
-						onChange={onChange}
-						onBlur={onBlur}
-					/>
+					<Checkbox name={name} checked={Boolean(value)} ref={ref} onChange={onChange} onBlur={onBlur} />
 				}
 				label={I18n.t(label)}
 			/>

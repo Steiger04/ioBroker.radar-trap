@@ -31,35 +31,26 @@ const traps = async (minPos, maxPos) => {
   const { polys } = await (0, import_cross_fetch.fetch)(
     `https://cdn3.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
   ).then((res) => res.json()).catch((ex) => console.log(ex));
-  const polyPoints = polys.reduce(
-    (list, poly) => {
-      let polyPoint;
-      if (poly.type === "sc")
-        return list;
-      if (poly.type === "closure") {
-        polyPoint = (0, import_helpers.point)([+poly.pos.lng, +poly.pos.lat], {
-          ...poly
-        });
-      } else {
-        polyPoint = (0, import_helpers.point)(
-          [+poly.showdelay_pos.lng, +poly.showdelay_pos.lat],
-          { ...poly }
-        );
-      }
-      list.push(polyPoint);
+  const polyPoints = polys.reduce((list, poly) => {
+    let polyPoint;
+    if (poly.type === "sc")
       return list;
-    },
-    []
-  );
-  const trapPoints = pois.reduce(
-    (list, poi) => {
-      const trapPoint = (0, import_helpers.point)([+poi.lng, +poi.lat]);
-      trapPoint.properties = poi;
-      list.push(trapPoint);
-      return list;
-    },
-    []
-  );
+    if (poly.type === "closure") {
+      polyPoint = (0, import_helpers.point)([+poly.pos.lng, +poly.pos.lat], {
+        ...poly
+      });
+    } else {
+      polyPoint = (0, import_helpers.point)([+poly.showdelay_pos.lng, +poly.showdelay_pos.lat], { ...poly });
+    }
+    list.push(polyPoint);
+    return list;
+  }, []);
+  const trapPoints = pois.reduce((list, poi) => {
+    const trapPoint = (0, import_helpers.point)([+poi.lng, +poi.lat]);
+    trapPoint.properties = poi;
+    list.push(trapPoint);
+    return list;
+  }, []);
   return { trapPoints, polyPoints };
 };
 // Annotate the CommonJS export names for ESM import in node:

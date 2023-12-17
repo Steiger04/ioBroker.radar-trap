@@ -19,7 +19,8 @@ import {
 	/* useAnimationFrame, */
 	useInvisibleBottomButtons,
 	useMapImages,
-	useRadarTrapSource,
+	// useRadarTrapSource,
+	useRadarTrapSource2,
 	useResizeMap,
 } from "../../lib";
 import { TrapInfo } from "./TrapInfo";
@@ -27,9 +28,7 @@ import { TrapInfo } from "./TrapInfo";
 import type { FC, ReactElement } from "react";
 
 const RadarTrapMaps: FC = (): ReactElement => {
-	/* const { savedNative, language } = useAppData(); */
-	const { savedNative } = useAppData();
-
+	const { feathers: feathersClient, savedNative } = useAppData();
 	const mapRef = useRef<MapRef>(null);
 
 	useMapImages(mapRef);
@@ -38,14 +37,13 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 	const [trapInfo, setTrapInfo] = useState<radarTrap.trapInfo | null>(null);
 
+	/* const {
+		source: { directionsFeatureCollection, trapsFeatureCollection, polysFeatureCollection, areaPolygons },
+	} = useRadarTrapSource(routeId); */
+
 	const {
-		source: {
-			directionsFeatureCollection,
-			trapsFeatureCollection,
-			polysFeatureCollection,
-			areaPolygons,
-		},
-	} = useRadarTrapSource(routeId);
+		source: { directionsFeatureCollection, trapsFeatureCollection, polysFeatureCollection, areaPolygons },
+	} = useRadarTrapSource2(routeId, feathersClient);
 
 	const [cursor, setCursor] = useState<string>("");
 
@@ -108,9 +106,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 		const clusterId = feature.properties!.cluster_id;
 		const sourceId = feature.source;
-		const mapboxSource = mapRef.current!.getSource(
-			sourceId,
-		) as GeoJSONSource;
+		const mapboxSource = mapRef.current!.getSource(sourceId) as GeoJSONSource;
 
 		switch (feature.layer.id) {
 			case "traffic-closure":
@@ -189,12 +185,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 				reuseMaps={true}
 				attributionControl={false}
 				mapStyle="mapbox://styles/mapbox/streets-v12"
-				interactiveLayerIds={[
-					"cluster-traps",
-					"traps",
-					"speed-traps",
-					"traffic-closure",
-				]}
+				interactiveLayerIds={["cluster-traps", "traps", "speed-traps", "traffic-closure"]}
 				cursor={cursor}
 				onClick={clickHandler}
 				onMouseEnter={mouseEnterHandler}
@@ -227,8 +218,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 					type="geojson"
 					data={
 						areaPolygons
-							? featureCollection(Object.values(areaPolygons!))
-									.features[0]
+							? featureCollection(Object.values(areaPolygons!)).features[0]
 							: featureCollection([])
 					}
 				>

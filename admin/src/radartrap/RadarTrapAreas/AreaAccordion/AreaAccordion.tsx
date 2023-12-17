@@ -9,11 +9,7 @@ import { UseAccordionExpanded, useAreaAccordion } from "../../../lib";
 import { AreaTrapMap, RadarTrapAccordion } from "../../../radartrap";
 import { AreaModal } from "../AreaModal";
 
-import type {
-	FieldArrayWithId,
-	UseFieldArrayRemove,
-	UseFieldArrayUpdate,
-} from "react-hook-form";
+import type { FieldArrayWithId, UseFieldArrayRemove, UseFieldArrayUpdate } from "react-hook-form";
 
 const Red = red[700];
 
@@ -34,13 +30,12 @@ const AreaAccordion: FC<AreaAccordionProps> = ({
 	index,
 	field,
 }): ReactElement => {
-	const {
-		methods,
-		accordionDisabledMap,
-		register,
-		deleteHandler,
-		createHandler,
-	} = useAreaAccordion({ index, field, remove, update });
+	const { methods, accordionDisabledMap, register, deleteHandler, createHandler } = useAreaAccordion({
+		index,
+		field,
+		remove,
+		update,
+	});
 
 	const {
 		trigger,
@@ -83,9 +78,7 @@ const AreaAccordion: FC<AreaAccordionProps> = ({
 						<Box sx={{ display: "flex" }}>
 							<Box sx={{ flexGrow: 1 }}>
 								<RadarTrapTextField
-									disabled={
-										accordionDisabledMap.get(field._id)!
-									}
+									disabled={accordionDisabledMap.get(field._id)!}
 									name="description"
 									label="description"
 									type="text"
@@ -100,10 +93,7 @@ const AreaAccordion: FC<AreaAccordionProps> = ({
 									}}
 									sx={[
 										() => ({
-											color: getFieldState("areaPolygons")
-												.invalid
-												? Red
-												: undefined,
+											color: getFieldState("areaPolygons").invalid ? Red : undefined,
 										}),
 										{ p: 0, mr: 1 },
 									]}
@@ -115,10 +105,7 @@ const AreaAccordion: FC<AreaAccordionProps> = ({
 							</Box>
 						</Box>
 
-						<RadarTrapCronField
-							disabled={accordionDisabledMap.get(field._id)!}
-							cronDefault={field.cron}
-						/>
+						<RadarTrapCronField disabled={accordionDisabledMap.get(field._id)!} cronDefault={field.cron} />
 					</Stack>
 				</RadarTrapAccordion>
 			</FormProvider>

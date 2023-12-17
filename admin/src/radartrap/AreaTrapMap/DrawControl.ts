@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import MapboxDraw, {
-	DrawCreateEvent,
-	DrawDeleteEvent,
-	DrawUpdateEvent,
-} from "@mapbox/mapbox-gl-draw";
+import MapboxDraw, { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
 import { forwardRef, useImperativeHandle } from "react";
 import { useControl } from "react-map-gl";
 

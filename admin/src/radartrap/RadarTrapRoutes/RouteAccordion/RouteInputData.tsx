@@ -10,18 +10,10 @@ interface RouteInputDataProps {
 	field: FieldArrayWithId<radarTrap.FormRoutes, "routes">;
 }
 
-const RouteInputData: FC<RouteInputDataProps> = ({
-	disabled,
-	field,
-}): ReactElement => {
+const RouteInputData: FC<RouteInputDataProps> = ({ disabled, field }): ReactElement => {
 	return (
 		<Stack spacing={2}>
-			<RadarTrapTextField
-				disabled={disabled}
-				name="description"
-				label="description"
-				type="text"
-			/>
+			<RadarTrapTextField disabled={disabled} name="description" label="description" type="text" />
 			<RouteGeocoderField
 				disabled={disabled}
 				label="source"

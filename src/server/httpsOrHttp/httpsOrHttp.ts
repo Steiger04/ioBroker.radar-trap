@@ -33,37 +33,30 @@ const httpsOrHttp = async (options: any, callback: any): Promise<void> => {
 
 	if (certificate) {
 		http2
-			.createSecureServer(
-				{ key: certificate.privateKey, cert: certificate.certificate },
-				options.app,
-			)
+			.createSecureServer({ key: certificate.privateKey, cert: certificate.certificate }, options.app)
 			.listen(options.ports.https, () => {
 				const redirectApp = express();
 
 				redirectApp.get(/.*/u, (req: any, res: any) => {
 					res.redirect(
-						`https://${req.headers.host.replace(
-							`:${options.ports.http}`,
-							`:${options.ports.https}`,
-						)}${req.url}`,
+						`https://${req.headers.host.replace(`:${options.ports.http}`, `:${options.ports.https}`)}${
+							req.url
+						}`,
 					);
 				});
 
-				http.createServer(redirectApp).listen(
-					options.ports.http,
-					() => {
-						callback(null, {
-							app: {
-								protocol: "https",
-								port: options.ports.https,
-							},
-							redirect: {
-								protocol: "http",
-								port: options.ports.http,
-							},
-						});
-					},
-				);
+				http.createServer(redirectApp).listen(options.ports.http, () => {
+					callback(null, {
+						app: {
+							protocol: "https",
+							port: options.ports.https,
+						},
+						redirect: {
+							protocol: "http",
+							port: options.ports.http,
+						},
+					});
+				});
 			});
 
 		return;

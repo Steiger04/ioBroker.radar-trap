@@ -29,21 +29,15 @@ class Scheduler {
 		this.routeData = routeData;
 
 		this.cronJob = new Cron(pattern!.trim(), () => {
-			console.log(
-				`Cron-Job with id ${id} and pattern ${pattern!.trim()} scheduled`,
-			);
+			console.log(`Cron-Job with id ${id} and pattern ${pattern!.trim()} scheduled`);
 			Scheduler.run(id!);
 		});
 
 		this.interval = setInterval(() => {
-			Scheduler.#adapter
-				.setStateAsync(`${id}.cron-job.timer`, this.next, true)
-				.catch((ex) => console.log(ex));
+			Scheduler.#adapter.setStateAsync(`${id}.cron-job.timer`, this.next, true).catch((ex) => console.log(ex));
 		}, 1_000);
 
-		console.log(
-			`Cron-Job with id ${id} and pattern ${pattern!.trim()} created.`,
-		);
+		console.log(`Cron-Job with id ${id} and pattern ${pattern!.trim()} created.`);
 	}
 
 	get next(): number | null {
@@ -101,14 +95,7 @@ class Scheduler {
 		const routes = await Scheduler.#routesService.find({
 			query: {
 				$limit: -1,
-				$select: [
-					"_id",
-					"src",
-					"dst",
-					"activeProfile",
-					"maxTrapDistance",
-					"cron",
-				],
+				$select: ["_id", "src", "dst", "activeProfile", "maxTrapDistance", "cron"],
 			},
 		});
 
@@ -195,9 +182,7 @@ class Scheduler {
 		_schedule.interval = null;
 		_schedule.cronJob.pause();
 
-		Scheduler.#adapter
-			.setStateAsync(`${id}.cron-job.timer`, 0, true)
-			.catch((ex) => console.log(ex));
+		Scheduler.#adapter.setStateAsync(`${id}.cron-job.timer`, 0, true).catch((ex) => console.log(ex));
 	}
 
 	static resume(id: string): void {

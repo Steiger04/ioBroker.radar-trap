@@ -67,23 +67,17 @@ const getTrapsFromDirection = async ({
       console.log("clusterTraps >>>", clusterTraps.length);
     resultTraps = [...resultTraps, ...clusterTraps];
   }
-  resultTraps = (0, import_lodash.uniqWith)(
-    resultTraps,
-    (trapA, trapB) => trapA.properties.content === trapB.properties.content
-  );
-  resultTraps = resultTraps.reduce(
-    (list, trapPoint) => {
-      const trapDistance = (0, import_point_to_line_distance.default)(trapPoint, directionLine, {
-        units: "meters"
-      });
-      if (trapDistance <= maxTrapDistance) {
-        trapPoint.properties.distance = trapDistance;
-        list.push(trapPoint);
-      }
-      return list;
-    },
-    []
-  );
+  resultTraps = (0, import_lodash.uniqWith)(resultTraps, (trapA, trapB) => trapA.properties.content === trapB.properties.content);
+  resultTraps = resultTraps.reduce((list, trapPoint) => {
+    const trapDistance = (0, import_point_to_line_distance.default)(trapPoint, directionLine, {
+      units: "meters"
+    });
+    if (trapDistance <= maxTrapDistance) {
+      trapPoint.properties.distance = trapDistance;
+      list.push(trapPoint);
+    }
+    return list;
+  }, []);
   return (0, import_determineTrapTypes.determineTrapTypes)(resultTraps);
 };
 // Annotate the CommonJS export names for ESM import in node:

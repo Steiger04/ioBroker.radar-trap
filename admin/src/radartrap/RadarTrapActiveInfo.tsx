@@ -19,11 +19,7 @@ const RadarTrapActiveInfo: FC = (): ReactElement | null => {
 
 	/* return radarTrapEnabled ? ( */
 	return !radarTrapEnabled && process.env.NODE_ENV === "production" ? (
-		<Message
-			message={`${I18n.t(
-				"For the configuration the radar-trap instance must be started",
-			)}`}
-		/>
+		<Message message={`${I18n.t("For the configuration the radar-trap instance must be started")}`} />
 	) : null;
 };
 

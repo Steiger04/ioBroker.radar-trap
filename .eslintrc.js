@@ -76,10 +76,7 @@ module.exports = {
 		// Although this rule makes sense, it takes about a second to execute (and we don't need it)
 		"@typescript-eslint/no-implied-eval": "off",
 
-		"@typescript-eslint/explicit-module-boundary-types": [
-			"warn",
-			{ allowArgumentsExplicitlyTypedAsAny: true },
-		],
+		"@typescript-eslint/explicit-module-boundary-types": ["warn", { allowArgumentsExplicitlyTypedAsAny: true }],
 		"@typescript-eslint/no-this-alias": "off",
 	},
 	overrides: [

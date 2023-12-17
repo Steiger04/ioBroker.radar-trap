@@ -40,26 +40,17 @@ class RadarTrap2 extends utils.Adapter {
 	 */
 	private async onReady(): Promise<void> {
 		// console.log("inside main() -> onReady()");
-		process.on("unhandledRejection", (reason, p) =>
-			logger.error("Unhandled Rejection at: Promise ", p, reason),
-		);
+		process.on("unhandledRejection", (reason, p) => logger.error("Unhandled Rejection at: Promise ", p, reason));
 
 		// Muss in onReady direkt gesetzt werden
-		process.env.MAPBOX_TOKEN = (
-			this.config as ioBroker.INative
-		).settings.mbxAccessToken;
+		process.env.MAPBOX_TOKEN = (this.config as ioBroker.INative).settings.mbxAccessToken;
 
 		// Process.env['HOST'] = 'localhost';
 		// process.env['PORT'] = String(this.config.settings.feathersPort);
 
-		provideFeathers(
-			this,
-			(this.config as ioBroker.INative).settings.feathersPort,
-		);
+		provideFeathers(this, (this.config as ioBroker.INative).settings.feathersPort);
 
-		await createAllAreaAndRouteObjects(this, feathers).catch((ex) =>
-			console.log(ex),
-		);
+		await createAllAreaAndRouteObjects(this, feathers).catch((ex) => console.log(ex));
 
 		Scheduler.addThat(this);
 		await Scheduler.scheduleAll().catch((ex) => console.log(ex));
@@ -67,12 +58,8 @@ class RadarTrap2 extends utils.Adapter {
 		routeServiceListener(this, feathers);
 		areaServiceListener(this, feathers);
 
-		await this.subscribeStatesAsync("*.pause").catch((ex) =>
-			console.log(ex),
-		);
-		await this.subscribeStatesAsync("*.resume").catch((ex) =>
-			console.log(ex),
-		);
+		await this.subscribeStatesAsync("*.pause").catch((ex) => console.log(ex));
+		await this.subscribeStatesAsync("*.resume").catch((ex) => console.log(ex));
 		await this.subscribeStatesAsync("*.run").catch((ex) => console.log(ex));
 	}
 
@@ -80,17 +67,12 @@ class RadarTrap2 extends utils.Adapter {
 	 * Is called if a subscribed state changes
 	 */
 
-	private onStateChange(
-		id: string,
-		state: ioBroker.State | null | undefined,
-	): void {
+	private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
 		if (!state || state.ack) {
 			return;
 		}
 
-		this.setStateAsync(id, { val: state.val, ack: true }).catch((ex) =>
-			console.log(ex),
-		);
+		this.setStateAsync(id, { val: state.val, ack: true }).catch((ex) => console.log(ex));
 
 		const DCS = this.idToDCS(id)!;
 
@@ -128,9 +110,7 @@ class RadarTrap2 extends utils.Adapter {
 			.pipe(
 				mergeMap((device) => {
 					const _schedule = Scheduler.getSchedule(device);
-					const notResume =
-						_schedule?.cronJobIsRunning ||
-						_schedule?.status === "loading";
+					const notResume = _schedule?.cronJobIsRunning || _schedule?.status === "loading";
 
 					return notResume ? EMPTY : of(device);
 				}),
@@ -158,9 +138,7 @@ class RadarTrap2 extends utils.Adapter {
 			this.unsubscribeStatesAsync("*").catch((ex) => console.log(ex));
 
 			server.close();
-			this.setStateAsync("info.connection", false, true).catch((ex) =>
-				console.log(ex),
-			);
+			this.setStateAsync("info.connection", false, true).catch((ex) => console.log(ex));
 
 			callback();
 		} catch {
@@ -204,8 +182,7 @@ class RadarTrap2 extends utils.Adapter {
 if (require.main !== module) {
 	// Export the constructor in compact mode
 
-	module.exports = (options: Partial<utils.AdapterOptions> | undefined) =>
-		new RadarTrap2(options);
+	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new RadarTrap2(options);
 } else {
 	// Otherwise start the instance directly
 	(() => new RadarTrap2())();

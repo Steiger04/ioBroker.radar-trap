@@ -41,20 +41,12 @@ declare module "figbird" {
 	export const useIdField: (field?: string) => any;
 	export const useUpdatedAtField: (updatedAtField?: string) => any;
 
-	export const useQuery: (
-		serviceName: string,
-		options: any,
-		queryHookOptions: any,
-	) => any;
+	export const useQuery: (serviceName: string, options: any, queryHookOptions: any) => any;
 
 	export type UseGetParams = BaseParams;
 	export type UseGetResult<T = any> = FetchResult<T>;
 
-	export const useGet: <T = any>(
-		serviceName: string,
-		id: any,
-		options?: any,
-	) => UseGetResult<T>;
+	export const useGet: <T = any>(serviceName: string, id: any, options?: any) => UseGetResult<T>;
 
 	export interface UseFindParams extends BaseParams, Params {
 		allPages?: boolean;
@@ -67,22 +59,14 @@ declare module "figbird" {
 		skip: number;
 	}
 
-	export const useFind: <T = any>(
-		serviceName: string,
-		params: UseFindParams,
-	) => UseFindResult<T>;
+	export const useFind: <T = any>(serviceName: string, params: UseFindParams) => UseFindResult<T>;
 
 	export interface UseMutationResult<T = any>
-		extends Pick<
-			ServiceMethods<T>,
-			"create" | "update" | "patch" | "remove"
-		> {
+		extends Pick<ServiceMethods<T>, "create" | "update" | "patch" | "remove"> {
 		status: MutationStatus;
 		data: null | T | T[];
 		error: null | any;
 	}
 
-	export const useMutation: <T = any>(
-		serviceName: string,
-	) => UseMutationResult<T>;
+	export const useMutation: <T = any>(serviceName: string) => UseMutationResult<T>;
 }

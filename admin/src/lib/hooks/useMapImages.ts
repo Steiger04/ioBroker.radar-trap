@@ -18,9 +18,7 @@ const images = [
 	},
 ];
 
-const useMapImages = (
-	map: RefObject<MapRef>,
-): { status: radarTrap.GenericStatus } => {
+const useMapImages = (map: RefObject<MapRef>): { status: radarTrap.GenericStatus } => {
 	const [status, setStatus] = useState<radarTrap.GenericStatus>("idle");
 
 	const loadHandler = useCallback(() => {
@@ -39,19 +37,11 @@ const useMapImages = (
 								reject(error);
 							}
 
-							map.current?.addImage(
-								image.id,
-								mapimage as HTMLImageElement,
-								{ sdf: false },
-							);
+							map.current?.addImage(image.id, mapimage as HTMLImageElement, { sdf: false });
 
 							resolve();
 						});
-					}).catch((ex) =>
-						console.log(
-							`useMapImages() -> loadImage() -> Error: ${ex}`,
-						),
-					),
+					}).catch((ex) => console.log(`useMapImages() -> loadImage() -> Error: ${ex}`)),
 				);
 			}
 		}

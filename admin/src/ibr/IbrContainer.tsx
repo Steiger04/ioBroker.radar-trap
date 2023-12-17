@@ -8,11 +8,7 @@ interface IbrContainerProps {
 	[key: string]: any;
 }
 
-const IbrContainer: FC<IbrContainerProps> = ({
-	children,
-	sx = [],
-	...props
-}): ReactElement => (
+const IbrContainer: FC<IbrContainerProps> = ({ children, sx = [], ...props }): ReactElement => (
 	<Container
 		disableGutters={true}
 		sx={[

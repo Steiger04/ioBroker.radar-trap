@@ -7,15 +7,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import type { Theme } from "@mui/system";
-import {
-	Link,
-	matchPath,
-	MemoryRouter,
-	Route,
-	Routes,
-	useLocation,
-	useNavigate,
-} from "react-router-dom";
+import { Link, matchPath, MemoryRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useAppData } from "../App";
 import { TabCard } from "../components";
 import { useAccordionDisabled, useRadarTrapEnabled } from "../lib";
@@ -45,11 +37,7 @@ function useRouteMatch(patterns: readonly string[]) {
 }
 
 const Router: FC = ({ children }): ReactElement => {
-	return (
-		<MemoryRouter initialEntries={["/trap-settings"]}>
-			{children}
-		</MemoryRouter>
-	);
+	return <MemoryRouter initialEntries={["/trap-settings"]}>{children}</MemoryRouter>;
 };
 
 const TrapTabs: FC = (): ReactElement => {
@@ -61,15 +49,8 @@ const TrapTabs: FC = (): ReactElement => {
 
 	const { disabled: accordionDisabled } = useAccordionDisabled();
 
-	const showTabIcons = useMediaQuery((theme: Theme) =>
-		theme.breakpoints.down("md"),
-	);
-	const routeMatch = useRouteMatch([
-		"/trap-areas",
-		"/trap-maps",
-		"/trap-routes",
-		"/trap-settings",
-	]);
+	const showTabIcons = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
+	const routeMatch = useRouteMatch(["/trap-areas", "/trap-maps", "/trap-routes", "/trap-settings"]);
 	const currentTab = routeMatch?.pattern?.path;
 
 	const navigate = useNavigate();
@@ -126,8 +107,7 @@ const RadarTrapTabs: FC = (): ReactElement => {
 
 			{/* {true && ( */}
 			{(process.env.NODE_ENV === "development" ||
-				(process.env.NODE_ENV === "production" &&
-					radarTrapEnabled)) && (
+				(process.env.NODE_ENV === "production" && radarTrapEnabled)) && (
 				<Router>
 					<TrapTabs />
 

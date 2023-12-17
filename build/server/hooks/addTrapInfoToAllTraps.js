@@ -27,9 +27,7 @@ const addTrapInfoToAllTraps = (data) => {
   if (data.areaTraps === void 0) {
     return;
   }
-  data.trapsFeatureCollection = (0, import_helpers.featureCollection)(
-    (0, import_prepareTraps.prepareTraps)(data.areaTraps)
-  );
+  data.trapsFeatureCollection = (0, import_helpers.featureCollection)((0, import_prepareTraps.prepareTraps)(data.areaTraps));
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -19,11 +19,7 @@ interface MapMenuProps {
 	resizeMap: () => void;
 }
 
-const MapMenu: FC<MapMenuProps> = ({
-	routeId,
-	setRouteId,
-	resizeMap,
-}): ReactElement => {
+const MapMenu: FC<MapMenuProps> = ({ routeId, setRouteId, resizeMap }): ReactElement => {
 	const { count } = useRadarTrapCount();
 	const upSmall = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
 	const [showDrawer, setShowDrawer] = useState(false);
@@ -75,9 +71,7 @@ const MapMenu: FC<MapMenuProps> = ({
 					color="transparent"
 					elevation={0}
 				>
-					<Toolbar
-						sx={{ px: { xs: 0 }, py: { xs: 2 }, p: { sm: 2 } }}
-					>
+					<Toolbar sx={{ px: { xs: 0 }, py: { xs: 2 }, p: { sm: 2 } }}>
 						{!!count.total && (
 							<Fab
 								sx={{ opacity: 0.7, ml: 1 }}

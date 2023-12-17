@@ -45,10 +45,7 @@ var areas_hooks_default = {
       (0, import_feathers_hooks_common.disallow)("rest"),
       (0, import_feathers_hooks_common.iffElse)(
         (0, import_feathers_hooks_common.isProvider)("external"),
-        [
-          (0, import_feathers_hooks_common.paramsFromClient)("patchSourceFromClient"),
-          (0, import_hooks.patchOrCreateArea)()
-        ],
+        [(0, import_feathers_hooks_common.paramsFromClient)("patchSourceFromClient"), (0, import_hooks.patchOrCreateArea)()],
         [(0, import_hooks.patchOrCreateArea)()]
       )
     ],

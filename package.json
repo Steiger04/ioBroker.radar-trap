@@ -1,6 +1,9 @@
 {
   "name": "iobroker.radar-trap",
   "version": "1.0.10",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "description": "Detect speed traps and obstacles on routes",
   "author": {
     "name": "Steiger04",
@@ -105,7 +108,7 @@
     "sinon-chai": "^3.7.0",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.2",
-    "typescript": "^4.9.5"
+    "typescript": "^5.3.3"
   },
   "main": "build/main.js",
   "files": [
@@ -133,8 +136,8 @@
     "build:ts": "build-adapter ts",
     "watch:ts": "build-adapter ts --watch",
     "prebuild:react": "rimraf admin/build",
-    "build:react": "build-adapter react",
-    "watch:react": "build-adapter react --watch",
+    "build:react": "build-adapter react --reactCompileTarget es2020",
+    "watch:react": "build-adapter react --watch --reactCompileTarget es2020",
     "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",

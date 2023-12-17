@@ -25,29 +25,18 @@ interface MapListProps {
 	setShowDrawer: Dispatch<SetStateAction<boolean>>;
 }
 
-const MapList: FC<MapListProps> = ({
-	routeId,
-	setRouteId,
-	setRouteInfo,
-	setShowDrawer,
-}): ReactElement | null => {
-	const { data: areaData, status: areaStatus } = useFind<radarTrap.Area>(
-		"areas",
-		{
-			realtime: "refetch",
-			allPages: true,
-			query: { $select: ["_id", "description"] },
-		},
-	);
+const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowDrawer }): ReactElement | null => {
+	const { data: areaData, status: areaStatus } = useFind<radarTrap.Area>("areas", {
+		realtime: "refetch",
+		allPages: true,
+		query: { $select: ["_id", "description"] },
+	});
 
-	const { data: routesData, status: routesStatus } = useFind<radarTrap.Route>(
-		"routes",
-		{
-			realtime: "refetch",
-			allPages: true,
-			query: { $select: ["_id", "description", "activeProfile"] },
-		},
-	);
+	const { data: routesData, status: routesStatus } = useFind<radarTrap.Route>("routes", {
+		realtime: "refetch",
+		allPages: true,
+		query: { $select: ["_id", "description", "activeProfile"] },
+	});
 
 	const routesItems =
 		routesStatus === "success" &&
@@ -56,17 +45,13 @@ const MapList: FC<MapListProps> = ({
 			.sort((a, b) => a.description!.localeCompare(b.description!))
 			.map((data) => {
 				const actualExclusionsList = data
-					.activeProfile!.actualExclusion.map((excl) =>
-						I18n.t(excl as string),
-					)
+					.activeProfile!.actualExclusion.map((excl) => I18n.t(excl as string))
 					.join(", ");
 
 				const primaryText = data.description!;
-				const secondaryText = `${I18n.t("profile")}: ${I18n.t(
-					data.activeProfile!.name,
-				)} | ${I18n.t("exclusions")}: ${
-					actualExclusionsList.length > 0 ? actualExclusionsList : "-"
-				} `;
+				const secondaryText = `${I18n.t("profile")}: ${I18n.t(data.activeProfile!.name)} | ${I18n.t(
+					"exclusions",
+				)}: ${actualExclusionsList.length > 0 ? actualExclusionsList : "-"} `;
 
 				return (
 					<ListItem key={data._id} disablePadding={true}>
@@ -79,19 +64,10 @@ const MapList: FC<MapListProps> = ({
 						>
 							<ListItemAvatar>
 								<Avatar>
-									<RouteIcon
-										color={
-											routeId === data._id
-												? "primary"
-												: "inherit"
-										}
-									/>
+									<RouteIcon color={routeId === data._id ? "primary" : "inherit"} />
 								</Avatar>
 							</ListItemAvatar>
-							<ListItemText
-								primary={primaryText}
-								secondary={secondaryText}
-							/>
+							<ListItemText primary={primaryText} secondary={secondaryText} />
 						</ListItemButton>
 					</ListItem>
 				);
@@ -117,19 +93,10 @@ const MapList: FC<MapListProps> = ({
 						>
 							<ListItemAvatar>
 								<Avatar>
-									<PublicIcon
-										color={
-											routeId === data._id
-												? "primary"
-												: "inherit"
-										}
-									/>
+									<PublicIcon color={routeId === data._id ? "primary" : "inherit"} />
 								</Avatar>
 							</ListItemAvatar>
-							<ListItemText
-								primary={primaryText}
-								secondary={secondaryText}
-							/>
+							<ListItemText primary={primaryText} secondary={secondaryText} />
 						</ListItemButton>
 					</ListItem>
 				);
@@ -146,9 +113,7 @@ const MapList: FC<MapListProps> = ({
 			{routesItems && !!routesItems.length && (
 				<List
 					subheader={
-						<ListSubheader
-							sx={{ display: "flex", justifyContent: "center" }}
-						>
+						<ListSubheader sx={{ display: "flex", justifyContent: "center" }}>
 							<Typography variant="body1" py={1}>
 								{I18n.t("routes")}
 							</Typography>
@@ -162,9 +127,7 @@ const MapList: FC<MapListProps> = ({
 			{areaItems && !!areaItems.length && (
 				<List
 					subheader={
-						<ListSubheader
-							sx={{ display: "flex", justifyContent: "center" }}
-						>
+						<ListSubheader sx={{ display: "flex", justifyContent: "center" }}>
 							<Typography variant="body1" py={1}>
 								{I18n.t("areas")}
 							</Typography>

@@ -73,9 +73,7 @@ const determineTrapTypes = (trapTypes) => trapTypes.reduce(
     resultTrap.properties.type_text = type_text[resultTrap.properties.type];
     if (resultTrap.properties.polyline !== "") {
       resultTrap.properties.polyline = (0, import_helpers.feature)(
-        import_polyline.default.toGeoJSON(
-          resultTrap.properties.polyline
-        )
+        import_polyline.default.toGeoJSON(resultTrap.properties.polyline)
       );
       resultTrap.properties.polyline.properties.linetrap = true;
       resultTrap.properties.polyline.properties.lat = resultTrap.properties.lat;
@@ -101,9 +99,7 @@ const determineTrapTypes = (trapTypes) => trapTypes.reduce(
       resultTrap.properties.type_name = "fixed-trap";
       list.fixedTraps.push(resultTrap);
     }
-    if (["0", "1", "2", "3", "4", "5", "6"].includes(
-      resultTrap.properties.type
-    )) {
+    if (["0", "1", "2", "3", "4", "5", "6"].includes(resultTrap.properties.type)) {
       resultTrap.properties.type_name = "mobile-trap";
       list.mobileTraps.push(resultTrap);
     }

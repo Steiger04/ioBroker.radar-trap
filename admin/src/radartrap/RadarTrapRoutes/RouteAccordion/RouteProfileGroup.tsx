@@ -15,9 +15,7 @@ import type { ChangeEvent, FC, ReactElement } from "react";
 interface RouteProfileGroupProps {
 	disabled: boolean;
 }
-const RouteProfileGroup: FC<RouteProfileGroupProps> = ({
-	disabled,
-}): ReactElement => {
+const RouteProfileGroup: FC<RouteProfileGroupProps> = ({ disabled }): ReactElement => {
 	const { control } = useFormContext<radarTrap.Route>();
 
 	const {
@@ -27,9 +25,7 @@ const RouteProfileGroup: FC<RouteProfileGroupProps> = ({
 		name: "profiles",
 	});
 
-	const [activeProfile, setActiveProfile] = useState<radarTrap.Profile>(
-		profiles.find((profile) => profile.active)!,
-	);
+	const [activeProfile, setActiveProfile] = useState<radarTrap.Profile>(profiles.find((profile) => profile.active)!);
 
 	const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
 		profiles.forEach((profile) => {
@@ -68,18 +64,9 @@ const RouteProfileGroup: FC<RouteProfileGroupProps> = ({
 	return (
 		<FormControl>
 			<FormLabel disabled={disabled}>{I18n.t("profile")}</FormLabel>
-			<RadioGroup
-				row={true}
-				name={activeProfile.name}
-				value={activeProfile.name}
-				onChange={handleRadioChange}
-			>
+			<RadioGroup row={true} name={activeProfile.name} value={activeProfile.name} onChange={handleRadioChange}>
 				{profiles.map((profile) => (
-					<Tooltip
-						key={profile.name}
-						title={I18n.t(`${profile.name}-tooltip`)}
-						placement="top"
-					>
+					<Tooltip key={profile.name} title={I18n.t(`${profile.name}-tooltip`)} placement="top">
 						<FormControlLabel
 							disabled={disabled}
 							labelPlacement="end"
@@ -106,9 +93,7 @@ const RouteProfileGroup: FC<RouteProfileGroupProps> = ({
 									disabled={disabled}
 									value={exclusion}
 									onChange={handleBoxChange}
-									checked={activeProfile.actualExclusion.includes(
-										exclusion,
-									)}
+									checked={activeProfile.actualExclusion.includes(exclusion)}
 								/>
 							}
 							label={I18n.t(exclusion as string)}
