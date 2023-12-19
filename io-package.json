@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "news": {
+      "1.0.12": {
+        "en": "test-and-release.yml changed",
+        "de": "test-and-release.yml geändert",
+        "ru": "test-and-release.yml изменен",
+        "pt": "test-and-release.yml mudou",
+        "nl": "de test en vrijlating veranderde",
+        "fr": "test-and-release.yml changé",
+        "it": "test-and-release.yml cambiato",
+        "es": "test-and-release.yml cambió",
+        "pl": "zmiana testowa i wydawnicza została zmieniona",
+        "uk": "тест-і-випуск.yml змінився",
+        "zh-cn": "试验和重新定位"
+      },
       "1.0.11": {
         "en": "figbird.js removed\nCode optimized\npackages updated\nDB moved to files folder",
         "de": "figbird.js entfernt\nCode optimiert\npakete aktualisiert\nDB bewegt in Dateien Ordner",
@@ -80,19 +93,6 @@
         "pl": "nanoid upgradowany do 4.0.2",
         "uk": "наноідний знижений до 4.0.2",
         "zh-cn": "纳迪降到4.0.2"
-      },
-      "1.0.5": {
-        "en": "UI optimized and packages updated",
-        "de": "UI optimiert und Pakete aktualisiert",
-        "ru": "UI оптимизирован и пакеты обновлены",
-        "pt": "UI otimizado e pacotes atualizados",
-        "nl": "UI optimistisch en verpakkingen",
-        "fr": "UI optimisé et les paquets mis à jour",
-        "it": "UI ottimizzato e pacchetti aggiornati",
-        "es": "UI optimizado y los paquetes actualizados",
-        "pl": "UI optymalizowało i pakiety aktualizowane",
-        "uk": "UI оптимізовані та оновлені пакети",
-        "zh-cn": "A. 优化和更新的一揽子方案"
       }
     },
     "title": "Radar Trap",
