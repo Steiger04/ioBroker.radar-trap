@@ -58,7 +58,7 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 
 				const _data: Partial<TWithIndex> | undefined =
 					params.query && params.query.$select
-						? params.query.$select.reduce((acc: Partial<TWithIndex>, key) => {
+						? params.query.$select.reduce((acc: Partial<TWithIndex>, key: string) => {
 								if (key in createdData) {
 									(acc as Record<string, unknown>)[key] = createdData[key];
 								}
