@@ -29,6 +29,12 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) figbird.js removed
+* (Steiger04) Code optimized
+* (Steiger04) packages updated
+* (Steiger04) DB moved to files folder
+
 ### 1.0.10 (2023-12-02)
 * (Steiger04) io-package.json changed (ignoreInVersions)
 
