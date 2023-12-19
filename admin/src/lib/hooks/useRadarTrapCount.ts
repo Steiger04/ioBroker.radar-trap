@@ -1,4 +1,4 @@
-import { useFind } from "figbird";
+import { useRadarTrapFind } from "./useRadarTrapFind";
 import { useEffect, useState } from "react";
 
 type UseRadarTrapCount = {
@@ -16,20 +16,20 @@ const useRadarTrapCount = (): UseRadarTrapCount => {
 		total: 0,
 	});
 
-	const { status: areasStatus, total: areasTotal } = useFind<radarTrap.Area>("areas", {
+	const { status: areasStatus, total: areasTotal } = useRadarTrapFind<radarTrap.Area>("areas", {
 		query: { $limit: 0 },
 	});
 
-	const { status: routesStatus, total: routesTotal } = useFind<radarTrap.Route>("routes", {
+	const { status: routesStatus, total: routesTotal } = useRadarTrapFind<radarTrap.Route>("routes", {
 		query: { $limit: 0 },
 	});
 
 	useEffect(() => {
 		if (areasStatus === "success" && routesStatus === "success") {
 			setCount({
-				areas: areasTotal,
-				routes: routesTotal,
-				total: areasTotal + routesTotal,
+				areas: areasTotal!,
+				routes: routesTotal!,
+				total: areasTotal! + routesTotal!,
 			});
 		}
 	}, [areasStatus, routesStatus, areasTotal, routesTotal]);

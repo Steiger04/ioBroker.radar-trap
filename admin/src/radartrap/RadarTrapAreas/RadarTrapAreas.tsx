@@ -3,7 +3,7 @@ import { AreaAndRouteCard, Loading } from "../../components";
 import { useInvisibleBottomButtons, useRadarTrapAreas } from "../../lib";
 import { AreaAccordion } from "./AreaAccordion";
 
-import type { FC, ReactElement } from "react";
+import { type FC, type ReactElement } from "react";
 
 const RadarTrapAreas: FC = (): ReactElement => {
 	const { status, fields, prepend, update, remove, getDefault, expanded, handleChange } = useRadarTrapAreas();

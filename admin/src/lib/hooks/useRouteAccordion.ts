@@ -1,6 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { paramsForServer } from "feathers-hooks-common";
-import { useMutation } from "figbird";
 import { SyntheticEvent, useEffect } from "react";
 import {
 	FieldArrayWithId,
@@ -11,6 +10,7 @@ import {
 	UseFormReturn,
 } from "react-hook-form";
 import { useAccordionDisabled } from "./useAccordionDisabled";
+import { useAppData } from "../../App";
 import { useRouteSchema } from "./useRouteSchema";
 
 type UseRouteAccordion = {
@@ -32,7 +32,9 @@ const useRouteAccordion = ({
 	update: UseFieldArrayUpdate<radarTrap.FormRoutes, "routes">;
 	remove: UseFieldArrayRemove;
 }): UseRouteAccordion => {
-	const { create, remove } = useMutation<radarTrap.Route>("routes");
+	const { feathers } = useAppData();
+	const create = (data: radarTrap.Route, params?: object) => feathers.service("routes").create(data, params);
+	const remove = (id: string, params?: object) => feathers.service("routes").remove(id, params);
 
 	const { accordionDisabledMap } = useAccordionDisabled();
 
@@ -85,7 +87,7 @@ const useRouteAccordion = ({
 						dirtyFields.src || dirtyFields.dst || dirtyFields.profiles || dirtyFields.maxTrapDistance,
 					),
 				}),
-			).catch((ex) => console.log("Error in createRoute", ex));
+			).catch((ex: any) => console.log("Error in createRoute", ex));
 		})().catch((ex) => console.log("Error in handleSubmit", ex));
 	};
 

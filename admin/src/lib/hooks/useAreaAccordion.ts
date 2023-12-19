@@ -1,7 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { paramsForServer } from "feathers-hooks-common";
-// import { paramsForServer } from "feathers-hooks-common";
-import { useMutation } from "figbird";
 import { SyntheticEvent, useEffect } from "react";
 import {
 	FieldArrayWithId,
@@ -13,6 +11,7 @@ import {
 } from "react-hook-form";
 import { useAccordionDisabled } from "./useAccordionDisabled";
 import { useAreaSchema } from "./useAreaSchema";
+import { useAppData } from "../../App";
 
 type UseAreaAccordion = {
 	methods: UseFormReturn<radarTrap.Area, any>;
@@ -33,7 +32,9 @@ const useAreaAccordion = ({
 	update: UseFieldArrayUpdate<radarTrap.FormAreas, "areas">;
 	remove: UseFieldArrayRemove;
 }): UseAreaAccordion => {
-	const { create, remove } = useMutation<radarTrap.Area>("areas");
+	const { feathers } = useAppData();
+	const create = (data: radarTrap.Area, params?: object) => feathers.service("areas").create(data, params);
+	const remove = (id: string, params?: object) => feathers.service("areas").remove(id, params);
 
 	const { accordionDisabledMap } = useAccordionDisabled();
 
@@ -86,7 +87,7 @@ const useAreaAccordion = ({
 				paramsForServer({
 					patchSourceFromClient: Boolean(dirtyFields.areaPolygons),
 				}),
-			).catch((ex) => console.log("Error in createArea", ex));
+			).catch((ex: any) => console.log("Error in createArea", ex));
 		})().catch((ex) => console.log("Error in handleSubmit", ex));
 	};
 

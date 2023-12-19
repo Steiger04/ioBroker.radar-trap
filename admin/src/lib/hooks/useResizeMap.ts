@@ -7,31 +7,34 @@ import type { MapRef } from "react-map-gl";
 type UseResizeMap = {
 	_id: null | string;
 	map: RefObject<MapRef>;
-	animate?: boolean;
+	feathers: radarTrap.FeathersClient;
 };
 const useResizeMap = ({
 	_id,
 	map,
-	animate = false,
+	feathers,
 }: UseResizeMap): {
-	resizeMap: () => void;
+	resizeMap: (animate: boolean) => void;
 	boxStatus: radarTrap.GenericStatus;
 } => {
-	const { status: boxStatus, directionsBox } = useRadarTrapMapBox(_id);
+	const { status: boxStatus, directionsBox } = useRadarTrapMapBox(_id, feathers);
 
-	const resizeMap = useCallback(() => {
-		setTimeout(() => {
-			if (Boolean(map.current) && boxStatus === "success") {
-				map.current!.fitBounds(
-					[
-						[directionsBox![0], directionsBox![1]],
-						[directionsBox![2], directionsBox![3]],
-					],
-					{ animate, padding: 10 },
-				);
-			}
-		}, 100);
-	}, [boxStatus, directionsBox, map.current]);
+	const resizeMap = useCallback(
+		(animate: boolean) => {
+			setTimeout(() => {
+				if (Boolean(map.current) && boxStatus === "success") {
+					map.current!.fitBounds(
+						[
+							[directionsBox![0], directionsBox![1]],
+							[directionsBox![2], directionsBox![3]],
+						],
+						{ animate, padding: 10 },
+					);
+				}
+			}, 100);
+		},
+		[boxStatus, directionsBox, map.current],
+	);
 
 	useEffect(() => {
 		let resizeTimer: NodeJS.Timeout | undefined;
@@ -39,7 +42,7 @@ const useResizeMap = ({
 		const handleResize = (): void => {
 			clearTimeout(resizeTimer);
 			resizeTimer = setTimeout(() => {
-				resizeMap();
+				resizeMap(false);
 			}, 100);
 		};
 

@@ -5,5 +5,4 @@ module.exports = {
 		default: 10,
 		max: 50,
 	},
-	nedb: "data",
 };

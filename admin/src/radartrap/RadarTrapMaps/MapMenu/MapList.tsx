@@ -9,7 +9,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import Typography from "@mui/material/Typography";
-import { useFind } from "figbird";
+import { useRadarTrapFind } from "../../../lib";
 
 import type { Dispatch, FC, ReactElement, SetStateAction } from "react";
 
@@ -26,15 +26,11 @@ interface MapListProps {
 }
 
 const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowDrawer }): ReactElement | null => {
-	const { data: areaData, status: areaStatus } = useFind<radarTrap.Area>("areas", {
-		realtime: "refetch",
-		allPages: true,
+	const { data: areaData, status: areaStatus } = useRadarTrapFind<radarTrap.Area>("areas", {
 		query: { $select: ["_id", "description"] },
 	});
 
-	const { data: routesData, status: routesStatus } = useFind<radarTrap.Route>("routes", {
-		realtime: "refetch",
-		allPages: true,
+	const { data: routesData, status: routesStatus } = useRadarTrapFind<radarTrap.Route>("routes", {
 		query: { $select: ["_id", "description", "activeProfile"] },
 	});
 

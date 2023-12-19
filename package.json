@@ -51,7 +51,6 @@
     "cross-fetch": "^4.0.0",
     "feathers-hooks-common": "^6.1.5",
     "feathers-nedb": "^6.0.0",
-    "figbird": "0.12.1",
     "gsap": "^3.12.4",
     "helmet": "^6.1.5",
     "lodash": "^4.17.21",

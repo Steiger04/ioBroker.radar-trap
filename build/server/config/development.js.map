@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/config/development.ts"],
+  "sourcesContent": ["module.exports = {\n\tnedb: \"../../../../../iobroker-data/files/radarTrapDB\",\n};\n"],
+  "mappings": ";AAAA,OAAO,UAAU;AAAA,EAChB,MAAM;AACP;",
+  "names": []
+}

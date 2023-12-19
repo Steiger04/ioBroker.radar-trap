@@ -5,7 +5,6 @@ module.exports = {
   paginate: {
     default: 10,
     max: 50
-  },
-  nedb: "data"
+  }
 };
 //# sourceMappingURL=default.js.map

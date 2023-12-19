@@ -1,5 +1,4 @@
 import I18n from "@iobroker/adapter-react/i18n";
-import { Status, useFind } from "figbird";
 import { nanoid } from "nanoid";
 import { useEffect } from "react";
 import {
@@ -11,6 +10,7 @@ import {
 	useForm,
 } from "react-hook-form";
 import { useAccordionExpanded, UseAccordionExpanded } from "./useAccordionExpanded";
+import { useRadarTrapFind } from "./useRadarTrapFind";
 
 const getDefault = (): radarTrap.Area => ({
 	_id: nanoid(),
@@ -20,7 +20,7 @@ const getDefault = (): radarTrap.Area => ({
 });
 
 type UseRadarTrapAreas = {
-	status: Status;
+	status: radarTrap.GenericStatus;
 	fields: FieldArrayWithId<radarTrap.FormAreas, "areas", "id">[];
 	prepend: UseFieldArrayPrepend<radarTrap.FormAreas, "areas">;
 	update: UseFieldArrayUpdate<radarTrap.FormAreas, "areas">;
@@ -32,11 +32,9 @@ type UseRadarTrapAreas = {
 
 const useRadarTrapAreas = (): UseRadarTrapAreas => {
 	const { expanded, handleChange } = useAccordionExpanded();
-	const { data, status } = useFind<radarTrap.Area>("areas", {
-		allPages: true,
-		realtime: "refetch",
+
+	const { data, status } = useRadarTrapFind<radarTrap.Area>("areas", {
 		query: {
-			/* $sort: { description: 1 }, */
 			$select: ["_id", "description", "cron", "areaPolygons"],
 		},
 	});
@@ -51,9 +49,8 @@ const useRadarTrapAreas = (): UseRadarTrapAreas => {
 	});
 
 	useEffect(() => {
-		console.log("useRadarTrapAreas", { status, data });
 		status === "success" && reset({ areas: data as radarTrap.Areas });
-	}, [status]);
+	}, [status, data]);
 
 	return {
 		status,

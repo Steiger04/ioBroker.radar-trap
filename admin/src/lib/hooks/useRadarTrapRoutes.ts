@@ -1,5 +1,4 @@
 import I18n from "@iobroker/adapter-react/i18n";
-import { Status, useFind } from "figbird";
 import { nanoid } from "nanoid";
 import { useEffect } from "react";
 import {
@@ -11,6 +10,7 @@ import {
 	useForm,
 } from "react-hook-form";
 import { useAccordionExpanded, UseAccordionExpanded } from "./useAccordionExpanded";
+import { useRadarTrapFind } from "./useRadarTrapFind";
 
 const getDefault = (): radarTrap.Route => ({
 	_id: nanoid(),
@@ -48,7 +48,7 @@ const getDefault = (): radarTrap.Route => ({
 });
 
 type UseRadarTrapRoutes = {
-	status: Status;
+	status: radarTrap.GenericStatus;
 	fields: FieldArrayWithId<radarTrap.FormRoutes, "routes", "id">[];
 	prepend: UseFieldArrayPrepend<radarTrap.FormRoutes, "routes">;
 	update: UseFieldArrayUpdate<radarTrap.FormRoutes, "routes">;
@@ -61,11 +61,8 @@ type UseRadarTrapRoutes = {
 const useRadarTrapRoutes = (): UseRadarTrapRoutes => {
 	const { expanded, handleChange } = useAccordionExpanded();
 
-	const { data, status } = useFind<radarTrap.Route>("routes", {
-		allPages: true,
-		realtime: "refetch",
+	const { data, status } = useRadarTrapFind<radarTrap.Route>("routes", {
 		query: {
-			/* $sort: { description: 1 }, */
 			$select: ["_id", "description", "src", "dst", "profiles", "cron", "maxTrapDistance"],
 		},
 	});
@@ -81,7 +78,7 @@ const useRadarTrapRoutes = (): UseRadarTrapRoutes => {
 
 	useEffect(() => {
 		status === "success" && reset({ routes: data as radarTrap.Routes });
-	}, [status]);
+	}, [status, data]);
 
 	return {
 		status,

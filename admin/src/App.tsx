@@ -2,7 +2,6 @@ import feathers from "@feathersjs/client";
 import socketio from "@feathersjs/socketio-client";
 import GenericApp from "@iobroker/adapter-react/GenericApp";
 import Geocoding, { GeocodeService } from "@mapbox/mapbox-sdk/services/geocoding";
-import { Provider } from "figbird";
 import { createContext, ReactElement, useContext } from "react";
 import io from "socket.io-client";
 import { IbrContainer, IbrFooter, IbrHeader } from "./ibr";
@@ -100,17 +99,15 @@ class App extends GenericApp {
 		};
 
 		return (
-			<Provider feathers={this.feathersClient}>
-				<AppContext.Provider value={appContext}>
-					<IbrContainer id="ibr-container" component="main" maxWidth={false}>
-						<IbrHeader />
+			<AppContext.Provider value={appContext}>
+				<IbrContainer id="ibr-container" component="main" maxWidth={false}>
+					<IbrHeader />
 
-						<RadarTrapTabs />
+					<RadarTrapTabs />
 
-						<IbrFooter />
-					</IbrContainer>
-				</AppContext.Provider>
-			</Provider>
+					<IbrFooter />
+				</IbrContainer>
+			</AppContext.Provider>
 		);
 	}
 }

@@ -1,5 +1,5 @@
 "use strict";
 module.exports = {
-  nedb: "../data"
+  nedb: "../../../../../iobroker-data/files/radarTrapDB"
 };
 //# sourceMappingURL=production.js.map

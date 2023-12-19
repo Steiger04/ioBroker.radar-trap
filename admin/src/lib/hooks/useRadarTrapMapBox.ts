@@ -1,12 +1,14 @@
 import bbox from "@turf/bbox";
 import { BBox, Coord, featureCollection } from "@turf/helpers";
 import { useCallback, useEffect, useState } from "react";
-import { square, useRadarTrapSource } from "..";
+import { square } from "../helpers/square";
+import { useRadarTrapSource } from "./useRadarTrapSource";
 
 const cache = new Map();
 
 const useRadarTrapMapBox = (
-	routeId: null | string,
+	id: null | string,
+	feathersClient: radarTrap.FeathersClient,
 ): { status: radarTrap.GenericStatus; directionsBox: BBox | null } => {
 	const [status, setStatus] = useState<radarTrap.GenericStatus>("idle");
 	const [directionsBox, setDirectionsBox] = useState<BBox | null>(null);
@@ -15,11 +17,9 @@ const useRadarTrapMapBox = (
 		source: { directionsFeatureCollection, areaPolygons },
 		areaSourceStatus,
 		routeSourceStatus,
-	} = useRadarTrapSource(routeId);
+	} = useRadarTrapSource(id, feathersClient);
 
 	const fetchData = useCallback(async (): Promise<void> => {
-		//console.log("useRadarTrapMapBox() -> fetchData");
-
 		const url = "http://ip-api.com/json?fields=lon,lat";
 
 		let json: Record<string, number> | ArrayLike<number>;
@@ -58,11 +58,13 @@ const useRadarTrapMapBox = (
 				console.log(`useRadarTrapMapBox() -> fetchData() -> Error: ${ex}`);
 			});
 		}
-	}, [areaSourceStatus, routeSourceStatus]);
+	}, [areaSourceStatus, routeSourceStatus, fetchData]);
 
 	useEffect(() => {
+		if (!areaPolygons) return;
+
 		if (areaSourceStatus === "success") {
-			setDirectionsBox(bbox(featureCollection(Object.values(areaPolygons!))));
+			setDirectionsBox(bbox(featureCollection(Object.values(areaPolygons))));
 			setStatus("success");
 
 			return;
@@ -70,12 +72,12 @@ const useRadarTrapMapBox = (
 
 		if (areaSourceStatus === "loading") {
 			setStatus("loading");
-
-			return;
 		}
-	}, [areaSourceStatus]);
+	}, [areaSourceStatus, areaPolygons]);
 
 	useEffect(() => {
+		if (!directionsFeatureCollection!.features.length) return;
+
 		if (routeSourceStatus === "success") {
 			setDirectionsBox(bbox(directionsFeatureCollection));
 			setStatus("success");
@@ -85,10 +87,8 @@ const useRadarTrapMapBox = (
 
 		if (routeSourceStatus === "loading") {
 			setStatus("loading");
-
-			return;
 		}
-	}, [routeSourceStatus]);
+	}, [routeSourceStatus, directionsFeatureCollection]);
 
 	return { status, directionsBox };
 };

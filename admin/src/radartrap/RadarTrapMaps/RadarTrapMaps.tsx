@@ -20,8 +20,8 @@ import {
 	useInvisibleBottomButtons,
 	useMapImages,
 	// useRadarTrapSource,
-	useRadarTrapSource2,
-	useResizeMap2,
+	useRadarTrapSource,
+	useResizeMap,
 } from "../../lib";
 import { TrapInfo } from "./TrapInfo";
 
@@ -39,7 +39,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 	const {
 		source: { directionsFeatureCollection, trapsFeatureCollection, polysFeatureCollection, areaPolygons },
-	} = useRadarTrapSource2(routeId, feathers);
+	} = useRadarTrapSource(routeId, feathers);
 
 	const [cursor, setCursor] = useState<string>("");
 
@@ -156,7 +156,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 		}
 	};
 
-	const { resizeMap } = useResizeMap2({
+	const { resizeMap } = useResizeMap({
 		_id: routeId,
 		map: mapRef,
 		feathers,

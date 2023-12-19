@@ -3,7 +3,7 @@ import { Feature, featureCollection } from "@turf/helpers";
 import { FC, ReactElement, useCallback, useEffect, useRef } from "react";
 import Map, { MapRef, ScaleControl } from "react-map-gl";
 import { useAppData } from "../../App";
-import { useResizeMap2 } from "../../lib";
+import { useResizeMap } from "../../lib";
 import { DrawControl } from "./DrawControl";
 
 import type { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
@@ -54,7 +54,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 		});
 	}, []);
 
-	const { resizeMap, boxStatus } = useResizeMap2({
+	const { resizeMap, boxStatus } = useResizeMap({
 		_id: getValues("_id"),
 		map: mapRef,
 		feathers,
