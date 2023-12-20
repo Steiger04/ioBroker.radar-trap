@@ -12,6 +12,7 @@ import {
 import { useAccordionDisabled } from "./useAccordionDisabled";
 import { useAreaSchema } from "./useAreaSchema";
 import { useAppData } from "../../App";
+import { Params } from "@feathersjs/feathers";
 
 type UseAreaAccordion = {
 	methods: UseFormReturn<radarTrap.Area, any>;
@@ -33,8 +34,8 @@ const useAreaAccordion = ({
 	remove: UseFieldArrayRemove;
 }): UseAreaAccordion => {
 	const { feathers } = useAppData();
-	const create = (data: radarTrap.Area, params?: object) => feathers.service("areas").create(data, params);
-	const remove = (id: string, params?: object) => feathers.service("areas").remove(id, params);
+	const create = (data: radarTrap.Area, params?: Params) => feathers.service("areas").create(data, params);
+	const remove = (id: string, params?: Params) => feathers.service("areas").remove(id, params);
 
 	const { accordionDisabledMap } = useAccordionDisabled();
 

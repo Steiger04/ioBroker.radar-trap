@@ -12,6 +12,7 @@ import {
 import { useAccordionDisabled } from "./useAccordionDisabled";
 import { useAppData } from "../../App";
 import { useRouteSchema } from "./useRouteSchema";
+import { Params } from "@feathersjs/feathers";
 
 type UseRouteAccordion = {
 	methods: UseFormReturn<radarTrap.Route, any>;
@@ -33,8 +34,8 @@ const useRouteAccordion = ({
 	remove: UseFieldArrayRemove;
 }): UseRouteAccordion => {
 	const { feathers } = useAppData();
-	const create = (data: radarTrap.Route, params?: object) => feathers.service("routes").create(data, params);
-	const remove = (id: string, params?: object) => feathers.service("routes").remove(id, params);
+	const create = (data: radarTrap.Route, params?: Params) => feathers.service("routes").create(data, params);
+	const remove = (id: string, params?: Params) => feathers.service("routes").remove(id, params);
 
 	const { accordionDisabledMap } = useAccordionDisabled();
 

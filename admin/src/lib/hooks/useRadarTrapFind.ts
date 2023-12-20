@@ -5,7 +5,7 @@ import { filter, findIndex, set } from "lodash";
 import { Params } from "@feathersjs/feathers";
 
 const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
-	serviceType: string,
+	serviceName: string,
 	params: Params = {},
 ): { status: radarTrap.GenericStatus; data: T[]; total: number | null } => {
 	type TWithIndex = T & Record<string, unknown>;
@@ -24,7 +24,7 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 			setStatus("loading");
 
 			const { data: _data, total: _total }: { data: T[]; total: number } = await feathers
-				.service(serviceType)
+				.service(serviceName)
 				.find(params);
 
 			setTotal(_total);
@@ -43,7 +43,7 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 				console.log(err);
 			}
 		}
-	}, [feathers, serviceType]);
+	}, [feathers, serviceName]);
 
 	useEffect(() => {
 		find();
@@ -87,13 +87,13 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 	}, []);
 
 	useEffect(() => {
-		feathers.service(serviceType).on("created", dataCreatedHandler);
-		feathers.service(serviceType).on("removed", dataRemovedHandler);
+		feathers.service(serviceName).on("created", dataCreatedHandler);
+		feathers.service(serviceName).on("removed", dataRemovedHandler);
 
 		// eslint-disable-next-line consistent-return
 		return () => {
-			feathers.service(serviceType).removeListener("created", dataCreatedHandler);
-			feathers.service(serviceType).removeListener("removed", dataRemovedHandler);
+			feathers.service(serviceName).removeListener("created", dataCreatedHandler);
+			feathers.service(serviceName).removeListener("removed", dataRemovedHandler);
 		};
 	}, [feathers]);
 
