@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { Feature, featureCollection } from "@turf/helpers";
 import { FC, ReactElement, useCallback, useEffect, useRef } from "react";
-import Map, { MapRef, ScaleControl } from "react-map-gl";
+import Map, { MapRef, ScaleControl, FullscreenControl } from "react-map-gl";
 import { useAppData } from "../../App";
 import { useResizeMap } from "../../lib";
 import { DrawControl } from "./DrawControl";
@@ -17,15 +17,15 @@ const AreaTrapMap: FC = (): ReactElement => {
 
 	const onUpdate = useCallback(
 		(e: DrawUpdateEvent | DrawCreateEvent) => {
-			// console.log("event Update", e);
+			if (!drawRef.current) return;
 
 			const tmpFeature = e.features[0] as Feature<GeoJSON.Polygon, GeoJSON.GeoJsonProperties>;
 
 			const newFeatures = { ...getValues("areaPolygons") };
 
 			if (tmpFeature.id !== Object.keys(newFeatures)[0]) {
-				drawRef.current?.delete(Object.keys(newFeatures)[0]);
-				drawRef.current?.add(tmpFeature);
+				drawRef.current.delete(Object.keys(newFeatures)[0]);
+				drawRef.current.add(tmpFeature);
 			}
 
 			setValue(
@@ -37,12 +37,10 @@ const AreaTrapMap: FC = (): ReactElement => {
 				},
 			);
 		},
-		[drawRef.current],
+		[drawRef],
 	);
 
 	const onDelete = useCallback((e: DrawDeleteEvent) => {
-		// console.log("event Delete", e);
-
 		const newFeatures = { ...getValues("areaPolygons") };
 
 		for (const f of e.features) {
@@ -61,20 +59,14 @@ const AreaTrapMap: FC = (): ReactElement => {
 	});
 
 	useEffect(() => {
-		if (!!drawRef.current && boxStatus === "success") {
+		if (drawRef.current && boxStatus === "success") {
 			const areaPolygons = getValues("areaPolygons");
-
-			/* console.log(
-				"drawRef.current",
-				featureCollection(Object.values(areaPolygons!)),
-				drawRef.current,
-			); */
 
 			drawRef.current.add(featureCollection(Object.values(areaPolygons!)));
 		}
 
-		resizeMap(true);
-	}, [drawRef.current, resizeMap, boxStatus]);
+		resizeMap(false);
+	}, [drawRef, resizeMap, boxStatus]);
 
 	return (
 		<Box
@@ -90,7 +82,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 				attributionControl={false}
 				mapStyle="mapbox://styles/mapbox/streets-v12"
 			>
-				<ScaleControl position="bottom-left" />
+				<FullscreenControl position="top-left" />
 				<DrawControl
 					ref={drawRef}
 					position="top-left"
@@ -104,6 +96,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 					onUpdate={onUpdate}
 					onDelete={onDelete}
 				/>
+				<ScaleControl position="bottom-left" />
 			</Map>
 		</Box>
 	);

@@ -9,7 +9,6 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 	params: Params = {},
 ): { status: radarTrap.GenericStatus; data: T[]; total: number | null } => {
 	type TWithIndex = T & Record<string, unknown>;
-
 	type AreaWithIndex = radarTrap.Area & { [key: string]: unknown };
 	type RouteWithIndex = radarTrap.Route & { [key: string]: unknown };
 

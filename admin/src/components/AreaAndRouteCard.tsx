@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import type { SxProps, Theme } from "@mui/material/styles";
-import type { FC, MouseEventHandler, ReactElement } from "react";
+import { useRef, type FC, type MouseEventHandler, type ReactElement, useState, useEffect, useCallback } from "react";
 
 interface AreaAndRouteCardProps {
 	sx?: SxProps<Theme>;
@@ -15,34 +15,57 @@ const AreaAndRouteCard: FC<AreaAndRouteCardProps> = ({
 	children,
 	buttonClickHandler,
 	label,
-}): ReactElement => (
-	<Box
-		sx={{
-			/* bgcolor: "blue", */
-			height: "100%",
-			display: "flex",
-			flexFlow: "column",
-		}}
-	>
-		<Box sx={{ pb: 2, alignSelf: "center" }}>
-			<Button onClick={buttonClickHandler} variant="contained">
-				{label}
-			</Button>
-		</Box>
+}): ReactElement => {
+	const boxRef = useRef(null);
+	const [isOverflowing, setIsOverflowing] = useState(false);
 
+	const checkOverflow = useCallback(() => {
+		if (boxRef.current) {
+			const { scrollHeight, clientHeight } = boxRef.current;
+			setIsOverflowing(scrollHeight >= clientHeight);
+		}
+	}, [boxRef]);
+
+	useEffect(() => {
+		checkOverflow();
+		window.addEventListener("resize", checkOverflow);
+
+		return () => {
+			window.removeEventListener("resize", checkOverflow);
+		};
+	}, [checkOverflow]);
+
+	return (
 		<Box
-			sx={[
-				{
-					/* bgcolor: "gold", */
-					flex: "1 1 0",
-					overflowY: "auto",
-				},
-				...(Array.isArray(sx) ? sx : [sx]),
-			]}
+			sx={{
+				/* bgcolor: "blue", */
+				height: "100%",
+				display: "flex",
+				flexFlow: "column",
+			}}
 		>
-			{children}
+			<Box sx={{ pb: 2, alignSelf: "center" }}>
+				<Button onClick={buttonClickHandler} variant="contained">
+					{label}
+				</Button>
+			</Box>
+
+			<Box
+				ref={boxRef}
+				sx={[
+					{
+						/* bgcolor: "gold", */
+						flex: "1 1 0",
+						overflowY: "auto",
+						pr: isOverflowing ? 1 : 0,
+					},
+					...(Array.isArray(sx) ? sx : [sx]),
+				]}
+			>
+				{children}
+			</Box>
 		</Box>
-	</Box>
-);
+	);
+};
 
 export { AreaAndRouteCard };
