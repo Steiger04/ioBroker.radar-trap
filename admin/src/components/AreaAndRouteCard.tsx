@@ -57,7 +57,7 @@ const AreaAndRouteCard: FC<AreaAndRouteCardProps> = ({
 						/* bgcolor: "gold", */
 						flex: "1 1 0",
 						overflowY: "auto",
-						pr: isOverflowing ? 1 : 0,
+						pr: isOverflowing ? 0.75 : 0,
 					},
 					...(Array.isArray(sx) ? sx : [sx]),
 				]}

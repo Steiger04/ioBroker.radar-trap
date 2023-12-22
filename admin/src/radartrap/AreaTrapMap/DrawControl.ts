@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import MapboxDraw, { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
+import ExtendMapboxDraw from "./ExtendMapboxDraw";
 import { forwardRef, useImperativeHandle } from "react";
 import { useControl } from "react-map-gl";
 
@@ -15,8 +16,21 @@ type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
 };
 
 const DrawControl = forwardRef((props: DrawControlProps, ref): null => {
-	const drawRef = useControl<MapboxDraw>(
-		() => new MapboxDraw(props),
+	const drawRef = useControl<ExtendMapboxDraw>(
+		() =>
+			new ExtendMapboxDraw({
+				buttons: [
+					{
+						on: "click",
+						action: () => console.log("click"),
+						classes: [],
+						content:
+							"<div title='Circle Tool' style='width: 29px;height: 29px;background-image: url(./assets/circle.svg);" +
+							"background-repeat: no-repeat;background-position: center;background-size: 15px 15px;' />",
+					},
+				],
+				...props,
+			}),
 		({ map }: MapContextValue) => {
 			map.on("draw.create", props.onCreate!);
 			map.on("draw.update", props.onUpdate!);
@@ -36,11 +50,5 @@ const DrawControl = forwardRef((props: DrawControlProps, ref): null => {
 
 	return null;
 });
-
-DrawControl.defaultProps = {
-	onCreate: () => {},
-	onUpdate: () => {},
-	onDelete: () => {},
-};
 
 export { DrawControl };

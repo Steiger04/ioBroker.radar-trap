@@ -5,9 +5,9 @@ import Map, { MapRef, ScaleControl, FullscreenControl } from "react-map-gl";
 import { useAppData } from "../../App";
 import { useResizeMap } from "../../lib";
 import { DrawControl } from "./DrawControl";
+import { useFormContext } from "react-hook-form";
 
 import type { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
-import { useFormContext } from "react-hook-form";
 
 const AreaTrapMap: FC = (): ReactElement => {
 	const { savedNative, feathers } = useAppData();
@@ -82,7 +82,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 				attributionControl={false}
 				mapStyle="mapbox://styles/mapbox/streets-v12"
 			>
-				<FullscreenControl position="top-left" />
+				<FullscreenControl position="top-right" />
 				<DrawControl
 					ref={drawRef}
 					position="top-left"
