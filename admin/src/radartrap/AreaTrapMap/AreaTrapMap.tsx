@@ -83,6 +83,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 				mapStyle="mapbox://styles/mapbox/streets-v12"
 			>
 				<FullscreenControl position="top-right" />
+
 				<DrawControl
 					ref={drawRef}
 					position="top-left"
@@ -91,11 +92,12 @@ const AreaTrapMap: FC = (): ReactElement => {
 						polygon: true,
 						trash: true,
 					}}
-					defaultMode="draw_polygon"
+					// defaultMode="draw_polygon"
 					onCreate={onUpdate}
 					onUpdate={onUpdate}
 					onDelete={onDelete}
 				/>
+
 				<ScaleControl position="bottom-left" />
 			</Map>
 		</Box>

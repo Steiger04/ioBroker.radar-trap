@@ -16,21 +16,10 @@ type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
 };
 
 const DrawControl = forwardRef((props: DrawControlProps, ref): null => {
+	const extendMapboxDraw = new ExtendMapboxDraw(props);
+
 	const drawRef = useControl<ExtendMapboxDraw>(
-		() =>
-			new ExtendMapboxDraw({
-				buttons: [
-					{
-						on: "click",
-						action: () => console.log("click"),
-						classes: [],
-						content:
-							"<div title='Circle Tool' style='width: 29px;height: 29px;background-image: url(./assets/circle.svg);" +
-							"background-repeat: no-repeat;background-position: center;background-size: 15px 15px;' />",
-					},
-				],
-				...props,
-			}),
+		() => extendMapboxDraw,
 		({ map }: MapContextValue) => {
 			map.on("draw.create", props.onCreate!);
 			map.on("draw.update", props.onUpdate!);

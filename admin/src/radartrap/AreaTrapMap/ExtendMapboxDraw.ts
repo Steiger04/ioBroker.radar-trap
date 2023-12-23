@@ -1,12 +1,15 @@
 import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { CircleMode, DragCircleMode, DirectMode, SimpleSelectMode } = require("maplibre-gl-draw-circle");
 
 type ButtonOption = {
 	classes?: string[];
 	on: string;
 	action: () => void;
 	elButton?: HTMLButtonElement;
-	content?: Element | string;
+	buttonStyle: string;
+	content?: string | Element;
 };
 
 class ExtendMapboxDraw extends MapboxDraw implements mapboxgl.IControl {
@@ -15,18 +18,38 @@ class ExtendMapboxDraw extends MapboxDraw implements mapboxgl.IControl {
 	onAddOrig: (map: mapboxgl.Map) => HTMLElement;
 	onRemoveOrig: (map: mapboxgl.Map) => void;
 
-	constructor({ buttons, ...props }: { buttons: ButtonOption[] } & ConstructorParameters<typeof MapboxDraw>[0]) {
-		super(props);
+	constructor(props: ConstructorParameters<typeof MapboxDraw>[0]) {
+		super({
+			...props,
+			modes: {
+				...MapboxDraw.modes,
+				draw_circle: CircleMode,
+				drag_circle: DragCircleMode,
+				direct_select: DirectMode,
+				simple_select: SimpleSelectMode,
+			},
+		} as ConstructorParameters<typeof MapboxDraw>[0]);
 
-		this.buttons = buttons;
+		this.buttons = [
+			{
+				on: "click",
+				action: () => {
+					this.changeMode("draw_circle", { initialRadiusInKm: 5.0 });
+				},
+				classes: ["mapbox-gl-draw_ctrl-draw-btn"],
+				buttonStyle: "background-image: url(./assets/circle.svg);background-size: 15px 15px;",
+			},
+		];
 
 		this.onAddOrig = this.onAdd;
+
 		this.onAdd = (map: mapboxgl.Map): HTMLElement => {
 			this.elContainer = this.onAddOrig(map);
 
 			this.buttons.forEach((b) => {
 				this.addButton(b);
 			});
+
 			return this.elContainer;
 		};
 
@@ -42,7 +65,9 @@ class ExtendMapboxDraw extends MapboxDraw implements mapboxgl.IControl {
 
 	addButton(opt: ButtonOption): void {
 		const elButton = document.createElement("button");
+
 		elButton.className = "mapbox-gl-draw_ctrl-draw-btn";
+		elButton.style.cssText = opt.buttonStyle;
 
 		if (opt.classes instanceof Array) {
 			opt.classes.forEach((c) => {
@@ -60,7 +85,7 @@ class ExtendMapboxDraw extends MapboxDraw implements mapboxgl.IControl {
 
 		elButton.addEventListener(opt.on, opt.action);
 		this.elContainer?.prepend(elButton);
-		opt.elButton = elButton;
+		// opt.elButton = elButton;
 	}
 
 	removeButton(opt: ButtonOption): void {

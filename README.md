@@ -29,6 +29,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) circle mode added
+
 ### 1.0.12 (2023-12-19)
 * (Steiger04) test-and-release.yml changed
 
