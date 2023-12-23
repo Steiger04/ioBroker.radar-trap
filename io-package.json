@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "news": {
+      "1.0.13": {
+        "en": "circle mode added",
+        "de": "kreismodus hinzugefügt",
+        "ru": "режим круга добавлен",
+        "pt": "modo de círculo adicionado",
+        "nl": "cirkelvorm toegevoegd",
+        "fr": "mode cercle ajouté",
+        "it": "modalità cerchio aggiunto",
+        "es": "modo círculo añadido",
+        "pl": "tryb kołowy",
+        "uk": "режим додано",
+        "zh-cn": "b. 集群增加"
+      },
       "1.0.12": {
         "en": "test-and-release.yml changed",
         "de": "test-and-release.yml geändert",
@@ -80,19 +93,6 @@
         "pl": "Addd for visual Widget\nPaństwa dopasowane do liczenia pułapek",
         "uk": "Додані функції для vis-widgets\nДодані стани для підрахунку пасток",
         "zh-cn": "A. 植被增加的特点\n增购装置的国家"
-      },
-      "1.0.6": {
-        "en": "nanoid downgraded to 4.0.2",
-        "de": "nanoid reduziert auf 4,0.2",
-        "ru": "наноид пониженный до 4.0.2",
-        "pt": "nanoide degradado para 4.0.2",
-        "nl": "nanoid gedegradeerd tot 4.0.2",
-        "fr": "nanoid dégradé à 4.0.2",
-        "it": "nanoide degradato a 4.0.2",
-        "es": "nanoide degradado a 4.0.2",
-        "pl": "nanoid upgradowany do 4.0.2",
-        "uk": "наноідний знижений до 4.0.2",
-        "zh-cn": "纳迪降到4.0.2"
       }
     },
     "title": "Radar Trap",

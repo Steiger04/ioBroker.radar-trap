@@ -29,7 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.13 (2023-12-23)
 * (Steiger04) circle mode added
 
 ### 1.0.12 (2023-12-19)
