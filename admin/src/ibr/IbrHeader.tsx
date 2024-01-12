@@ -1,4 +1,4 @@
-import Logo from "@iobroker/adapter-react/Components/Logo";
+import Logo from "@iobroker/adapter-react-v5/Components/Logo";
 import Box from "@mui/material/Box";
 import { useAppData } from "../App";
 
@@ -17,8 +17,7 @@ const IbrHeader: FC = (): ReactElement => {
 			}
 		>
 			<Logo
-				common={that.common}
-				classes={{ buttons: "button-logo", logo: "" }}
+				common={that.common}				
 				native={that.state.native}
 				instance={that.instance}
 				onError={(text): void => that.setState({ errorText: text })}

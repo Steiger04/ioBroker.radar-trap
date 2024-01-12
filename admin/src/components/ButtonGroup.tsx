@@ -46,7 +46,7 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
 				val: true,
 				ack: false,
 			})
-			.catch((ex) => console.log(ex));
+			.catch((ex: any) => console.log(ex));
 	};
 
 	return (

@@ -1,4 +1,4 @@
-import I18n from "@iobroker/adapter-react/i18n";
+import I18n from "@iobroker/adapter-react-v5/i18n";
 import { boolean, number, object, string } from "yup";
 import { isFQDNList } from "../validators/isFQDNList";
 

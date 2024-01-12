@@ -2,7 +2,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import type { SxProps, Theme } from "@mui/material/styles";
-import { useRef, type FC, type MouseEventHandler, type ReactElement, useState, useEffect, useCallback } from "react";
+import {
+	useRef,
+	type FC,
+	type MouseEventHandler,
+	type PropsWithChildren,
+	type ReactElement,
+	useState,
+	useEffect,
+	useCallback,
+} from "react";
 
 interface AreaAndRouteCardProps {
 	sx?: SxProps<Theme>;
@@ -10,7 +19,7 @@ interface AreaAndRouteCardProps {
 	label: string;
 }
 
-const AreaAndRouteCard: FC<AreaAndRouteCardProps> = ({
+const AreaAndRouteCard: FC<PropsWithChildren<AreaAndRouteCardProps>> = ({
 	sx = [],
 	children,
 	buttonClickHandler,

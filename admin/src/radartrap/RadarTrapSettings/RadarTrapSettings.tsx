@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import I18n from "@iobroker/adapter-react/i18n";
+import I18n from "@iobroker/adapter-react-v5/i18n";
 import { Box, Link } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { FC, ReactElement, useEffect } from "react";

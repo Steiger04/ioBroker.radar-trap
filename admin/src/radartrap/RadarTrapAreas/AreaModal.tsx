@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import Modal from "@mui/material/Modal";
 
-import type { Dispatch, FC, ReactElement } from "react";
+import type { Dispatch, FC, PropsWithChildren, ReactElement } from "react";
 
 const style = {
 	position: "absolute",
@@ -23,7 +23,7 @@ interface AreaModalProps {
 	openModal: boolean;
 	setOpenModal: Dispatch<React.SetStateAction<boolean>>;
 }
-const AreaModal: FC<AreaModalProps> = ({ children, openModal, setOpenModal }): ReactElement => {
+const AreaModal: FC<PropsWithChildren<AreaModalProps>> = ({ children, openModal, setOpenModal }): ReactElement => {
 	const handleClose = () => setOpenModal(false);
 
 	return (

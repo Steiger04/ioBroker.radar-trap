@@ -12,7 +12,7 @@ const useRadarTrapEnabled = (): { enabled: boolean } => {
 
 		that.socket
 			.getObject(that.instanceId)
-			.then((instanceObj) => {
+			.then((instanceObj: ioBroker.Object) => {
 				sub = radarTrapEnabled$.subscribe((radarTrapEnabled) => {
 					// console.log("radarTrapEnabled", radarTrapEnabled);
 
@@ -22,7 +22,7 @@ const useRadarTrapEnabled = (): { enabled: boolean } => {
 				// console.log("instanceObj", instanceObj);
 				radarTrapEnabled$.next(instanceObj?.common.enabled);
 			})
-			.catch((ex) => console.log(ex));
+			.catch((ex: any) => console.log(ex));
 
 		return () => sub.unsubscribe();
 	}, []);

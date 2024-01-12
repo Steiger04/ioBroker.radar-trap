@@ -1,4 +1,4 @@
-import I18n from "@iobroker/adapter-react/i18n";
+import I18n from "@iobroker/adapter-react-v5/i18n";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";

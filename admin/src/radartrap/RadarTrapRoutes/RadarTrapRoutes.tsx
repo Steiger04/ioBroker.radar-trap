@@ -1,4 +1,4 @@
-import I18n from "@iobroker/adapter-react/i18n";
+import I18n from "@iobroker/adapter-react-v5/i18n";
 import { RouteAccordion } from "..";
 import { AreaAndRouteCard, Loading } from "../../components";
 import { useInvisibleBottomButtons } from "../../lib";

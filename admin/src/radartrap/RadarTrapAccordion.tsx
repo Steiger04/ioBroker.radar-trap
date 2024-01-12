@@ -4,7 +4,15 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { grey } from "@mui/material/colors";
 import { gsap } from "gsap";
-import { FC, ReactElement, SyntheticEvent, useEffect, useRef, useState } from "react";
+import {
+	type FC,
+	type PropsWithChildren,
+	type ReactElement,
+	type SyntheticEvent,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { ButtonGroup } from "../components/ButtonGroup";
 
 import type { UseAccordionExpanded } from "../lib";
@@ -24,7 +32,7 @@ interface RadarTrapAccordionProps {
 	isDirty: boolean;
 }
 
-const RadarTrapAccordion: FC<RadarTrapAccordionProps> = ({
+const RadarTrapAccordion: FC<PropsWithChildren<RadarTrapAccordionProps>> = ({
 	children,
 	accordionDisabledMap,
 	_id,

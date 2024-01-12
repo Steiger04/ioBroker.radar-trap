@@ -1,9 +1,9 @@
 import Geocoding from "@mapbox/mapbox-sdk/services/geocoding";
 import Box from "@mui/material/Box";
-import type { BaseSyntheticEvent, FC, ReactElement } from "react";
+import type { BaseSyntheticEvent, FC, PropsWithChildren, ReactElement } from "react";
 import { useAppData } from "../App";
 
-const SaveCloseButtonsWrapper: FC = ({ children }): ReactElement => {
+const SaveCloseButtonsWrapper: FC<PropsWithChildren> = ({ children }): ReactElement => {
 	const { that, native } = useAppData();
 
 	const onClickHandler = (event: BaseSyntheticEvent) => {
@@ -22,16 +22,16 @@ const SaveCloseButtonsWrapper: FC = ({ children }): ReactElement => {
 				() =>
 					that.socket
 						.getObject(that.instanceId)
-						.then((instanceObj) => {
+						.then((instanceObj: ioBroker.Object) => {
 							if (instanceObj) {
 								that.geocodingService = Geocoding({
 									accessToken: native.settings!.mbxAccessToken,
 								});
 
-								that.socket.setObject(that.instanceId, instanceObj).catch((ex) => console.log(ex));
+								that.socket.setObject(that.instanceId, instanceObj).catch((ex: any) => console.log(ex));
 							}
 						})
-						.catch((ex) => console.log(ex)),
+						.catch((ex: any) => console.log(ex)),
 				1000,
 			);
 		}

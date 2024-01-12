@@ -1,6 +1,6 @@
 import feathers from "@feathersjs/client";
 import socketio from "@feathersjs/socketio-client";
-import GenericApp from "@iobroker/adapter-react/GenericApp";
+import GenericApp from "@iobroker/adapter-react-v5/GenericApp";
 import Geocoding, { GeocodeService } from "@mapbox/mapbox-sdk/services/geocoding";
 import { createContext, ReactElement, useContext } from "react";
 import io from "socket.io-client";
@@ -9,7 +9,7 @@ import { cronCounter$ } from "./lib";
 import { radarTrapEnabled$ } from "./lib/helpers/radarTrapEnabledStream";
 import { RadarTrapTabs } from "./radartrap";
 
-import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
+import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react-v5/types";
 
 const AppContext = createContext<ioBroker.IAppContext>(undefined!);
 
@@ -61,27 +61,25 @@ class App extends GenericApp {
 			});
 		}
 
-		this.socket.subscribeState("*.timer", false, (id, state) => {
+		this.socket.subscribeState("*.timer", false, (id: string, state: ioBroker.State) => {
 			const routeId = id.split(".")[2]; //
 
 			if (state === null) {
-				this.socket.unsubscribeState(id, (id, obj) => console.log(id, obj));
+				this.socket.unsubscribeState(id, (id: string, obj: ioBroker.State) => console.log(id, obj));
 			} else {
-				cronCounter$.next({ [routeId]: state!.val });
+				cronCounter$.next({ [routeId]: state.val });
 			}
 		});
 
-		this.socket.subscribeObject(this.instanceId, (id, obj) => {
-			// console.log("subscribeObject", id, obj);
-
-			radarTrapEnabled$.next(obj?.common.enabled);
+		this.socket.subscribeObject(this.instanceId, (id: string, obj: ioBroker.Object) => {
+			radarTrapEnabled$.next(obj.common.enabled);
 		});
 	}
 
 	public componentWillUnmount(): void {
-		this.socket.unsubscribeState("*.timer", (id, obj) => console.log(id, obj));
+		this.socket.unsubscribeState("*.timer", (id: string, obj: ioBroker.State) => console.log(id, obj));
 
-		this.socket.unsubscribeObject(this.instanceId, (id, obj) => console.log(id, obj));
+		this.socket.unsubscribeObject(this.instanceId, (id: string, obj: ioBroker.Object) => console.log(id, obj));
 	}
 
 	public render(): ReactElement {
@@ -102,9 +100,7 @@ class App extends GenericApp {
 			<AppContext.Provider value={appContext}>
 				<IbrContainer id="ibr-container" component="main" maxWidth={false}>
 					<IbrHeader />
-
 					<RadarTrapTabs />
-
 					<IbrFooter />
 				</IbrContainer>
 			</AppContext.Provider>

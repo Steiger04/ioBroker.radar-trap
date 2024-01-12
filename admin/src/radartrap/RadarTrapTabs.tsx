@@ -1,4 +1,4 @@
-import I18n from "@iobroker/adapter-react/i18n";
+import I18n from "@iobroker/adapter-react-v5/i18n";
 import MapIcon from "@mui/icons-material/Map";
 import PublicIcon from "@mui/icons-material/Public";
 import RouteIcon from "@mui/icons-material/Route";
@@ -16,7 +16,7 @@ import { RadarTrapMaps } from "./RadarTrapMaps/RadarTrapMaps";
 import { RadarTrapRoutes } from "./RadarTrapRoutes/RadarTrapRoutes";
 import { RadarTrapSettings } from "./RadarTrapSettings/RadarTrapSettings";
 
-import { FC, ReactElement, useEffect } from "react";
+import { type FC, type PropsWithChildren, type ReactElement, useEffect } from "react";
 import { RadarTrapActiveInfo } from "./RadarTrapActiveInfo";
 
 function useRouteMatch(patterns: readonly string[]) {
@@ -36,7 +36,7 @@ function useRouteMatch(patterns: readonly string[]) {
 	return null;
 }
 
-const Router: FC = ({ children }): ReactElement => {
+const Router: FC<PropsWithChildren> = ({ children }): ReactElement => {
 	return <MemoryRouter initialEntries={["/trap-settings"]}>{children}</MemoryRouter>;
 };
 
