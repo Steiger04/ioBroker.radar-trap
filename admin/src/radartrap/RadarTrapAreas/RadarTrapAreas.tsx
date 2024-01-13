@@ -8,7 +8,7 @@ import { type FC, type ReactElement } from "react";
 const RadarTrapAreas: FC = (): ReactElement => {
 	const { status, fields, prepend, update, remove, getDefault, expanded, handleChange } = useRadarTrapAreas();
 
-	useInvisibleBottomButtons();
+	const { bottomButtons } = useInvisibleBottomButtons();
 
 	const renderAreaAccordion = fields
 		.map((field, index) => (
@@ -26,7 +26,7 @@ const RadarTrapAreas: FC = (): ReactElement => {
 		))
 		.sort((a, b) => a.props.field.description!.localeCompare(b.props.field.description!));
 
-	return status === "success" ? (
+	return !bottomButtons && status === "success" ? (
 		<AreaAndRouteCard label={I18n.t("Add area")} buttonClickHandler={() => prepend(getDefault())}>
 			{renderAreaAccordion}
 		</AreaAndRouteCard>

@@ -98,12 +98,6 @@ const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowD
 				);
 			});
 
-	/* useEffect(() => {
-		console.log("MapList: useEffect");
-
-		return () => console.log("MapList: useEffect cleanup");
-	}, []); */
-
 	return areaStatus === "success" && routesStatus === "success" ? (
 		<>
 			{routesItems && !!routesItems.length && (

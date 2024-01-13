@@ -1,12 +1,12 @@
 // import { nextTick } from "async";
-import { RefObject, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useRadarTrapMapBox } from "..";
 
 import type { MapRef } from "react-map-gl";
 
 type UseResizeMap = {
 	_id: null | string;
-	map: RefObject<MapRef>;
+	map: MapRef | null;
 	feathers: radarTrap.FeathersClient;
 };
 const useResizeMap = ({
@@ -22,8 +22,8 @@ const useResizeMap = ({
 	const resizeMap = useCallback(
 		(animate: boolean) => {
 			setTimeout(() => {
-				if (Boolean(map.current) && boxStatus === "success") {
-					map.current!.fitBounds(
+				if (map && boxStatus === "success") {
+					map.fitBounds(
 						[
 							[directionsBox![0], directionsBox![1]],
 							[directionsBox![2], directionsBox![3]],
@@ -33,7 +33,7 @@ const useResizeMap = ({
 				}
 			}, 100);
 		},
-		[boxStatus, directionsBox, map.current],
+		[boxStatus, directionsBox, map],
 	);
 
 	useEffect(() => {

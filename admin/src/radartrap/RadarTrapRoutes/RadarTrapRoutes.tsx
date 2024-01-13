@@ -9,7 +9,7 @@ import type { FC, ReactElement } from "react";
 const RadarTrapRoutes: FC = (): ReactElement => {
 	const { status, fields, prepend, update, remove, getDefault, expanded, handleChange } = useRadarTrapRoutes();
 
-	useInvisibleBottomButtons();
+	const { bottomButtons } = useInvisibleBottomButtons();
 
 	const renderRouteAccordion = fields
 		.map((field, index) => (
@@ -27,7 +27,7 @@ const RadarTrapRoutes: FC = (): ReactElement => {
 		))
 		.sort((a, b) => a.props.field.description!.localeCompare(b.props.field.description!));
 
-	return status === "success" ? (
+	return !bottomButtons && status === "success" ? (
 		<AreaAndRouteCard label={I18n.t("Add route")} buttonClickHandler={() => prepend(getDefault())}>
 			{renderRouteAccordion}
 		</AreaAndRouteCard>

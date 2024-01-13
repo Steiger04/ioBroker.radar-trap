@@ -17,7 +17,7 @@ const IbrHeader: FC = (): ReactElement => {
 			}
 		>
 			<Logo
-				common={that.common}				
+				common={that.common}
 				native={that.state.native}
 				instance={that.instance}
 				onError={(text): void => that.setState({ errorText: text })}

@@ -3,6 +3,7 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
+		"types": ["node", "@iobroker/types"],
 		"noEmit": false,
 		"noEmitOnError": false,
 		"outDir": "./build",

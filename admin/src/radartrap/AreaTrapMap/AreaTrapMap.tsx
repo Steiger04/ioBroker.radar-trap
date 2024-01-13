@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { Feature, featureCollection } from "@turf/helpers";
-import { FC, ReactElement, useCallback, useEffect, useRef } from "react";
+import { FC, ReactElement, useCallback, useEffect, useState, useRef } from "react";
 import Map, { MapRef, ScaleControl, FullscreenControl } from "react-map-gl";
 import { useAppData } from "../../App";
 import { useResizeMap } from "../../lib";
@@ -11,7 +11,8 @@ import type { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/
 
 const AreaTrapMap: FC = (): ReactElement => {
 	const { savedNative, feathers } = useAppData();
-	const mapRef = useRef<MapRef>(null);
+	// const mapRef = useRef<MapRef>(null);
+	const [mapRef, setMapRef] = useState<MapRef | null>(null);
 	const drawRef = useRef<MapboxDraw>(null);
 	const { setValue, getValues } = useFormContext<radarTrap.Area>();
 
@@ -37,20 +38,23 @@ const AreaTrapMap: FC = (): ReactElement => {
 				},
 			);
 		},
-		[drawRef],
+		[drawRef, getValues, setValue],
 	);
 
-	const onDelete = useCallback((e: DrawDeleteEvent) => {
-		const newFeatures = { ...getValues("areaPolygons") };
+	const onDelete = useCallback(
+		(e: DrawDeleteEvent) => {
+			const newFeatures = { ...getValues("areaPolygons") };
 
-		for (const f of e.features) {
-			delete newFeatures[f.id!];
-		}
-		setValue("areaPolygons", newFeatures, {
-			shouldValidate: true,
-			shouldDirty: true,
-		});
-	}, []);
+			for (const f of e.features) {
+				delete newFeatures[f.id!];
+			}
+			setValue("areaPolygons", newFeatures, {
+				shouldValidate: true,
+				shouldDirty: true,
+			});
+		},
+		[getValues, setValue],
+	);
 
 	const { resizeMap, boxStatus } = useResizeMap({
 		_id: getValues("_id"),
@@ -66,7 +70,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 		}
 
 		resizeMap(false);
-	}, [drawRef, resizeMap, boxStatus]);
+	}, [drawRef, resizeMap, boxStatus, getValues]);
 
 	return (
 		<Box
@@ -76,7 +80,7 @@ const AreaTrapMap: FC = (): ReactElement => {
 		>
 			<Map
 				mapboxAccessToken={savedNative.settings.mbxAccessToken}
-				ref={mapRef}
+				ref={setMapRef}
 				logoPosition="bottom-right"
 				reuseMaps={true}
 				attributionControl={false}

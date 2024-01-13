@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import type { MapRef } from "react-map-gl";
 
@@ -18,26 +18,22 @@ const images = [
 	},
 ];
 
-const useMapImages = (map: RefObject<MapRef>): { status: radarTrap.GenericStatus } => {
+const useMapImages = (map: MapRef | null): { status: radarTrap.GenericStatus } => {
 	const [status, setStatus] = useState<radarTrap.GenericStatus>("idle");
 
 	const loadHandler = useCallback(() => {
-		/* console.log(
-			"useMapImages -> loadHandler -> mapRef.current",
-			map.current,
-		); */
 		const loadedImages: Promise<void>[] = [];
 
 		for (const image of images) {
-			if (!map.current?.hasImage(image.id)) {
+			if (map && !map.hasImage(image.id)) {
 				loadedImages.push(
 					new Promise<void>((resolve, reject) => {
-						map.current?.loadImage(image.png, (error, mapimage) => {
+						map.loadImage(image.png, (error, mapimage) => {
 							if (error) {
 								reject(error);
 							}
 
-							map.current?.addImage(image.id, mapimage as HTMLImageElement, { sdf: false });
+							map.addImage(image.id, mapimage as HTMLImageElement, { sdf: false });
 
 							resolve();
 						});
@@ -49,22 +45,14 @@ const useMapImages = (map: RefObject<MapRef>): { status: radarTrap.GenericStatus
 		Promise.all(loadedImages)
 			.then(() => setStatus("success"))
 			.catch((ex) => console.log(ex));
-	}, []);
+	}, [map]);
 
 	useEffect(() => {
-		if (map.current) {
+		if (map) {
 			setStatus("loading");
 			loadHandler();
-			// map.current.on("load", async () => await loadHandler());
 		}
-
-		/* return () => {
-			console.log("useMapImages() -> useEffect() -> return");
-			if (map.current) {
-				map.current.off("load", loadHandler);
-			}
-		}; */
-	}, [map.current]);
+	}, [map, loadHandler]);
 
 	return { status };
 };

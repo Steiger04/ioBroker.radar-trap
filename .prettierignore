@@ -1,7 +1,6 @@
 .*/
-admin/.watch
+admin/.watch/
 **/build/
-data/
 widgets/radar-trap/js/mapbox/
 package.json
 package-lock.json

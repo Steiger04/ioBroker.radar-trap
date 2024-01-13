@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { featureCollection } from "@turf/helpers";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Map, {
 	GeoJSONSource,
 	Layer,
@@ -29,7 +29,7 @@ import type { FC, ReactElement } from "react";
 
 const RadarTrapMaps: FC = (): ReactElement => {
 	const { feathers, savedNative } = useAppData();
-	const mapRef = useRef<MapRef>(null);
+	const [mapRef, setMapRef] = useState<MapRef | null>(null);
 
 	useMapImages(mapRef);
 
@@ -43,7 +43,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 	const [cursor, setCursor] = useState<string>("");
 
-	useInvisibleBottomButtons();
+	const { bottomButtons } = useInvisibleBottomButtons();
 
 	const mouseEnterHandler = useCallback(() => setCursor("pointer"), []);
 	const mouseLeaveHandler = useCallback(() => setCursor(""), []);
@@ -102,7 +102,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 		const clusterId = feature.properties!.cluster_id;
 		const sourceId = feature.source;
-		const mapboxSource = mapRef.current!.getSource(sourceId) as GeoJSONSource;
+		const mapboxSource = mapRef!.getSource(sourceId) as GeoJSONSource;
 
 		switch (feature.layer.id) {
 			case "traffic-closure":
@@ -143,7 +143,7 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 					const geometry = feature.geometry as GeoJSON.Point;
 
-					mapRef.current!.easeTo({
+					mapRef!.easeTo({
 						center: geometry.coordinates as LngLatLike,
 						zoom,
 						duration: 750,
@@ -167,86 +167,90 @@ const RadarTrapMaps: FC = (): ReactElement => {
 	}, [resizeMap]);
 
 	return (
-		<Box
-			sx={{
-				/* bgcolor: "blue", */
-				height: "100%",
-			}}
-		>
-			<Map
-				mapboxAccessToken={savedNative.settings.mbxAccessToken}
-				/* projection="globe" */
-				ref={mapRef}
-				logoPosition="bottom-right"
-				reuseMaps={true}
-				attributionControl={false}
-				mapStyle="mapbox://styles/mapbox/streets-v12"
-				interactiveLayerIds={["cluster-traps", "traps", "speed-traps", "traffic-closure"]}
-				cursor={cursor}
-				onClick={clickHandler}
-				onMouseEnter={mouseEnterHandler}
-				onMouseLeave={mouseLeaveHandler}
-			>
-				{/* {routesStatus === "success" && ( */}
-				<MapMenu
-					{...{
-						routeId,
-						setRouteId,
-						resizeMap,
+		<>
+			{!bottomButtons ? (
+				<Box
+					sx={{
+						/* bgcolor: "blue", */
+						height: "100%",
 					}}
-				/>
-				{/* )} */}
-
-				{trapInfo && (
-					<Popup
-						maxWidth="auto"
-						longitude={trapInfo.longitude!}
-						latitude={trapInfo.latitude!}
-						closeButton={false}
+				>
+					<Map
+						mapboxAccessToken={savedNative.settings.mbxAccessToken}
+						/* projection="globe" */
+						ref={setMapRef}
+						logoPosition="bottom-right"
+						reuseMaps={true}
+						attributionControl={false}
+						mapStyle="mapbox://styles/mapbox/streets-v12"
+						interactiveLayerIds={["cluster-traps", "traps", "speed-traps", "traffic-closure"]}
+						cursor={cursor}
+						onClick={clickHandler}
+						onMouseEnter={mouseEnterHandler}
+						onMouseLeave={mouseLeaveHandler}
 					>
-						<TrapInfo info={trapInfo} />
-					</Popup>
-				)}
+						{/* {routesStatus === "success" && ( */}
+						<MapMenu
+							{...{
+								routeId,
+								setRouteId,
+								resizeMap,
+							}}
+						/>
+						{/* )} */}
 
-				<ScaleControl position="bottom-left" />
+						{trapInfo && (
+							<Popup
+								maxWidth="auto"
+								longitude={trapInfo.longitude!}
+								latitude={trapInfo.latitude!}
+								closeButton={false}
+							>
+								<TrapInfo info={trapInfo} />
+							</Popup>
+						)}
 
-				<Source
-					type="geojson"
-					data={
-						areaPolygons
-							? featureCollection(Object.values(areaPolygons!)).features[0]
-							: featureCollection([])
-					}
-				>
-					<Layer {...(mapStyles.areaSurface as LayerProps)} />
-					<Layer {...(mapStyles.areaSurfaceBorder as LayerProps)} />
-				</Source>
+						<ScaleControl position="bottom-left" />
 
-				<Source type="geojson" data={directionsFeatureCollection!}>
-					<Layer {...(mapStyles.route as LayerProps)} />
-				</Source>
+						<Source
+							type="geojson"
+							data={
+								areaPolygons
+									? featureCollection(Object.values(areaPolygons!)).features[0]
+									: featureCollection([])
+							}
+						>
+							<Layer {...(mapStyles.areaSurface as LayerProps)} />
+							<Layer {...(mapStyles.areaSurfaceBorder as LayerProps)} />
+						</Source>
 
-				<Source type="geojson" data={polysFeatureCollection!}>
-					<Layer {...(mapStyles.lineBackground as LayerProps)} />
-					<Layer {...(mapStyles.lineDashed as LayerProps)} />
-					<Layer {...(mapStyles.trafficClosure as LayerProps)} />
-				</Source>
+						<Source type="geojson" data={directionsFeatureCollection!}>
+							<Layer {...(mapStyles.route as LayerProps)} />
+						</Source>
 
-				<Source
-					type="geojson"
-					data={trapsFeatureCollection!}
-					cluster={true}
-					clusterMaxZoom={14}
-					clusterRadius={50}
-				>
-					<Layer {...(mapStyles.speedTraps as LayerProps)} />
-					<Layer {...(mapStyles.speedTrapsVmax as LayerProps)} />
-					<Layer {...(mapStyles.traps as LayerProps)} />
-					<Layer {...(mapStyles.clusterTraps as LayerProps)} />
-					<Layer {...(mapStyles.clusterTrapsCount as LayerProps)} />
-				</Source>
-			</Map>
-		</Box>
+						<Source type="geojson" data={polysFeatureCollection!}>
+							<Layer {...(mapStyles.lineBackground as LayerProps)} />
+							<Layer {...(mapStyles.lineDashed as LayerProps)} />
+							<Layer {...(mapStyles.trafficClosure as LayerProps)} />
+						</Source>
+
+						<Source
+							type="geojson"
+							data={trapsFeatureCollection!}
+							cluster={true}
+							clusterMaxZoom={14}
+							clusterRadius={50}
+						>
+							<Layer {...(mapStyles.speedTraps as LayerProps)} />
+							<Layer {...(mapStyles.speedTrapsVmax as LayerProps)} />
+							<Layer {...(mapStyles.traps as LayerProps)} />
+							<Layer {...(mapStyles.clusterTraps as LayerProps)} />
+							<Layer {...(mapStyles.clusterTrapsCount as LayerProps)} />
+						</Source>
+					</Map>
+				</Box>
+			) : null}
+		</>
 	);
 };
 

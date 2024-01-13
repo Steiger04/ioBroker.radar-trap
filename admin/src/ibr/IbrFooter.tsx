@@ -44,16 +44,19 @@ const IbrFooter: FC = (): ReactElement => {
 	const { that } = useAppData();
 
 	return (
-		<Box
-			component="footer"
-			sx={{
-				flex: () => (that!.state.bottomButtons ? { xs: "0 1 56px", sm: "0 1 64px" } : "0 1 auto"),
-			}}
-		>
-			{/* {that.renderError()}
-			{that.renderToast()} */}
-			<SaveCloseButtonsWrapper>{that!.renderSaveCloseButtons()}</SaveCloseButtonsWrapper>
-		</Box>
+		<>
+			{that.state.bottomButtons ? (
+				<Box
+					component="footer"
+					sx={{
+						/* flex: () => (that.state.bottomButtons ? { xs: "0 1 56px", sm: "0 1 64px" } : "0 1 auto"), */
+						flex: { xs: "0 1 56px", sm: "0 1 64px" },
+					}}
+				>
+					<SaveCloseButtonsWrapper>{that.renderSaveCloseButtons()}</SaveCloseButtonsWrapper>
+				</Box>
+			) : null}
+		</>
 	);
 };
 
