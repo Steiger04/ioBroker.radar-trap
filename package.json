@@ -1,6 +1,6 @@
 {
   "name": "iobroker.radar-trap",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "engines": {
     "node": ">=18.0.0"
   },

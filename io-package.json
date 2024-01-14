@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.0.13",
+    "version": "1.1.0",
     "news": {
+      "1.1.0": {
+        "en": "updated on mui5, adapter-react-v5, react 18, react-dom 18\nfixed some issues in connection with react 18",
+        "de": "aktualisiert auf mui5, adapter-react-v5, reagieren 18, reakt-dom 18\neinige probleme im zusammenhang mit der reaktion 18 behoben",
+        "ru": "обновлено на mui5, адаптер-реакт-v5, реагируйте 18, реакция-дом 18\nв связи с реакцией 18",
+        "pt": "atualizado em mui5, adaptador-react-v5, reagir 18, reage-dom 18\ncorrigiu alguns problemas em conexão com a reação 18",
+        "nl": "bijgewerkt op mui5, adapter-reactive-v5, react 18, react-dom 18\nbepaalde problemen in verband met de reactie vast te stellen 18",
+        "fr": "mise à jour sur mui5, adaptateur-réaction-v5, réactivité 18, réactivité 18\ncorrigé certains problèmes liés à la réaction 18",
+        "it": "aggiornato su mui5, adattatore-react-v5, reagire 18, reagire-dom 18\nha risolto alcuni problemi in relazione alla reazione 18",
+        "es": "actualizado en mui5, adapter-react-v5, reaccionar 18, reaccionar-dom 18\narreglar algunas cuestiones en relación con la reacción 18",
+        "pl": "aktualizacja: mui5, adapter- react- v5, response 18, react- dom 18\nnaprawiono niektóre problemy w związku z reakcją 18",
+        "uk": "оновлений на mui5, адаптер-react-v5, реагувати 18, реагувати-домін 18\nвиправлено деякі питання у зв'язку з реагацією 18",
+        "zh-cn": "在 mui5 上更新,适配器-反应-v5 反应 18,反应-度18\n确定与反应有关的一些问题"
+      },
       "1.0.13": {
         "en": "circle mode added",
         "de": "kreismodus hinzugefügt",
@@ -80,19 +93,6 @@
         "pl": "Instalacja wizardowych dla użycia jedynie wizów\nwiza nie została zainstalowana na radarach",
         "uk": "Встановити в'язниці тільки для використання в'язнів\nне повинні бути встановлені для використання радіолокаторів",
         "zh-cn": "在最小的眼下,只使用眼光\n绝不能安装使用雷达-塔拉布的雷达。"
-      },
-      "1.0.7": {
-        "en": "Added features for vis-widgets\nAdded states for counting traps",
-        "de": "Zusätzliche Funktionen für vis-widgets\nHinzugefügte Zustände zum Zählen von Fallen",
-        "ru": "Добавлены функции для vis-widgets\nДобавлены государства для подсчета ловушек",
-        "pt": "Adicionado recursos para vis-widgets\nAdicionados estados para contar armadilhas",
-        "nl": "Geadresseerde kenmerken voor vis-widgets\nVermeld staat voor het tellen van vallen",
-        "fr": "Ajout de fonctionnalités pour vis-widgets\nÉtat ajouté pour le comptage des pièges",
-        "it": "Caratteristiche aggiuntive per vis-widgets\nStati aggiunti per il conteggio delle trappole",
-        "es": "Funciones adicionales para vis-widgets\nEstados adicionales para contar trampas",
-        "pl": "Addd for visual Widget\nPaństwa dopasowane do liczenia pułapek",
-        "uk": "Додані функції для vis-widgets\nДодані стани для підрахунку пасток",
-        "zh-cn": "A. 植被增加的特点\n增购装置的国家"
       }
     },
     "title": "Radar Trap",
