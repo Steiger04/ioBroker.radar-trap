@@ -14,15 +14,7 @@ import Map, {
 } from "react-map-gl";
 import { MapMenu } from "..";
 import { useAppData } from "../../App";
-import {
-	mapStyles,
-	/* useAnimationFrame, */
-	useInvisibleBottomButtons,
-	useMapImages,
-	// useRadarTrapSource,
-	useRadarTrapSource,
-	useResizeMap,
-} from "../../lib";
+import { mapStyles, useInvisibleBottomButtons, useMapImages, useRadarTrapSource, useResizeMap } from "../../lib";
 import { TrapInfo } from "./TrapInfo";
 
 import type { FC, ReactElement } from "react";
@@ -47,47 +39,6 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 	const mouseEnterHandler = useCallback(() => setCursor("pointer"), []);
 	const mouseLeaveHandler = useCallback(() => setCursor(""), []);
-
-	/* useAnimationFrame((timestamp, step) => {
-		if (!mapRef.current || !mapRef.current.isStyleLoaded()) return step;
-
-		const dashArraySequence = [
-			[0, 4, 3],
-			[0.5, 4, 2.5],
-			[1, 4, 2],
-			[1.5, 4, 1.5],
-			[2, 4, 1],
-			[2.5, 4, 0.5],
-			[3, 4, 0],
-			[0, 0.5, 3, 3.5],
-			[0, 1, 3, 3],
-			[0, 1.5, 3, 2.5],
-			[0, 2, 3, 2],
-			[0, 2.5, 3, 1.5],
-			[0, 3, 3, 1],
-			[0, 3.5, 3, 0.5],
-		];
-
-		const newStep = parseInt(
-			((timestamp / 50) % dashArraySequence.length).toString(),
-		);
-
-		if (newStep !== step) {
-			if (mapRef.current) {
-				console.log("jetzt wird getMap ausgeführt");
-				mapRef.current
-					?.getMap()
-					.setPaintProperty(
-						"line-dashed",
-						"line-dasharray",
-						dashArraySequence[step],
-					);
-				step = newStep;
-			}
-		}
-
-		return step;
-	}); */
 
 	const clickHandler = (event: MapLayerMouseEvent) => {
 		const feature = event.features && event.features[0];

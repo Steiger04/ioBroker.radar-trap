@@ -15,7 +15,7 @@ const RadarTrapActiveInfo: FC = (): ReactElement | null => {
 		} else {
 			feathers.io.connect();
 		}
-	}, [radarTrapEnabled]);
+	}, [radarTrapEnabled, feathers]);
 
 	/* return radarTrapEnabled ? ( */
 	return !radarTrapEnabled && process.env.NODE_ENV === "production" ? (

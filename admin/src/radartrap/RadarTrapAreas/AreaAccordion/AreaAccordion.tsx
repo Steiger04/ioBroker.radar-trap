@@ -15,6 +15,7 @@ const Red = red[700];
 
 interface AreaAccordionProps {
 	expanded: UseAccordionExpanded["expanded"];
+	accordionDisabledMap: Map<string | null, boolean>;
 	handleChange: UseAccordionExpanded["handleChange"];
 	update: UseFieldArrayUpdate<radarTrap.FormAreas, "areas">;
 	remove: UseFieldArrayRemove;
@@ -24,13 +25,14 @@ interface AreaAccordionProps {
 
 const AreaAccordion: FC<AreaAccordionProps> = ({
 	expanded,
+	accordionDisabledMap,
 	handleChange,
 	update,
 	remove,
 	index,
 	field,
 }): ReactElement => {
-	const { methods, accordionDisabledMap, register, deleteHandler, createHandler } = useAreaAccordion({
+	const { methods, register, deleteHandler, createHandler } = useAreaAccordion({
 		index,
 		field,
 		remove,

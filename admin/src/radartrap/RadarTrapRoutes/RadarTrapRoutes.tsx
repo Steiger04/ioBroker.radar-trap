@@ -2,13 +2,15 @@ import I18n from "@iobroker/adapter-react-v5/i18n";
 import { RouteAccordion } from "..";
 import { AreaAndRouteCard, Loading } from "../../components";
 import { useInvisibleBottomButtons } from "../../lib";
-import { useRadarTrapRoutes } from "../../lib/hooks/useRadarTrapRoutes";
+import { useRadarTrapRoutes } from "../../lib";
 
-import type { FC, ReactElement } from "react";
+import { type FC, type ReactElement } from "react";
 
-const RadarTrapRoutes: FC = (): ReactElement => {
+interface RadarTrapRoutesProps {
+	accordionDisabledMap: Map<string | null, boolean>;
+}
+const RadarTrapRoutes: FC<RadarTrapRoutesProps> = ({ accordionDisabledMap }): ReactElement => {
 	const { status, fields, prepend, update, remove, getDefault, expanded, handleChange } = useRadarTrapRoutes();
-
 	const { bottomButtons } = useInvisibleBottomButtons();
 
 	const renderRouteAccordion = fields
@@ -16,6 +18,7 @@ const RadarTrapRoutes: FC = (): ReactElement => {
 			<RouteAccordion
 				key={field.id}
 				{...{
+					accordionDisabledMap,
 					index,
 					field,
 					update,

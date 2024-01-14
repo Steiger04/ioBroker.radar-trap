@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useAppData } from "../../App";
 import { FeathersError } from "@feathersjs/errors";
 import { filter, findIndex, set } from "lodash";
@@ -18,38 +19,41 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 	const [data, setData] = useState<T[]>([]);
 	const [status, setStatus] = useState<radarTrap.GenericStatus>("idle");
 
-	const find = useCallback(async () => {
-		try {
-			setStatus("loading");
+	const find = useCallback(
+		async (serviceName: string, params: Params) => {
+			try {
+				setStatus("loading");
 
-			const { data: _data, total: _total }: { data: T[]; total: number } = await feathers
-				.service(serviceName)
-				.find(params);
+				const { data: _data, total: _total }: { data: T[]; total: number } = await feathers
+					.service(serviceName)
+					.find(params);
 
-			setTotal(_total);
-			setData(_data);
+				setTotal(_total);
+				setData(_data);
 
-			setStatus("success");
-		} catch (err) {
-			if (err instanceof FeathersError) {
-				if (err.name === "NotFound") {
-					setData([]);
-					setStatus("error");
+				setStatus("success");
+			} catch (err) {
+				if (err instanceof FeathersError) {
+					if (err.name === "NotFound") {
+						setData([]);
+						setStatus("error");
+					} else {
+						console.log(err);
+					}
 				} else {
 					console.log(err);
 				}
-			} else {
-				console.log(err);
 			}
-		}
-	}, [feathers, serviceName]);
+		},
+		[feathers],
+	);
 
-	useEffect(() => {
-		find();
-	}, [find]);
+	useDeepCompareEffect(() => {
+		find(serviceName, params);
+	}, [find, serviceName, params]);
 
 	const dataCreatedHandler = useCallback(
-		(createdData: AreaWithIndex | RouteWithIndex) => {
+		(params: Params) => (createdData: AreaWithIndex | RouteWithIndex) => {
 			setStatus("loading");
 
 			setData((prevData) => {
@@ -76,7 +80,7 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 
 			setStatus("success");
 		},
-		[params],
+		[],
 	);
 
 	const dataRemovedHandler = useCallback((removedData: T) => {
@@ -85,16 +89,18 @@ const useRadarTrapFind = <T extends radarTrap.Area | radarTrap.Route>(
 		setStatus("success");
 	}, []);
 
-	useEffect(() => {
-		feathers.service(serviceName).on("created", dataCreatedHandler);
+	useDeepCompareEffect(() => {
+		const _dataCreatedHandler = dataCreatedHandler(params);
+
+		feathers.service(serviceName).on("created", _dataCreatedHandler);
 		feathers.service(serviceName).on("removed", dataRemovedHandler);
 
 		// eslint-disable-next-line consistent-return
 		return () => {
-			feathers.service(serviceName).removeListener("created", dataCreatedHandler);
+			feathers.service(serviceName).removeListener("created", _dataCreatedHandler);
 			feathers.service(serviceName).removeListener("removed", dataRemovedHandler);
 		};
-	}, [feathers]);
+	}, [feathers, serviceName, params]);
 
 	return { status, data, total };
 };

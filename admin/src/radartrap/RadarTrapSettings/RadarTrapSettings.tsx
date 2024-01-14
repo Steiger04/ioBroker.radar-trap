@@ -34,6 +34,7 @@ const RadarTrapSettings: FC = (): ReactElement => {
 			(data: ioBroker.INative) => !isValidating && isValid && updateNativeValue("settings", { ...data.settings }),
 			() => that.setState({ changed: false }),
 		)().catch((ex) => console.log(ex));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isValidating, isValid]);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

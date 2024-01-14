@@ -59,6 +59,7 @@ const RouteProfileGroup: FC<RouteProfileGroupProps> = ({ disabled }): ReactEleme
 		});
 
 		onChange(actualProfiles);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeProfile]);
 
 	return (

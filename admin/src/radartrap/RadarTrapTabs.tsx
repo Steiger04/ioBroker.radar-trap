@@ -58,6 +58,7 @@ const TrapTabs: FC = (): ReactElement => {
 
 	useEffect(() => {
 		if (mbxAccessToken !== "") navigate("/trap-maps", { replace: true });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [mbxAccessToken]);
 
 	return (
@@ -100,6 +101,7 @@ const TrapTabs: FC = (): ReactElement => {
 
 const RadarTrapTabs: FC = (): ReactElement => {
 	const { enabled: radarTrapEnabled } = useRadarTrapEnabled();
+	const { accordionDisabledMap } = useAccordionDisabled();
 
 	return (
 		<>
@@ -138,7 +140,7 @@ const RadarTrapTabs: FC = (): ReactElement => {
 										p: { sm: 1 },
 									}}
 								>
-									<RadarTrapRoutes />
+									<RadarTrapRoutes accordionDisabledMap={accordionDisabledMap} />
 								</TabCard>
 							}
 						/>
@@ -153,7 +155,7 @@ const RadarTrapTabs: FC = (): ReactElement => {
 										p: { sm: 1 },
 									}}
 								>
-									<RadarTrapAreas />
+									<RadarTrapAreas accordionDisabledMap={accordionDisabledMap} />
 								</TabCard>
 							}
 						/>

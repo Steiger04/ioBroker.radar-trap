@@ -3,7 +3,6 @@ export { mapStyles } from "./helpers/mapStyles";
 export { square } from "./helpers/square";
 export { useAccordionDisabled } from "./hooks/useAccordionDisabled";
 export { useAccordionExpanded, UseAccordionExpanded } from "./hooks/useAccordionExpanded";
-export { useAnimationFrame } from "./hooks/useAnimationFrame";
 export { useAreaAccordion } from "./hooks/useAreaAccordion";
 export { useAreaSchema } from "./hooks/useAreaSchema";
 export { useCronCheck } from "./hooks/useCronCheck";

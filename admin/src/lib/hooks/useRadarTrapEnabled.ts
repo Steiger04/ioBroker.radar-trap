@@ -25,7 +25,7 @@ const useRadarTrapEnabled = (): { enabled: boolean } => {
 			.catch((ex: any) => console.log(ex));
 
 		return () => sub.unsubscribe();
-	}, []);
+	}, [that]);
 
 	return { enabled };
 };

@@ -20,9 +20,9 @@ import type { UseAccordionExpanded } from "../lib";
 const Grey = grey[500];
 
 interface RadarTrapAccordionProps {
-	accordionDisabledMap: Map<string, boolean>;
 	_id: string;
 	id: string;
+	accordionDisabledMap: Map<string | null, boolean>;
 	description: string | undefined;
 	expanded: UseAccordionExpanded["expanded"];
 	handleChange: UseAccordionExpanded["handleChange"];
@@ -34,9 +34,9 @@ interface RadarTrapAccordionProps {
 
 const RadarTrapAccordion: FC<PropsWithChildren<RadarTrapAccordionProps>> = ({
 	children,
-	accordionDisabledMap,
 	_id,
 	id,
+	accordionDisabledMap,
 	description,
 	expanded,
 	handleChange,
@@ -47,10 +47,11 @@ const RadarTrapAccordion: FC<PropsWithChildren<RadarTrapAccordionProps>> = ({
 }): ReactElement => {
 	const accordionRef = useRef<HTMLDivElement>(null);
 
-	const [disabled, setDisabled] = useState<boolean | undefined>(accordionDisabledMap.get(_id));
+	const [disabled, setDisabled] = useState<boolean | undefined>(false);
 
 	useEffect(() => {
-		setDisabled(accordionDisabledMap.get(_id));
+		const _value = accordionDisabledMap.get(_id);
+		if (_value !== undefined) setDisabled(accordionDisabledMap.get(_id));
 	}, [accordionDisabledMap, _id]);
 
 	useEffect(() => {
@@ -89,6 +90,7 @@ const RadarTrapAccordion: FC<PropsWithChildren<RadarTrapAccordionProps>> = ({
 				<ButtonGroup
 					{...{
 						_id,
+						accordionDisabledMap,
 						description,
 						deleteHandler,
 						createHandler,

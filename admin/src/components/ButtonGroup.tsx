@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Fragment } from "react";
 import { useAppData } from "../App";
-import { useAccordionDisabled, useCronCounterHHMMSS } from "../lib";
+import { useCronCounterHHMMSS } from "../lib";
 
 import type { FC, ReactElement, SyntheticEvent } from "react";
 
@@ -19,6 +19,7 @@ const Green = green[700];
 
 interface ButtonGroupProps {
 	_id: string;
+	accordionDisabledMap: Map<string | null, boolean>;
 	description: string | undefined;
 	deleteHandler: (event: SyntheticEvent) => Promise<void>;
 	createHandler: (event: SyntheticEvent) => void;
@@ -27,8 +28,9 @@ interface ButtonGroupProps {
 }
 
 const ButtonGroup: FC<ButtonGroupProps> = ({
-	description,
 	_id,
+	description,
+	accordionDisabledMap,
 	deleteHandler,
 	createHandler,
 	isValid,
@@ -36,7 +38,6 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
 }): ReactElement => {
 	const { that } = useAppData();
 
-	const { accordionDisabledMap } = useAccordionDisabled();
 	const { cronCounterHHMMSS } = useCronCounterHHMMSS(_id);
 
 	const cronHandler = (event: SyntheticEvent, name: string) => {

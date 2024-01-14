@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppData } from "../../App";
 
 const usePatchOrCreateSourceStatus = (): radarTrap.GenericStatusWithId => {
@@ -9,9 +9,10 @@ const usePatchOrCreateSourceStatus = (): radarTrap.GenericStatusWithId => {
 		status: "idle",
 	});
 
-	const onStatusListener = (data: radarTrap.GenericStatusWithId): void => {
+	const onStatusListener = useCallback((data: radarTrap.GenericStatusWithId): void => {
+		// console.log("onStatusListener", data);
 		setpatchOrCreateSourceStatus(data);
-	};
+	}, []);
 
 	useEffect(() => {
 		feathers.service("areas").on("status", onStatusListener);
@@ -22,7 +23,7 @@ const usePatchOrCreateSourceStatus = (): radarTrap.GenericStatusWithId => {
 
 			feathers.service("routes").removeListener("status", onStatusListener);
 		};
-	}, []);
+	}, [feathers, onStatusListener]);
 
 	return patchOrCreateSourceStatus;
 };

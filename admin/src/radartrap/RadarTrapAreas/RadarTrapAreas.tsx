@@ -5,9 +5,11 @@ import { AreaAccordion } from "./AreaAccordion";
 
 import { type FC, type ReactElement } from "react";
 
-const RadarTrapAreas: FC = (): ReactElement => {
+interface RadarTrapAreasProps {
+	accordionDisabledMap: Map<string | null, boolean>;
+}
+const RadarTrapAreas: FC<RadarTrapAreasProps> = ({ accordionDisabledMap }): ReactElement => {
 	const { status, fields, prepend, update, remove, getDefault, expanded, handleChange } = useRadarTrapAreas();
-
 	const { bottomButtons } = useInvisibleBottomButtons();
 
 	const renderAreaAccordion = fields
@@ -15,6 +17,7 @@ const RadarTrapAreas: FC = (): ReactElement => {
 			<AreaAccordion
 				key={field.id}
 				{...{
+					accordionDisabledMap,
 					index,
 					expanded,
 					update,

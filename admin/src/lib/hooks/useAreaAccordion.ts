@@ -9,14 +9,12 @@ import {
 	UseFormRegister,
 	UseFormReturn,
 } from "react-hook-form";
-import { useAccordionDisabled } from "./useAccordionDisabled";
 import { useAreaSchema } from "./useAreaSchema";
 import { useAppData } from "../../App";
 import { Params } from "@feathersjs/feathers";
 
 type UseAreaAccordion = {
 	methods: UseFormReturn<radarTrap.Area, any>;
-	accordionDisabledMap: Map<string, boolean>;
 	register: UseFormRegister<radarTrap.Area>;
 	deleteHandler: (event: SyntheticEvent) => Promise<void>;
 	createHandler: (event: SyntheticEvent) => void;
@@ -37,8 +35,6 @@ const useAreaAccordion = ({
 	const create = (data: radarTrap.Area, params?: Params) => feathers.service("areas").create(data, params);
 	const remove = (id: string, params?: Params) => feathers.service("areas").remove(id, params);
 
-	const { accordionDisabledMap } = useAccordionDisabled();
-
 	const areaSchema = useAreaSchema();
 	const methods = useForm<radarTrap.Area>({
 		mode: "onChange",
@@ -55,7 +51,7 @@ const useAreaAccordion = ({
 
 	useEffect(() => {
 		trigger().catch((ex) => console.log(ex));
-	}, []);
+	}, [trigger]);
 
 	const deleteHandler = async (event: SyntheticEvent) => {
 		event.stopPropagation();
@@ -94,7 +90,6 @@ const useAreaAccordion = ({
 
 	return {
 		methods,
-		accordionDisabledMap,
 		register,
 		deleteHandler,
 		createHandler,

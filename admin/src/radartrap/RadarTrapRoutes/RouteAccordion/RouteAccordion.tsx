@@ -3,11 +3,12 @@ import { RouteInputData } from ".";
 import { useRouteAccordion } from "../../../lib";
 import { RadarTrapAccordion } from "../../../radartrap";
 
-import type { FC, ReactElement } from "react";
+import { type FC, type ReactElement } from "react";
 import type { FieldArrayWithId, UseFieldArrayRemove, UseFieldArrayUpdate } from "react-hook-form";
 import type { UseAccordionExpanded } from "../../../lib";
 
 interface RouteAccordionProps {
+	accordionDisabledMap: Map<string | null, boolean>;
 	expanded: UseAccordionExpanded["expanded"];
 	handleChange: UseAccordionExpanded["handleChange"];
 	update: UseFieldArrayUpdate<radarTrap.FormRoutes, "routes">;
@@ -17,6 +18,7 @@ interface RouteAccordionProps {
 }
 
 const RouteAccordion: FC<RouteAccordionProps> = ({
+	accordionDisabledMap,
 	expanded,
 	handleChange,
 	update,
@@ -24,7 +26,7 @@ const RouteAccordion: FC<RouteAccordionProps> = ({
 	index,
 	field,
 }): ReactElement => {
-	const { methods, accordionDisabledMap, register, deleteHandler, createHandler } = useRouteAccordion({
+	const { methods, register, deleteHandler, createHandler } = useRouteAccordion({
 		index,
 		field,
 		remove,

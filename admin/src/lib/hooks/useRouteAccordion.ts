@@ -9,14 +9,12 @@ import {
 	UseFormRegister,
 	UseFormReturn,
 } from "react-hook-form";
-import { useAccordionDisabled } from "./useAccordionDisabled";
 import { useAppData } from "../../App";
 import { useRouteSchema } from "./useRouteSchema";
 import { Params } from "@feathersjs/feathers";
 
 type UseRouteAccordion = {
 	methods: UseFormReturn<radarTrap.Route, any>;
-	accordionDisabledMap: Map<string, boolean>;
 	register: UseFormRegister<radarTrap.Route>;
 	deleteHandler: (event: SyntheticEvent) => Promise<void>;
 	createHandler: (event: SyntheticEvent) => void;
@@ -37,8 +35,6 @@ const useRouteAccordion = ({
 	const create = (data: radarTrap.Route, params?: Params) => feathers.service("routes").create(data, params);
 	const remove = (id: string, params?: Params) => feathers.service("routes").remove(id, params);
 
-	const { accordionDisabledMap } = useAccordionDisabled();
-
 	const routeSchema = useRouteSchema();
 	const methods = useForm<radarTrap.Route>({
 		mode: "onChange",
@@ -55,7 +51,7 @@ const useRouteAccordion = ({
 
 	useEffect(() => {
 		trigger().catch((ex) => console.log(ex));
-	}, []);
+	}, [trigger]);
 
 	const deleteHandler = async (event: SyntheticEvent) => {
 		event.stopPropagation();
@@ -94,7 +90,6 @@ const useRouteAccordion = ({
 
 	return {
 		methods,
-		accordionDisabledMap,
 		register,
 		deleteHandler,
 		createHandler,

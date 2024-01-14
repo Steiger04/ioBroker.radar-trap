@@ -78,7 +78,7 @@ const useRadarTrapRoutes = (): UseRadarTrapRoutes => {
 
 	useEffect(() => {
 		status === "success" && reset({ routes: data as radarTrap.Routes });
-	}, [status, data]);
+	}, [status, data, reset]);
 
 	return {
 		status,
