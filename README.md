@@ -29,6 +29,10 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) updated on mui5, adapter-react-v5, react 18, react-dom 18
+* (Steiger04) fixed some issues in connection with react 18
+
 ### 1.0.13 (2023-12-23)
 * (Steiger04) circle mode added
 
