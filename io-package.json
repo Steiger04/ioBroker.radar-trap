@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "news": {
+      "1.1.1": {
+        "en": "fixed legacy-peer-deps",
+        "de": "feste legacy-peer-deps",
+        "ru": "с фиксированным наследием:",
+        "pt": "legado fixo-peer-deps",
+        "nl": "vaste legacy-peer-deps",
+        "fr": "deps de temps fixes",
+        "it": "deprezzamento dell'eredità",
+        "es": "fijo legado-peer-deps",
+        "pl": "stałe legacy- peer- deps",
+        "uk": "фіксована спадщина-peer-deps",
+        "zh-cn": "固定遗留文件"
+      },
       "1.1.0": {
         "en": "updated on mui5, adapter-react-v5, react 18, react-dom 18\nfixed some issues in connection with react 18",
         "de": "aktualisiert auf mui5, adapter-react-v5, reagieren 18, reakt-dom 18\neinige probleme im zusammenhang mit der reaktion 18 behoben",
@@ -80,19 +93,6 @@
         "pl": "Bugfix",
         "uk": "Виправлення помилок",
         "zh-cn": "Bugfix"
-      },
-      "1.0.8": {
-        "en": "Install vis-widgets only for using vis\nvis must not be installed for using radar-trap",
-        "de": "Installieren Sie vis-widgets nur für die Verwendung von vis\nvis darf nicht für die verwendung von radar-trap installiert werden",
-        "ru": "Установите vis-widgets только для использования vis\nvis не должен быть установлен для использования радар-трапа",
-        "pt": "Instalar vis-widgets apenas para usar vis\nvis não deve ser instalado para usar radar-trap",
-        "nl": "Install fish-widgets alleen voor gebruik van vis\nvis moet niet geïnstalleerd worden voor gebruik van radar-trap",
-        "fr": "Installer les vis-widgets uniquement pour utiliser les vis\nvis ne doit pas être installé pour l'utilisation de radar-trap",
-        "it": "Installare vis-widgets solo per l'utilizzo vis\nvis non deve essere installato per l'utilizzo di radar-trap",
-        "es": "Instalar vis-widgets sólo para usar vis\nvis no debe ser instalado para el uso de radar-trap",
-        "pl": "Instalacja wizardowych dla użycia jedynie wizów\nwiza nie została zainstalowana na radarach",
-        "uk": "Встановити в'язниці тільки для використання в'язнів\nне повинні бути встановлені для використання радіолокаторів",
-        "zh-cn": "在最小的眼下,只使用眼光\n绝不能安装使用雷达-塔拉布的雷达。"
       }
     },
     "title": "Radar Trap",
