@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "news": {
+      "1.1.2": {
+        "en": "fixed version conflict between react 17 and react 18",
+        "de": "festversionskonflikt zwischen reaktion 17 und reaktion 18",
+        "ru": "конфликт между реакцией 17 и реакцией 18",
+        "pt": "conflito de versão fixa entre reagir 17 e reagir 18",
+        "nl": "vaste versie conflict tussen reactie 17 en reactie 18",
+        "fr": "conflit de version fixe entre réaction 17 et réaction 18",
+        "it": "versione fissa conflitto tra reagire 17 e reagire 18",
+        "es": "conflicto de la versión fija entre reaccionar 17 y reaccionar 18",
+        "pl": "stały konflikt wersji między reakcją 17 i reakcją 18",
+        "uk": "виправлений варіант конфлікту між реагацією 17 та реагацією 18",
+        "zh-cn": "反应17和反应18之间的固定版本冲突"
+      },
       "1.1.1": {
         "en": "fixed legacy-peer-deps",
         "de": "feste legacy-peer-deps",
@@ -80,19 +93,6 @@
         "pl": "io-package album został zmieniony (ignoreInVersions)",
         "uk": "io-package.json змінив (ignoreInVersions)",
         "zh-cn": "碘酒(乙型肝炎)变化"
-      },
-      "1.0.9": {
-        "en": "Bugfix for using vis",
-        "de": "Bugfix für die Verwendung von vis",
-        "ru": "Bugfix для использования vis",
-        "pt": "Bugfix para usar vis",
-        "nl": "Bugfix gebruikt vis",
-        "fr": "Bugfix pour l'utilisation vis",
-        "it": "Bugfix per l'utilizzo di vis",
-        "es": "Bugfix para usar vis",
-        "pl": "Bugfix",
-        "uk": "Виправлення помилок",
-        "zh-cn": "Bugfix"
       }
     },
     "title": "Radar Trap",

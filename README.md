@@ -29,7 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.1.2 (2024-01-15)
 * (Steiger04) fixed version conflict between react 17 and react 18
 
 ### 1.1.1 (2024-01-14)
