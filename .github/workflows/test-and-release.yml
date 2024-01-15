@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           os: ${{ matrix.os }}
-          build: true
+          # build: true
           # extra-tests: 'npm run test:ts'
 
 

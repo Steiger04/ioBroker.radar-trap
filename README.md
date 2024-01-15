@@ -29,6 +29,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) fixed version conflict between react 17 and react 18
+
 ### 1.1.1 (2024-01-14)
 * (Steiger04) fixed legacy-peer-deps
 
