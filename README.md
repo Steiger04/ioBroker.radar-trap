@@ -29,7 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### 1.1.4 (2024-01-22)
+### __WORK IN PROGRESS__
 * (Steiger04) legacy-peer-deps added
 
 ### 1.1.3 (2024-01-22)
