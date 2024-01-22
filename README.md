@@ -29,6 +29,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) some GUI optimizations
+
 ### 1.1.2 (2024-01-15)
 * (Steiger04) fixed version conflict between react 17 and react 18
 

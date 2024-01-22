@@ -1,21 +1,28 @@
 import { useCallback, useEffect, useState } from "react";
+import IconFixedTrap from "../../../assets/map-icons/icon-fixed-trap.png";
+import IconMobileTrap from "../../../assets/map-icons/icon-mobile-trap.png";
+import IconTrafficJam from "../../../assets/map-icons/icon-traffic-jam.png";
+import IconRoadWork from "../../../assets/map-icons/icon-road-work.png";
+import IconAccident from "../../../assets/map-icons/icon-accident.png";
+import IconObject from "../../../assets/map-icons/icon-object.png";
+import IconSleekness from "../../../assets/map-icons/icon-sleekness.png";
+import IconFog from "../../../assets/map-icons/icon-fog.png";
+import IconPoliceNews from "../../../assets/map-icons/icon-police-news.png";
+import IconTrafficClosure from "../../../assets/map-icons/icon-traffic-closure.png";
 
 import type { MapRef } from "react-map-gl";
 
 const images = [
-	{ id: "icon-fixed-trap", png: "assets/map-icons/icon-fixed-trap.png" },
-	{ id: "icon-mobile-trap", png: "assets/map-icons/icon-mobile-trap.png" },
-	{ id: "icon-traffic-jam", png: "assets/map-icons/icon-traffic-jam.png" },
-	{ id: "icon-road-work", png: "assets/map-icons/icon-road-work.png" },
-	{ id: "icon-accident", png: "assets/map-icons/icon-accident.png" },
-	{ id: "icon-object", png: "assets/map-icons/icon-object.png" },
-	{ id: "icon-sleekness", png: "assets/map-icons/icon-sleekness.png" },
-	{ id: "icon-fog", png: "assets/map-icons/icon-fog.png" },
-	{ id: "icon-police-news", png: "assets/map-icons/icon-police-news.png" },
-	{
-		id: "icon-traffic-closure",
-		png: "assets/map-icons/icon-traffic-closure.png",
-	},
+	{ id: "icon-fixed-trap", png: IconFixedTrap },
+	{ id: "icon-mobile-trap", png: IconMobileTrap },
+	{ id: "icon-traffic-jam", png: IconTrafficJam },
+	{ id: "icon-road-work", png: IconRoadWork },
+	{ id: "icon-accident", png: IconAccident },
+	{ id: "icon-object", png: IconObject },
+	{ id: "icon-sleekness", png: IconSleekness },
+	{ id: "icon-fog", png: IconFog },
+	{ id: "icon-police-news", png: IconPoliceNews },
+	{ id: "icon-traffic-closure", png: IconTrafficClosure },
 ];
 
 const useMapImages = (map: MapRef | null): { status: radarTrap.GenericStatus } => {

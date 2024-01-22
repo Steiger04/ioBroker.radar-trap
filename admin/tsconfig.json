@@ -13,6 +13,6 @@
 		"lib": ["es2018", "DOM"],
 		"esModuleInterop": true
 	},
-	"include": ["./**/*.ts", "./**/*.tsx", "../src/lib/adapter-config.d.ts"],
+	"include": ["./**/*.ts", "./**/*.tsx", "../src/lib/adapter-config.d.ts", "./assets/map-icons/index.d.ts"],
 	"exclude": ["./**/*.test.ts", "./**/*.test.tsx"]
 }

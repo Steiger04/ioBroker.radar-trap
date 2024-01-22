@@ -43,12 +43,12 @@ const RadarTrapMaps: FC = (): ReactElement => {
 	const clickHandler = (event: MapLayerMouseEvent) => {
 		const feature = event.features && event.features[0];
 
-		if (trapInfo !== null) {
-			setTrapInfo(null);
-		}
-
 		if (!feature) {
 			return;
+		}
+
+		if (trapInfo !== null) {
+			setTrapInfo(null);
 		}
 
 		const clusterId = feature.properties!.cluster_id;
@@ -59,31 +59,43 @@ const RadarTrapMaps: FC = (): ReactElement => {
 			case "traffic-closure":
 				const address = JSON.parse(feature.properties!.address);
 
-				setTrapInfo({
-					typeText: "Verkehrssperrung",
-					country: address.country,
-					zipCode: address.zip,
-					city: address.city,
-					street: address.street,
-					longitude: event.lngLat.lng,
-					latitude: event.lngLat.lat,
-				});
+				setTimeout(
+					() =>
+						setTrapInfo({
+							typeText: "Verkehrssperrung",
+							country: address.country,
+							zipCode: address.zip,
+							city: address.city,
+							street: address.street,
+							longitude: event.lngLat.lng,
+							latitude: event.lngLat.lat,
+						}),
+					0,
+				);
 				break;
 
 			case "traps":
-				setTrapInfo({
-					...JSON.parse(feature.properties!.trapInfo),
-					longitude: event.lngLat.lng,
-					latitude: event.lngLat.lat,
-				});
+				setTimeout(
+					() =>
+						setTrapInfo({
+							...JSON.parse(feature.properties!.trapInfo),
+							longitude: event.lngLat.lng,
+							latitude: event.lngLat.lat,
+						}),
+					0,
+				);
 				break;
 
 			case "speed-traps":
-				setTrapInfo({
-					...JSON.parse(feature.properties!.trapInfo),
-					longitude: event.lngLat.lng,
-					latitude: event.lngLat.lat,
-				});
+				setTimeout(
+					() =>
+						setTrapInfo({
+							...JSON.parse(feature.properties!.trapInfo),
+							longitude: event.lngLat.lng,
+							latitude: event.lngLat.lat,
+						}),
+					0,
+				);
 				break;
 
 			case "cluster-traps":

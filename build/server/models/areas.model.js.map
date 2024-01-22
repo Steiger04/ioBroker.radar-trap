@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["../../../src/server/models/areas.model.ts"],
   "sourcesContent": ["import NeDB from \"@seald-io/nedb\";\nimport path from \"path\";\nimport type { Application } from \"../declarations\";\n\nexport default function (app: Application): NeDB<any> {\n\tconst dbPath = app.get(\"nedb\");\n\tconst Model = new NeDB({\n\t\tfilename: path.join(dbPath, \"areas.db\"),\n\t\tautoload: true,\n\t});\n\n\treturn Model;\n}\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,kBAAiB;AACjB,kBAAiB;AAGF,SAAR,oBAAkB,KAA6B;AACrD,QAAM,SAAS,IAAI,IAAI,MAAM;AAC7B,QAAM,QAAQ,IAAI,YAAAA,QAAK;AAAA,IACtB,UAAU,YAAAC,QAAK,KAAK,QAAQ,UAAU;AAAA,IACtC,UAAU;AAAA,EACX,CAAC;AAED,SAAO;AACR;",
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,kBAAiB;AACjB,kBAAiB;AAGF,SAAR,oBAAkB,KAA6B;AACrD,QAAM,SAAS,IAAI,IAAI,MAAM;AAC7B,QAAM,QAAQ,IAAI,YAAAA,QAAK;AAAA,IACtB,UAAU,YAAAC,QAAK,KAAK,QAAQ,UAAU;AAAA,IACtC,UAAU;AAAA,EACX,CAAC;AAED,SAAO;AACR;",
   "names": ["NeDB", "path"]
 }

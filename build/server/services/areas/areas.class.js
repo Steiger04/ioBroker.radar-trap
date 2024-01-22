@@ -23,6 +23,7 @@ __export(areas_class_exports, {
 module.exports = __toCommonJS(areas_class_exports);
 var import_feathers_nedb = require("feathers-nedb");
 class Areas extends import_feathers_nedb.Service {
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(options, app) {
     super(options);
   }

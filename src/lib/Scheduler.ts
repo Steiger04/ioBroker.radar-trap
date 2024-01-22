@@ -3,8 +3,6 @@ import { feathers } from "../server/createFeathers";
 
 import type * as utils from "@iobroker/adapter-core";
 
-console.log("### Scheduler.TS ###");
-
 type DataType = "ROUTE" | "AREA";
 
 class Scheduler {
@@ -29,7 +27,8 @@ class Scheduler {
 		this.routeData = routeData;
 
 		this.cronJob = new Cron(pattern!.trim(), () => {
-			console.log(`Cron-Job with id ${id} and pattern ${pattern!.trim()} scheduled`);
+			if (process.env.NODE_ENV === "development")
+				console.log(`Cron-Job with id ${id} and pattern ${pattern!.trim()} scheduled`);
 			Scheduler.run(id!);
 		});
 
@@ -37,7 +36,8 @@ class Scheduler {
 			Scheduler.#adapter.setStateAsync(`${id}.cron-job.timer`, this.next, true).catch((ex) => console.log(ex));
 		}, 1_000);
 
-		console.log(`Cron-Job with id ${id} and pattern ${pattern!.trim()} created.`);
+		if (process.env.NODE_ENV === "development")
+			console.log(`Cron-Job with id ${id} and pattern ${pattern!.trim()} created.`);
 	}
 
 	get next(): number | null {
@@ -88,7 +88,9 @@ class Scheduler {
 
 		Scheduler.#scheduleMap.set(id!, new this(routeData, type));
 
-		console.log(`Scheduled with id: ${id}`);
+		console.log("process.env.NODE_ENV", process.env.NODE_ENV);
+
+		if (process.env.NODE_ENV === "development") console.log(`Scheduled with id: ${id}`);
 	}
 
 	static async scheduleAll(): Promise<void> {

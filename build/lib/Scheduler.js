@@ -23,7 +23,6 @@ __export(Scheduler_exports, {
 module.exports = __toCommonJS(Scheduler_exports);
 var import_croner = require("croner");
 var import_createFeathers = require("../server/createFeathers");
-console.log("### Scheduler.TS ###");
 class Scheduler {
   static #scheduleMap = /* @__PURE__ */ new Map();
   static #areasService = import_createFeathers.feathers.service("areas");
@@ -35,13 +34,15 @@ class Scheduler {
     this.dataType = type;
     this.routeData = routeData;
     this.cronJob = new import_croner.Cron(pattern.trim(), () => {
-      console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} scheduled`);
+      if (false)
+        console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} scheduled`);
       Scheduler.run(id);
     });
     this.interval = setInterval(() => {
       Scheduler.#adapter.setStateAsync(`${id}.cron-job.timer`, this.next, true).catch((ex) => console.log(ex));
     }, 1e3);
-    console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} created.`);
+    if (false)
+      console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} created.`);
   }
   get next() {
     const next = this.cronJob.msToNext();
@@ -77,7 +78,9 @@ class Scheduler {
     const { _id: id } = routeData;
     Scheduler.delete(id);
     Scheduler.#scheduleMap.set(id, new this(routeData, type));
-    console.log(`Scheduled with id: ${id}`);
+    console.log("process.env.NODE_ENV", "production");
+    if (false)
+      console.log(`Scheduled with id: ${id}`);
   }
   static async scheduleAll() {
     const routes = await Scheduler.#routesService.find({

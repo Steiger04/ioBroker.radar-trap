@@ -1,10 +1,8 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import ZoomOutMap from "@mui/icons-material/ZoomOutMap";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import type { Theme } from "@mui/system";
@@ -64,57 +62,46 @@ const MapMenu: FC<MapMenuProps> = ({ routeId, setRouteId, resizeMap }): ReactEle
 				</Box>
 			)}
 
-			<Box sx={{ flexGrow: 1 }}>
-				<AppBar
-					/* sx={{ top: "145px" }} */
-					position="absolute"
-					color="transparent"
-					elevation={0}
+			{!!count.total && (
+				<Fab
+					sx={{ position: "absolute", top: 0, left: 0, opacity: 0.7, ml: 1, mt: 1 }}
+					size={upSmall ? "medium" : "small"}
+					color="primary"
+					onClick={() => setShowDrawer(true)}
 				>
-					<Toolbar sx={{ px: { xs: 0 }, py: { xs: 2 }, p: { sm: 2 } }}>
-						{!!count.total && (
-							<Fab
-								sx={{ opacity: 0.7, ml: 1 }}
-								size={upSmall ? "medium" : "small"}
-								color="primary"
-								onClick={() => setShowDrawer(true)}
-							>
-								<MenuIcon />
-							</Fab>
-						)}
+					<MenuIcon />
+				</Fab>
+			)}
 
-						<Box sx={{ flexGrow: 1 }} />
+			<Box sx={{ flexGrow: 1 }} />
 
-						<Fab
-							sx={{ opacity: 0.7, mr: 1 }}
-							size={upSmall ? "medium" : "small"}
-							color="primary"
-							onClick={() => resizeMap(true)}
-						>
-							<ZoomOutMap />
-						</Fab>
-					</Toolbar>
-				</AppBar>
+			<Fab
+				sx={{ position: "absolute", top: 0, right: 0, opacity: 0.7, mr: 1, mt: 1 }}
+				size={upSmall ? "medium" : "small"}
+				color="primary"
+				onClick={() => resizeMap(true)}
+			>
+				<ZoomOutMap />
+			</Fab>
 
-				<SwipeableDrawer
-					PaperProps={{
-						style: { top: "127px", height: "calc(100vh - 135px)" },
+			<SwipeableDrawer
+				PaperProps={{
+					style: { top: "127px", height: "calc(100vh - 135px)" },
+				}}
+				anchor="left"
+				open={showDrawer}
+				onOpen={() => setShowDrawer(true)}
+				onClose={() => setShowDrawer(false)}
+			>
+				<MapList
+					{...{
+						routeId,
+						setRouteId,
+						setRouteInfo,
+						setShowDrawer,
 					}}
-					anchor="left"
-					open={showDrawer}
-					onOpen={() => setShowDrawer(true)}
-					onClose={() => setShowDrawer(false)}
-				>
-					<MapList
-						{...{
-							routeId,
-							setRouteId,
-							setRouteInfo,
-							setShowDrawer,
-						}}
-					/>
-				</SwipeableDrawer>
-			</Box>
+				/>
+			</SwipeableDrawer>
 		</>
 	);
 };

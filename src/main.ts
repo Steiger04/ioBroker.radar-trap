@@ -11,15 +11,12 @@ import { Scheduler } from "./lib/Scheduler";
 import { feathers, provideFeathers, server } from "./server/createFeathers";
 import logger from "./server/logger";
 
-console.log("### MAIN.TS ###");
-
 class RadarTrap2 extends utils.Adapter {
 	private pause$!: Subject<string>;
 	private resume$!: Subject<string>;
 	private run$!: Subject<string>;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
-		// console.log("inside RadarTrap2 Constructor()");
 		super({
 			...options,
 			name: "radar-trap",

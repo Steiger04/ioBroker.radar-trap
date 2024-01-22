@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["../../../../src/server/services/areas/areas.class.ts"],
   "sourcesContent": ["import { NedbServiceOptions, Service } from \"feathers-nedb\";\n\nimport type { Application } from \"../../declarations\";\n\nexport class Areas extends Service<radarTrap.Area> {\n\t//eslint-disable-next-line @typescript-eslint/no-unused-vars\n\tconstructor(options: Partial<NedbServiceOptions>, app: Application) {\n\t\tsuper(options);\n\t}\n}\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,2BAA4C;AAIrC,MAAM,cAAc,6BAAwB;AAAA,EAElD,YAAY,SAAsC,KAAkB;AACnE,UAAM,OAAO;AAAA,EACd;AACD;",
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,2BAA4C;AAIrC,MAAM,cAAc,6BAAwB;AAAA;AAAA,EAElD,YAAY,SAAsC,KAAkB;AACnE,UAAM,OAAO;AAAA,EACd;AACD;",
   "names": []
 }

@@ -14,6 +14,10 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -25,7 +29,6 @@ var import_routeServiceListener = require("./lib/routeServiceListener");
 var import_Scheduler = require("./lib/Scheduler");
 var import_createFeathers = require("./server/createFeathers");
 var import_logger = __toESM(require("./server/logger"));
-console.log("### MAIN.TS ###");
 class RadarTrap2 extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -37,6 +40,9 @@ class RadarTrap2 extends utils.Adapter {
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
   }
+  /**
+   * Is called when databases are connected and adapter received configuration
+   */
   async onReady() {
     process.on("unhandledRejection", (reason, p) => import_logger.default.error("Unhandled Rejection at: Promise ", p, reason));
     process.env.MAPBOX_TOKEN = this.config.settings.mbxAccessToken;
@@ -50,6 +56,9 @@ class RadarTrap2 extends utils.Adapter {
     await this.subscribeStatesAsync("*.resume").catch((ex) => console.log(ex));
     await this.subscribeStatesAsync("*.run").catch((ex) => console.log(ex));
   }
+  /**
+   * Is called if a subscribed state changes
+   */
   onStateChange(id, state) {
     if (!state || state.ack) {
       return;
@@ -94,6 +103,9 @@ class RadarTrap2 extends utils.Adapter {
       })
     ).subscribe(import_Scheduler.Scheduler.run);
   }
+  /**
+   * Is called when adapter shuts down - callback has to be called under any circumstances!
+   */
   onUnload(callback) {
     try {
       import_Scheduler.Scheduler.deleteAll();
@@ -105,6 +117,35 @@ class RadarTrap2 extends utils.Adapter {
       callback();
     }
   }
+  // If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
+  // You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
+  // /**
+  //  * Is called if a subscribed object changes
+  //  */
+  // private onObjectChange(id: string, obj: ioBroker.Object | null | undefined): void {
+  //     if (obj) {
+  //         // The object was changed
+  //         this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
+  //     } else {
+  //         // The object was deleted
+  //         this.log.info(`object ${id} deleted`);
+  //     }
+  // }
+  // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
+  // /**
+  //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
+  //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
+  //  */
+  // private onMessage(obj: ioBroker.Message): void {
+  //     if (typeof obj === 'object' && obj.message) {
+  //         if (obj.command === 'send') {
+  //             // e.g. send email or pushover or whatever
+  //             this.log.info('send command');
+  //             // Send response in callback if required
+  //             if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+  //         }
+  //     }
+  // }
 }
 if (require.main !== module) {
   module.exports = (options) => new RadarTrap2(options);
