@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "news": {
+      "1.1.5": {
+        "en": "some GUI optimizations",
+        "de": "einige GUI-Optimierungen",
+        "ru": "некоторые GUI оптимизации",
+        "pt": "algumas otimizações de GUI",
+        "nl": "sommige GUI optimalisaties",
+        "fr": "quelques optimisations GUI",
+        "it": "alcune ottimizzazioni GUI",
+        "es": "algunas optimizaciones GUI",
+        "pl": "niektóre zoptymalizacje GUI",
+        "uk": "деякі оптимізації інтерфейсу",
+        "zh-cn": "一些图形用户界面优化"
+      },
       "1.1.4": {
         "en": "test-and-release.yml changed",
         "de": "test-and-release.yml geändert",
@@ -80,19 +93,6 @@
         "pl": "tryb kołowy",
         "uk": "режим додано",
         "zh-cn": "b. 集群增加"
-      },
-      "1.0.12": {
-        "en": "test-and-release.yml changed",
-        "de": "test-and-release.yml geändert",
-        "ru": "test-and-release.yml изменен",
-        "pt": "test-and-release.yml mudou",
-        "nl": "de test en vrijlating veranderde",
-        "fr": "test-and-release.yml changé",
-        "it": "test-and-release.yml cambiato",
-        "es": "test-and-release.yml cambió",
-        "pl": "zmiana testowa i wydawnicza została zmieniona",
-        "uk": "тест-і-випуск.yml змінився",
-        "zh-cn": "试验和重新定位"
       }
     },
     "title": "Radar Trap",
