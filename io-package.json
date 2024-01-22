@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "news": {
+      "1.1.3": {
+        "en": "some GUI optimizations",
+        "de": "einige GUI-Optimierungen",
+        "ru": "некоторые GUI оптимизации",
+        "pt": "algumas otimizações de GUI",
+        "nl": "sommige GUI optimalisaties",
+        "fr": "quelques optimisations GUI",
+        "it": "alcune ottimizzazioni GUI",
+        "es": "algunas optimizaciones GUI",
+        "pl": "niektóre zoptymalizacje GUI",
+        "uk": "деякі оптимізації інтерфейсу",
+        "zh-cn": "一些图形用户界面优化"
+      },
       "1.1.2": {
         "en": "fixed version conflict between react 17 and react 18",
         "de": "festversionskonflikt zwischen reaktion 17 und reaktion 18",
@@ -80,19 +93,6 @@
         "pl": "figbird\nOptimized\nuaktualniać\nDB przeniosła się do folderów plików",
         "uk": "figbird.js видалено\nКод оптимізований\nпакети оновлені\nDB перейшов на папку файлів",
         "zh-cn": "figbird.js\n优化法典\n更新的一揽子方案\n行驶来档案库"
-      },
-      "1.0.10": {
-        "en": "io-package.json changed (ignoreInVersions)",
-        "de": "io-package.json geändert (ignoreInVersions)",
-        "ru": "io-package.json изменен (ignoreInVersions)",
-        "pt": "io-package.json mudou (ignoreInVersions)",
-        "nl": "json is veranderd",
-        "fr": "io-package.json a changé (ignoreInVersions)",
-        "it": "io-package.json cambiato (ignoreInVersions)",
-        "es": "io-package.json cambió (ignoreInVersions)",
-        "pl": "io-package album został zmieniony (ignoreInVersions)",
-        "uk": "io-package.json змінив (ignoreInVersions)",
-        "zh-cn": "碘酒(乙型肝炎)变化"
       }
     },
     "title": "Radar Trap",
