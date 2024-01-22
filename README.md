@@ -29,6 +29,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) legacy-peer-deps added
+
 ### 1.1.3 (2024-01-22)
 * (Steiger04) some GUI optimizations
 
