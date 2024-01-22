@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "news": {
+      "1.1.4": {
+        "en": "legacy-peer-deps added",
+        "de": "legacy-peer-deps hinzugefügt",
+        "ru": "добавлено:",
+        "pt": "legado-peer-deps adicionado",
+        "nl": "legacy-peer-deps toegevoegd",
+        "fr": "legacy-peer-deps ajouté",
+        "it": "aggiunto",
+        "es": "legado-peer-deps añadido",
+        "pl": "legacy- peer- deps",
+        "uk": "додано legacy-peer-deps",
+        "zh-cn": "添加了 leg-peer- dips"
+      },
       "1.1.3": {
         "en": "some GUI optimizations",
         "de": "einige GUI-Optimierungen",
