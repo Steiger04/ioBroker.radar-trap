@@ -29,10 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### 1.1.4 (2024-01-22)
-* (Steiger04) test-and-release.yml changed
-
-### 1.1.3 (2024-01-22)
+### __WORK IN PROGRESS__
 * (Steiger04) some GUI optimizations
 
 ### 1.1.2 (2024-01-15)
