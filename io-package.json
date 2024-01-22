@@ -1,202 +1,154 @@
 {
-  "common": {
-    "name": "radar-trap",
-    "version": "1.1.5",
-    "news": {
-      "1.1.5": {
-        "en": "some GUI optimizations",
-        "de": "einige GUI-Optimierungen",
-        "ru": "некоторые GUI оптимизации",
-        "pt": "algumas otimizações de GUI",
-        "nl": "sommige GUI optimalisaties",
-        "fr": "quelques optimisations GUI",
-        "it": "alcune ottimizzazioni GUI",
-        "es": "algunas optimizaciones GUI",
-        "pl": "niektóre zoptymalizacje GUI",
-        "uk": "деякі оптимізації інтерфейсу",
-        "zh-cn": "一些图形用户界面优化"
-      },
-      "1.1.4": {
-        "en": "test-and-release.yml changed",
-        "de": "test-and-release.yml geändert",
-        "ru": "test-and-release.yml изменен",
-        "pt": "test-and-release.yml mudou",
-        "nl": "test-and-release.yml gewijzigd",
-        "fr": "test-and-release.yml modifié",
-        "it": "test-and-release.yml cambiato",
-        "es": "test-and-release.yml cambió",
-        "pl": "test- and- releasase.yml zmienione",
-        "uk": "тест-і-випуск.yml змінився",
-        "zh-cn": "测试和释放.yml已更改"
-      },
-      "1.1.3": {
-        "en": "some GUI optimizations",
-        "de": "einige GUI-Optimierungen",
-        "ru": "некоторые GUI оптимизации",
-        "pt": "algumas otimizações de GUI",
-        "nl": "sommige GUI optimalisaties",
-        "fr": "quelques optimisations GUI",
-        "it": "alcune ottimizzazioni GUI",
-        "es": "algunas optimizaciones GUI",
-        "pl": "niektóre zoptymalizacje GUI",
-        "uk": "деякі оптимізації інтерфейсу",
-        "zh-cn": "一些图形用户界面优化"
-      },
-      "1.1.2": {
-        "en": "fixed version conflict between react 17 and react 18",
-        "de": "festversionskonflikt zwischen reaktion 17 und reaktion 18",
-        "ru": "конфликт между реакцией 17 и реакцией 18",
-        "pt": "conflito de versão fixa entre reagir 17 e reagir 18",
-        "nl": "vaste versie conflict tussen reactie 17 en reactie 18",
-        "fr": "conflit de version fixe entre réaction 17 et réaction 18",
-        "it": "versione fissa conflitto tra reagire 17 e reagire 18",
-        "es": "conflicto de la versión fija entre reaccionar 17 y reaccionar 18",
-        "pl": "stały konflikt wersji między reakcją 17 i reakcją 18",
-        "uk": "виправлений варіант конфлікту між реагацією 17 та реагацією 18",
-        "zh-cn": "反应17和反应18之间的固定版本冲突"
-      },
-      "1.1.1": {
-        "en": "fixed legacy-peer-deps",
-        "de": "feste legacy-peer-deps",
-        "ru": "с фиксированным наследием:",
-        "pt": "legado fixo-peer-deps",
-        "nl": "vaste legacy-peer-deps",
-        "fr": "deps de temps fixes",
-        "it": "deprezzamento dell'eredità",
-        "es": "fijo legado-peer-deps",
-        "pl": "stałe legacy- peer- deps",
-        "uk": "фіксована спадщина-peer-deps",
-        "zh-cn": "固定遗留文件"
-      },
-      "1.1.0": {
-        "en": "updated on mui5, adapter-react-v5, react 18, react-dom 18\nfixed some issues in connection with react 18",
-        "de": "aktualisiert auf mui5, adapter-react-v5, reagieren 18, reakt-dom 18\neinige probleme im zusammenhang mit der reaktion 18 behoben",
-        "ru": "обновлено на mui5, адаптер-реакт-v5, реагируйте 18, реакция-дом 18\nв связи с реакцией 18",
-        "pt": "atualizado em mui5, adaptador-react-v5, reagir 18, reage-dom 18\ncorrigiu alguns problemas em conexão com a reação 18",
-        "nl": "bijgewerkt op mui5, adapter-reactive-v5, react 18, react-dom 18\nbepaalde problemen in verband met de reactie vast te stellen 18",
-        "fr": "mise à jour sur mui5, adaptateur-réaction-v5, réactivité 18, réactivité 18\ncorrigé certains problèmes liés à la réaction 18",
-        "it": "aggiornato su mui5, adattatore-react-v5, reagire 18, reagire-dom 18\nha risolto alcuni problemi in relazione alla reazione 18",
-        "es": "actualizado en mui5, adapter-react-v5, reaccionar 18, reaccionar-dom 18\narreglar algunas cuestiones en relación con la reacción 18",
-        "pl": "aktualizacja: mui5, adapter- react- v5, response 18, react- dom 18\nnaprawiono niektóre problemy w związku z reakcją 18",
-        "uk": "оновлений на mui5, адаптер-react-v5, реагувати 18, реагувати-домін 18\nвиправлено деякі питання у зв'язку з реагацією 18",
-        "zh-cn": "在 mui5 上更新,适配器-反应-v5 反应 18,反应-度18\n确定与反应有关的一些问题"
-      },
-      "1.0.13": {
-        "en": "circle mode added",
-        "de": "kreismodus hinzugefügt",
-        "ru": "режим круга добавлен",
-        "pt": "modo de círculo adicionado",
-        "nl": "cirkelvorm toegevoegd",
-        "fr": "mode cercle ajouté",
-        "it": "modalità cerchio aggiunto",
-        "es": "modo círculo añadido",
-        "pl": "tryb kołowy",
-        "uk": "режим додано",
-        "zh-cn": "b. 集群增加"
-      }
-    },
-    "title": "Radar Trap",
-    "titleLang": {
-      "en": "Radar Trap",
-      "de": "Radarfalle",
-      "ru": "Радарная ловушка",
-      "pt": "Armadilha de radar",
-      "nl": "Radarval",
-      "fr": "Piège radar",
-      "it": "Trappola radar",
-      "es": "Trampa de radar",
-      "pl": "Pułapka radarowa",
-      "zh-cn": "雷达陷阱",
-      "uk": "Радарна пастка"
-    },
-    "desc": {
-      "en": "Detect speed traps and obstacles on routes",
-      "de": "Radarfallen und Hindernisse auf Strecken erkennen",
-      "ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
-      "pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
-      "nl": "Detecteer snelheidscontroles en obstakels op routes",
-      "fr": "Détecter les radars et les obstacles sur les routes",
-      "it": "Rileva autovelox e ostacoli sui percorsi",
-      "es": "Detecta trampas de velocidad y obstáculos en las rutas",
-      "pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
-      "zh-cn": "检测路线上的速度陷阱和障碍物",
-      "uk": "Виявляйте радари та перешкоди на маршрутах"
-    },
-    "authors": [
-      "Steiger04 <steiger04@posteo.de>"
-    ],
-    "keywords": [
-      "speed traps",
-      "obstacles on routes"
-    ],
-    "license": "MIT",
-    "stopBeforeUpdate": true,
-    "platform": "Javascript/Node.js",
-    "main": "build/main.js",
-    "icon": "radar-trap.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
-    "readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
-    "loglevel": "info",
-    "ereaseUpload": true,
-    "mode": "daemon",
-    "type": "geoposition",
-    "compact": true,
-    "connectionType": "cloud",
-    "dataSource": "poll",
-    "materialize": true,
-    "singletonHost": true,
-    "supportCustoms": false,
-    "jsonCustom": false,
-    "eraseOnUpload": true,
-    "restartAdapters": [
-      "vis"
-    ],
-    "dependencies": [
-      {
-        "js-controller": ">=5.0.17"
-      }
-    ],
-    "adminUI": {
-      "config": "materialize"
-    },
-    "visWidgets": {
-      "ignoreInVersions": [
-        2
-      ]
-    },
-    "installedFrom": "D:\\dev-workspace\\ioBroker.radar-trap"
-  },
-  "native": {
-    "settings": {
-      "httpsEnabled": false,
-      "domains": "localhost",
-      "feathersPort": 3040,
-      "mbxAccessToken": ""
-    }
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": "Information"
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "role": "indicator.connected",
-        "name": "Feathers-Server started",
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": true
-      },
-      "native": {}
-    }
-  ]
+	"common": {
+		"name": "radar-trap",
+		"version": "1.1.2",
+		"news": {
+			"1.1.2": {
+				"en": "fixed version conflict between react 17 and react 18",
+				"de": "festversionskonflikt zwischen reaktion 17 und reaktion 18",
+				"ru": "конфликт между реакцией 17 и реакцией 18",
+				"pt": "conflito de versão fixa entre reagir 17 e reagir 18",
+				"nl": "vaste versie conflict tussen reactie 17 en reactie 18",
+				"fr": "conflit de version fixe entre réaction 17 et réaction 18",
+				"it": "versione fissa conflitto tra reagire 17 e reagire 18",
+				"es": "conflicto de la versión fija entre reaccionar 17 y reaccionar 18",
+				"pl": "stały konflikt wersji między reakcją 17 i reakcją 18",
+				"uk": "виправлений варіант конфлікту між реагацією 17 та реагацією 18",
+				"zh-cn": "反应17和反应18之间的固定版本冲突"
+			},
+			"1.1.1": {
+				"en": "fixed legacy-peer-deps",
+				"de": "feste legacy-peer-deps",
+				"ru": "с фиксированным наследием:",
+				"pt": "legado fixo-peer-deps",
+				"nl": "vaste legacy-peer-deps",
+				"fr": "deps de temps fixes",
+				"it": "deprezzamento dell'eredità",
+				"es": "fijo legado-peer-deps",
+				"pl": "stałe legacy- peer- deps",
+				"uk": "фіксована спадщина-peer-deps",
+				"zh-cn": "固定遗留文件"
+			},
+			"1.1.0": {
+				"en": "updated on mui5, adapter-react-v5, react 18, react-dom 18\nfixed some issues in connection with react 18",
+				"de": "aktualisiert auf mui5, adapter-react-v5, reagieren 18, reakt-dom 18\neinige probleme im zusammenhang mit der reaktion 18 behoben",
+				"ru": "обновлено на mui5, адаптер-реакт-v5, реагируйте 18, реакция-дом 18\nв связи с реакцией 18",
+				"pt": "atualizado em mui5, adaptador-react-v5, reagir 18, reage-dom 18\ncorrigiu alguns problemas em conexão com a reação 18",
+				"nl": "bijgewerkt op mui5, adapter-reactive-v5, react 18, react-dom 18\nbepaalde problemen in verband met de reactie vast te stellen 18",
+				"fr": "mise à jour sur mui5, adaptateur-réaction-v5, réactivité 18, réactivité 18\ncorrigé certains problèmes liés à la réaction 18",
+				"it": "aggiornato su mui5, adattatore-react-v5, reagire 18, reagire-dom 18\nha risolto alcuni problemi in relazione alla reazione 18",
+				"es": "actualizado en mui5, adapter-react-v5, reaccionar 18, reaccionar-dom 18\narreglar algunas cuestiones en relación con la reacción 18",
+				"pl": "aktualizacja: mui5, adapter- react- v5, response 18, react- dom 18\nnaprawiono niektóre problemy w związku z reakcją 18",
+				"uk": "оновлений на mui5, адаптер-react-v5, реагувати 18, реагувати-домін 18\nвиправлено деякі питання у зв'язку з реагацією 18",
+				"zh-cn": "在 mui5 上更新,适配器-反应-v5 反应 18,反应-度18\n确定与反应有关的一些问题"
+			},
+			"1.0.13": {
+				"en": "circle mode added",
+				"de": "kreismodus hinzugefügt",
+				"ru": "режим круга добавлен",
+				"pt": "modo de círculo adicionado",
+				"nl": "cirkelvorm toegevoegd",
+				"fr": "mode cercle ajouté",
+				"it": "modalità cerchio aggiunto",
+				"es": "modo círculo añadido",
+				"pl": "tryb kołowy",
+				"uk": "режим додано",
+				"zh-cn": "b. 集群增加"
+			}
+		},
+		"title": "Radar Trap",
+		"titleLang": {
+			"en": "Radar Trap",
+			"de": "Radarfalle",
+			"ru": "Радарная ловушка",
+			"pt": "Armadilha de radar",
+			"nl": "Radarval",
+			"fr": "Piège radar",
+			"it": "Trappola radar",
+			"es": "Trampa de radar",
+			"pl": "Pułapka radarowa",
+			"zh-cn": "雷达陷阱",
+			"uk": "Радарна пастка"
+		},
+		"desc": {
+			"en": "Detect speed traps and obstacles on routes",
+			"de": "Radarfallen und Hindernisse auf Strecken erkennen",
+			"ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
+			"pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
+			"nl": "Detecteer snelheidscontroles en obstakels op routes",
+			"fr": "Détecter les radars et les obstacles sur les routes",
+			"it": "Rileva autovelox e ostacoli sui percorsi",
+			"es": "Detecta trampas de velocidad y obstáculos en las rutas",
+			"pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
+			"zh-cn": "检测路线上的速度陷阱和障碍物",
+			"uk": "Виявляйте радари та перешкоди на маршрутах"
+		},
+		"authors": ["Steiger04 <steiger04@posteo.de>"],
+		"keywords": ["speed traps", "obstacles on routes"],
+		"license": "MIT",
+		"stopBeforeUpdate": true,
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "radar-trap.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
+		"readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
+		"loglevel": "info",
+		"ereaseUpload": true,
+		"mode": "daemon",
+		"type": "geoposition",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"materialize": true,
+		"singletonHost": true,
+		"supportCustoms": false,
+		"jsonCustom": false,
+		"eraseOnUpload": true,
+		"restartAdapters": ["vis"],
+		"dependencies": [
+			{
+				"js-controller": ">=5.0.17"
+			}
+		],
+		"adminUI": {
+			"config": "materialize"
+		},
+		"visWidgets": {
+			"ignoreInVersions": [2]
+		},
+		"installedFrom": "D:\\dev-workspace\\ioBroker.radar-trap"
+	},
+	"native": {
+		"settings": {
+			"httpsEnabled": false,
+			"domains": "localhost",
+			"feathersPort": 3040,
+			"mbxAccessToken": ""
+		}
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Feathers-Server started",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": true
+			},
+			"native": {}
+		}
+	]
 }
