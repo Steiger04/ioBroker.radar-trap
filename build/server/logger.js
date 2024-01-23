@@ -23,10 +23,11 @@ __export(logger_exports, {
 module.exports = __toCommonJS(logger_exports);
 var import_winston = require("winston");
 const logger = (0, import_winston.createLogger)({
-  // To see more detailed errors, change this to 'debug'
   level: "info",
   format: import_winston.format.combine(import_winston.format.splat(), import_winston.format.simple()),
   transports: [new import_winston.transports.Console()]
 });
 var logger_default = logger;
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {});
 //# sourceMappingURL=logger.js.map

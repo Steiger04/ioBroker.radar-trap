@@ -37,11 +37,7 @@ function channels_default(app) {
   });
   app.service("routes").publish(
     "status",
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (data, context) => (
-      // Console.log('channels -> status)', context.result);
-      app.channel("anonymous")
-    )
+    (data, context) => app.channel("anonymous")
   );
   app.service("areas").publish((data, context) => {
     if (context.params.publishEvent === false) {
@@ -51,11 +47,9 @@ function channels_default(app) {
   });
   app.service("areas").publish(
     "status",
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (data, context) => (
-      // Console.log('channels -> status)', context.result);
-      app.channel("anonymous")
-    )
+    (data, context) => app.channel("anonymous")
   );
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {});
 //# sourceMappingURL=channels.js.map

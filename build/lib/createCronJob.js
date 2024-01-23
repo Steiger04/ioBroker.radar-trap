@@ -36,7 +36,6 @@ const createCronJobAsync = async (that, _id) => {
   }).then(
     async () => await that.setStateAsync(
       `${_id}.cron-job.timer`,
-      /* Scheduler.getSchedule(route._id)!.next, */
       0,
       true
     )

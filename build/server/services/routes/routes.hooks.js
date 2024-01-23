@@ -81,4 +81,6 @@ var routes_hooks_default = {
     remove: []
   }
 };
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {});
 //# sourceMappingURL=routes.hooks.js.map

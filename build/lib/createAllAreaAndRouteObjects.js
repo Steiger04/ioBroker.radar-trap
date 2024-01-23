@@ -30,10 +30,7 @@ const createAllAreaAndRouteObjects = async (that, feathers) => {
       $select: [
         "_id",
         "description",
-        /* "src",
-        "dst", */
         "activeProfile",
-        /* "cron", */
         "directions"
       ]
     }
@@ -45,9 +42,6 @@ const createAllAreaAndRouteObjects = async (that, feathers) => {
         "_id",
         "description",
         "areaTraps"
-        /* "src",
-        "dst", */
-        /* "cron", */
       ]
     }
   });

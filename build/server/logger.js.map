@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["../../src/server/logger.ts"],
   "sourcesContent": ["import { createLogger, format, transports } from \"winston\";\n\n// Configure the Winston logger. For the complete documentation see https://github.com/winstonjs/winston\nconst logger = createLogger({\n\t// To see more detailed errors, change this to 'debug'\n\tlevel: \"info\",\n\tformat: format.combine(format.splat(), format.simple()),\n\ttransports: [new transports.Console()],\n});\n\nexport default logger;\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qBAAiD;AAGjD,MAAM,aAAS,6BAAa;AAAA;AAAA,EAE3B,OAAO;AAAA,EACP,QAAQ,sBAAO,QAAQ,sBAAO,MAAM,GAAG,sBAAO,OAAO,CAAC;AAAA,EACtD,YAAY,CAAC,IAAI,0BAAW,QAAQ,CAAC;AACtC,CAAC;AAED,IAAO,iBAAQ;",
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qBAAiD;AAGjD,MAAM,aAAS,6BAAa;AAAA,EAE3B,OAAO;AAAA,EACP,QAAQ,sBAAO,QAAQ,sBAAO,MAAM,GAAG,sBAAO,OAAO,CAAC;AAAA,EACtD,YAAY,CAAC,IAAI,0BAAW,QAAQ,CAAC;AACtC,CAAC;AAED,IAAO,iBAAQ;",
   "names": []
 }
