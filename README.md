@@ -29,7 +29,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.1.5 (2024-01-23)
 * (Steiger04) createTheme added
 
 ### 1.1.4 (2024-01-22)

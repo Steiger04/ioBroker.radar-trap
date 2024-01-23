@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "news": {
+      "1.1.5": {
+        "en": "createTheme added",
+        "de": "erstellen Thema hinzugefügt",
+        "ru": "создание Тема добавлена",
+        "pt": "criar Tema adicionado",
+        "nl": "aanmaken Thema toegevoegd",
+        "fr": "créer Thème ajouté",
+        "it": "creare Tema aggiunto",
+        "es": "crear Tema añadido",
+        "pl": "create Motyw dodany",
+        "uk": "створення Тема додано",
+        "zh-cn": "创建 添加主题"
+      },
       "1.1.4": {
         "en": "legacy-peer-deps added",
         "de": "legacy-peer-deps hinzugefügt",
