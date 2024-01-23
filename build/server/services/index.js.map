@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["../../../src/server/services/index.ts"],
   "sourcesContent": ["import routes from \"./routes/routes.service\";\n\nimport type { Application } from \"../declarations\";\n\nimport areas from \"./areas/areas.service\";\n\n// Don't remove this comment. It's needed to format import lines nicely.\n\nexport default function (app: Application): void {\n\tapp.configure(routes);\n\tapp.configure(areas);\n}\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,oBAAmB;AAInB,mBAAkB;AAIH,SAAR,iBAAkB,KAAwB;AAChD,MAAI,UAAU,cAAAA,OAAM;AACpB,MAAI,UAAU,aAAAC,OAAK;AACpB;",
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,oBAAmB;AAInB,mBAAkB;AAIH,SAAR,iBAAkB,KAAwB;AAChD,MAAI,UAAU,cAAAA,OAAM;AACpB,MAAI,UAAU,aAAAC,OAAK;AACpB;",
   "names": ["routes", "areas"]
 }
