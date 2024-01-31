@@ -46,7 +46,7 @@ class RadarTrap2 extends utils.Adapter {
   async onReady() {
     process.on("unhandledRejection", (reason, p) => import_logger.default.error("Unhandled Rejection at: Promise ", p, reason));
     process.env.MAPBOX_TOKEN = this.config.settings.mbxAccessToken;
-    (0, import_createFeathers.provideFeathers)(this, this.config.settings.feathersPort);
+    await (0, import_createFeathers.provideFeathersHTTPSAsync)(this, this.config.settings.feathersPort);
     await (0, import_createAllAreaAndRouteObjects.createAllAreaAndRouteObjects)(this, import_createFeathers.feathers).catch((ex) => console.log(ex));
     import_Scheduler.Scheduler.addThat(this);
     await import_Scheduler.Scheduler.scheduleAll().catch((ex) => console.log(ex));

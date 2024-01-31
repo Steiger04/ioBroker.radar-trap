@@ -30,23 +30,42 @@ var createFeathers_exports = {};
 __export(createFeathers_exports, {
   feathers: () => import_app.default,
   provideFeathers: () => provideFeathers,
+  provideFeathersHTTPSAsync: () => provideFeathersHTTPSAsync,
   server: () => server
 });
 module.exports = __toCommonJS(createFeathers_exports);
 var import_app = __toESM(require("./app"));
 var import_logger = __toESM(require("./logger"));
+var import_getCertificate = require("./httpsOrHttp/getCertificate");
+var import_https = __toESM(require("https"));
 let server;
 function provideFeathers(that, port) {
   server = import_app.default.listen(port);
   server.on("listening", () => {
-    import_logger.default.info("Feathers application started on http://%s:%d", import_app.default.get("host"), port);
     that.setStateAsync("info.connection", true, true).catch((ex) => console.log(ex));
+    import_logger.default.info("Feathers application started on http://%s:%d", import_app.default.get("host"), port);
+  });
+}
+async function provideFeathersHTTPSAsync(that, port) {
+  const { certificate, privateKey } = await (0, import_getCertificate.getCertificate)(that);
+  server = import_https.default.createServer(
+    {
+      key: privateKey,
+      cert: certificate
+    },
+    import_app.default
+  ).listen(port);
+  import_app.default.setup(server);
+  server.on("listening", () => {
+    that.setStateAsync("info.connection", true, true).catch((ex) => console.log(ex));
+    that.log.info(`Feathers server for radar-trap started on https://${import_app.default.get("host")}:${port}`);
   });
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   feathers,
   provideFeathers,
+  provideFeathersHTTPSAsync,
   server
 });
 //# sourceMappingURL=createFeathers.js.map
