@@ -30,6 +30,8 @@ const patchOrCreateRoute = (): Hook => {
 		const { data, service, params } = context;
 		const { _id, activeProfile, maxTrapDistance } = data!;
 
+		data!.timestamp = new Date();
+
 		Scheduler.pause(_id);
 		service.emit("status", { _id: data!._id, status: "loading" });
 

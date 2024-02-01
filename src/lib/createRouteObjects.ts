@@ -93,13 +93,12 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 				type: "number",
 				role: "value",
 			})
-			.then(
-				async () =>
-					await that.setStateAsync(
-						`${route._id}.direction-${idx}-infos.distance`,
-						Math.round(direction.direction.distance),
-						true,
-					),
+			.then(() =>
+				that.setStateAsync(
+					`${route._id}.direction-${idx}-infos.distance`,
+					Math.round(direction.direction.distance),
+					true,
+				),
 			);
 
 		let totalTrapsCount = 0;

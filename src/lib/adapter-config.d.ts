@@ -80,6 +80,7 @@ declare global {
 			directions?: Direction[] | null;
 			directionsFeatureCollection?: GeoJSON.FeatureCollection<GeoJSON.LineString> | null;
 			trapsFeatureCollection?: GeoJSON.FeatureCollection<GeoJSON.Point | GeoJSON.LineString> | null;
+			timestamp?: Date;
 		}
 
 		type Routes = Route[];
@@ -128,6 +129,7 @@ declare global {
 			areaTraps?: Record<string, Feature<LineString | Point>[]>;
 			trapsFeatureCollection?: FeatureCollection<Point | LineString> | null;
 			polysFeatureCollection?: FeatureCollection<Point | LineString> | null;
+			timestamp?: Date;
 		}
 
 		type Areas = Area[];

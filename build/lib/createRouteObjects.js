@@ -95,7 +95,7 @@ const createRouteObjects = async (that, route) => {
       type: "number",
       role: "value"
     }).then(
-      async () => await that.setStateAsync(
+      () => that.setStateAsync(
         `${route._id}.direction-${idx}-infos.distance`,
         Math.round(direction.direction.distance),
         true

@@ -23,6 +23,8 @@ const patchOrCreateArea = (): Hook => {
 		const { data, service, params } = context;
 		const { _id } = data!;
 
+		data!.timestamp = new Date();
+
 		Scheduler.pause(_id);
 		service.emit("status", { _id: data!._id, status: "loading" });
 
