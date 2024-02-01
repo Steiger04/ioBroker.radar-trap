@@ -16,6 +16,7 @@ const prepareTraps = (
 			t.forEach(({ properties }) => {
 				const trapInfo = {} as radarTrap.trapInfo;
 
+				trapInfo.trap_id = properties!.id;
 				trapInfo.typeName = properties!.type_name;
 
 				const info = properties!.info === "false" ? false : properties!.info;

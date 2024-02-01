@@ -91,6 +91,7 @@ declare global {
 		}
 
 		interface trapInfo {
+			trap_id?: string;
 			typeName?: string;
 			longitude?: number;
 			latitude?: number;

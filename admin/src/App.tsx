@@ -42,8 +42,8 @@ class App extends GenericApp {
 		const savedNative = this.savedNative as ioBroker.INative;
 		const port = savedNative.settings.feathersPort;
 		const activeUrl = new URL(document.URL);
-		// const url = `${activeUrl.protocol}//${activeUrl.hostname}:${port}`;
-		const url = `https://${activeUrl.hostname}:${port}`;
+		const url = `${activeUrl.protocol}//${activeUrl.hostname}:${port}`;
+		// const url = `https://${activeUrl.hostname}:${port}`;
 
 		const socket = io(url, {
 			// transports: ["websocket"],

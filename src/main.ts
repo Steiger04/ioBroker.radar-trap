@@ -8,7 +8,7 @@ import { areaServiceListener } from "./lib/areaServiceListener";
 import { createAllAreaAndRouteObjects } from "./lib/createAllAreaAndRouteObjects";
 import { routeServiceListener } from "./lib/routeServiceListener";
 import { Scheduler } from "./lib/Scheduler";
-import { feathers, provideFeathersHTTPSAsync, server } from "./server/createFeathers";
+import { feathers, provideFeathers, server } from "./server/createFeathers";
 import logger from "./server/logger";
 
 class RadarTrap2 extends utils.Adapter {
@@ -45,7 +45,7 @@ class RadarTrap2 extends utils.Adapter {
 		// Process.env['HOST'] = 'localhost';
 		// process.env['PORT'] = String(this.config.settings.feathersPort);
 
-		await provideFeathersHTTPSAsync(this, (this.config as ioBroker.INative).settings.feathersPort);
+		provideFeathers(this, (this.config as ioBroker.INative).settings.feathersPort);
 
 		await createAllAreaAndRouteObjects(this, feathers).catch((ex) => console.log(ex));
 
