@@ -52,26 +52,24 @@ const MapList: FC<MapListProps> = ({
 								"exclusions",
 							)}: ${actualExclusionsList.length > 0 ? actualExclusionsList : "-"} `}
 						</Typography>
+						<Typography sx={{ display: "block" }} variant="caption">
+							{`${I18n.t("updated")}: `}
+							{new Date(data.timestamp!).toLocaleString("de-DE", {
+								day: "2-digit",
+								month: "2-digit",
+								year: "numeric",
+								hour: "2-digit",
+								minute: "2-digit",
+								second: "2-digit",
+							})}
+						</Typography>
 					</>
 				);
 
-				const secondaryText = (
-					<Typography sx={{ display: "block" }} variant="caption">
-						{`${I18n.t("updated")}: `}
-						{new Date(data.timestamp!).toLocaleString("de-DE", {
-							day: "2-digit",
-							month: "2-digit",
-							year: "numeric",
-							hour: "2-digit",
-							minute: "2-digit",
-							second: "2-digit",
-						})}
-					</Typography>
-				);
-
 				return (
-					<ListItem key={data._id} disablePadding={true}>
+					<ListItem key={data._id} disablePadding>
 						<ListItemButton
+							dense
 							onClick={() => {
 								setShowDrawer(false);
 								setRouteId(data._id);
@@ -83,7 +81,7 @@ const MapList: FC<MapListProps> = ({
 									<RouteIcon color={routeId === data._id ? "primary" : "inherit"} />
 								</Avatar>
 							</ListItemAvatar>
-							<ListItemText disableTypography primary={primaryText} secondary={secondaryText} />
+							<ListItemText disableTypography primary={primaryText} />
 						</ListItemButton>
 					</ListItem>
 				);
@@ -95,25 +93,27 @@ const MapList: FC<MapListProps> = ({
 			.slice()
 			.sort((a, b) => a.description!.localeCompare(b.description!))
 			.map((data) => {
-				const primaryText = <Typography variant="subtitle1">{data.description!}</Typography>;
-
-				const secondaryText = (
-					<Typography sx={{ display: "block" }} variant="caption">
-						{`${I18n.t("updated")}: `}
-						{new Date(data.timestamp!).toLocaleString("de-DE", {
-							day: "2-digit",
-							month: "2-digit",
-							year: "numeric",
-							hour: "2-digit",
-							minute: "2-digit",
-							second: "2-digit",
-						})}
-					</Typography>
+				const primaryText = (
+					<>
+						<Typography variant="subtitle1">{data.description!}</Typography>
+						<Typography sx={{ display: "block" }} variant="caption">
+							{`${I18n.t("updated")}: `}
+							{new Date(data.timestamp!).toLocaleString("de-DE", {
+								day: "2-digit",
+								month: "2-digit",
+								year: "numeric",
+								hour: "2-digit",
+								minute: "2-digit",
+								second: "2-digit",
+							})}
+						</Typography>
+					</>
 				);
 
 				return (
-					<ListItem key={data._id} disablePadding={true}>
+					<ListItem key={data._id} disablePadding>
 						<ListItemButton
+							dense
 							onClick={() => {
 								setShowDrawer(false);
 								setRouteId(data._id);
@@ -125,7 +125,7 @@ const MapList: FC<MapListProps> = ({
 									<PublicIcon color={routeId === data._id ? "primary" : "inherit"} />
 								</Avatar>
 							</ListItemAvatar>
-							<ListItemText disableTypography primary={primaryText} secondary={secondaryText} />
+							<ListItemText disableTypography primary={primaryText} />
 						</ListItemButton>
 					</ListItem>
 				);
@@ -135,6 +135,8 @@ const MapList: FC<MapListProps> = ({
 		<>
 			{routesItems && !!routesItems.length && (
 				<List
+					disablePadding
+					dense
 					subheader={
 						<ListSubheader sx={{ display: "flex", justifyContent: "center" }}>
 							<Typography variant="body1" py={1}>
@@ -149,6 +151,8 @@ const MapList: FC<MapListProps> = ({
 
 			{areaItems && !!areaItems.length && (
 				<List
+					disablePadding
+					dense
 					subheader={
 						<ListSubheader sx={{ display: "flex", justifyContent: "center" }}>
 							<Typography variant="body1" py={1}>
