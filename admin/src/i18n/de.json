@@ -60,5 +60,6 @@
     "state": "Bundesland",
     "zipCode": "PLZ",
     "street": "Straße",
-    "cityDistrict": "Stadtteil"
+    "cityDistrict": "Stadtteil",
+    "updated": "aktualisiert"
 }

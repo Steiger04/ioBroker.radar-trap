@@ -60,5 +60,6 @@
     "state": "state",
     "zipCode": "zip code",
     "street": "street",
-    "cityDistrict": "city district"
+    "cityDistrict": "city district",
+    "updated": "updated"
 }

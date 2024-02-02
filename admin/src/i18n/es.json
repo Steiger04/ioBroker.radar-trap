@@ -64,5 +64,6 @@
     "state": "estado",
     "zipCode": "código postal",
     "street": "calle",
-    "cityDistrict": "Distrito de la ciudad"
+    "cityDistrict": "Distrito de la ciudad",
+    "updated": "actualizado"
 }

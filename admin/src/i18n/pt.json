@@ -64,5 +64,6 @@
     "state": "estado",
     "zipCode": "CEP",
     "street": "rua",
-    "cityDistrict": "Distrito da cidade"
+    "cityDistrict": "Distrito da cidade",
+    "updated": "Atualizada"
 }

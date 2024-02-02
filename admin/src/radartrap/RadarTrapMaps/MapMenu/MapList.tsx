@@ -16,22 +16,22 @@ import type { Dispatch, FC, ReactElement, SetStateAction } from "react";
 interface MapListProps {
 	routeId: null | string;
 	setRouteId: Dispatch<React.SetStateAction<string | null>>;
-	setRouteInfo: Dispatch<
-		SetStateAction<{
-			primaryText: string;
-			secondaryText: string;
-		}>
-	>;
+	setRouteDescription: Dispatch<SetStateAction<JSX.Element | undefined>>;
 	setShowDrawer: Dispatch<SetStateAction<boolean>>;
 }
 
-const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowDrawer }): ReactElement | null => {
+const MapList: FC<MapListProps> = ({
+	routeId,
+	setRouteId,
+	setRouteDescription,
+	setShowDrawer,
+}): ReactElement | null => {
 	const { data: areaData, status: areaStatus } = useRadarTrapFind<radarTrap.Area>("areas", {
-		query: { $select: ["_id", "description"] },
+		query: { $select: ["_id", "timestamp", "description"] },
 	});
 
 	const { data: routesData, status: routesStatus } = useRadarTrapFind<radarTrap.Route>("routes", {
-		query: { $select: ["_id", "description", "activeProfile"] },
+		query: { $select: ["_id", "timestamp", "description", "activeProfile"] },
 	});
 
 	const routesItems =
@@ -44,10 +44,30 @@ const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowD
 					.activeProfile!.actualExclusion.map((excl) => I18n.t(excl as string))
 					.join(", ");
 
-				const primaryText = data.description!;
-				const secondaryText = `${I18n.t("profile")}: ${I18n.t(data.activeProfile!.name)} | ${I18n.t(
-					"exclusions",
-				)}: ${actualExclusionsList.length > 0 ? actualExclusionsList : "-"} `;
+				const primaryText = (
+					<>
+						<Typography variant="subtitle1">{data.description!}</Typography>
+						<Typography variant="caption">
+							{`${I18n.t("profile")}: ${I18n.t(data.activeProfile!.name)} | ${I18n.t(
+								"exclusions",
+							)}: ${actualExclusionsList.length > 0 ? actualExclusionsList : "-"} `}
+						</Typography>
+					</>
+				);
+
+				const secondaryText = (
+					<Typography sx={{ display: "block" }} variant="caption">
+						{`${I18n.t("updated")}: `}
+						{new Date(data.timestamp!).toLocaleString("de-DE", {
+							day: "2-digit",
+							month: "2-digit",
+							year: "numeric",
+							hour: "2-digit",
+							minute: "2-digit",
+							second: "2-digit",
+						})}
+					</Typography>
+				);
 
 				return (
 					<ListItem key={data._id} disablePadding={true}>
@@ -55,7 +75,7 @@ const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowD
 							onClick={() => {
 								setShowDrawer(false);
 								setRouteId(data._id);
-								setRouteInfo({ primaryText, secondaryText });
+								setRouteDescription(primaryText);
 							}}
 						>
 							<ListItemAvatar>
@@ -63,7 +83,7 @@ const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowD
 									<RouteIcon color={routeId === data._id ? "primary" : "inherit"} />
 								</Avatar>
 							</ListItemAvatar>
-							<ListItemText primary={primaryText} secondary={secondaryText} />
+							<ListItemText disableTypography primary={primaryText} secondary={secondaryText} />
 						</ListItemButton>
 					</ListItem>
 				);
@@ -75,8 +95,21 @@ const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowD
 			.slice()
 			.sort((a, b) => a.description!.localeCompare(b.description!))
 			.map((data) => {
-				const primaryText = data.description!;
-				const secondaryText = "";
+				const primaryText = <Typography variant="subtitle1">{data.description!}</Typography>;
+
+				const secondaryText = (
+					<Typography sx={{ display: "block" }} variant="caption">
+						{`${I18n.t("updated")}: `}
+						{new Date(data.timestamp!).toLocaleString("de-DE", {
+							day: "2-digit",
+							month: "2-digit",
+							year: "numeric",
+							hour: "2-digit",
+							minute: "2-digit",
+							second: "2-digit",
+						})}
+					</Typography>
+				);
 
 				return (
 					<ListItem key={data._id} disablePadding={true}>
@@ -84,7 +117,7 @@ const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowD
 							onClick={() => {
 								setShowDrawer(false);
 								setRouteId(data._id);
-								setRouteInfo({ primaryText, secondaryText });
+								setRouteDescription(primaryText);
 							}}
 						>
 							<ListItemAvatar>
@@ -92,7 +125,7 @@ const MapList: FC<MapListProps> = ({ routeId, setRouteId, setRouteInfo, setShowD
 									<PublicIcon color={routeId === data._id ? "primary" : "inherit"} />
 								</Avatar>
 							</ListItemAvatar>
-							<ListItemText primary={primaryText} secondary={secondaryText} />
+							<ListItemText disableTypography primary={primaryText} secondary={secondaryText} />
 						</ListItemButton>
 					</ListItem>
 				);

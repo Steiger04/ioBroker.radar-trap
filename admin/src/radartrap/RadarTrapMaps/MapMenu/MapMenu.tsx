@@ -3,7 +3,6 @@ import ZoomOutMap from "@mui/icons-material/ZoomOutMap";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import type { Theme } from "@mui/system";
 import type { Dispatch, FC, ReactElement, SetStateAction } from "react";
@@ -21,27 +20,23 @@ const MapMenu: FC<MapMenuProps> = ({ routeId, setRouteId, resizeMap }): ReactEle
 	const { count } = useRadarTrapCount();
 	const upSmall = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
 	const [showDrawer, setShowDrawer] = useState(false);
-	const [{ primaryText, secondaryText }, setRouteInfo] = useState({
-		primaryText: "",
-		secondaryText: "",
-	});
+	const [routeDescription, setRouteDescription] = useState<JSX.Element>();
 
 	return (
 		<>
-			{upSmall && (Boolean(primaryText) || Boolean(secondaryText)) && (
+			{upSmall && routeDescription && (
 				<Box
 					sx={{
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",
 						alignItems: "center",
-						/* color: "primary.main", */
 						border: "2px solid",
 						borderRadius: "4px",
 						borderColor: (theme) => theme.palette.primary.dark,
 						backgroundColor: (theme) => theme.palette.primary.main,
-						mt: 1,
-						p: 1,
+						mt: 0,
+						p: 0,
 						position: "fixed",
 						left: "50%",
 						top: 0,
@@ -57,8 +52,7 @@ const MapMenu: FC<MapMenuProps> = ({ routeId, setRouteId, resizeMap }): ReactEle
 						},
 					}}
 				>
-					<Typography variant="subtitle1">{primaryText}</Typography>
-					<Typography variant="caption">{secondaryText}</Typography>
+					{routeDescription}
 				</Box>
 			)}
 
@@ -97,7 +91,7 @@ const MapMenu: FC<MapMenuProps> = ({ routeId, setRouteId, resizeMap }): ReactEle
 					{...{
 						routeId,
 						setRouteId,
-						setRouteInfo,
+						setRouteDescription,
 						setShowDrawer,
 					}}
 				/>

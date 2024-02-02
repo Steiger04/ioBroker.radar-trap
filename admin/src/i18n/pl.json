@@ -64,5 +64,6 @@
     "state": "państwo",
     "zipCode": "kod pocztowy",
     "street": "ulica",
-    "cityDistrict": "dzielnica"
+    "cityDistrict": "dzielnica",
+    "updated": "zaktualizowany"
 }

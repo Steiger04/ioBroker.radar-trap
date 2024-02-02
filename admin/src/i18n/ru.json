@@ -64,5 +64,6 @@
     "state": "состояние",
     "zipCode": "почтовый индекс",
     "street": "улица",
-    "cityDistrict": "район города"
+    "cityDistrict": "район города",
+    "updated": "обновлено"
 }

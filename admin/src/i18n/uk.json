@@ -64,5 +64,6 @@
     "state": "стан",
     "zipCode": "ЗІП код",
     "street": "вулиця",
-    "cityDistrict": "міський район"
+    "cityDistrict": "міський район",
+    "updated": "оновлено"
 }

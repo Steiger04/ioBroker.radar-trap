@@ -64,5 +64,6 @@
     "state": "staat",
     "zipCode": "postcode",
     "street": "straat",
-    "cityDistrict": "stadsdeel"
+    "cityDistrict": "stadsdeel",
+    "updated": "bijgewerkt"
 }

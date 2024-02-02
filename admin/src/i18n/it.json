@@ -64,5 +64,6 @@
     "state": "stato",
     "zipCode": "Cap",
     "street": "strada",
-    "cityDistrict": "quartiere cittadino"
+    "cityDistrict": "quartiere cittadino",
+    "updated": "aggiornato"
 }

@@ -64,5 +64,6 @@
     "state": "状态",
     "zipCode": "邮政编码",
     "street": "街道",
-    "cityDistrict": "市区"
+    "cityDistrict": "市区",
+    "updated": "更新"
 }
