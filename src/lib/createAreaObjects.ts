@@ -16,6 +16,17 @@ const createAreaObjects = async (that: utils.AdapterInstance, area: radarTrap.Ar
 	});
 
 	await that
+		.createStateAsync(`${area._id}`, "area-infos", "lastUpdated", {
+			name: "Last Updated",
+			defAck: true,
+			read: true,
+			write: false,
+			type: "string",
+			role: "text",
+		})
+		.then(() => that.setStateAsync(`${area._id}.area-infos.lastUpdated`, `${area.timestamp}`, true));
+
+	await that
 		.createStateAsync(`${area._id}`, "area-infos", "description", {
 			name: "Description",
 			defAck: true,

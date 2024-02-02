@@ -52,7 +52,7 @@ const patchOrCreateRoute = () => {
     }
     const { data, service, params } = context;
     const { _id, activeProfile, maxTrapDistance } = data;
-    data.timestamp = /* @__PURE__ */ new Date();
+    data.timestamp = (/* @__PURE__ */ new Date()).toString();
     import_Scheduler.Scheduler.pause(_id);
     service.emit("status", { _id: data._id, status: "loading" });
     const [record] = await service.find({

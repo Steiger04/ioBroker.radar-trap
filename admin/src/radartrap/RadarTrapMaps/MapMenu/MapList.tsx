@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import Typography from "@mui/material/Typography";
 import { useRadarTrapFind } from "../../../lib";
+import { useAppData } from "../../../App";
 
 import type { Dispatch, FC, ReactElement, SetStateAction } from "react";
 
@@ -26,6 +27,8 @@ const MapList: FC<MapListProps> = ({
 	setRouteDescription,
 	setShowDrawer,
 }): ReactElement | null => {
+	const { language } = useAppData();
+
 	const { data: areaData, status: areaStatus } = useRadarTrapFind<radarTrap.Area>("areas", {
 		query: { $select: ["_id", "timestamp", "description"] },
 	});
@@ -54,7 +57,7 @@ const MapList: FC<MapListProps> = ({
 						</Typography>
 						<Typography sx={{ display: "block" }} variant="caption">
 							{`${I18n.t("updated")}: `}
-							{new Date(data.timestamp!).toLocaleString("de-DE", {
+							{new Date(data.timestamp!).toLocaleString(language, {
 								day: "2-digit",
 								month: "2-digit",
 								year: "numeric",
@@ -98,7 +101,7 @@ const MapList: FC<MapListProps> = ({
 						<Typography variant="subtitle1">{data.description!}</Typography>
 						<Typography sx={{ display: "block" }} variant="caption">
 							{`${I18n.t("updated")}: `}
-							{new Date(data.timestamp!).toLocaleString("de-DE", {
+							{new Date(data.timestamp!).toLocaleString(language, {
 								day: "2-digit",
 								month: "2-digit",
 								year: "numeric",

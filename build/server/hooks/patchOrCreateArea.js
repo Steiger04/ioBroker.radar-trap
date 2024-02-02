@@ -52,7 +52,7 @@ const patchOrCreateArea = () => {
     const startTime = performance.now();
     const { data, service, params } = context;
     const { _id } = data;
-    data.timestamp = /* @__PURE__ */ new Date();
+    data.timestamp = (/* @__PURE__ */ new Date()).toString();
     import_Scheduler.Scheduler.pause(_id);
     service.emit("status", { _id: data._id, status: "loading" });
     const [record] = await service.find({

@@ -22,6 +22,19 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 		});
 
 		await that
+			.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "lastUpdated", {
+				name: "Last Updated",
+				defAck: true,
+				read: true,
+				write: false,
+				type: "string",
+				role: "text",
+			})
+			.then(() =>
+				that.setStateAsync(`${route._id}.direction-${idx}-infos.lastUpdated`, `${route.timestamp}`, true),
+			);
+
+		await that
 			.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "description", {
 				name: "Description",
 				defAck: true,

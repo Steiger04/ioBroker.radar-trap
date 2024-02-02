@@ -9,29 +9,14 @@ const createAllAreaAndRouteObjects = async (that: utils.AdapterInstance, feather
 	const routes = await feathers.service("routes").find({
 		query: {
 			$limit: -1,
-			$select: [
-				"_id",
-				"description",
-				/* "src",
-				"dst", */
-				"activeProfile",
-				/* "cron", */
-				"directions",
-			],
+			$select: ["_id", "timestamp", "description", "activeProfile", "directions"],
 		},
 	});
 
 	const areas = await feathers.service("areas").find({
 		query: {
 			$limit: -1,
-			$select: [
-				"_id",
-				"description",
-				"areaTraps",
-				/* "src",
-				"dst", */
-				/* "cron", */
-			],
+			$select: ["_id", "timestamp", "description", "areaTraps"],
 		},
 	});
 
