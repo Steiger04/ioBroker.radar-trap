@@ -21,7 +21,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.2.0 (2024-02-04)
 * (Steiger04) added new state lastUpdated
 * (Steiger04) UI optimized
 
