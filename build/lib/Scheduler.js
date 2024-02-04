@@ -28,20 +28,20 @@ class Scheduler {
   static #areasService = import_createFeathers.feathers.service("areas");
   static #routesService = import_createFeathers.feathers.service("routes");
   static #adapter;
-  constructor(routeData, type) {
-    const { _id: id, cron: pattern } = routeData;
-    this.routeStatus = "idle";
+  constructor(data, type) {
+    const { _id: id, cron: pattern } = data;
+    this._status = "idle";
     this.dataType = type;
-    this.routeData = routeData;
+    this.data = data;
     this.cronJob = new import_croner.Cron(pattern.trim(), () => {
-      if (false)
+      if (true)
         console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} scheduled`);
       Scheduler.run(id);
     });
     this.interval = setInterval(() => {
       Scheduler.#adapter.setStateAsync(`${id}.cron-job.timer`, this.next, true).catch((ex) => console.log(ex));
     }, 1e3);
-    if (false)
+    if (true)
       console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} created.`);
   }
   get next() {
@@ -55,10 +55,10 @@ class Scheduler {
     return this.cronJob.isRunning();
   }
   get status() {
-    return this.routeStatus;
+    return this._status;
   }
   set status(status) {
-    this.routeStatus = status;
+    this._status = status;
   }
   static setStatus(statusWithId) {
     const { _id, status } = statusWithId;
@@ -74,12 +74,12 @@ class Scheduler {
   static getSchedule(id) {
     return Scheduler.#scheduleMap.get(id);
   }
-  static schedule(routeData, type) {
-    const { _id: id } = routeData;
+  static schedule(data, type) {
+    const { _id: id } = data;
     Scheduler.delete(id);
-    Scheduler.#scheduleMap.set(id, new this(routeData, type));
-    console.log("process.env.NODE_ENV", "production");
-    if (false)
+    Scheduler.#scheduleMap.set(id, new this(data, type));
+    console.log("process.env.NODE_ENV", "development");
+    if (true)
       console.log(`Scheduled with id: ${id}`);
   }
   static async scheduleAll() {
@@ -130,11 +130,11 @@ class Scheduler {
     Scheduler.pause(id);
     try {
       if (_schedule.dataType === "AREA") {
-        await Scheduler.#areasService.create(_schedule.routeData, {
+        await Scheduler.#areasService.create(_schedule.data, {
           patchSourceFromServer: true
         });
       } else if (_schedule.dataType === "ROUTE") {
-        await Scheduler.#routesService.create(_schedule.routeData, {
+        await Scheduler.#routesService.create(_schedule.data, {
           patchSourceFromServer: true
         });
       }

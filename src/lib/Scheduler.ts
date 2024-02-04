@@ -5,26 +5,25 @@ import type * as utils from "@iobroker/adapter-core";
 
 type DataType = "ROUTE" | "AREA";
 
-class Scheduler {
-	private routeStatus: radarTrap.GenericStatus;
+class Scheduler<T extends radarTrap.Route | radarTrap.Area> {
+	private _status: radarTrap.GenericStatus;
 	private readonly dataType: DataType;
-	private readonly routeData: Partial<radarTrap.Area & radarTrap.Route>;
+	private readonly data: Partial<T>;
 	private readonly cronJob: Cron;
 	private interval: NodeJS.Timeout | null;
 
-	static #scheduleMap = new Map<string, Scheduler>();
+	static #scheduleMap = new Map<string, Scheduler<radarTrap.Route | radarTrap.Area>>();
 	static #areasService = feathers.service("areas");
 	static #routesService = feathers.service("routes");
 	static #adapter: utils.AdapterInstance;
 
-	constructor(routeData: Partial<radarTrap.Route>, type: DataType) {
-		// console.log("inside Scheduler Constructor()");
-		const { _id: id, cron: pattern } = routeData;
+	constructor(data: Partial<T>, type: DataType) {
+		const { _id: id, cron: pattern } = data;
 
-		this.routeStatus = "idle";
+		this._status = "idle";
 
 		this.dataType = type;
-		this.routeData = routeData;
+		this.data = data;
 
 		this.cronJob = new Cron(pattern!.trim(), () => {
 			if (process.env.NODE_ENV === "development")
@@ -55,11 +54,11 @@ class Scheduler {
 	}
 
 	get status(): radarTrap.GenericStatus {
-		return this.routeStatus;
+		return this._status;
 	}
 
 	private set status(status: radarTrap.GenericStatus) {
-		this.routeStatus = status;
+		this._status = status;
 	}
 
 	static setStatus(statusWithId: radarTrap.GenericStatusWithId): void {
@@ -77,16 +76,16 @@ class Scheduler {
 		Scheduler.#adapter = adapter;
 	}
 
-	static getSchedule(id: string): Scheduler | undefined {
+	static getSchedule(id: string): Scheduler<radarTrap.Route | radarTrap.Area> | undefined {
 		return Scheduler.#scheduleMap.get(id);
 	}
 
-	static schedule(routeData: Partial<radarTrap.Route>, type: DataType): void {
-		const { _id: id } = routeData;
+	static schedule(data: Partial<radarTrap.Route | radarTrap.Area>, type: DataType): void {
+		const { _id: id } = data;
 
 		Scheduler.delete(id!);
 
-		Scheduler.#scheduleMap.set(id!, new this(routeData, type));
+		Scheduler.#scheduleMap.set(id!, new this(data, type));
 
 		console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
@@ -155,12 +154,11 @@ class Scheduler {
 
 		try {
 			if (_schedule.dataType === "AREA") {
-				// console.log("AREA");
-				await Scheduler.#areasService.create(_schedule.routeData, {
+				await Scheduler.#areasService.create(_schedule.data, {
 					patchSourceFromServer: true,
 				});
 			} else if (_schedule.dataType === "ROUTE") {
-				await Scheduler.#routesService.create(_schedule.routeData, {
+				await Scheduler.#routesService.create(_schedule.data, {
 					patchSourceFromServer: true,
 				});
 			}
