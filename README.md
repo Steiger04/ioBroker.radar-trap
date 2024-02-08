@@ -21,7 +21,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.3.0 (2024-02-08)
 * Steiger04) new states for new and rejected traps
 
 ### 1.2.0 (2024-02-04)
