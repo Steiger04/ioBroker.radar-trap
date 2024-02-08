@@ -54,7 +54,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use('/', express.static(app.get('public')));
 
 // Set up Plugins and providers
-app.configure(express.rest());
+if (process.env.NODE_ENV === "development") app.configure(express.rest());
 app.configure(socketio());
 
 // Configure other middleware (see `middleware/index.ts`)
