@@ -31,7 +31,8 @@ const prepareTraps = (traps) => Object.values(traps).reduce((list, t) => {
   if (isArray(t)) {
     t.forEach(({ properties }) => {
       const trapInfo = {};
-      trapInfo.trap_id = properties.id;
+      trapInfo.id = properties.backend;
+      trapInfo.status = properties.status;
       trapInfo.typeName = properties.type_name;
       const info = properties.info === "false" ? false : properties.info;
       trapInfo.reason = Boolean(info) && Boolean(info.reason) && info.reason || Boolean(properties.reason) && properties.reason;

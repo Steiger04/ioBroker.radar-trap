@@ -77,8 +77,6 @@ const useAreaAccordion = ({
 			// setTimeout(() => fieldUpdate(index, data), 0);
 			fieldUpdate(index, data);
 
-			// console.log("data", data);
-
 			create(
 				data,
 				paramsForServer({

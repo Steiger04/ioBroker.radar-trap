@@ -51,42 +51,46 @@ const createAreaObjects = async (that, area) => {
   await that.createChannelAsync(`${area._id}`, "area", {
     name: "Area"
   });
-  let totalTrapsCount = 0;
-  for (const [trapName, traps] of Object.entries(area.areaTraps)) {
-    const newTraps = traps.map((trap) => {
-      var _a;
-      return {
-        type: trap.type,
-        geometry: trap.geometry,
-        properties: { ...(_a = trap.properties) == null ? void 0 : _a.trapInfo }
-      };
-    });
-    totalTrapsCount += newTraps.length;
-    await that.createStateAsync(`${area._id}`, `area`, `${trapName}`, {
-      name: `${trapName}`,
-      defAck: true,
-      read: true,
-      write: false,
-      type: "array",
-      role: "list"
-    }).then(() => that.setStateAsync(`${area._id}.area.${trapName}`, JSON.stringify(newTraps), true));
-    await that.createStateAsync(`${area._id}`, `area`, `${trapName}Count`, {
-      name: `${trapName} Count`,
+  for (const trapType of ["areaTraps", "areaTrapsNew", "areaTrapsRejected"]) {
+    let totalTrapsCount = 0;
+    for (const [trapName, traps] of Object.entries(
+      area[trapType]
+    )) {
+      const newTraps = traps.map((trap) => {
+        var _a;
+        return {
+          type: trap.type,
+          geometry: trap.geometry,
+          properties: { ...(_a = trap.properties) == null ? void 0 : _a.trapInfo }
+        };
+      });
+      totalTrapsCount += newTraps.length;
+      await that.createStateAsync(`${area._id}`, `area`, `${trapName}`, {
+        name: `${trapName}`,
+        defAck: true,
+        read: true,
+        write: false,
+        type: "array",
+        role: "list"
+      }).then(() => that.setStateAsync(`${area._id}.area.${trapName}`, JSON.stringify(newTraps), true));
+      await that.createStateAsync(`${area._id}`, `area`, `${trapName}Count`, {
+        name: `${trapName} Count`,
+        defAck: true,
+        read: true,
+        write: false,
+        type: "number",
+        role: "value"
+      }).then(() => that.setStateAsync(`${area._id}.area.${trapName}Count`, newTraps.length, true));
+    }
+    await that.createStateAsync(`${area._id}`, "area-infos", `${trapType}Count`, {
+      name: "totalTraps Count",
       defAck: true,
       read: true,
       write: false,
       type: "number",
       role: "value"
-    }).then(() => that.setStateAsync(`${area._id}.area.${trapName}Count`, newTraps.length, true));
+    }).then(() => that.setStateAsync(`${area._id}.area-infos.${trapType}Count`, totalTrapsCount, true));
   }
-  await that.createStateAsync(`${area._id}`, "area-infos", "totalTrapsCount", {
-    name: "totalTraps Count",
-    defAck: true,
-    read: true,
-    write: false,
-    type: "number",
-    role: "value"
-  }).then(() => that.setStateAsync(`${area._id}.area-infos.totalTrapsCount`, totalTrapsCount, true));
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

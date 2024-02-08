@@ -1,5 +1,5 @@
 import polyline from "@mapbox/polyline";
-import { Feature, feature, Point, Properties } from "@turf/helpers";
+import { Feature, feature, Point } from "@turf/helpers";
 
 const type_text: Record<string, string> = {
 	0: "unbekannt, mobil",
@@ -38,9 +38,7 @@ const type_text: Record<string, string> = {
 	ts: "Geschwindigkeit, teilstationär",
 };
 
-const determineTrapTypes = (
-	trapTypes: Feature<Point, Properties>[],
-): Record<string, GeoJSON.Feature<GeoJSON.Point>[]> =>
+const determineTrapTypes = (trapTypes: Feature<Point>[]): Record<string, Feature<Point>[]> =>
 	trapTypes.reduce(
 		(list, resultTrap) => {
 			if (resultTrap.properties!.type === "1" && resultTrap.properties!.info.partly_fixed === "1") {
@@ -48,12 +46,6 @@ const determineTrapTypes = (
 			}
 
 			resultTrap.properties!.type_text = type_text[resultTrap.properties!.type];
-
-			/* if (resultTrap.properties!.info !== "false") {
-				resultTrap.properties!.info = JSON.parse(
-					resultTrap.properties!.info,
-				);
-			} */
 
 			if (resultTrap.properties!.polyline !== "") {
 				resultTrap.properties!.polyline = feature(

@@ -92,7 +92,8 @@ declare global {
 		}
 
 		interface trapInfo {
-			trap_id?: string;
+			id?: string;
+			status?: string;
 			typeName?: string;
 			longitude?: number;
 			latitude?: number;
@@ -126,7 +127,10 @@ declare global {
 			description: string | undefined;
 			cron: string;
 			areaPolygons: AreaPolygons | null;
-			areaTraps?: Record<string, Feature<LineString | Point>[]>;
+			areaTraps?: Record<string, Feature<LineString | Point, Properties>[]>;
+			areaTrapsNew?: Record<string, Feature<LineString | Point, Properties>[]>;
+			areaTrapsEstablished?: Record<string, Feature<LineString | Point, Properties>[]>;
+			areaTrapsRejected?: Record<string, Feature<LineString | Point, Properties>[]>;
 			trapsFeatureCollection?: FeatureCollection<Point | LineString> | null;
 			polysFeatureCollection?: FeatureCollection<Point | LineString> | null;
 			timestamp?: string;

@@ -87,8 +87,6 @@ class Scheduler<T extends radarTrap.Route | radarTrap.Area> {
 
 		Scheduler.#scheduleMap.set(id!, new this(data, type));
 
-		console.log("process.env.NODE_ENV", process.env.NODE_ENV);
-
 		if (process.env.NODE_ENV === "development") console.log(`Scheduled with id: ${id}`);
 	}
 

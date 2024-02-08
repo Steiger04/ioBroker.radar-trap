@@ -34,14 +34,14 @@ class Scheduler {
     this.dataType = type;
     this.data = data;
     this.cronJob = new import_croner.Cron(pattern.trim(), () => {
-      if (false)
+      if (true)
         console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} scheduled`);
       Scheduler.run(id);
     });
     this.interval = setInterval(() => {
       Scheduler.#adapter.setStateAsync(`${id}.cron-job.timer`, this.next, true).catch((ex) => console.log(ex));
     }, 1e3);
-    if (false)
+    if (true)
       console.log(`Cron-Job with id ${id} and pattern ${pattern.trim()} created.`);
   }
   get next() {
@@ -78,8 +78,7 @@ class Scheduler {
     const { _id: id } = data;
     Scheduler.delete(id);
     Scheduler.#scheduleMap.set(id, new this(data, type));
-    console.log("process.env.NODE_ENV", "production");
-    if (false)
+    if (true)
       console.log(`Scheduled with id: ${id}`);
   }
   static async scheduleAll() {

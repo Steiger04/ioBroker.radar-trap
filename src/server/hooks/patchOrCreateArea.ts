@@ -16,6 +16,7 @@ import polyline from "@mapbox/polyline";
 import { featureReduce } from "@turf/meta";
 import transformScale from "@turf/transform-scale";
 import console from "console";
+import { differenceBy, mergeWith, intersectionBy, mapKeys, flatten, reduce } from "lodash";
 
 const patchOrCreateArea = (): Hook => {
 	return async (context: HookContext<radarTrap.Area>) => {
@@ -29,27 +30,20 @@ const patchOrCreateArea = (): Hook => {
 		service.emit("status", { _id: data!._id, status: "loading" });
 
 		const [record] = (await service.find({
-			query: { _id },
+			query: { _id, $select: ["areaTraps"] },
 			paginate: false,
-		})) as radarTrap.Areas;
-
-		// console.log("record", record);
+		})) as Partial<radarTrap.Areas>;
 
 		if (params.patchSourceFromClient || params.patchSourceFromServer) {
 			const areaPolygon = Object.values(data!.areaPolygons!)[0];
-			// console.log("areaPolygon", areaPolygon.geometry.coordinates);
 
 			const areaBox = bbox(areaPolygon);
-			// console.log("areaBox", areaBox);
 
 			const squareBox = square(areaBox);
-			// console.log("squareBox", squareBox);
 
 			const squareBoxPolygon = transformScale(bboxPolygon(squareBox), 1.3);
-			// console.log("squareBoxPolygon", squareBoxPolygon);
 
 			const sideLength = Math.sqrt(area(squareBoxPolygon)) / 1e3;
-			// console.log("sideLength", sideLength);
 
 			let sideLengthDivisor = 0;
 
@@ -68,28 +62,19 @@ const patchOrCreateArea = (): Hook => {
 			}
 
 			const squareBoxGrid = squareGrid(bbox(squareBoxPolygon), sideLength / sideLengthDivisor);
-			// console.log("squareBoxGrid", squareBoxGrid.features.length);
 
 			const reducedSquareBoxGrid = featureCollection(
 				squareBoxGrid.features.filter((feature) => {
-					// console.log("feature::", feature.geometry!.coordinates);
 					return booleanOverlap(areaPolygon, feature) || booleanContains(areaPolygon, feature);
 				}),
 			);
 
-			/* console.log(
-				"reducedSquareBoxGrid",
-				reducedSquareBoxGrid.features.length,
-			); */
-
-			let resultTraps: Feature<Point>[] | Record<string, Feature<Point, Properties>[]> = [];
-
+			let resultTraps: Feature<Point>[] = [];
 			let resultPolyPoints: Feature<Point>[] = [];
 			let resultPolyLines: Feature<Point | LineString>[] = [];
 
 			for (const feature of reducedSquareBoxGrid.features) {
 				const tmpBbox = bbox(feature);
-				// console.log("feature coordinates", tmpBbox);
 
 				const { polyPoints, trapPoints: gridTraps } = await traps(
 					{
@@ -104,35 +89,11 @@ const patchOrCreateArea = (): Hook => {
 
 				if (gridTraps.length > 499) console.log("gridTraps >>>", gridTraps.length);
 
-				resultTraps = resultTraps.concat(gridTraps);
 				resultPolyPoints = resultPolyPoints.concat(polyPoints);
+				resultTraps = resultTraps.concat(gridTraps);
 			}
 
-			// console.log("resultPolyPoints", resultPolyPoints.length);
-			// console.log("resultTraps", resultTraps.length);
-			// console.log("resultTraps", JSON.stringify(resultTraps, null, 4));
-
-			resultTraps = pointsWithinPolygon(featureCollection(resultTraps), areaPolygon).features;
-
 			resultPolyPoints = pointsWithinPolygon(featureCollection(resultPolyPoints), areaPolygon).features;
-
-			/* console.log(
-				"resultPolyPoints after reduction",
-				resultPolyPoints.length,
-			); */
-
-			// console.log("resultTraps after reduction", resultTraps.length);
-
-			resultTraps = determineTrapTypes(resultTraps);
-			// console.log("resultTraps", JSON.stringify(resultTraps, null, 4));
-
-			const endTime = performance.now();
-			console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1_000} Sekunden`);
-
-			data!.areaTraps = resultTraps;
-
-			// console.log("resultPolyPoints", resultPolyPoints);
-
 			resultPolyLines = featureReduce(
 				featureCollection(resultPolyPoints),
 				(features: Feature<Point | LineString, Properties>[], tmpFeature) => {
@@ -147,8 +108,104 @@ const patchOrCreateArea = (): Hook => {
 				},
 				[],
 			);
-
 			data!.polysFeatureCollection = featureCollection(resultPolyLines);
+
+			resultTraps = pointsWithinPolygon(featureCollection(resultTraps), areaPolygon).features;
+			const resultTypeTraps = determineTrapTypes(resultTraps);
+
+			const newTraps = mapKeys(
+				mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
+					{ ...(record?.areaTraps || {}) },
+					resultTypeTraps,
+					(objValue, srcValue) =>
+						differenceBy<Feature<Point>, Feature<Point>>(
+							srcValue,
+							objValue || [],
+							"properties.backend",
+						).map((item) => ({
+							...item,
+							properties: { ...item.properties, status: "NEW" },
+						})),
+				),
+				(_, key) => `${key}New`,
+			);
+			if (process.env.NODE_ENV === "development") console.log("newTraps >>>", newTraps);
+
+			const establishedTraps = mapKeys(
+				mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
+					{ ...(record?.areaTraps || {}) },
+					resultTypeTraps,
+					(objValue, srcValue) =>
+						intersectionBy<Feature<Point>, Feature<Point>>(
+							objValue || [],
+							srcValue,
+							"properties.backend",
+						).map((item) => ({
+							...item,
+							properties: { ...item.properties, status: "ESTABLISHED" },
+						})),
+				),
+				(_, key) => `${key}Established`,
+			);
+			if (process.env.NODE_ENV === "development") console.log("establishedTraps >>>", establishedTraps);
+
+			const rejectedTraps = mapKeys(
+				mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
+					{ ...(record?.areaTraps || {}) },
+					resultTypeTraps,
+					(objValue, srcValue) =>
+						differenceBy<Feature<Point>, Feature<Point>>(
+							objValue || [],
+							srcValue,
+							"properties.backend",
+						).map((item) => ({
+							...item,
+							properties: { ...item.properties, status: "REJECTED" },
+						})),
+				),
+				(_, key) => `${key}Rejected`,
+			);
+			if (process.env.NODE_ENV === "development") console.log("rejectedTraps >>>", rejectedTraps);
+
+			const areaTraps = mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
+				{ ...mapKeys(establishedTraps, (_, key) => key.substring(0, key.length - 11)) },
+				mapKeys(newTraps, (_, key) => key.substring(0, key.length - 3)),
+				(objValue, srcValue) => flatten<Feature<Point>>([objValue, srcValue]),
+			);
+			if (process.env.NODE_ENV === "development") console.log("areaTraps >>>", areaTraps);
+
+			const newTrapsReduced = reduce<
+				NonNullable<radarTrap.Area["areaTrapsNew"]>,
+				NonNullable<radarTrap.Area["areaTrapsNew"]>
+			>(
+				newTraps,
+				function (acc, value) {
+					acc.trapsNew.push(...value);
+					return acc;
+				},
+				{ trapsNew: [] },
+			);
+			if (process.env.NODE_ENV === "development") console.log("newTrapsReduced >>>", newTrapsReduced);
+
+			const rejectedTrapsReduced = reduce<
+				NonNullable<radarTrap.Area["areaTrapsRejected"]>,
+				NonNullable<radarTrap.Area["areaTrapsRejected"]>
+			>(
+				rejectedTraps,
+				function (acc, value) {
+					acc.trapsRejected.push(...value);
+					return acc;
+				},
+				{ trapsRejected: [] },
+			);
+			if (process.env.NODE_ENV === "development") console.log("rejectedTrapsReduced >>>", rejectedTrapsReduced);
+
+			data!.areaTraps = areaTraps;
+			data!.areaTrapsNew = newTrapsReduced;
+			data!.areaTrapsRejected = rejectedTrapsReduced;
+			// data!.areaTrapsNew = newTraps;
+			// data!.areaTrapsEstablished = establishedTraps;
+			// data!.areaTrapsRejected = rejectedTraps;
 		}
 
 		if (record !== undefined) {
@@ -156,9 +213,10 @@ const patchOrCreateArea = (): Hook => {
 				...params,
 				publishEvent: false,
 			});
-
-			return context;
 		}
+
+		const endTime = performance.now();
+		console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1_000} Sekunden`);
 
 		return context;
 	};

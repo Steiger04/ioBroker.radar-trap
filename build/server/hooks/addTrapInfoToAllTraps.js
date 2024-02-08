@@ -24,10 +24,14 @@ module.exports = __toCommonJS(addTrapInfoToAllTraps_exports);
 var import_helpers = require("@turf/helpers");
 var import_prepareTraps = require("./prepareTraps");
 const addTrapInfoToAllTraps = (data) => {
-  if (data.areaTraps === void 0) {
-    return;
-  }
-  data.trapsFeatureCollection = (0, import_helpers.featureCollection)((0, import_prepareTraps.prepareTraps)(data.areaTraps));
+  if (data.areaTraps !== void 0)
+    data.trapsFeatureCollection = (0, import_helpers.featureCollection)((0, import_prepareTraps.prepareTraps)(data.areaTraps));
+  if (data.areaTrapsNew !== void 0)
+    (0, import_prepareTraps.prepareTraps)(data.areaTrapsNew);
+  if (data.areaTrapsEstablished !== void 0)
+    (0, import_prepareTraps.prepareTraps)(data.areaTrapsEstablished);
+  if (data.areaTrapsRejected !== void 0)
+    (0, import_prepareTraps.prepareTraps)(data.areaTrapsRejected);
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
