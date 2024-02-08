@@ -18,21 +18,30 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var hooks_exports = {};
 __export(hooks_exports, {
+  addTrapInfoToAllTraps: () => import_addTrapInfoToAllTraps.addTrapInfoToAllTraps,
   convertPolylineToGeojson: () => import_convertPolylineToGeojson.convertPolylineToGeojson,
   patchOrCreateArea: () => import_patchOrCreateArea.patchOrCreateArea,
   patchOrCreateRoute: () => import_patchOrCreateRoute.patchOrCreateRoute,
-  setActiveProfile: () => import_setActiveProfile.setActiveProfile
+  prepareTraps: () => import_prepareTraps.prepareTraps,
+  setActiveProfile: () => import_setActiveProfile.setActiveProfile,
+  trapsChain: () => import_trapsChain.trapsChain
 });
 module.exports = __toCommonJS(hooks_exports);
 var import_convertPolylineToGeojson = require("./convertPolylineToGeojson");
 var import_patchOrCreateArea = require("./patchOrCreateArea");
 var import_patchOrCreateRoute = require("./patchOrCreateRoute");
 var import_setActiveProfile = require("./setActiveProfile");
+var import_addTrapInfoToAllTraps = require("./addTrapInfoToAllTraps");
+var import_prepareTraps = require("./prepareTraps");
+var import_trapsChain = require("./trapsChain");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  addTrapInfoToAllTraps,
   convertPolylineToGeojson,
   patchOrCreateArea,
   patchOrCreateRoute,
-  setActiveProfile
+  prepareTraps,
+  setActiveProfile,
+  trapsChain
 });
 //# sourceMappingURL=index.js.map

@@ -24,7 +24,7 @@ const convertPolylineToGeojson = (data: radarTrap.Route): void => {
 
 	data.directionsFeatureCollection = directionsFeatureCollection;
 
-	let allTraps = data.directions.flatMap(({ traps }) => prepareTraps(traps));
+	let allTraps = data.directions.flatMap(({ routeTraps }) => prepareTraps(routeTraps!));
 
 	allTraps = uniqWith(allTraps, (a, b) => {
 		if (

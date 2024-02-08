@@ -1,6 +1,7 @@
 import { createCronJobAsync } from "./createCronJob";
 
 import type * as utils from "@iobroker/adapter-core";
+import { Feature, Point, LineString } from "@turf/turf";
 
 const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.Route): Promise<void> => {
 	await that.setObjectAsync(route._id, {
@@ -114,32 +115,50 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 				),
 			);
 
-		let totalTrapsCount = 0;
-		for (const [trapName, traps] of Object.entries(direction.traps)) {
-			const newTraps = traps.map((trap) => ({
-				type: trap.type,
-				geometry: trap.geometry,
-				properties: { ...trap.properties?.trapInfo },
-			}));
+		for (const trapType of ["routeTraps", "routeTrapsNew", "routeTrapsRejected"]) {
+			let totalTrapsCount = 0;
 
-			totalTrapsCount += newTraps.length;
+			for (const [trapName, traps] of Object.entries(
+				direction[trapType as keyof radarTrap.Direction]! as Record<string, Feature<Point | LineString>[]>,
+			)) {
+				const newTraps = traps.map((trap) => ({
+					type: trap.type,
+					geometry: trap.geometry,
+					properties: { ...trap.properties?.trapInfo },
+				}));
+
+				totalTrapsCount += newTraps.length;
+
+				await that
+					.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}`, {
+						name: `${trapName}`,
+						defAck: true,
+						read: true,
+						write: false,
+						type: "array",
+						role: "list",
+					})
+					.then(() =>
+						that.setStateAsync(`${route._id}.direction-${idx}.${trapName}`, JSON.stringify(newTraps), true),
+					);
+
+				await that
+					.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}Count`, {
+						name: `${trapName} Count`,
+						defAck: true,
+						read: true,
+						write: false,
+						type: "number",
+						role: "value",
+					})
+					.then(() =>
+						that.setStateAsync(`${route._id}.direction-${idx}.${trapName}Count`, newTraps.length, true),
+					);
+			}
 
 			await that
-				.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}`, {
-					name: `${trapName}`,
-					defAck: true,
-					read: true,
-					write: false,
-					type: "array",
-					role: "list",
-				})
-				.then(() =>
-					that.setStateAsync(`${route._id}.direction-${idx}.${trapName}`, JSON.stringify(newTraps), true),
-				);
-
-			await that
-				.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}Count`, {
-					name: `${trapName} Count`,
+				.createStateAsync(`${route._id}`, `direction-${idx}-infos`, `${trapType}Count`, {
+					name: "totalTraps Count",
 					defAck: true,
 					read: true,
 					write: false,
@@ -147,22 +166,9 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 					role: "value",
 				})
 				.then(() =>
-					that.setStateAsync(`${route._id}.direction-${idx}.${trapName}Count`, newTraps.length, true),
+					that.setStateAsync(`${route._id}.direction-${idx}-infos.${trapType}Count`, totalTrapsCount, true),
 				);
 		}
-
-		await that
-			.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "totalTrapsCount", {
-				name: "totalTraps Count",
-				defAck: true,
-				read: true,
-				write: false,
-				type: "number",
-				role: "value",
-			})
-			.then(() =>
-				that.setStateAsync(`${route._id}.direction-${idx}-infos.totalTrapsCount`, totalTrapsCount, true),
-			);
 	});
 };
 

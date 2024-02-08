@@ -50,7 +50,7 @@ const convertPolylineToGeojson = (data) => {
     data.directions.map((rec) => rec.direction.directionFeature)
   );
   data.directionsFeatureCollection = directionsFeatureCollection;
-  let allTraps = data.directions.flatMap(({ traps }) => (0, import_prepareTraps.prepareTraps)(traps));
+  let allTraps = data.directions.flatMap(({ routeTraps }) => (0, import_prepareTraps.prepareTraps)(routeTraps));
   allTraps = (0, import_lodash.uniqWith)(allTraps, (a, b) => {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     if (!((_a = a.properties) == null ? void 0 : _a.linetrap) && !((_b = b.properties) == null ? void 0 : _b.linetrap) && ((_c = a.properties) == null ? void 0 : _c.lat) === ((_d = b.properties) == null ? void 0 : _d.lat) && ((_e = a.properties) == null ? void 0 : _e.lng) === ((_f = b.properties) == null ? void 0 : _f.lng)) {

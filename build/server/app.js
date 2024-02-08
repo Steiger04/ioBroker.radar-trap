@@ -56,7 +56,7 @@ app.use((0, import_cors.default)());
 app.use((0, import_compression.default)());
 app.use(import_express.default.json());
 app.use(import_express.default.urlencoded({ extended: true }));
-if (true)
+if (false)
   app.configure(import_express.default.rest());
 app.configure((0, import_socketio.default)());
 app.configure(import_middleware.default);

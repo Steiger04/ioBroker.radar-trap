@@ -63,7 +63,11 @@ declare global {
 			direction: MapBoxRoute<string> & {
 				directionFeature?: GeoJSON.Feature<GeoJSON.LineString>;
 			};
-			traps: Record<string, GeoJSON.Feature<GeoJSON.LineString | GeoJSON.Point>[]>;
+			// traps: Record<string, GeoJSON.Feature<GeoJSON.LineString | GeoJSON.Point>[]>;
+			routeTraps?: Record<string, Feature<LineString | Point, Properties>[]>;
+			routeTrapsNew?: Record<string, Feature<LineString | Point, Properties>[]>;
+			routeTrapsEstablished?: Record<string, Feature<LineString | Point, Properties>[]>;
+			routeTrapsRejected?: Record<string, Feature<LineString | Point, Properties>[]>;
 			matrix: MatrixResponse;
 		}
 

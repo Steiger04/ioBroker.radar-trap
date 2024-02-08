@@ -16,7 +16,8 @@ import polyline from "@mapbox/polyline";
 import { featureReduce } from "@turf/meta";
 import transformScale from "@turf/transform-scale";
 import console from "console";
-import { differenceBy, mergeWith, intersectionBy, mapKeys, flatten, reduce } from "lodash";
+// import { differenceBy, mergeWith, intersectionBy, mapKeys, flatten, reduce } from "lodash";
+import { trapsChain } from "./trapsChain";
 
 const patchOrCreateArea = (): Hook => {
 	return async (context: HookContext<radarTrap.Area>) => {
@@ -113,92 +114,11 @@ const patchOrCreateArea = (): Hook => {
 			resultTraps = pointsWithinPolygon(featureCollection(resultTraps), areaPolygon).features;
 			const resultTypeTraps = determineTrapTypes(resultTraps);
 
-			const newTraps = mapKeys(
-				mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
-					{ ...(record?.areaTraps || {}) },
-					resultTypeTraps,
-					(objValue, srcValue) =>
-						differenceBy<Feature<Point>, Feature<Point>>(
-							srcValue,
-							objValue || [],
-							"properties.backend",
-						).map((item) => ({
-							...item,
-							properties: { ...item.properties, status: "NEW" },
-						})),
-				),
-				(_, key) => `${key}New`,
-			);
-			if (process.env.NODE_ENV === "development") console.log("newTraps >>>", newTraps);
-
-			const establishedTraps = mapKeys(
-				mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
-					{ ...(record?.areaTraps || {}) },
-					resultTypeTraps,
-					(objValue, srcValue) =>
-						intersectionBy<Feature<Point>, Feature<Point>>(
-							objValue || [],
-							srcValue,
-							"properties.backend",
-						).map((item) => ({
-							...item,
-							properties: { ...item.properties, status: "ESTABLISHED" },
-						})),
-				),
-				(_, key) => `${key}Established`,
-			);
-			if (process.env.NODE_ENV === "development") console.log("establishedTraps >>>", establishedTraps);
-
-			const rejectedTraps = mapKeys(
-				mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
-					{ ...(record?.areaTraps || {}) },
-					resultTypeTraps,
-					(objValue, srcValue) =>
-						differenceBy<Feature<Point>, Feature<Point>>(
-							objValue || [],
-							srcValue,
-							"properties.backend",
-						).map((item) => ({
-							...item,
-							properties: { ...item.properties, status: "REJECTED" },
-						})),
-				),
-				(_, key) => `${key}Rejected`,
-			);
-			if (process.env.NODE_ENV === "development") console.log("rejectedTraps >>>", rejectedTraps);
-
-			const areaTraps = mergeWith<radarTrap.Area["areaTraps"], radarTrap.Area["areaTraps"]>(
-				{ ...mapKeys(establishedTraps, (_, key) => key.substring(0, key.length - 11)) },
-				mapKeys(newTraps, (_, key) => key.substring(0, key.length - 3)),
-				(objValue, srcValue) => flatten<Feature<Point>>([objValue, srcValue]),
-			);
-			if (process.env.NODE_ENV === "development") console.log("areaTraps >>>", areaTraps);
-
-			const newTrapsReduced = reduce<
-				NonNullable<radarTrap.Area["areaTrapsNew"]>,
-				NonNullable<radarTrap.Area["areaTrapsNew"]>
-			>(
-				newTraps,
-				function (acc, value) {
-					acc.trapsNew.push(...value);
-					return acc;
-				},
-				{ trapsNew: [] },
-			);
-			if (process.env.NODE_ENV === "development") console.log("newTrapsReduced >>>", newTrapsReduced);
-
-			const rejectedTrapsReduced = reduce<
-				NonNullable<radarTrap.Area["areaTrapsRejected"]>,
-				NonNullable<radarTrap.Area["areaTrapsRejected"]>
-			>(
-				rejectedTraps,
-				function (acc, value) {
-					acc.trapsRejected.push(...value);
-					return acc;
-				},
-				{ trapsRejected: [] },
-			);
-			if (process.env.NODE_ENV === "development") console.log("rejectedTrapsReduced >>>", rejectedTrapsReduced);
+			const {
+				traps: areaTraps,
+				newTrapsReduced,
+				rejectedTrapsReduced,
+			} = trapsChain(record?.areaTraps, resultTypeTraps);
 
 			data!.areaTraps = areaTraps;
 			data!.areaTrapsNew = newTrapsReduced;

@@ -111,48 +111,52 @@ const createRouteObjects = async (that, route) => {
         true
       )
     );
-    let totalTrapsCount = 0;
-    for (const [trapName, traps] of Object.entries(direction.traps)) {
-      const newTraps = traps.map((trap) => {
-        var _a2;
-        return {
-          type: trap.type,
-          geometry: trap.geometry,
-          properties: { ...(_a2 = trap.properties) == null ? void 0 : _a2.trapInfo }
-        };
-      });
-      totalTrapsCount += newTraps.length;
-      await that.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}`, {
-        name: `${trapName}`,
-        defAck: true,
-        read: true,
-        write: false,
-        type: "array",
-        role: "list"
-      }).then(
-        () => that.setStateAsync(`${route._id}.direction-${idx}.${trapName}`, JSON.stringify(newTraps), true)
-      );
-      await that.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}Count`, {
-        name: `${trapName} Count`,
+    for (const trapType of ["routeTraps", "routeTrapsNew", "routeTrapsRejected"]) {
+      let totalTrapsCount = 0;
+      for (const [trapName, traps] of Object.entries(
+        direction[trapType]
+      )) {
+        const newTraps = traps.map((trap) => {
+          var _a2;
+          return {
+            type: trap.type,
+            geometry: trap.geometry,
+            properties: { ...(_a2 = trap.properties) == null ? void 0 : _a2.trapInfo }
+          };
+        });
+        totalTrapsCount += newTraps.length;
+        await that.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}`, {
+          name: `${trapName}`,
+          defAck: true,
+          read: true,
+          write: false,
+          type: "array",
+          role: "list"
+        }).then(
+          () => that.setStateAsync(`${route._id}.direction-${idx}.${trapName}`, JSON.stringify(newTraps), true)
+        );
+        await that.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}Count`, {
+          name: `${trapName} Count`,
+          defAck: true,
+          read: true,
+          write: false,
+          type: "number",
+          role: "value"
+        }).then(
+          () => that.setStateAsync(`${route._id}.direction-${idx}.${trapName}Count`, newTraps.length, true)
+        );
+      }
+      await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, `${trapType}Count`, {
+        name: "totalTraps Count",
         defAck: true,
         read: true,
         write: false,
         type: "number",
         role: "value"
       }).then(
-        () => that.setStateAsync(`${route._id}.direction-${idx}.${trapName}Count`, newTraps.length, true)
+        () => that.setStateAsync(`${route._id}.direction-${idx}-infos.${trapType}Count`, totalTrapsCount, true)
       );
     }
-    await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "totalTrapsCount", {
-      name: "totalTraps Count",
-      defAck: true,
-      read: true,
-      write: false,
-      type: "number",
-      role: "value"
-    }).then(
-      () => that.setStateAsync(`${route._id}.direction-${idx}-infos.totalTrapsCount`, totalTrapsCount, true)
-    );
   });
 };
 // Annotate the CommonJS export names for ESM import in node:

@@ -36,6 +36,7 @@ var import_matrix = __toESM(require("@mapbox/mapbox-sdk/services/matrix"));
 var import_perf_hooks = require("perf_hooks");
 var import_getTrapsFromDirection = require("../../lib/getTrapsFromDirection");
 var import_Scheduler = require("../../lib/Scheduler");
+var import_trapsChain = require("./trapsChain");
 const patchOrCreateRoute = () => {
   let directionsService = null;
   let matrixService = null;
@@ -108,7 +109,15 @@ const patchOrCreateRoute = () => {
           const endTime = import_perf_hooks.performance.now();
           console.log(`getTrapsFrom() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
           route.duration = matrix.durations[0][1];
-          data.directions.push({ direction: route, traps, matrix });
+          const length = data.directions.push({ direction: route, matrix });
+          const {
+            traps: routeTraps,
+            newTrapsReduced,
+            rejectedTrapsReduced
+          } = (0, import_trapsChain.trapsChain)(record == null ? void 0 : record.directions[length - 1].routeTraps, traps);
+          data.directions[length - 1].routeTraps = routeTraps;
+          data.directions[length - 1].routeTrapsNew = newTrapsReduced;
+          data.directions[length - 1].routeTrapsRejected = rejectedTrapsReduced;
         } catch (error) {
           console.log(error);
         }
@@ -119,7 +128,6 @@ const patchOrCreateRoute = () => {
         ...params,
         publishEvent: false
       });
-      return context;
     }
     return context;
   };

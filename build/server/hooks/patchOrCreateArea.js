@@ -47,7 +47,7 @@ var import_polyline = __toESM(require("@mapbox/polyline"));
 var import_meta = require("@turf/meta");
 var import_transform_scale = __toESM(require("@turf/transform-scale"));
 var import_console = __toESM(require("console"));
-var import_lodash = require("lodash");
+var import_trapsChain = require("./trapsChain");
 const patchOrCreateArea = () => {
   return async (context) => {
     const startTime = performance.now();
@@ -123,84 +123,11 @@ const patchOrCreateArea = () => {
       data.polysFeatureCollection = (0, import_helpers.featureCollection)(resultPolyLines);
       resultTraps = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultTraps), areaPolygon).features;
       const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultTraps);
-      const newTraps = (0, import_lodash.mapKeys)(
-        (0, import_lodash.mergeWith)(
-          { ...(record == null ? void 0 : record.areaTraps) || {} },
-          resultTypeTraps,
-          (objValue, srcValue) => (0, import_lodash.differenceBy)(
-            srcValue,
-            objValue || [],
-            "properties.backend"
-          ).map((item) => ({
-            ...item,
-            properties: { ...item.properties, status: "NEW" }
-          }))
-        ),
-        (_, key) => `${key}New`
-      );
-      if (true)
-        import_console.default.log("newTraps >>>", newTraps);
-      const establishedTraps = (0, import_lodash.mapKeys)(
-        (0, import_lodash.mergeWith)(
-          { ...(record == null ? void 0 : record.areaTraps) || {} },
-          resultTypeTraps,
-          (objValue, srcValue) => (0, import_lodash.intersectionBy)(
-            objValue || [],
-            srcValue,
-            "properties.backend"
-          ).map((item) => ({
-            ...item,
-            properties: { ...item.properties, status: "ESTABLISHED" }
-          }))
-        ),
-        (_, key) => `${key}Established`
-      );
-      if (true)
-        import_console.default.log("establishedTraps >>>", establishedTraps);
-      const rejectedTraps = (0, import_lodash.mapKeys)(
-        (0, import_lodash.mergeWith)(
-          { ...(record == null ? void 0 : record.areaTraps) || {} },
-          resultTypeTraps,
-          (objValue, srcValue) => (0, import_lodash.differenceBy)(
-            objValue || [],
-            srcValue,
-            "properties.backend"
-          ).map((item) => ({
-            ...item,
-            properties: { ...item.properties, status: "REJECTED" }
-          }))
-        ),
-        (_, key) => `${key}Rejected`
-      );
-      if (true)
-        import_console.default.log("rejectedTraps >>>", rejectedTraps);
-      const areaTraps = (0, import_lodash.mergeWith)(
-        { ...(0, import_lodash.mapKeys)(establishedTraps, (_, key) => key.substring(0, key.length - 11)) },
-        (0, import_lodash.mapKeys)(newTraps, (_, key) => key.substring(0, key.length - 3)),
-        (objValue, srcValue) => (0, import_lodash.flatten)([objValue, srcValue])
-      );
-      if (true)
-        import_console.default.log("areaTraps >>>", areaTraps);
-      const newTrapsReduced = (0, import_lodash.reduce)(
-        newTraps,
-        function(acc, value) {
-          acc.trapsNew.push(...value);
-          return acc;
-        },
-        { trapsNew: [] }
-      );
-      if (true)
-        import_console.default.log("newTrapsReduced >>>", newTrapsReduced);
-      const rejectedTrapsReduced = (0, import_lodash.reduce)(
-        rejectedTraps,
-        function(acc, value) {
-          acc.trapsRejected.push(...value);
-          return acc;
-        },
-        { trapsRejected: [] }
-      );
-      if (true)
-        import_console.default.log("rejectedTrapsReduced >>>", rejectedTrapsReduced);
+      const {
+        traps: areaTraps,
+        newTrapsReduced,
+        rejectedTrapsReduced
+      } = (0, import_trapsChain.trapsChain)(record == null ? void 0 : record.areaTraps, resultTypeTraps);
       data.areaTraps = areaTraps;
       data.areaTrapsNew = newTrapsReduced;
       data.areaTrapsRejected = rejectedTrapsReduced;
