@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "news": {
+      "1.3.1": {
+        "en": "bug fixes trapInfo for traps",
+        "de": "bugfixes trapInfo für Fallen",
+        "ru": "bug correctedes trapInfo для ловушек",
+        "pt": "correções de bugs trapInfo para armadilhas",
+        "nl": "bug repareert valInfo voor vallen",
+        "fr": "bug corrige le piègeInfo pour les pièges",
+        "it": "bug correzioni trapInfo per trappole",
+        "es": "bug arregla trampaInfo para trampas",
+        "pl": "błąd poprawki trapInfo dla pułapek",
+        "uk": "виправлення помилок для пасток",
+        "zh-cn": "错误修正陷阱信息"
+      },
       "1.3.0": {
         "en": "Steiger04) new states for new and rejected traps",
         "de": "Steiger04) neue Staaten für neue und abgelehnte Fallen",
@@ -80,19 +93,6 @@
         "pl": "stały konflikt wersji między reakcją 17 i reakcją 18",
         "uk": "виправлений варіант конфлікту між реагацією 17 та реагацією 18",
         "zh-cn": "反应17和反应18之间的固定版本冲突"
-      },
-      "1.1.1": {
-        "en": "fixed legacy-peer-deps",
-        "de": "feste legacy-peer-deps",
-        "ru": "с фиксированным наследием:",
-        "pt": "legado fixo-peer-deps",
-        "nl": "vaste legacy-peer-deps",
-        "fr": "deps de temps fixes",
-        "it": "deprezzamento dell'eredità",
-        "es": "fijo legado-peer-deps",
-        "pl": "stałe legacy- peer- deps",
-        "uk": "фіксована спадщина-peer-deps",
-        "zh-cn": "固定遗留文件"
       }
     },
     "title": "Radar Trap",

@@ -21,7 +21,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.3.1 (2024-02-10)
 * (Steiger04) bug fixes trapInfo for traps
 
 ### 1.3.0 (2024-02-08)
