@@ -8,7 +8,7 @@ import {
 	paramsFromClient,
 } from "feathers-hooks-common";
 import { Scheduler } from "../../../lib/Scheduler";
-import { convertPolylineToGeojson, patchOrCreateRoute, setActiveProfile } from "../../hooks";
+import { routeTrapsWithTrapInfo, patchOrCreateRoute, setActiveProfile } from "../../hooks";
 
 import type { HookContext } from "@feathersjs/feathers";
 
@@ -44,10 +44,10 @@ export default {
 
 	after: {
 		all: [],
-		find: [alterItems(convertPolylineToGeojson)],
-		get: [alterItems(convertPolylineToGeojson)],
+		find: [alterItems(routeTrapsWithTrapInfo)],
+		get: [alterItems(routeTrapsWithTrapInfo)],
 		create: [
-			alterItems(convertPolylineToGeojson),
+			alterItems(routeTrapsWithTrapInfo),
 			(ctx: HookContext): HookContext => {
 				ctx.service.emit("status", {
 					_id: ctx.data._id,

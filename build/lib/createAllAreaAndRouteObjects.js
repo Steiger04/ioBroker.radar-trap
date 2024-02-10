@@ -33,9 +33,10 @@ const createAllAreaAndRouteObjects = async (that, feathers) => {
   const areas = await feathers.service("areas").find({
     query: {
       $limit: -1,
-      $select: ["_id", "timestamp", "description", "areaTraps"]
+      $select: ["_id", "timestamp", "description", "areaTraps", "areaTrapsNew", "areaTrapsRejected"]
     }
   });
+  console.log("createAllAreaAndRouteObjects: areas", areas);
   for (const routeData of routes) {
     await (0, import_createRouteObjects.createRouteObjects)(that, routeData);
   }

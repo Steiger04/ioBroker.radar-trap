@@ -24,7 +24,7 @@ module.exports = __toCommonJS(areas_hooks_exports);
 var import_feathers_hooks_common = require("feathers-hooks-common");
 var import_Scheduler = require("../../../lib/Scheduler");
 var import_hooks = require("../../hooks");
-var import_addTrapInfoToAllTraps = require("../../hooks/addTrapInfoToAllTraps");
+var import_areaTrapsWithTrapInfo = require("../../hooks/areaTrapsWithTrapInfo");
 var areas_hooks_default = {
   before: {
     all: [],
@@ -55,10 +55,10 @@ var areas_hooks_default = {
   },
   after: {
     all: [],
-    find: [(0, import_feathers_hooks_common.alterItems)(import_addTrapInfoToAllTraps.addTrapInfoToAllTraps)],
-    get: [(0, import_feathers_hooks_common.alterItems)(import_addTrapInfoToAllTraps.addTrapInfoToAllTraps)],
+    find: [(0, import_feathers_hooks_common.alterItems)(import_areaTrapsWithTrapInfo.areaTrapsWithTrapInfo)],
+    get: [(0, import_feathers_hooks_common.alterItems)(import_areaTrapsWithTrapInfo.areaTrapsWithTrapInfo)],
     create: [
-      (0, import_feathers_hooks_common.alterItems)(import_addTrapInfoToAllTraps.addTrapInfoToAllTraps),
+      (0, import_feathers_hooks_common.alterItems)(import_areaTrapsWithTrapInfo.areaTrapsWithTrapInfo),
       (ctx) => {
         ctx.service.emit("status", {
           _id: ctx.data._id,

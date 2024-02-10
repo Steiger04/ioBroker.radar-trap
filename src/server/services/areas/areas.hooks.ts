@@ -10,7 +10,7 @@ import {
 } from "feathers-hooks-common";
 import { Scheduler } from "../../../lib/Scheduler";
 import { patchOrCreateArea } from "../../hooks";
-import { addTrapInfoToAllTraps } from "../../hooks/addTrapInfoToAllTraps";
+import { areaTrapsWithTrapInfo } from "../../hooks/areaTrapsWithTrapInfo";
 
 export default {
 	before: {
@@ -44,10 +44,10 @@ export default {
 
 	after: {
 		all: [],
-		find: [alterItems(addTrapInfoToAllTraps)],
-		get: [alterItems(addTrapInfoToAllTraps)],
+		find: [alterItems(areaTrapsWithTrapInfo)],
+		get: [alterItems(areaTrapsWithTrapInfo)],
 		create: [
-			alterItems(addTrapInfoToAllTraps),
+			alterItems(areaTrapsWithTrapInfo),
 			(ctx: HookContext): HookContext => {
 				ctx.service.emit("status", {
 					_id: ctx.data._id,

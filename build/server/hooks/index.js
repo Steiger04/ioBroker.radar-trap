@@ -18,29 +18,29 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var hooks_exports = {};
 __export(hooks_exports, {
-  addTrapInfoToAllTraps: () => import_addTrapInfoToAllTraps.addTrapInfoToAllTraps,
-  convertPolylineToGeojson: () => import_convertPolylineToGeojson.convertPolylineToGeojson,
+  addTrapInfoToTrapProperties: () => import_addTrapInfoToTrapProperties.addTrapInfoToTrapProperties,
+  areaTrapsWithTrapInfo: () => import_areaTrapsWithTrapInfo.areaTrapsWithTrapInfo,
   patchOrCreateArea: () => import_patchOrCreateArea.patchOrCreateArea,
   patchOrCreateRoute: () => import_patchOrCreateRoute.patchOrCreateRoute,
-  prepareTraps: () => import_prepareTraps.prepareTraps,
+  routeTrapsWithTrapInfo: () => import_routeTrapsWithTrapInfo.routeTrapsWithTrapInfo,
   setActiveProfile: () => import_setActiveProfile.setActiveProfile,
   trapsChain: () => import_trapsChain.trapsChain
 });
 module.exports = __toCommonJS(hooks_exports);
-var import_convertPolylineToGeojson = require("./convertPolylineToGeojson");
+var import_routeTrapsWithTrapInfo = require("./routeTrapsWithTrapInfo");
 var import_patchOrCreateArea = require("./patchOrCreateArea");
 var import_patchOrCreateRoute = require("./patchOrCreateRoute");
 var import_setActiveProfile = require("./setActiveProfile");
-var import_addTrapInfoToAllTraps = require("./addTrapInfoToAllTraps");
-var import_prepareTraps = require("./prepareTraps");
+var import_areaTrapsWithTrapInfo = require("./areaTrapsWithTrapInfo");
+var import_addTrapInfoToTrapProperties = require("./addTrapInfoToTrapProperties");
 var import_trapsChain = require("./trapsChain");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  addTrapInfoToAllTraps,
-  convertPolylineToGeojson,
+  addTrapInfoToTrapProperties,
+  areaTrapsWithTrapInfo,
   patchOrCreateArea,
   patchOrCreateRoute,
-  prepareTraps,
+  routeTrapsWithTrapInfo,
   setActiveProfile,
   trapsChain
 });

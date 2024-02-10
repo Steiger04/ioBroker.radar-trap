@@ -49,11 +49,13 @@ const createAreaObjects = async (that: utils.AdapterInstance, area: radarTrap.Ar
 		for (const [trapName, traps] of Object.entries(
 			area[trapType as keyof radarTrap.Area]! as Record<string, Feature<Point>[]>,
 		)) {
-			const newTraps = traps.map((trap) => ({
-				type: trap.type,
-				geometry: trap.geometry,
-				properties: { ...trap.properties?.trapInfo },
-			}));
+			const newTraps = traps
+				.filter((trap) => trap.properties?.trapInfo !== null)
+				.map((trap) => ({
+					type: trap.type,
+					geometry: trap.geometry,
+					properties: { ...trap.properties?.trapInfo },
+				}));
 
 			totalTrapsCount += newTraps.length;
 

@@ -121,11 +121,13 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 			for (const [trapName, traps] of Object.entries(
 				direction[trapType as keyof radarTrap.Direction]! as Record<string, Feature<Point | LineString>[]>,
 			)) {
-				const newTraps = traps.map((trap) => ({
-					type: trap.type,
-					geometry: trap.geometry,
-					properties: { ...trap.properties?.trapInfo },
-				}));
+				const newTraps = traps
+					.filter((trap) => trap.properties?.trapInfo !== null)
+					.map((trap) => ({
+						type: trap.type,
+						geometry: trap.geometry,
+						properties: { ...trap.properties?.trapInfo },
+					}));
 
 				totalTrapsCount += newTraps.length;
 

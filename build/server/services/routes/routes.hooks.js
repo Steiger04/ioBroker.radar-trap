@@ -54,10 +54,10 @@ var routes_hooks_default = {
   },
   after: {
     all: [],
-    find: [(0, import_feathers_hooks_common.alterItems)(import_hooks.convertPolylineToGeojson)],
-    get: [(0, import_feathers_hooks_common.alterItems)(import_hooks.convertPolylineToGeojson)],
+    find: [(0, import_feathers_hooks_common.alterItems)(import_hooks.routeTrapsWithTrapInfo)],
+    get: [(0, import_feathers_hooks_common.alterItems)(import_hooks.routeTrapsWithTrapInfo)],
     create: [
-      (0, import_feathers_hooks_common.alterItems)(import_hooks.convertPolylineToGeojson),
+      (0, import_feathers_hooks_common.alterItems)(import_hooks.routeTrapsWithTrapInfo),
       (ctx) => {
         ctx.service.emit("status", {
           _id: ctx.data._id,

@@ -56,7 +56,10 @@ const createAreaObjects = async (that, area) => {
     for (const [trapName, traps] of Object.entries(
       area[trapType]
     )) {
-      const newTraps = traps.map((trap) => {
+      const newTraps = traps.filter((trap) => {
+        var _a;
+        return ((_a = trap.properties) == null ? void 0 : _a.trapInfo) !== null;
+      }).map((trap) => {
         var _a;
         return {
           type: trap.type,

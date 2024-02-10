@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/server/hooks/areaTrapsWithTrapInfo.ts"],
+  "sourcesContent": ["import { featureCollection } from \"@turf/helpers\";\nimport { addTrapInfoToTrapProperties } from \"./addTrapInfoToTrapProperties\";\n\nconst areaTrapsWithTrapInfo = (data: radarTrap.Area): void => {\n\tif (data.areaTraps !== undefined)\n\t\tdata.trapsFeatureCollection = featureCollection(addTrapInfoToTrapProperties(data.areaTraps));\n\n\tif (data.areaTrapsNew !== undefined) addTrapInfoToTrapProperties(data.areaTrapsNew);\n\tif (data.areaTrapsEstablished !== undefined) addTrapInfoToTrapProperties(data.areaTrapsEstablished);\n\tif (data.areaTrapsRejected !== undefined) addTrapInfoToTrapProperties(data.areaTrapsRejected);\n};\n\nexport { areaTrapsWithTrapInfo };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,qBAAkC;AAClC,yCAA4C;AAE5C,MAAM,wBAAwB,CAAC,SAA+B;AAC7D,MAAI,KAAK,cAAc;AACtB,SAAK,6BAAyB,sCAAkB,gEAA4B,KAAK,SAAS,CAAC;AAE5F,MAAI,KAAK,iBAAiB;AAAW,wEAA4B,KAAK,YAAY;AAClF,MAAI,KAAK,yBAAyB;AAAW,wEAA4B,KAAK,oBAAoB;AAClG,MAAI,KAAK,sBAAsB;AAAW,wEAA4B,KAAK,iBAAiB;AAC7F;",
+  "names": []
+}

@@ -116,7 +116,10 @@ const createRouteObjects = async (that, route) => {
       for (const [trapName, traps] of Object.entries(
         direction[trapType]
       )) {
-        const newTraps = traps.map((trap) => {
+        const newTraps = traps.filter((trap) => {
+          var _a2;
+          return ((_a2 = trap.properties) == null ? void 0 : _a2.trapInfo) !== null;
+        }).map((trap) => {
           var _a2;
           return {
             type: trap.type,
