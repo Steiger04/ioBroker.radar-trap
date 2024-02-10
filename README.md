@@ -21,6 +21,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) bug fixes trapInfo for traps
+
 ### 1.3.0 (2024-02-08)
 * Steiger04) new states for new and rejected traps
 
