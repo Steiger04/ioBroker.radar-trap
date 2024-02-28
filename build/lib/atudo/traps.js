@@ -24,8 +24,8 @@ module.exports = __toCommonJS(traps_exports);
 var import_helpers = require("@turf/helpers");
 var import_cross_fetch = require("cross-fetch");
 var import_value = require("@sinclair/typebox/value");
-var import_poiSchema = require("../schemas/poiSchema");
-var import_polySchema = require("../schemas/polySchema");
+var import_atudoPoiSchema = require("../schemas/atudoPoiSchema");
+var import_atudoPolySchema = require("../schemas/atudoPolySchema");
 async function request(url, config = {}) {
   const response = await (0, import_cross_fetch.fetch)(url, config);
   return response.json();
@@ -36,15 +36,15 @@ const traps = async (minPos, maxPos) => {
     const { pois } = await request(
       `https://cdn2.atudo.net/api/4.0/pois.php?type=${trapBase}&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
     );
-    import_value.Value.Default(import_poiSchema.poisSchema, pois);
-    if (!import_value.Value.Check(import_poiSchema.poisSchema, pois))
-      console.log("POIS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_poiSchema.poisSchema, pois)]);
+    import_value.Value.Default(import_atudoPoiSchema.atudoPoisSchema, pois);
+    if (!import_value.Value.Check(import_atudoPoiSchema.atudoPoisSchema, pois))
+      console.log("POIS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_atudoPoiSchema.atudoPoisSchema, pois)]);
     const { polys } = await request(
       `https://cdn2.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
     );
-    import_value.Value.Default(import_polySchema.polysSchema, polys);
-    if (!import_value.Value.Check(import_polySchema.polysSchema, polys))
-      console.log("POLYS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_polySchema.polysSchema, polys)]);
+    import_value.Value.Default(import_atudoPolySchema.atudoPolysSchema, polys);
+    if (!import_value.Value.Check(import_atudoPolySchema.atudoPolysSchema, polys))
+      console.log("POLYS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_atudoPolySchema.atudoPolysSchema, polys)]);
     const polyPoints = polys.reduce((list, poly) => {
       if (poly.type === "sc")
         return list;

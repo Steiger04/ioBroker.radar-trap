@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-const polySchema = Type.Object(
+const atudoPolySchema = Type.Object(
 	{
 		schemaType: Type.String({ default: "POLY" }),
 		id: Type.String(),
@@ -46,6 +46,6 @@ const polySchema = Type.Object(
 	{ additionalProperties: false },
 );
 
-const polysSchema = Type.Array(polySchema);
+const atudoPolysSchema = Type.Array(atudoPolySchema);
 
-export { polySchema, polysSchema };
+export { atudoPolySchema, atudoPolysSchema };

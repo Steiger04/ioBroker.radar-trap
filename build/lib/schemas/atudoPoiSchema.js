@@ -16,15 +16,15 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var poiSchema_exports = {};
-__export(poiSchema_exports, {
-  poiInfoSchema: () => poiInfoSchema,
-  poiSchema: () => poiSchema,
-  poisSchema: () => poisSchema
+var atudoPoiSchema_exports = {};
+__export(atudoPoiSchema_exports, {
+  atudoPoiInfoSchema: () => atudoPoiInfoSchema,
+  atudoPoiSchema: () => atudoPoiSchema,
+  atudoPoisSchema: () => atudoPoisSchema
 });
-module.exports = __toCommonJS(poiSchema_exports);
+module.exports = __toCommonJS(atudoPoiSchema_exports);
 var import_typebox = require("@sinclair/typebox");
-const poiInfoSchema = import_typebox.Type.Object({
+const atudoPoiInfoSchema = import_typebox.Type.Object({
   partly_fixed: import_typebox.Type.Optional(import_typebox.Type.String()),
   qltyCountryRoad: import_typebox.Type.Optional(import_typebox.Type.Union([import_typebox.Type.Number(), import_typebox.Type.String()])),
   confirmed: import_typebox.Type.Optional(import_typebox.Type.Number()),
@@ -44,7 +44,7 @@ const poiInfoSchema = import_typebox.Type.Object({
   lng_end: import_typebox.Type.Optional(import_typebox.Type.Union([import_typebox.Type.String(), import_typebox.Type.Number(), import_typebox.Type.Null()])),
   refid_start: import_typebox.Type.Optional(import_typebox.Type.Union([import_typebox.Type.String(), import_typebox.Type.Null()]))
 });
-const poiSchema = import_typebox.Type.Object(
+const atudoPoiSchema = import_typebox.Type.Object(
   {
     schemaType: import_typebox.Type.String({ default: "POI" }),
     id: import_typebox.Type.String(),
@@ -70,17 +70,17 @@ const poiSchema = import_typebox.Type.Object(
     counter: import_typebox.Type.String(),
     create_date: import_typebox.Type.String(),
     confirm_date: import_typebox.Type.String(),
-    info: import_typebox.Type.Union([poiInfoSchema, import_typebox.Type.Boolean(), import_typebox.Type.String(), import_typebox.Type.Array(import_typebox.Type.Any())]),
+    info: import_typebox.Type.Union([atudoPoiInfoSchema, import_typebox.Type.Boolean(), import_typebox.Type.String(), import_typebox.Type.Array(import_typebox.Type.Any())]),
     polyline: import_typebox.Type.Any(),
     style: import_typebox.Type.Number()
   },
   { additionalProperties: false }
 );
-const poisSchema = import_typebox.Type.Array(poiSchema);
+const atudoPoisSchema = import_typebox.Type.Array(atudoPoiSchema);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  poiInfoSchema,
-  poiSchema,
-  poisSchema
+  atudoPoiInfoSchema,
+  atudoPoiSchema,
+  atudoPoisSchema
 });
-//# sourceMappingURL=poiSchema.js.map
+//# sourceMappingURL=atudoPoiSchema.js.map

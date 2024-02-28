@@ -1,13 +1,13 @@
 import { Feature, Point, point } from "@turf/helpers";
 import { fetch } from "cross-fetch";
 import { Value } from "@sinclair/typebox/value";
-import { poisSchema } from "../schemas/poiSchema";
-import { polysSchema } from "../schemas/polySchema";
+import { atudoPoisSchema } from "../schemas/atudoPoiSchema";
+import { atudoPolysSchema } from "../schemas/atudoPolySchema";
 
-async function request<TResponse extends radarTrap.Poi | radarTrap.Poly, TArray = TResponse[]>(
-	url: string,
-	config: RequestInit = {},
-): Promise<Record<string, TArray>> {
+async function request<
+	TResponse extends radarTrap.AtudoPoi | radarTrap.AtudoPoly,
+	TArray extends TResponse[] = TResponse[],
+>(url: string, config: RequestInit = {}): Promise<Record<string, TArray>> {
 	const response = await fetch(url, config);
 	return response.json();
 }
@@ -78,20 +78,21 @@ const traps = async (
 		console.log("POIS_POLIZEI_ARCHIV >>>", JSON.stringify(poisPolizeiArchiv, null, 2)); */
 
 		//----------------------------------------------
-		const { pois } = await request<radarTrap.Poi>(
+		const { pois } = await request<radarTrap.AtudoPoi>(
 			`https://cdn2.atudo.net/api/4.0/pois.php?type=${trapBase}&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
 		);
-		Value.Default(poisSchema, pois);
 
-		if (!Value.Check(poisSchema, pois)) console.log("POIS SCHEMA ERRORS >>>", [...Value.Errors(poisSchema, pois)]);
+		Value.Default(atudoPoisSchema, pois); // add schemaType to each poi
+		if (!Value.Check(atudoPoisSchema, pois))
+			console.log("POIS SCHEMA ERRORS >>>", [...Value.Errors(atudoPoisSchema, pois)]);
 
-		const { polys } = await request<radarTrap.Poly>(
+		const { polys } = await request<radarTrap.AtudoPoly>(
 			`https://cdn2.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
 		);
-		Value.Default(polysSchema, polys);
 
-		if (!Value.Check(polysSchema, polys))
-			console.log("POLYS SCHEMA ERRORS >>>", [...Value.Errors(polysSchema, polys)]);
+		Value.Default(atudoPolysSchema, polys); // add schemaType to each poly
+		if (!Value.Check(atudoPolysSchema, polys))
+			console.log("POLYS SCHEMA ERRORS >>>", [...Value.Errors(atudoPolysSchema, polys)]);
 
 		const polyPoints = polys.reduce((list: Feature<Point, radarTrap.Poly>[], poly) => {
 			if (poly.type === "sc") return list;

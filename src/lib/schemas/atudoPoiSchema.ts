@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-const poiInfoSchema = Type.Object({
+const atudoPoiInfoSchema = Type.Object({
 	partly_fixed: Type.Optional(Type.String()),
 	qltyCountryRoad: Type.Optional(Type.Union([Type.Number(), Type.String()])),
 	confirmed: Type.Optional(Type.Number()),
@@ -21,7 +21,7 @@ const poiInfoSchema = Type.Object({
 	refid_start: Type.Optional(Type.Union([Type.String(), Type.Null()])),
 });
 
-const poiSchema = Type.Object(
+const atudoPoiSchema = Type.Object(
 	{
 		schemaType: Type.String({ default: "POI" }),
 		id: Type.String(),
@@ -47,13 +47,13 @@ const poiSchema = Type.Object(
 		counter: Type.String(),
 		create_date: Type.String(),
 		confirm_date: Type.String(),
-		info: Type.Union([poiInfoSchema, Type.Boolean(), Type.String(), Type.Array(Type.Any())]),
+		info: Type.Union([atudoPoiInfoSchema, Type.Boolean(), Type.String(), Type.Array(Type.Any())]),
 		polyline: Type.Any(),
 		style: Type.Number(),
 	},
 	{ additionalProperties: false },
 );
 
-const poisSchema = Type.Array(poiSchema);
+const atudoPoisSchema = Type.Array(atudoPoiSchema);
 
-export { poiSchema, poisSchema, poiInfoSchema };
+export { atudoPoiSchema, atudoPoisSchema, atudoPoiInfoSchema };

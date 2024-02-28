@@ -3,8 +3,8 @@ import createApplication from "@feathersjs/feathers";
 import { Route as MapBoxRoute } from "@mapbox/mapbox-sdk/services/directions";
 import { Path } from "react-hook-form";
 import { App } from "../../admin/src/App";
-import { poiSchema, poiInfoSchema } from "./schemas/poiSchema";
-import { polySchema } from "./schemas/polySchema";
+import { atudoPoiSchema, atudoPoiInfoSchema } from "./schemas/atudoPoiSchema";
+import { atudoPolySchema } from "./schemas/atudoPolySchema";
 import type { Static } from "@sinclair/typebox";
 
 import type { MatrixResponse } from "@mapbox/mapbox-sdk/services/matrix";
@@ -98,7 +98,7 @@ declare global {
 			routes: Routes;
 		}
 
-		type AtudoPoi = Static<typeof poiSchema>;
+		type AtudoPoi = Static<typeof atudoPoiSchema>;
 		type Poi = AtudoPoi & {
 			trapInfo?: trapInfo;
 			// from determineTrapTypes.ts
@@ -109,8 +109,12 @@ declare global {
 			status?: string;
 		};
 
-		type PoiInfo = Static<typeof poiInfoSchema>;
-		type Poly = Static<typeof polySchema>;
+		type PoiInfo = Static<typeof atudoPoiInfoSchema>;
+		type AtudoPoly = Static<typeof atudoPolySchema>;
+		type Poly = AtudoPoly & {
+			// from trapsChain.ts
+			status?: string;
+		};
 		type trapInfo = {
 			id?: string;
 			status?: string;

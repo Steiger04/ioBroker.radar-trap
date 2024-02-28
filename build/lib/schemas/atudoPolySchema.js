@@ -16,14 +16,14 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var polySchema_exports = {};
-__export(polySchema_exports, {
-  polySchema: () => polySchema,
-  polysSchema: () => polysSchema
+var atudoPolySchema_exports = {};
+__export(atudoPolySchema_exports, {
+  atudoPolySchema: () => atudoPolySchema,
+  atudoPolysSchema: () => atudoPolysSchema
 });
-module.exports = __toCommonJS(polySchema_exports);
+module.exports = __toCommonJS(atudoPolySchema_exports);
 var import_typebox = require("@sinclair/typebox");
-const polySchema = import_typebox.Type.Object(
+const atudoPolySchema = import_typebox.Type.Object(
   {
     schemaType: import_typebox.Type.String({ default: "POLY" }),
     id: import_typebox.Type.String(),
@@ -68,10 +68,10 @@ const polySchema = import_typebox.Type.Object(
   },
   { additionalProperties: false }
 );
-const polysSchema = import_typebox.Type.Array(polySchema);
+const atudoPolysSchema = import_typebox.Type.Array(atudoPolySchema);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  polySchema,
-  polysSchema
+  atudoPolySchema,
+  atudoPolysSchema
 });
-//# sourceMappingURL=polySchema.js.map
+//# sourceMappingURL=atudoPolySchema.js.map
