@@ -3,9 +3,12 @@ import createApplication from "@feathersjs/feathers";
 import { Route as MapBoxRoute } from "@mapbox/mapbox-sdk/services/directions";
 import { Path } from "react-hook-form";
 import { App } from "../../admin/src/App";
+import { poiSchema, poiInfoSchema } from "./schemas/poiSchema";
+import { polySchema } from "./schemas/polySchema";
+import type { Static } from "@sinclair/typebox";
 
 import type { MatrixResponse } from "@mapbox/mapbox-sdk/services/matrix";
-import type { FeatureCollection, LineString, Point } from "@turf/helpers/dist/js/lib/geojson";
+import type { FeatureCollection, LineString, Point, Feature } from "@turf/helpers/dist/js/lib/geojson";
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
@@ -61,13 +64,13 @@ declare global {
 
 		interface Direction {
 			direction: MapBoxRoute<string> & {
-				directionFeature?: GeoJSON.Feature<GeoJSON.LineString>;
+				directionFeature?: Feature<Point | LineString, Poi>;
 			};
 			// traps: Record<string, GeoJSON.Feature<GeoJSON.LineString | GeoJSON.Point>[]>;
-			routeTraps?: Record<string, Feature<LineString | Point, Properties>[]>;
-			routeTrapsNew?: Record<string, Feature<LineString | Point, Properties>[]>;
-			routeTrapsEstablished?: Record<string, Feature<LineString | Point, Properties>[]>;
-			routeTrapsRejected?: Record<string, Feature<LineString | Point, Properties>[]>;
+			routeTraps?: Record<string, Feature<LineString | Point, Poi>[]>;
+			routeTrapsNew?: Record<string, Feature<LineString | Point, Poi>[]>;
+			routeTrapsEstablished?: Record<string, Feature<LineString | Point, Poi>[]>;
+			routeTrapsRejected?: Record<string, Feature<LineString | Point, Poi>[]>;
 			matrix: MatrixResponse;
 		}
 
@@ -82,8 +85,8 @@ declare global {
 			cron: string;
 			maxTrapDistance: number;
 			directions?: Direction[] | null;
-			directionsFeatureCollection?: GeoJSON.FeatureCollection<GeoJSON.LineString> | null;
-			trapsFeatureCollection?: GeoJSON.FeatureCollection<GeoJSON.Point | GeoJSON.LineString> | null;
+			directionsFeatureCollection?: FeatureCollection<Point | LineString, Poi | Poly> | null;
+			trapsFeatureCollection?: FeatureCollection<Point | LineString, Poi> | null;
 			timestamp?: string;
 		}
 
@@ -95,7 +98,20 @@ declare global {
 			routes: Routes;
 		}
 
-		interface trapInfo {
+		type AtudoPoi = Static<typeof poiSchema>;
+		type Poi = AtudoPoi & {
+			trapInfo?: trapInfo;
+			// from determineTrapTypes.ts
+			type_name?: string;
+			type_text?: string;
+			linetrap?: boolean;
+			// from trapsChain.ts
+			status?: string;
+		};
+
+		type PoiInfo = Static<typeof poiInfoSchema>;
+		type Poly = Static<typeof polySchema>;
+		type trapInfo = {
 			id?: string;
 			status?: string;
 			typeName?: string;
@@ -115,7 +131,7 @@ declare global {
 			city?: string | boolean;
 			cityDistrict?: string | boolean;
 			street?: string | boolean;
-		}
+		};
 
 		interface CronResult {
 			text: string;
@@ -131,12 +147,12 @@ declare global {
 			description: string | undefined;
 			cron: string;
 			areaPolygons: AreaPolygons | null;
-			areaTraps?: Record<string, Feature<LineString | Point, Properties>[]>;
-			areaTrapsNew?: Record<string, Feature<LineString | Point, Properties>[]>;
-			areaTrapsEstablished?: Record<string, Feature<LineString | Point, Properties>[]>;
-			areaTrapsRejected?: Record<string, Feature<LineString | Point, Properties>[]>;
-			trapsFeatureCollection?: FeatureCollection<Point | LineString> | null;
-			polysFeatureCollection?: FeatureCollection<Point | LineString> | null;
+			areaTraps?: Record<string, Feature<LineString | Point, Poi>[]>;
+			areaTrapsNew?: Record<string, Feature<LineString | Point, Poi>[]>;
+			areaTrapsEstablished?: Record<string, Feature<LineString | Point, Poi>[]>;
+			areaTrapsRejected?: Record<string, Feature<LineString | Point, Poi>[]>;
+			trapsFeatureCollection?: FeatureCollection<Point | LineString, Poi> | null;
+			polysFeatureCollection?: FeatureCollection<Point | LineString, Poly> | null;
 			timestamp?: string;
 		}
 

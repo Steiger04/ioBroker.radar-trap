@@ -20,7 +20,7 @@ const createAllAreaAndRouteObjects = async (that: utils.AdapterInstance, feather
 		},
 	});
 
-	console.log("createAllAreaAndRouteObjects: areas", areas);
+	// console.log("createAllAreaAndRouteObjects: areas", areas);
 
 	for (const routeData of routes as radarTrap.Routes) {
 		await createRouteObjects(that, routeData);

@@ -23,35 +23,49 @@ __export(traps_exports, {
 module.exports = __toCommonJS(traps_exports);
 var import_helpers = require("@turf/helpers");
 var import_cross_fetch = require("cross-fetch");
-const trapBase = "0,1,2,3,4,5,6,20,21,22,23,24,25,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts,vwd";
+var import_value = require("@sinclair/typebox/value");
+var import_poiSchema = require("../schemas/poiSchema");
+var import_polySchema = require("../schemas/polySchema");
+async function request(url, config = {}) {
+  const response = await (0, import_cross_fetch.fetch)(url, config);
+  return response.json();
+}
+const trapBase = "0,1,2,3,4,5,6,20,21,22,23,24,25,29,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts,vwd";
 const traps = async (minPos, maxPos) => {
-  const { pois } = await (0, import_cross_fetch.fetch)(
-    `https://cdn3.atudo.net/api/4.0/pois.php?type=${trapBase}&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
-  ).then((res) => res.json()).catch((ex) => console.log(ex));
-  const { polys } = await (0, import_cross_fetch.fetch)(
-    `https://cdn3.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
-  ).then((res) => res.json()).catch((ex) => console.log(ex));
-  const polyPoints = polys.reduce((list, poly) => {
-    let polyPoint;
-    if (poly.type === "sc")
+  try {
+    const { pois } = await request(
+      `https://cdn2.atudo.net/api/4.0/pois.php?type=${trapBase}&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
+    );
+    import_value.Value.Default(import_poiSchema.poisSchema, pois);
+    if (!import_value.Value.Check(import_poiSchema.poisSchema, pois))
+      console.log("POIS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_poiSchema.poisSchema, pois)]);
+    const { polys } = await request(
+      `https://cdn2.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
+    );
+    import_value.Value.Default(import_polySchema.polysSchema, polys);
+    if (!import_value.Value.Check(import_polySchema.polysSchema, polys))
+      console.log("POLYS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_polySchema.polysSchema, polys)]);
+    const polyPoints = polys.reduce((list, poly) => {
+      if (poly.type === "sc")
+        return list;
+      if (poly.type === "closure") {
+        list.push((0, import_helpers.point)([+poly.pos.lng, +poly.pos.lat], { ...poly }));
+      }
+      if (poly.type === "20") {
+        list.push((0, import_helpers.point)([+poly.showdelay_pos.lng, +poly.showdelay_pos.lat], { ...poly }));
+      }
       return list;
-    if (poly.type === "closure") {
-      polyPoint = (0, import_helpers.point)([+poly.pos.lng, +poly.pos.lat], {
-        ...poly
-      });
-    } else {
-      polyPoint = (0, import_helpers.point)([+poly.showdelay_pos.lng, +poly.showdelay_pos.lat], { ...poly });
-    }
-    list.push(polyPoint);
-    return list;
-  }, []);
-  const trapPoints = pois.reduce((list, poi) => {
-    const trapPoint = (0, import_helpers.point)([+poi.lng, +poi.lat]);
-    trapPoint.properties = poi;
-    list.push(trapPoint);
-    return list;
-  }, []);
-  return { trapPoints, polyPoints };
+    }, []);
+    const poiPoints = pois.reduce((list, poi) => {
+      const trapPoint = (0, import_helpers.point)([+poi.lng, +poi.lat], { ...poi });
+      list.push(trapPoint);
+      return list;
+    }, []);
+    return { poiPoints, polyPoints };
+  } catch (error) {
+    console.error("traps: ", error);
+    return { poiPoints: [], polyPoints: [] };
+  }
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

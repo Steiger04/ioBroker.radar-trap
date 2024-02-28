@@ -36,7 +36,6 @@ const createAllAreaAndRouteObjects = async (that, feathers) => {
       $select: ["_id", "timestamp", "description", "areaTraps", "areaTrapsNew", "areaTrapsRejected"]
     }
   });
-  console.log("createAllAreaAndRouteObjects: areas", areas);
   for (const routeData of routes) {
     await (0, import_createRouteObjects.createRouteObjects)(that, routeData);
   }

@@ -40,9 +40,7 @@ const routeTrapsWithTrapInfo = (data) => {
     return;
   }
   data.directions = data.directions.map((rec) => {
-    const directionFeature = (0, import_helpers.feature)(
-      import_polyline.default.toGeoJSON(rec.direction.geometry)
-    );
+    const directionFeature = (0, import_helpers.feature)(import_polyline.default.toGeoJSON(rec.direction.geometry));
     rec.direction.directionFeature = directionFeature;
     if (rec.routeTrapsNew !== void 0)
       (0, import_addTrapInfoToTrapProperties.addTrapInfoToTrapProperties)(rec.routeTrapsNew);
@@ -58,12 +56,13 @@ const routeTrapsWithTrapInfo = (data) => {
   data.directionsFeatureCollection = directionsFeatureCollection;
   let allTraps = data.directions.flatMap(({ routeTraps }) => (0, import_addTrapInfoToTrapProperties.addTrapInfoToTrapProperties)(routeTraps));
   allTraps = (0, import_lodash.uniqWith)(allTraps, (a, b) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
-    if (!((_a = a.properties) == null ? void 0 : _a.linetrap) && !((_b = b.properties) == null ? void 0 : _b.linetrap) && ((_c = a.properties) == null ? void 0 : _c.lat) === ((_d = b.properties) == null ? void 0 : _d.lat) && ((_e = a.properties) == null ? void 0 : _e.lng) === ((_f = b.properties) == null ? void 0 : _f.lng)) {
-      return true;
-    }
-    if (((_g = a.properties) == null ? void 0 : _g.linetrap) && ((_h = b.properties) == null ? void 0 : _h.linetrap) && a.properties.lat === b.properties.lat && a.properties.lng === b.properties.lng) {
-      return true;
+    if (a.properties.schemaType === "POI" && b.properties.schemaType === "POI") {
+      if (!a.properties.linetrap && !b.properties.linetrap && a.properties.lat === b.properties.lat && a.properties.lng === b.properties.lng) {
+        return true;
+      }
+      if (a.properties.linetrap && b.properties.linetrap && a.properties.lat === b.properties.lat && a.properties.lng === b.properties.lng) {
+        return true;
+      }
     }
     return false;
   });

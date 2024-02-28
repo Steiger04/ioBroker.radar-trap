@@ -43,13 +43,13 @@ var import_square_grid = __toESM(require("@turf/square-grid"));
 var import_determineTrapTypes = require("../../lib/atudo/determineTrapTypes");
 var import_traps = require("../../lib/atudo/traps");
 var import_Scheduler = require("../../lib/Scheduler");
-var import_polyline = __toESM(require("@mapbox/polyline"));
-var import_meta = require("@turf/meta");
 var import_transform_scale = __toESM(require("@turf/transform-scale"));
-var import_console = __toESM(require("console"));
 var import_trapsChain = require("./trapsChain");
+var import_turf = require("@turf/turf");
+var import_polyline = __toESM(require("@mapbox/polyline"));
 const patchOrCreateArea = () => {
   return async (context) => {
+    var _a;
     const startTime = performance.now();
     const { data, service, params } = context;
     const { _id } = data;
@@ -57,13 +57,12 @@ const patchOrCreateArea = () => {
     import_Scheduler.Scheduler.pause(_id);
     service.emit("status", { _id: data._id, status: "loading" });
     const [record] = await service.find({
-      query: { _id, $select: ["areaTraps"] },
+      query: { _id, $select: ["areaTraps", "polysFeatureCollection"] },
       paginate: false
     });
     if (params.patchSourceFromClient || params.patchSourceFromServer) {
       const areaPolygon = Object.values(data.areaPolygons)[0];
-      const areaBox = (0, import_bbox.default)(areaPolygon);
-      const squareBox = (0, import_square.default)(areaBox);
+      const squareBox = (0, import_square.default)((0, import_bbox.default)(areaPolygon));
       const squareBoxPolygon = (0, import_transform_scale.default)((0, import_bbox_polygon.default)(squareBox), 1.3);
       const sideLength = Math.sqrt((0, import_area.default)(squareBoxPolygon)) / 1e3;
       let sideLengthDivisor = 0;
@@ -86,12 +85,11 @@ const patchOrCreateArea = () => {
           return (0, import_boolean_overlap.default)(areaPolygon, feature2) || (0, import_boolean_contains.default)(areaPolygon, feature2);
         })
       );
-      let resultTraps = [];
+      let resultPoiPoints = [];
       let resultPolyPoints = [];
-      let resultPolyLines = [];
       for (const feature2 of reducedSquareBoxGrid.features) {
         const tmpBbox = (0, import_bbox.default)(feature2);
-        const { polyPoints, trapPoints: gridTraps } = await (0, import_traps.traps)(
+        const { polyPoints, poiPoints } = await (0, import_traps.traps)(
           {
             lng: tmpBbox[0],
             lat: tmpBbox[1]
@@ -101,28 +99,54 @@ const patchOrCreateArea = () => {
             lat: tmpBbox[3]
           }
         );
-        if (gridTraps.length > 499)
-          import_console.default.log("gridTraps >>>", gridTraps.length);
+        if (poiPoints.length > 499)
+          console.log("gridTraps >>>", poiPoints.length);
         resultPolyPoints = resultPolyPoints.concat(polyPoints);
-        resultTraps = resultTraps.concat(gridTraps);
+        resultPoiPoints = resultPoiPoints.concat(poiPoints);
       }
       resultPolyPoints = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultPolyPoints), areaPolygon).features;
-      resultPolyLines = (0, import_meta.featureReduce)(
+      let resultPolys = [];
+      resultPolys = (0, import_turf.featureReduce)(
         (0, import_helpers.featureCollection)(resultPolyPoints),
-        (features, tmpFeature) => {
-          features.push(tmpFeature);
-          features.push(
-            (0, import_helpers.feature)(import_polyline.default.toGeoJSON(tmpFeature.properties.polyline), {
-              ...tmpFeature.properties
-            })
-          );
+        (features, currentFeature) => {
+          if (currentFeature.properties.type === "closure") {
+            features.push(currentFeature);
+            if (currentFeature.properties.polyline !== "") {
+              features.push(
+                (0, import_turf.feature)(
+                  import_polyline.default.toGeoJSON(currentFeature.properties.polyline),
+                  {
+                    ...currentFeature.properties,
+                    type: "120"
+                  }
+                )
+              );
+            }
+          }
+          if (currentFeature.properties.type === "20") {
+            if (currentFeature.properties.polyline !== "") {
+              features.push(
+                (0, import_turf.feature)(
+                  import_polyline.default.toGeoJSON(currentFeature.properties.polyline),
+                  {
+                    ...currentFeature.properties,
+                    type: "120"
+                  }
+                )
+              );
+            }
+          }
           return features;
         },
         []
       );
-      data.polysFeatureCollection = (0, import_helpers.featureCollection)(resultPolyLines);
-      resultTraps = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultTraps), areaPolygon).features;
-      const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultTraps);
+      const { traps: allPolys } = (0, import_trapsChain.trapsChain)(
+        { allPolys: ((_a = record == null ? void 0 : record.polysFeatureCollection) == null ? void 0 : _a.features) || [] },
+        { allPolys: resultPolys }
+      );
+      data.polysFeatureCollection = (0, import_helpers.featureCollection)(allPolys.allPolys);
+      resultPoiPoints = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultPoiPoints), areaPolygon).features;
+      const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
       const {
         traps: areaTraps,
         newTrapsReduced,
@@ -139,7 +163,7 @@ const patchOrCreateArea = () => {
       });
     }
     const endTime = performance.now();
-    import_console.default.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
+    console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
     return context;
   };
 };

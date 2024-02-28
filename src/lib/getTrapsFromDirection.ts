@@ -7,14 +7,15 @@ import pointToLineDistance from "@turf/point-to-line-distance";
 import { uniqWith } from "lodash";
 import { determineTrapTypes } from "./atudo/determineTrapTypes";
 import { traps } from "./atudo/traps";
+import { Feature, LineString, Point } from "@turf/turf";
 
 type GetTrapsFromAtude = { direction: string; maxTrapDistance: number };
 
 const getTrapsFromDirection = async ({
 	direction,
 	maxTrapDistance,
-}: GetTrapsFromAtude): Promise<Record<string, GeoJSON.Feature<GeoJSON.Point>[]>> => {
-	const directionLine = feature<GeoJSON.LineString, GeoJSON.GeoJsonProperties>(polyline.toGeoJSON(direction));
+}: GetTrapsFromAtude): Promise<Record<string, Feature<Point | LineString, radarTrap.Poi>[]>> => {
+	const directionLine = feature<LineString, radarTrap.Poi | radarTrap.Poly>(polyline.toGeoJSON(direction));
 
 	let resultTraps: GeoJSON.Feature<GeoJSON.Point>[] = [];
 	const directionSteps = Math.trunc(length(directionLine) / 6);
@@ -32,7 +33,7 @@ const getTrapsFromDirection = async ({
 			units: "kilometers",
 		});
 
-		const { trapPoints: clusterTraps } = await traps(
+		const { poiPoints: clusterTraps } = await traps(
 			{
 				lng: minBox.geometry.coordinates[0],
 				lat: minBox.geometry.coordinates[1],
@@ -64,7 +65,7 @@ const getTrapsFromDirection = async ({
 		return list;
 	}, []);
 
-	return determineTrapTypes(resultTraps);
+	return determineTrapTypes(resultTraps as Feature<Point, radarTrap.Poi>[]);
 };
 
 export { getTrapsFromDirection };

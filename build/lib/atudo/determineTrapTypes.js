@@ -51,6 +51,7 @@ const type_text = {
   24: "Rutschgefahr, mobil",
   25: "Sichtbehinderung, mobil",
   26: "Dauerbaustelle, mobil",
+  29: "Panne, mobil",
   101: "Abstandskontrolle, fest",
   102: "Attrappe, fest",
   103: "Auffahrtskontrolle, fest",
@@ -58,16 +59,18 @@ const type_text = {
   105: "Einfahrtskontrolle, fest",
   106: "Fu\xDFg\xE4nger\xFCberweg, fest",
   107: "Geschwindigkeit, fest",
-  110: "Kombiniert, fest",
-  111: "Rotlicht, fest",
   108: "Gewichtskontrolle, fest",
   109: "H\xF6henkontrolle, fest",
+  110: "Kombiniert, fest",
+  111: "Rotlicht, fest",
   112: "Section Control, fest",
   113: "Section Control Ende, fest",
   114: "Tunnel, fest",
   115: "\xDCberholverbot, fest",
+  2015: "Geschwindigkeit, Hotspot",
   vwd: "Meldung, Polizei",
   ts: "Geschwindigkeit, teilstation\xE4r"
+  //nur Abfrage
 };
 const determineTrapTypes = (trapTypes) => trapTypes.reduce(
   (list, resultTrap) => {
@@ -80,8 +83,7 @@ const determineTrapTypes = (trapTypes) => trapTypes.reduce(
         import_polyline.default.toGeoJSON(resultTrap.properties.polyline)
       );
       resultTrap.properties.polyline.properties.linetrap = true;
-      resultTrap.properties.polyline.properties.lat = resultTrap.properties.lat;
-      resultTrap.properties.polyline.properties.lng = resultTrap.properties.lng;
+      console.log("resultTrap >>> linetrap", resultTrap.properties.polyline.properties.linetrap);
     }
     if ([
       "101",
@@ -133,6 +135,10 @@ const determineTrapTypes = (trapTypes) => trapTypes.reduce(
     }
     if (["25"].includes(resultTrap.properties.type)) {
       resultTrap.properties.type_name = "fog";
+      list.fog.push(resultTrap);
+    }
+    if (["29"].includes(resultTrap.properties.type)) {
+      resultTrap.properties.type_name = "defective-vehicle";
       list.fog.push(resultTrap);
     }
     if (["vwd"].includes(resultTrap.properties.type)) {

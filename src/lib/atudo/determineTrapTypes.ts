@@ -1,5 +1,6 @@
 import polyline from "@mapbox/polyline";
 import { Feature, feature, Point } from "@turf/helpers";
+import { LineString } from "@turf/turf";
 
 const type_text: Record<string, string> = {
 	0: "unbekannt, mobil",
@@ -19,6 +20,7 @@ const type_text: Record<string, string> = {
 	24: "Rutschgefahr, mobil",
 	25: "Sichtbehinderung, mobil",
 	26: "Dauerbaustelle, mobil",
+	29: "Panne, mobil",
 	101: "Abstandskontrolle, fest",
 	102: "Attrappe, fest",
 	103: "Auffahrtskontrolle, fest",
@@ -26,35 +28,43 @@ const type_text: Record<string, string> = {
 	105: "Einfahrtskontrolle, fest",
 	106: "Fußgängerüberweg, fest",
 	107: "Geschwindigkeit, fest",
-	110: "Kombiniert, fest",
-	111: "Rotlicht, fest",
 	108: "Gewichtskontrolle, fest",
 	109: "Höhenkontrolle, fest",
+	110: "Kombiniert, fest",
+	111: "Rotlicht, fest",
 	112: "Section Control, fest",
 	113: "Section Control Ende, fest",
 	114: "Tunnel, fest",
 	115: "Überholverbot, fest",
+	2015: "Geschwindigkeit, Hotspot",
 	vwd: "Meldung, Polizei",
-	ts: "Geschwindigkeit, teilstationär",
+	ts: "Geschwindigkeit, teilstationär", //nur Abfrage
 };
 
-const determineTrapTypes = (trapTypes: Feature<Point>[]): Record<string, Feature<Point>[]> =>
+const determineTrapTypes = (
+	trapTypes: Feature<Point, radarTrap.Poi>[],
+): Record<string, Feature<Point | LineString, radarTrap.Poi>[]> =>
 	trapTypes.reduce(
 		(list, resultTrap) => {
-			if (resultTrap.properties!.type === "1" && resultTrap.properties!.info.partly_fixed === "1") {
-				resultTrap.properties!.type = "ts";
+			if (
+				resultTrap.properties.type === "1" &&
+				(resultTrap.properties.info as radarTrap.PoiInfo).partly_fixed === "1"
+			) {
+				resultTrap.properties.type = "ts";
 			}
 
-			resultTrap.properties!.type_text = type_text[resultTrap.properties!.type];
+			resultTrap.properties.type_text = type_text[resultTrap.properties.type];
 
-			if (resultTrap.properties!.polyline !== "") {
-				resultTrap.properties!.polyline = feature(
-					polyline.toGeoJSON(resultTrap.properties!.polyline as string),
+			if (resultTrap.properties.polyline !== "") {
+				resultTrap.properties.polyline = feature<LineString, radarTrap.Poi>(
+					polyline.toGeoJSON(resultTrap.properties.polyline as string),
 				);
 
-				resultTrap.properties!.polyline.properties!.linetrap = true;
-				resultTrap.properties!.polyline.properties!.lat = resultTrap.properties!.lat;
-				resultTrap.properties!.polyline.properties!.lng = resultTrap.properties!.lng;
+				resultTrap.properties.polyline.properties.linetrap = true;
+				console.log("resultTrap >>> linetrap", resultTrap.properties.polyline.properties.linetrap);
+
+				// resultTrap.properties!.polyline.properties!.lat = resultTrap.properties!.lat;
+				// resultTrap.properties!.polyline.properties!.lng = resultTrap.properties!.lng;
 			}
 
 			if (
@@ -76,7 +86,7 @@ const determineTrapTypes = (trapTypes: Feature<Point>[]): Record<string, Feature
 					"115",
 				].includes(resultTrap.properties!.type)
 			) {
-				resultTrap.properties!.type_name = "fixed-trap";
+				resultTrap.properties.type_name = "fixed-trap";
 				list.fixedTraps.push(resultTrap);
 			}
 
@@ -120,6 +130,11 @@ const determineTrapTypes = (trapTypes: Feature<Point>[]): Record<string, Feature
 				list.fog.push(resultTrap);
 			}
 
+			if (["29"].includes(resultTrap.properties!.type)) {
+				resultTrap.properties!.type_name = "defective-vehicle";
+				list.fog.push(resultTrap);
+			}
+
 			if (["vwd"].includes(resultTrap.properties!.type)) {
 				resultTrap.properties!.type_name = "police-news";
 				list.policeNews.push(resultTrap);
@@ -128,16 +143,16 @@ const determineTrapTypes = (trapTypes: Feature<Point>[]): Record<string, Feature
 			return list;
 		},
 		{
-			fixedTraps: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			mobileTraps: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			speedTraps: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			roadWorks: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			trafficJams: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			sleekness: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			accidents: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			fog: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			objects: [] as GeoJSON.Feature<GeoJSON.Point>[],
-			policeNews: [] as GeoJSON.Feature<GeoJSON.Point>[],
+			fixedTraps: [] as Feature<Point, radarTrap.Poi>[],
+			mobileTraps: [] as Feature<Point, radarTrap.Poi>[],
+			speedTraps: [] as Feature<Point, radarTrap.Poi>[],
+			roadWorks: [] as Feature<Point, radarTrap.Poi>[],
+			trafficJams: [] as Feature<Point, radarTrap.Poi>[],
+			sleekness: [] as Feature<Point, radarTrap.Poi>[],
+			accidents: [] as Feature<Point, radarTrap.Poi>[],
+			fog: [] as Feature<Point, radarTrap.Poi>[],
+			objects: [] as Feature<Point, radarTrap.Poi>[],
+			policeNews: [] as Feature<Point, radarTrap.Poi>[],
 		},
 	);
 

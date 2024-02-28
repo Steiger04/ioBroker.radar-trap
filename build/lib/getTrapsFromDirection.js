@@ -57,7 +57,7 @@ const getTrapsFromDirection = async ({
     const maxBox = (0, import_destination.default)(directionPoint, 4, 45, {
       units: "kilometers"
     });
-    const { trapPoints: clusterTraps } = await (0, import_traps.traps)(
+    const { poiPoints: clusterTraps } = await (0, import_traps.traps)(
       {
         lng: minBox.geometry.coordinates[0],
         lat: minBox.geometry.coordinates[1]

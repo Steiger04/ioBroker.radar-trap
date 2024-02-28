@@ -2,6 +2,7 @@ import polyline from "@mapbox/polyline";
 import { feature, featureCollection } from "@turf/helpers";
 import { uniqWith } from "lodash";
 import { addTrapInfoToTrapProperties } from "./addTrapInfoToTrapProperties";
+import { LineString, Point } from "@turf/turf";
 
 const routeTrapsWithTrapInfo = (data: radarTrap.Route): void => {
 	if (data.directions === undefined) {
@@ -9,9 +10,7 @@ const routeTrapsWithTrapInfo = (data: radarTrap.Route): void => {
 	}
 
 	data.directions = data.directions!.map((rec) => {
-		const directionFeature = feature(
-			polyline.toGeoJSON(rec.direction.geometry),
-		) as GeoJSON.Feature<GeoJSON.LineString>;
+		const directionFeature = feature<LineString, radarTrap.Poi>(polyline.toGeoJSON(rec.direction.geometry));
 
 		rec.direction.directionFeature = directionFeature;
 
@@ -22,7 +21,7 @@ const routeTrapsWithTrapInfo = (data: radarTrap.Route): void => {
 		return rec;
 	});
 
-	const directionsFeatureCollection = featureCollection(
+	const directionsFeatureCollection = featureCollection<Point | LineString, radarTrap.Poi>(
 		data.directions.map((rec) => rec.direction.directionFeature!),
 	);
 
@@ -31,22 +30,24 @@ const routeTrapsWithTrapInfo = (data: radarTrap.Route): void => {
 	let allTraps = data.directions.flatMap(({ routeTraps }) => addTrapInfoToTrapProperties(routeTraps!));
 
 	allTraps = uniqWith(allTraps, (a, b) => {
-		if (
-			!a.properties?.linetrap &&
-			!b.properties?.linetrap &&
-			a.properties?.lat === b.properties?.lat &&
-			a.properties?.lng === b.properties?.lng
-		) {
-			return true;
-		}
+		if (a.properties.schemaType === "POI" && b.properties.schemaType === "POI") {
+			if (
+				!a.properties.linetrap &&
+				!b.properties.linetrap &&
+				a.properties.lat === b.properties.lat &&
+				a.properties.lng === b.properties.lng
+			) {
+				return true;
+			}
 
-		if (
-			a.properties?.linetrap &&
-			b.properties?.linetrap &&
-			a.properties.lat === b.properties.lat &&
-			a.properties.lng === b.properties.lng
-		) {
-			return true;
+			if (
+				a.properties.linetrap &&
+				b.properties.linetrap &&
+				a.properties.lat === b.properties.lat &&
+				a.properties.lng === b.properties.lng
+			) {
+				return true;
+			}
 		}
 
 		return false;

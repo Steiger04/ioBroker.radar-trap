@@ -22,59 +22,45 @@ __export(trapsChain_exports, {
 });
 module.exports = __toCommonJS(trapsChain_exports);
 var import_lodash = require("lodash");
-const trapsChain = (recordTraps = {}, resultTraps = {}) => {
+const trapsChain = (record = {}, result = {}) => {
   const newTraps = (0, import_lodash.mapKeys)(
     (0, import_lodash.mergeWith)(
-      { ...recordTraps },
-      resultTraps,
-      (objValue, srcValue) => (0, import_lodash.differenceBy)(srcValue, objValue || [], "properties.backend").map(
-        (item) => ({
-          ...item,
-          properties: { ...item.properties, status: "NEW" }
-        })
-      )
+      { ...record },
+      result,
+      (recordValue, resultValue) => (0, import_lodash.differenceBy)(resultValue, recordValue || [], "properties.backend").map((item) => ({
+        ...item,
+        properties: { ...item.properties, status: "NEW" }
+      }))
     ),
     (_, key) => `${key}New`
   );
-  if (false)
-    console.log("newTraps >>>", newTraps);
   const establishedTraps = (0, import_lodash.mapKeys)(
     (0, import_lodash.mergeWith)(
-      { ...recordTraps },
-      resultTraps,
-      (objValue, srcValue) => (0, import_lodash.intersectionBy)(objValue || [], srcValue, "properties.backend").map(
-        (item) => ({
-          ...item,
-          properties: { ...item.properties, status: "ESTABLISHED" }
-        })
-      )
+      { ...record },
+      result,
+      (recordValue, resultValue) => (0, import_lodash.intersectionBy)(recordValue || [], resultValue, "properties.backend").map((item) => ({
+        ...item,
+        properties: { ...item.properties, status: "ESTABLISHED" }
+      }))
     ),
     (_, key) => `${key}Established`
   );
-  if (false)
-    console.log("establishedTraps >>>", establishedTraps);
   const rejectedTraps = (0, import_lodash.mapKeys)(
     (0, import_lodash.mergeWith)(
-      { ...recordTraps },
-      resultTraps,
-      (objValue, srcValue) => (0, import_lodash.differenceBy)(objValue || [], srcValue, "properties.backend").map(
-        (item) => ({
-          ...item,
-          properties: { ...item.properties, status: "REJECTED" }
-        })
-      )
+      { ...record },
+      result,
+      (recordValue, resultValue) => (0, import_lodash.differenceBy)(recordValue || [], resultValue, "properties.backend").map((item) => ({
+        ...item,
+        properties: { ...item.properties, status: "REJECTED" }
+      }))
     ),
     (_, key) => `${key}Rejected`
   );
-  if (false)
-    console.log("rejectedTraps >>>", rejectedTraps);
   const traps = (0, import_lodash.mergeWith)(
     { ...(0, import_lodash.mapKeys)(establishedTraps, (_, key) => key.substring(0, key.length - 11)) },
     (0, import_lodash.mapKeys)(newTraps, (_, key) => key.substring(0, key.length - 3)),
     (objValue, srcValue) => (0, import_lodash.flatten)([objValue, srcValue])
   );
-  if (false)
-    console.log("areaTraps >>>", traps);
   const newTrapsReduced = (0, import_lodash.reduce)(
     newTraps,
     function(acc, value) {
@@ -83,8 +69,6 @@ const trapsChain = (recordTraps = {}, resultTraps = {}) => {
     },
     { trapsNew: [] }
   );
-  if (false)
-    console.log("newTrapsReduced >>>", newTrapsReduced);
   const rejectedTrapsReduced = (0, import_lodash.reduce)(
     rejectedTraps,
     function(acc, value) {
@@ -93,9 +77,7 @@ const trapsChain = (recordTraps = {}, resultTraps = {}) => {
     },
     { trapsRejected: [] }
   );
-  if (false)
-    console.log("rejectedTrapsReduced >>>", rejectedTrapsReduced);
-  return { newTraps, establishedTraps, rejectedTraps, traps, newTrapsReduced, rejectedTrapsReduced };
+  return { traps, newTraps, establishedTraps, rejectedTraps, newTrapsReduced, rejectedTrapsReduced };
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
