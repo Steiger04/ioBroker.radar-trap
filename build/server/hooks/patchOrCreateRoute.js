@@ -34,9 +34,12 @@ module.exports = __toCommonJS(patchOrCreateRoute_exports);
 var import_directions = __toESM(require("@mapbox/mapbox-sdk/services/directions"));
 var import_matrix = __toESM(require("@mapbox/mapbox-sdk/services/matrix"));
 var import_perf_hooks = require("perf_hooks");
-var import_getTrapsFromDirection = require("../../lib/getTrapsFromDirection");
 var import_Scheduler = require("../../lib/Scheduler");
 var import_trapsChain = require("./trapsChain");
+var import_polyline = __toESM(require("@mapbox/polyline"));
+var import_turf = require("@turf/turf");
+var import_getPoiPolyPointsAsync = __toESM(require("../../lib/getPoiPolyPointsAsync"));
+var import_determineTrapTypes = require("../../lib/atudo/determineTrapTypes");
 const patchOrCreateRoute = () => {
   let directionsService = null;
   let matrixService = null;
@@ -102,10 +105,16 @@ const patchOrCreateRoute = () => {
       for (const route of directions.routes) {
         try {
           const startTime = import_perf_hooks.performance.now();
-          const traps = await (0, import_getTrapsFromDirection.getTrapsFromDirection)({
-            direction: route.geometry,
-            maxTrapDistance
+          const directionLine = (0, import_turf.feature)(import_polyline.default.toGeoJSON(route.geometry));
+          let { resultPoiPoints } = await (0, import_getPoiPolyPointsAsync.default)(directionLine, import_getPoiPolyPointsAsync.AnalyzedType.LINESTRING);
+          resultPoiPoints = resultPoiPoints.filter((poiPoint) => {
+            const trapDistance = (0, import_turf.pointToLineDistance)(poiPoint, directionLine, {
+              units: "meters"
+            });
+            return trapDistance <= maxTrapDistance;
           });
+          console.log("resultPoiPoints >>>", resultPoiPoints.length);
+          const traps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
           const endTime = import_perf_hooks.performance.now();
           console.log(`getTrapsFrom() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
           route.duration = matrix.durations[0][1];

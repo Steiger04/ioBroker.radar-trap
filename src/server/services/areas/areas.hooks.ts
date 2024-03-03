@@ -9,6 +9,7 @@ import {
 	paramsFromClient,
 } from "feathers-hooks-common";
 import { Scheduler } from "../../../lib/Scheduler";
+// import { patchOrCreateArea } from "../../hooks";
 import { patchOrCreateArea } from "../../hooks";
 import { areaTrapsWithTrapInfo } from "../../hooks/areaTrapsWithTrapInfo";
 

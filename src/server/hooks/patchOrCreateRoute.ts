@@ -5,11 +5,14 @@ import Directions, {
 } from "@mapbox/mapbox-sdk/services/directions";
 import Matrix, { MatrixService } from "@mapbox/mapbox-sdk/services/matrix";
 import { performance } from "perf_hooks";
-import { getTrapsFromDirection } from "../../lib/getTrapsFromDirection";
 import { Scheduler } from "../../lib/Scheduler";
 import { trapsChain } from "./trapsChain";
 
 import type { Hook, HookContext } from "@feathersjs/feathers";
+import polyline from "@mapbox/polyline";
+import { Feature, feature, LineString, Point, pointToLineDistance } from "@turf/turf";
+import getPoiPolyPointsAsync, { AnalyzedType } from "../../lib/getPoiPolyPointsAsync";
+import { determineTrapTypes } from "../../lib/atudo/determineTrapTypes";
 
 const patchOrCreateRoute = (): Hook => {
 	let directionsService: DirectionsService | null = null;
@@ -97,10 +100,21 @@ const patchOrCreateRoute = (): Hook => {
 			for (const route of (directions as DirectionsResponse<string>).routes) {
 				try {
 					const startTime = performance.now();
-					const traps = await getTrapsFromDirection({
-						direction: route.geometry,
-						maxTrapDistance,
+					const directionLine = feature<LineString, radarTrap.Poi>(polyline.toGeoJSON(route.geometry));
+
+					let { resultPoiPoints } = await getPoiPolyPointsAsync(directionLine, AnalyzedType.LINESTRING);
+
+					resultPoiPoints = resultPoiPoints.filter((poiPoint) => {
+						const trapDistance = pointToLineDistance(poiPoint, directionLine, {
+							units: "meters",
+						});
+
+						return trapDistance <= maxTrapDistance;
 					});
+
+					console.log("resultPoiPoints >>>", resultPoiPoints.length);
+
+					const traps = determineTrapTypes(resultPoiPoints as Feature<Point, radarTrap.Poi>[]);
 
 					const endTime = performance.now();
 					console.log(`getTrapsFrom() dauerte: ${(endTime - startTime) / 1_000} Sekunden`);

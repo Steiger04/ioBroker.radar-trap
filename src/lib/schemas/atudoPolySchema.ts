@@ -21,7 +21,7 @@ const atudoPolySchema = Type.Object(
 				zip: Type.Union([Type.String(), Type.Null()]),
 				city: Type.String(),
 				street: Type.String(),
-				direction: Type.Union([Type.Number(), Type.Null()]),
+				direction: Type.Union([Type.Number(), Type.String(), Type.Null()]),
 				zip_code: Type.String(),
 			}),
 		),

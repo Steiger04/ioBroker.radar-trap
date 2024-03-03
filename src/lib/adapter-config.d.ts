@@ -107,6 +107,8 @@ declare global {
 			linetrap?: boolean;
 			// from trapsChain.ts
 			status?: string;
+			// from getTrapsFromDirection.ts
+			distance?: number;
 		};
 
 		type PoiInfo = Static<typeof atudoPoiInfoSchema>;

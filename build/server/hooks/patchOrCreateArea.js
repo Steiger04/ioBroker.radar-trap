@@ -31,22 +31,14 @@ __export(patchOrCreateArea_exports, {
   patchOrCreateArea: () => patchOrCreateArea
 });
 module.exports = __toCommonJS(patchOrCreateArea_exports);
-var import_area = __toESM(require("@turf/area"));
-var import_bbox = __toESM(require("@turf/bbox"));
-var import_bbox_polygon = __toESM(require("@turf/bbox-polygon"));
-var import_boolean_contains = __toESM(require("@turf/boolean-contains"));
-var import_boolean_overlap = __toESM(require("@turf/boolean-overlap"));
 var import_helpers = require("@turf/helpers");
 var import_points_within_polygon = __toESM(require("@turf/points-within-polygon"));
-var import_square = __toESM(require("@turf/square"));
-var import_square_grid = __toESM(require("@turf/square-grid"));
 var import_determineTrapTypes = require("../../lib/atudo/determineTrapTypes");
-var import_traps = require("../../lib/atudo/traps");
 var import_Scheduler = require("../../lib/Scheduler");
-var import_transform_scale = __toESM(require("@turf/transform-scale"));
 var import_trapsChain = require("./trapsChain");
 var import_turf = require("@turf/turf");
 var import_polyline = __toESM(require("@mapbox/polyline"));
+var import_getPoiPolyPointsAsync = __toESM(require("../../lib/getPoiPolyPointsAsync"));
 const patchOrCreateArea = () => {
   return async (context) => {
     var _a;
@@ -62,49 +54,9 @@ const patchOrCreateArea = () => {
     });
     if (params.patchSourceFromClient || params.patchSourceFromServer) {
       const areaPolygon = Object.values(data.areaPolygons)[0];
-      const squareBox = (0, import_square.default)((0, import_bbox.default)(areaPolygon));
-      const squareBoxPolygon = (0, import_transform_scale.default)((0, import_bbox_polygon.default)(squareBox), 1.3);
-      const sideLength = Math.sqrt((0, import_area.default)(squareBoxPolygon)) / 1e3;
-      let sideLengthDivisor = 0;
-      if (sideLength > 3e3) {
-        sideLengthDivisor = 80;
-      } else if (sideLength > 1500) {
-        sideLengthDivisor = 60;
-      } else if (sideLength > 900) {
-        sideLengthDivisor = 25;
-      } else if (sideLength > 500) {
-        sideLengthDivisor = 15;
-      } else if (sideLength > 100) {
-        sideLengthDivisor = 10;
-      } else {
-        sideLengthDivisor = 10;
-      }
-      const squareBoxGrid = (0, import_square_grid.default)((0, import_bbox.default)(squareBoxPolygon), sideLength / sideLengthDivisor);
-      const reducedSquareBoxGrid = (0, import_helpers.featureCollection)(
-        squareBoxGrid.features.filter((feature2) => {
-          return (0, import_boolean_overlap.default)(areaPolygon, feature2) || (0, import_boolean_contains.default)(areaPolygon, feature2);
-        })
-      );
-      let resultPoiPoints = [];
-      let resultPolyPoints = [];
-      for (const feature2 of reducedSquareBoxGrid.features) {
-        const tmpBbox = (0, import_bbox.default)(feature2);
-        const { polyPoints, poiPoints } = await (0, import_traps.traps)(
-          {
-            lng: tmpBbox[0],
-            lat: tmpBbox[1]
-          },
-          {
-            lng: tmpBbox[2],
-            lat: tmpBbox[3]
-          }
-        );
-        if (poiPoints.length > 499)
-          console.log("gridTraps >>>", poiPoints.length);
-        resultPolyPoints = resultPolyPoints.concat(polyPoints);
-        resultPoiPoints = resultPoiPoints.concat(poiPoints);
-      }
+      let { resultPoiPoints, resultPolyPoints } = await (0, import_getPoiPolyPointsAsync.default)(areaPolygon, import_getPoiPolyPointsAsync.AnalyzedType.POLYGONE);
       resultPolyPoints = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultPolyPoints), areaPolygon).features;
+      console.log("resultPolyPoints >>>", resultPolyPoints.length);
       let resultPolys = [];
       resultPolys = (0, import_turf.featureReduce)(
         (0, import_helpers.featureCollection)(resultPolyPoints),
@@ -146,6 +98,7 @@ const patchOrCreateArea = () => {
       );
       data.polysFeatureCollection = (0, import_helpers.featureCollection)(allPolys.allPolys);
       resultPoiPoints = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultPoiPoints), areaPolygon).features;
+      console.log("resultPoiPoints >>>", resultPoiPoints.length);
       const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
       const {
         traps: areaTraps,
@@ -163,7 +116,7 @@ const patchOrCreateArea = () => {
       });
     }
     const endTime = performance.now();
-    console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
+    console.log(`patchOrCreateArea2() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
     return context;
   };
 };

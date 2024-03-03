@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/lib/getDevisor.ts"],
+  "sourcesContent": ["const getDevisor = (number: number): number => {\n\tconst quotient = Math.ceil(number / 50);\n\treturn Math.max(1, quotient);\n};\n\nexport { getDevisor };\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,MAAM,aAAa,CAAC,WAA2B;AAC9C,QAAM,WAAW,KAAK,KAAK,SAAS,EAAE;AACtC,SAAO,KAAK,IAAI,GAAG,QAAQ;AAC5B;",
+  "names": []
+}

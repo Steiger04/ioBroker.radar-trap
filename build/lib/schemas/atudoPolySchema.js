@@ -44,7 +44,7 @@ const atudoPolySchema = import_typebox.Type.Object(
         zip: import_typebox.Type.Union([import_typebox.Type.String(), import_typebox.Type.Null()]),
         city: import_typebox.Type.String(),
         street: import_typebox.Type.String(),
-        direction: import_typebox.Type.Union([import_typebox.Type.Number(), import_typebox.Type.Null()]),
+        direction: import_typebox.Type.Union([import_typebox.Type.Number(), import_typebox.Type.String(), import_typebox.Type.Null()]),
         zip_code: import_typebox.Type.String()
       })
     ),
