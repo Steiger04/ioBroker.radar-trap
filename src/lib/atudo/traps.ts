@@ -3,6 +3,8 @@ import { fetch } from "cross-fetch";
 import { Value } from "@sinclair/typebox/value";
 import { atudoPoisSchema } from "../schemas/atudoPoiSchema";
 import { atudoPolysSchema } from "../schemas/atudoPolySchema";
+import { LineString, feature } from "@turf/turf";
+import polyline from "@mapbox/polyline";
 
 async function request<
 	TResponse extends radarTrap.AtudoPoi | radarTrap.AtudoPoly,
@@ -21,6 +23,7 @@ const traps = async (
 ): Promise<{
 	poiPoints: Feature<Point, radarTrap.Poi>[];
 	polyPoints: Feature<Point, radarTrap.Poly>[];
+	polyLines: Feature<LineString, radarTrap.Poly>[];
 }> => {
 	try {
 		/* // Blitzer fest
@@ -108,16 +111,21 @@ const traps = async (
 		}, []);
 
 		const poiPoints = pois.reduce((list: Feature<Point, radarTrap.Poi>[], poi) => {
-			const trapPoint = point([+poi.lng, +poi.lat], { ...poi });
-			list.push(trapPoint);
+			list.push(point([+poi.lng, +poi.lat], { ...poi }));
 
 			return list;
 		}, []);
 
-		return { poiPoints, polyPoints };
+		const polyLines = polys.reduce((list: Feature<LineString, radarTrap.Poly>[], poly) => {
+			list.push(feature(polyline.toGeoJSON(poly.polyline), { ...poly }));
+
+			return list;
+		}, []);
+
+		return { poiPoints, polyPoints, polyLines };
 	} catch (error) {
 		console.error("traps: ", error);
-		return { poiPoints: [], polyPoints: [] };
+		return { poiPoints: [], polyPoints: [], polyLines: [] };
 	}
 };
 

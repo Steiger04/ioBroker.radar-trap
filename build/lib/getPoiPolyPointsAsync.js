@@ -24,13 +24,17 @@ __export(getPoiPolyPointsAsync_exports, {
 module.exports = __toCommonJS(getPoiPolyPointsAsync_exports);
 var import_turf = require("@turf/turf");
 var import_getDevisor = require("./getDevisor");
-var import_traps2 = require("./atudo/traps2");
+var import_traps = require("./atudo/traps");
 var AnalyzedType = /* @__PURE__ */ ((AnalyzedType2) => {
   AnalyzedType2[AnalyzedType2["POLYGONE"] = 0] = "POLYGONE";
   AnalyzedType2[AnalyzedType2["LINESTRING"] = 1] = "LINESTRING";
   return AnalyzedType2;
 })(AnalyzedType || {});
-const getPoiPolyPointsAsync = async (analyzedFeature, type) => {
+const getPoiPolyPointsAsync = async ({
+  analyzedFeature,
+  type,
+  maxTrapDistance
+}) => {
   const analyzedBbox = (0, import_turf.bbox)(analyzedFeature);
   const analyzedBox = (0, import_turf.bboxPolygon)(analyzedBbox);
   const sideLength = Math.sqrt((0, import_turf.area)(analyzedBox)) / 1e3;
@@ -55,9 +59,10 @@ const getPoiPolyPointsAsync = async (analyzedFeature, type) => {
   console.log("squareBoxGridReduced >>>", squareBoxGridReduced.length);
   let resultPoiPoints = [];
   let resultPolyPoints = [];
+  let resultPolyLines = [];
   for (const feature of squareBoxGridReduced) {
     const tmpBbox = (0, import_turf.bbox)(feature);
-    const { polyPoints, poiPoints } = await (0, import_traps2.traps2)(
+    const { poiPoints, polyPoints, polyLines } = await (0, import_traps.traps)(
       {
         lng: tmpBbox[0],
         lat: tmpBbox[1]
@@ -70,10 +75,39 @@ const getPoiPolyPointsAsync = async (analyzedFeature, type) => {
     console.log("poiPoints >>>", poiPoints.length);
     if (poiPoints.length > 499)
       console.log("gridTraps >>>", poiPoints.length);
-    resultPolyPoints = resultPolyPoints.concat(polyPoints);
     resultPoiPoints = resultPoiPoints.concat(poiPoints);
+    resultPolyPoints = resultPolyPoints.concat(polyPoints);
+    resultPolyLines = resultPolyLines.concat(polyLines);
   }
-  return { resultPoiPoints, resultPolyPoints };
+  switch (type) {
+    case 0 /* POLYGONE */:
+      resultPolyPoints = (0, import_turf.pointsWithinPolygon)(
+        (0, import_turf.featureCollection)(resultPolyPoints),
+        analyzedFeature
+      ).features;
+      resultPoiPoints = (0, import_turf.pointsWithinPolygon)(
+        (0, import_turf.featureCollection)(resultPoiPoints),
+        analyzedFeature
+      ).features;
+      resultPolyLines = resultPolyLines.filter((polyLine) => {
+        return !(0, import_turf.booleanDisjoint)(polyLine, analyzedFeature);
+      });
+      break;
+    case 1 /* LINESTRING */:
+      resultPoiPoints = resultPoiPoints.filter((poiPoint) => {
+        const trapDistance = (0, import_turf.pointToLineDistance)(poiPoint, analyzedFeature, {
+          units: "meters"
+        });
+        return trapDistance <= maxTrapDistance;
+      });
+      resultPolyLines = resultPolyLines.filter((polyLine) => {
+        return !(0, import_turf.booleanDisjoint)(polyLine, analyzedFeature);
+      });
+      break;
+    default:
+      throw new Error("Invalid type in getPoiPolyPointsAsync");
+  }
+  return { resultPoiPoints, resultPolyPoints, resultPolyLines };
 };
 var getPoiPolyPointsAsync_default = getPoiPolyPointsAsync;
 // Annotate the CommonJS export names for ESM import in node:

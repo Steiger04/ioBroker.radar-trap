@@ -1,7 +1,9 @@
 "use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -15,6 +17,14 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var traps_exports = {};
 __export(traps_exports, {
@@ -26,6 +36,8 @@ var import_cross_fetch = require("cross-fetch");
 var import_value = require("@sinclair/typebox/value");
 var import_atudoPoiSchema = require("../schemas/atudoPoiSchema");
 var import_atudoPolySchema = require("../schemas/atudoPolySchema");
+var import_turf = require("@turf/turf");
+var import_polyline = __toESM(require("@mapbox/polyline"));
 async function request(url, config = {}) {
   const response = await (0, import_cross_fetch.fetch)(url, config);
   return response.json();
@@ -57,14 +69,17 @@ const traps = async (minPos, maxPos) => {
       return list;
     }, []);
     const poiPoints = pois.reduce((list, poi) => {
-      const trapPoint = (0, import_helpers.point)([+poi.lng, +poi.lat], { ...poi });
-      list.push(trapPoint);
+      list.push((0, import_helpers.point)([+poi.lng, +poi.lat], { ...poi }));
       return list;
     }, []);
-    return { poiPoints, polyPoints };
+    const polyLines = polys.reduce((list, poly) => {
+      list.push((0, import_turf.feature)(import_polyline.default.toGeoJSON(poly.polyline), { ...poly }));
+      return list;
+    }, []);
+    return { poiPoints, polyPoints, polyLines };
   } catch (error) {
     console.error("traps: ", error);
-    return { poiPoints: [], polyPoints: [] };
+    return { poiPoints: [], polyPoints: [], polyLines: [] };
   }
 };
 // Annotate the CommonJS export names for ESM import in node:

@@ -10,7 +10,7 @@ import { trapsChain } from "./trapsChain";
 
 import type { Hook, HookContext } from "@feathersjs/feathers";
 import polyline from "@mapbox/polyline";
-import { Feature, feature, LineString, Point, pointToLineDistance } from "@turf/turf";
+import { Feature, feature, LineString, Point } from "@turf/turf";
 import getPoiPolyPointsAsync, { AnalyzedType } from "../../lib/getPoiPolyPointsAsync";
 import { determineTrapTypes } from "../../lib/atudo/determineTrapTypes";
 
@@ -102,17 +102,15 @@ const patchOrCreateRoute = (): Hook => {
 					const startTime = performance.now();
 					const directionLine = feature<LineString, radarTrap.Poi>(polyline.toGeoJSON(route.geometry));
 
-					let { resultPoiPoints } = await getPoiPolyPointsAsync(directionLine, AnalyzedType.LINESTRING);
-
-					resultPoiPoints = resultPoiPoints.filter((poiPoint) => {
-						const trapDistance = pointToLineDistance(poiPoint, directionLine, {
-							units: "meters",
-						});
-
-						return trapDistance <= maxTrapDistance;
+					// eslint-disable-next-line prefer-const
+					let { resultPoiPoints, resultPolyPoints, resultPolyLines } = await getPoiPolyPointsAsync({
+						analyzedFeature: directionLine,
+						type: AnalyzedType.LINESTRING,
+						maxTrapDistance,
 					});
-
 					console.log("resultPoiPoints >>>", resultPoiPoints.length);
+					console.log("resultPolyPoints >>>", resultPolyPoints.length);
+					console.log("resultPolyLines >>>", resultPolyLines.length);
 
 					const traps = determineTrapTypes(resultPoiPoints as Feature<Point, radarTrap.Poi>[]);
 

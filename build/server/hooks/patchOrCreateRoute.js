@@ -106,14 +106,14 @@ const patchOrCreateRoute = () => {
         try {
           const startTime = import_perf_hooks.performance.now();
           const directionLine = (0, import_turf.feature)(import_polyline.default.toGeoJSON(route.geometry));
-          let { resultPoiPoints } = await (0, import_getPoiPolyPointsAsync.default)(directionLine, import_getPoiPolyPointsAsync.AnalyzedType.LINESTRING);
-          resultPoiPoints = resultPoiPoints.filter((poiPoint) => {
-            const trapDistance = (0, import_turf.pointToLineDistance)(poiPoint, directionLine, {
-              units: "meters"
-            });
-            return trapDistance <= maxTrapDistance;
+          let { resultPoiPoints, resultPolyPoints, resultPolyLines } = await (0, import_getPoiPolyPointsAsync.default)({
+            analyzedFeature: directionLine,
+            type: import_getPoiPolyPointsAsync.AnalyzedType.LINESTRING,
+            maxTrapDistance
           });
           console.log("resultPoiPoints >>>", resultPoiPoints.length);
+          console.log("resultPolyPoints >>>", resultPolyPoints.length);
+          console.log("resultPolyLines >>>", resultPolyLines.length);
           const traps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
           const endTime = import_perf_hooks.performance.now();
           console.log(`getTrapsFrom() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);

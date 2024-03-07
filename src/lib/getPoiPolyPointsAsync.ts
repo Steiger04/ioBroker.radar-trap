@@ -9,19 +9,34 @@ import {
 	bboxPolygon,
 	booleanDisjoint,
 	buffer,
+	featureCollection,
+	pointToLineDistance,
+	pointsWithinPolygon,
 	squareGrid,
 } from "@turf/turf";
 import { getDevisor } from "./getDevisor";
-import { traps2 } from "./atudo/traps2";
+import { traps } from "./atudo/traps";
 
 export enum AnalyzedType {
 	POLYGONE,
 	LINESTRING,
 }
 
-type AnalyzedFeature = Feature<Polygon> | Feature<LineString>;
+type Options = {
+	analyzedFeature: Feature<Polygon> | Feature<LineString>;
+	type: AnalyzedType;
+	maxTrapDistance?: number | undefined;
+};
 
-const getPoiPolyPointsAsync = async (analyzedFeature: AnalyzedFeature, type: AnalyzedType) => {
+const getPoiPolyPointsAsync = async ({
+	analyzedFeature,
+	type,
+	maxTrapDistance,
+}: Options): Promise<{
+	resultPoiPoints: Feature<Point, radarTrap.Poi>[];
+	resultPolyPoints: Feature<Point, radarTrap.Poly>[];
+	resultPolyLines: Feature<LineString, radarTrap.Poly>[];
+}> => {
 	// const areaPolygon = Object.values(data!.areaPolygons!)[0];
 	const analyzedBbox = bbox(analyzedFeature);
 	const analyzedBox = bboxPolygon(analyzedBbox);
@@ -55,11 +70,12 @@ const getPoiPolyPointsAsync = async (analyzedFeature: AnalyzedFeature, type: Ana
 
 	let resultPoiPoints: Feature<Point, radarTrap.Poi>[] = [];
 	let resultPolyPoints: Feature<Point, radarTrap.Poly>[] = [];
+	let resultPolyLines: Feature<LineString, radarTrap.Poly>[] = [];
 
 	for (const feature of squareBoxGridReduced) {
 		const tmpBbox = bbox(feature);
 
-		const { polyPoints, poiPoints } = await traps2(
+		const { poiPoints, polyPoints, polyLines } = await traps(
 			{
 				lng: tmpBbox[0],
 				lat: tmpBbox[1],
@@ -73,11 +89,47 @@ const getPoiPolyPointsAsync = async (analyzedFeature: AnalyzedFeature, type: Ana
 
 		if (poiPoints.length > 499) console.log("gridTraps >>>", poiPoints.length);
 
-		resultPolyPoints = resultPolyPoints.concat(polyPoints);
 		resultPoiPoints = resultPoiPoints.concat(poiPoints);
+		resultPolyPoints = resultPolyPoints.concat(polyPoints);
+		resultPolyLines = resultPolyLines.concat(polyLines);
 	}
 
-	return { resultPoiPoints, resultPolyPoints };
+	switch (type) {
+		case AnalyzedType.POLYGONE:
+			resultPolyPoints = pointsWithinPolygon(
+				featureCollection(resultPolyPoints),
+				analyzedFeature as Feature<Polygon>,
+			).features;
+
+			resultPoiPoints = pointsWithinPolygon(
+				featureCollection(resultPoiPoints),
+				analyzedFeature as Feature<Polygon>,
+			).features;
+
+			resultPolyLines = resultPolyLines.filter((polyLine) => {
+				return !booleanDisjoint(polyLine, analyzedFeature);
+			});
+			break;
+
+		case AnalyzedType.LINESTRING:
+			resultPoiPoints = resultPoiPoints.filter((poiPoint) => {
+				const trapDistance = pointToLineDistance(poiPoint, analyzedFeature as Feature<LineString>, {
+					units: "meters",
+				});
+
+				return trapDistance <= maxTrapDistance!;
+			});
+
+			resultPolyLines = resultPolyLines.filter((polyLine) => {
+				return !booleanDisjoint(polyLine, analyzedFeature);
+			});
+			break;
+
+		default:
+			throw new Error("Invalid type in getPoiPolyPointsAsync");
+	}
+
+	return { resultPoiPoints, resultPolyPoints, resultPolyLines };
 };
 
 export default getPoiPolyPointsAsync;

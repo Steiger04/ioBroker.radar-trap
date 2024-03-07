@@ -1,5 +1,4 @@
 import { Feature, featureCollection, LineString, Point } from "@turf/helpers";
-import pointsWithinPolygon from "@turf/points-within-polygon";
 import { determineTrapTypes } from "../../lib/atudo/determineTrapTypes";
 // import { traps } from "../../lib/atudo/traps";
 import { Scheduler } from "../../lib/Scheduler";
@@ -29,10 +28,14 @@ const patchOrCreateArea = (): Hook => {
 		if (params.patchSourceFromClient || params.patchSourceFromServer) {
 			const areaPolygon = Object.values(data!.areaPolygons!)[0];
 
-			let { resultPoiPoints, resultPolyPoints } = await getPoiPolyPointsAsync(areaPolygon, AnalyzedType.POLYGONE);
-
-			resultPolyPoints = pointsWithinPolygon(featureCollection(resultPolyPoints), areaPolygon).features;
+			// eslint-disable-next-line prefer-const
+			let { resultPoiPoints, resultPolyPoints, resultPolyLines } = await getPoiPolyPointsAsync({
+				analyzedFeature: areaPolygon,
+				type: AnalyzedType.POLYGONE,
+			});
+			console.log("resultPoiPoints >>>", resultPoiPoints.length);
 			console.log("resultPolyPoints >>>", resultPolyPoints.length);
+			console.log("resultPolyLines >>>", resultPolyLines.length);
 
 			let resultPolys: Feature<Point | LineString, radarTrap.Poly>[] = [];
 			resultPolys = featureReduce(
@@ -78,9 +81,6 @@ const patchOrCreateArea = (): Hook => {
 				{ allPolys: resultPolys },
 			);
 			data!.polysFeatureCollection = featureCollection(allPolys.allPolys);
-
-			resultPoiPoints = pointsWithinPolygon(featureCollection(resultPoiPoints), areaPolygon).features;
-			console.log("resultPoiPoints >>>", resultPoiPoints.length);
 
 			const resultTypeTraps = determineTrapTypes(resultPoiPoints);
 			const {

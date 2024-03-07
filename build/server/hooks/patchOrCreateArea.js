@@ -32,7 +32,6 @@ __export(patchOrCreateArea_exports, {
 });
 module.exports = __toCommonJS(patchOrCreateArea_exports);
 var import_helpers = require("@turf/helpers");
-var import_points_within_polygon = __toESM(require("@turf/points-within-polygon"));
 var import_determineTrapTypes = require("../../lib/atudo/determineTrapTypes");
 var import_Scheduler = require("../../lib/Scheduler");
 var import_trapsChain = require("./trapsChain");
@@ -54,9 +53,13 @@ const patchOrCreateArea = () => {
     });
     if (params.patchSourceFromClient || params.patchSourceFromServer) {
       const areaPolygon = Object.values(data.areaPolygons)[0];
-      let { resultPoiPoints, resultPolyPoints } = await (0, import_getPoiPolyPointsAsync.default)(areaPolygon, import_getPoiPolyPointsAsync.AnalyzedType.POLYGONE);
-      resultPolyPoints = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultPolyPoints), areaPolygon).features;
+      let { resultPoiPoints, resultPolyPoints, resultPolyLines } = await (0, import_getPoiPolyPointsAsync.default)({
+        analyzedFeature: areaPolygon,
+        type: import_getPoiPolyPointsAsync.AnalyzedType.POLYGONE
+      });
+      console.log("resultPoiPoints >>>", resultPoiPoints.length);
       console.log("resultPolyPoints >>>", resultPolyPoints.length);
+      console.log("resultPolyLines >>>", resultPolyLines.length);
       let resultPolys = [];
       resultPolys = (0, import_turf.featureReduce)(
         (0, import_helpers.featureCollection)(resultPolyPoints),
@@ -97,8 +100,6 @@ const patchOrCreateArea = () => {
         { allPolys: resultPolys }
       );
       data.polysFeatureCollection = (0, import_helpers.featureCollection)(allPolys.allPolys);
-      resultPoiPoints = (0, import_points_within_polygon.default)((0, import_helpers.featureCollection)(resultPoiPoints), areaPolygon).features;
-      console.log("resultPoiPoints >>>", resultPoiPoints.length);
       const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
       const {
         traps: areaTraps,
