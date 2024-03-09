@@ -46,7 +46,8 @@ const mapStyles = {
 				"mobile-trap",
 				"icon-mobile-trap",
 				"traffic-jam",
-				"icon-traffic-jam",
+				// "icon-traffic-jam",
+				"",
 				"road-work",
 				"icon-road-work",
 				"accident",
@@ -93,9 +94,9 @@ const mapStyles = {
 		type: "line",
 		id: "line-background",
 		paint: {
-			"line-color": "red",
+			"line-color": "white",
 			"line-width": 6,
-			"line-opacity": 0.4,
+			"line-opacity": 0.8,
 		},
 	},
 	lineDashed: {
@@ -103,9 +104,39 @@ const mapStyles = {
 		id: "line-dashed",
 		paint: {
 			/* "line-color": "red", */
-			"line-color": ["match", ["get", "type"], "20", "red", "white"],
+			"line-color": ["match", ["get", "type"], "sc", "blue", "closure", "red", "20", "green", "white"],
 			"line-width": 6,
 			"line-dasharray": [0, 4, 3],
+		},
+	},
+	trafficClosure2: {
+		type: "symbol",
+		id: "traffic-closure2",
+		filter: ["all", ["==", "type", "closure"]],
+		layout: {
+			"icon-allow-overlap": true,
+			"icon-image": "icon-traffic-closure",
+			"icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.2, 10, 0.3, 14, 0.4],
+		},
+		paint: {
+			"icon-opacity": 0.7,
+		},
+	},
+
+	traffic20: {
+		type: "symbol",
+		id: "traffic-20",
+		filter: ["all", ["==", "type", "20"]],
+		layout: {
+			"icon-allow-overlap": true,
+			"icon-image": "icon-20",
+			// "icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.04, 10, 0.05, 14, 0.06],
+			"icon-size": 0.04,
+			"icon-anchor": "bottom",
+		},
+		paint: {
+			"icon-opacity": 1.0,
+			"icon-color": "rgba(13,77,133,0.8)",
 		},
 	},
 	trafficClosure: {
@@ -115,7 +146,7 @@ const mapStyles = {
 		layout: {
 			"icon-allow-overlap": true,
 			"icon-image": "icon-traffic-closure",
-			"icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.2, 10, 0.3, 14, 0.4],
+			"icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.005, 10, 0.005, 14, 0.005],
 		},
 		paint: {
 			"icon-opacity": 0.7,

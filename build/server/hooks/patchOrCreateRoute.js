@@ -118,7 +118,11 @@ const patchOrCreateRoute = () => {
           const endTime = import_perf_hooks.performance.now();
           console.log(`getTrapsFrom() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
           route.duration = matrix.durations[0][1];
-          const length = data.directions.push({ direction: route, matrix });
+          const length = data.directions.push({
+            direction: route,
+            matrix,
+            polyLineFeatures: resultPolyLines
+          });
           const {
             traps: routeTraps,
             newTrapsReduced,

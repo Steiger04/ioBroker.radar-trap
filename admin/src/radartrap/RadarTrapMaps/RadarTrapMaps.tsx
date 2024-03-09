@@ -29,8 +29,12 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 	const [trapInfo, setTrapInfo] = useState<radarTrap.trapInfo | null>(null);
 
-	const {
+	/* const {
 		source: { directionsFeatureCollection, trapsFeatureCollection, polysFeatureCollection, areaPolygons },
+	} = useRadarTrapSource(routeId, feathers); */
+
+	const {
+		source: { directionsFeatureCollection, trapsFeatureCollection, polyLinesFeatureCollection, areaPolygons },
 	} = useRadarTrapSource(routeId, feathers);
 
 	const [cursor, setCursor] = useState<string>("");
@@ -191,10 +195,17 @@ const RadarTrapMaps: FC = (): ReactElement => {
 							<Layer {...(mapStyles.route as LayerProps)} />
 						</Source>
 
-						<Source type="geojson" data={polysFeatureCollection!}>
+						{/* <Source type="geojson" data={polysFeatureCollection!}>
 							<Layer {...(mapStyles.lineBackground as LayerProps)} />
 							<Layer {...(mapStyles.lineDashed as LayerProps)} />
 							<Layer {...(mapStyles.trafficClosure as LayerProps)} />
+						</Source> */}
+
+						<Source type="geojson" data={polyLinesFeatureCollection!}>
+							<Layer {...(mapStyles.lineBackground as LayerProps)} />
+							<Layer {...(mapStyles.lineDashed as LayerProps)} />
+							<Layer {...(mapStyles.trafficClosure2 as LayerProps)} />
+							<Layer {...(mapStyles.traffic20 as LayerProps)} />
 						</Source>
 
 						<Source

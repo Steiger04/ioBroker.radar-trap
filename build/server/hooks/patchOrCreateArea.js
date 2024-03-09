@@ -100,6 +100,7 @@ const patchOrCreateArea = () => {
         { allPolys: resultPolys }
       );
       data.polysFeatureCollection = (0, import_helpers.featureCollection)(allPolys.allPolys);
+      data.polyLinesFeatureCollection = (0, import_helpers.featureCollection)(resultPolyLines);
       const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
       const {
         traps: areaTraps,

@@ -25,6 +25,7 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 		directionsFeatureCollection: featureCollection([]),
 		trapsFeatureCollection: featureCollection([]),
 		polysFeatureCollection: featureCollection([]),
+		polyLinesFeatureCollection: featureCollection([]),
 		areaPolygons: null,
 	});
 
@@ -37,6 +38,7 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 			directionsFeatureCollection: featureCollection([]),
 			trapsFeatureCollection: featureCollection([]),
 			polysFeatureCollection: featureCollection([]),
+			polyLinesFeatureCollection: featureCollection([]),
 			areaPolygons: null,
 		});
 	}, [id]);
@@ -95,7 +97,7 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 			setAreaSourceStatus("loading");
 			const resData = await feathersClient.service("areas").get(id, {
 				query: {
-					$select: ["areaPolygons", "areaTraps", "polysFeatureCollection"],
+					$select: ["areaPolygons", "areaTraps", "polysFeatureCollection", "polyLinesFeatureCollection"],
 				},
 			});
 
@@ -124,13 +126,15 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 
 	useEffect(() => {
 		if (!isEmpty(routeData)) {
-			const { directions, directionsFeatureCollection, trapsFeatureCollection } = routeData;
+			const { directions, directionsFeatureCollection, trapsFeatureCollection, polyLinesFeatureCollection } =
+				routeData;
 
 			setSource({
 				directions,
 				directionsFeatureCollection,
 				trapsFeatureCollection,
 				polysFeatureCollection: featureCollection([]),
+				polyLinesFeatureCollection,
 				areaPolygons: null,
 			});
 
@@ -140,13 +144,15 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 
 	useEffect(() => {
 		if (!isEmpty(areaData)) {
-			const { areaPolygons, trapsFeatureCollection, polysFeatureCollection } = areaData;
+			const { areaPolygons, trapsFeatureCollection, polysFeatureCollection, polyLinesFeatureCollection } =
+				areaData;
 
 			setSource({
 				directions: null,
 				directionsFeatureCollection: featureCollection([]),
 				trapsFeatureCollection,
 				polysFeatureCollection,
+				polyLinesFeatureCollection,
 				areaPolygons: isEmpty(areaPolygons) ? null : areaPolygons,
 			});
 

@@ -27,6 +27,12 @@ const routeTrapsWithTrapInfo = (data: radarTrap.Route): void => {
 
 	data.directionsFeatureCollection = directionsFeatureCollection;
 
+	const polyLinesFeatureCollection = featureCollection<LineString, radarTrap.Poly>(
+		data.directions.flatMap((rec) => rec.polyLineFeatures!),
+	);
+
+	data.polyLinesFeatureCollection = polyLinesFeatureCollection;
+
 	let allTraps = data.directions.flatMap(({ routeTraps }) => addTrapInfoToTrapProperties(routeTraps!));
 
 	allTraps = uniqWith(allTraps, (a, b) => {

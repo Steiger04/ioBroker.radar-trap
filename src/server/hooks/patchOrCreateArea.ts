@@ -82,6 +82,8 @@ const patchOrCreateArea = (): Hook => {
 			);
 			data!.polysFeatureCollection = featureCollection(allPolys.allPolys);
 
+			data!.polyLinesFeatureCollection = featureCollection(resultPolyLines);
+
 			const resultTypeTraps = determineTrapTypes(resultPoiPoints);
 			const {
 				traps: areaTraps,

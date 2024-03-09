@@ -54,6 +54,10 @@ const routeTrapsWithTrapInfo = (data) => {
     data.directions.map((rec) => rec.direction.directionFeature)
   );
   data.directionsFeatureCollection = directionsFeatureCollection;
+  const polyLinesFeatureCollection = (0, import_helpers.featureCollection)(
+    data.directions.flatMap((rec) => rec.polyLineFeatures)
+  );
+  data.polyLinesFeatureCollection = polyLinesFeatureCollection;
   let allTraps = data.directions.flatMap(({ routeTraps }) => (0, import_addTrapInfoToTrapProperties.addTrapInfoToTrapProperties)(routeTraps));
   allTraps = (0, import_lodash.uniqWith)(allTraps, (a, b) => {
     if (a.properties.schemaType === "POI" && b.properties.schemaType === "POI") {

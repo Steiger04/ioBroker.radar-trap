@@ -9,6 +9,7 @@ import IconSleekness from "../../../assets/map-icons/icon-sleekness.png";
 import IconFog from "../../../assets/map-icons/icon-fog.png";
 import IconPoliceNews from "../../../assets/map-icons/icon-police-news.png";
 import IconTrafficClosure from "../../../assets/map-icons/icon-traffic-closure.png";
+import Icon20 from "../../../assets/map-icons/icon-20.png";
 
 import type { MapRef } from "react-map-gl";
 
@@ -23,6 +24,7 @@ const images = [
 	{ id: "icon-fog", png: IconFog },
 	{ id: "icon-police-news", png: IconPoliceNews },
 	{ id: "icon-traffic-closure", png: IconTrafficClosure },
+	{ id: "icon-20", png: Icon20 },
 ];
 
 const useMapImages = (map: MapRef | null): { status: radarTrap.GenericStatus } => {

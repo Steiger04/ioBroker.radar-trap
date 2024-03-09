@@ -71,6 +71,7 @@ declare global {
 			routeTrapsNew?: Record<string, Feature<LineString | Point, Poi>[]>;
 			routeTrapsEstablished?: Record<string, Feature<LineString | Point, Poi>[]>;
 			routeTrapsRejected?: Record<string, Feature<LineString | Point, Poi>[]>;
+			polyLineFeatures?: Feature<LineString, Poly>[];
 			matrix: MatrixResponse;
 		}
 
@@ -87,6 +88,7 @@ declare global {
 			directions?: Direction[] | null;
 			directionsFeatureCollection?: FeatureCollection<Point | LineString, Poi | Poly> | null;
 			trapsFeatureCollection?: FeatureCollection<Point | LineString, Poi> | null;
+			polyLinesFeatureCollection?: FeatureCollection<LineString, Poly> | null;
 			timestamp?: string;
 		}
 
@@ -145,7 +147,7 @@ declare global {
 			isValid: boolean;
 		}
 
-		type AreaPolygons = { [key: string]: GeoJSON.Feature<GeoJSON.Polygon> };
+		type AreaPolygons = Record<string, Feature<GeoJSON.Polygon>>;
 
 		interface Area {
 			id?: string;
@@ -159,6 +161,7 @@ declare global {
 			areaTrapsRejected?: Record<string, Feature<LineString | Point, Poi>[]>;
 			trapsFeatureCollection?: FeatureCollection<Point | LineString, Poi> | null;
 			polysFeatureCollection?: FeatureCollection<Point | LineString, Poly> | null;
+			polyLinesFeatureCollection?: FeatureCollection<LineString, Poly> | null;
 			timestamp?: string;
 		}
 
