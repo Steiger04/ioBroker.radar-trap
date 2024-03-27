@@ -24,7 +24,6 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 		directions: null,
 		directionsFeatureCollection: featureCollection([]),
 		trapsFeatureCollection: featureCollection([]),
-		polysFeatureCollection: featureCollection([]),
 		polyLinesFeatureCollection: featureCollection([]),
 		areaPolygons: null,
 	});
@@ -37,7 +36,6 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 			directions: null,
 			directionsFeatureCollection: featureCollection([]),
 			trapsFeatureCollection: featureCollection([]),
-			polysFeatureCollection: featureCollection([]),
 			polyLinesFeatureCollection: featureCollection([]),
 			areaPolygons: null,
 		});
@@ -97,7 +95,7 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 			setAreaSourceStatus("loading");
 			const resData = await feathersClient.service("areas").get(id, {
 				query: {
-					$select: ["areaPolygons", "areaTraps", "polysFeatureCollection", "polyLinesFeatureCollection"],
+					$select: ["areaPolygons", "areaTraps", "polyLinesFeatureCollection"],
 				},
 			});
 
@@ -133,7 +131,6 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 				directions,
 				directionsFeatureCollection,
 				trapsFeatureCollection,
-				polysFeatureCollection: featureCollection([]),
 				polyLinesFeatureCollection,
 				areaPolygons: null,
 			});
@@ -144,14 +141,12 @@ const useRadarTrapSource = (id: null | string, feathersClient: radarTrap.Feather
 
 	useEffect(() => {
 		if (!isEmpty(areaData)) {
-			const { areaPolygons, trapsFeatureCollection, polysFeatureCollection, polyLinesFeatureCollection } =
-				areaData;
+			const { areaPolygons, trapsFeatureCollection, polyLinesFeatureCollection } = areaData;
 
 			setSource({
 				directions: null,
 				directionsFeatureCollection: featureCollection([]),
 				trapsFeatureCollection,
-				polysFeatureCollection,
 				polyLinesFeatureCollection,
 				areaPolygons: isEmpty(areaPolygons) ? null : areaPolygons,
 			});

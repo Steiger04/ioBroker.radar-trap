@@ -22,7 +22,7 @@ __export(getDevisor_exports, {
 });
 module.exports = __toCommonJS(getDevisor_exports);
 const getDevisor = (number) => {
-  const quotient = Math.ceil(number / 50);
+  const quotient = Math.ceil(number / 35);
   return Math.max(1, quotient);
 };
 // Annotate the CommonJS export names for ESM import in node:

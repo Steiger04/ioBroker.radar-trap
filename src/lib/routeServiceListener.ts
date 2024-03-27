@@ -2,10 +2,9 @@ import { createRouteObjects } from "./createRouteObjects";
 import { Scheduler } from "./Scheduler";
 
 import type { Application } from "@feathersjs/express";
-import type * as utils from "@iobroker/adapter-core";
 import type { HookContext } from "../server/app";
 
-const routeServiceListener = (that: utils.AdapterInstance, feathers: Application): void => {
+const routeServiceListener = (that: ioBroker.AdapterInstanceWithI18n, feathers: Application): void => {
 	feathers.service("routes").on("status", async (statusWithId: radarTrap.GenericStatusWithId) => {
 		Scheduler.setStatus(statusWithId);
 	});

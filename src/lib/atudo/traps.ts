@@ -5,6 +5,7 @@ import { atudoPoisSchema } from "../schemas/atudoPoiSchema";
 import { atudoPolysSchema } from "../schemas/atudoPolySchema";
 import { LineString, feature } from "@turf/turf";
 import polyline from "@mapbox/polyline";
+import { uniqBy } from "lodash";
 
 async function request<
 	TResponse extends radarTrap.AtudoPoi | radarTrap.AtudoPoly,
@@ -14,15 +15,13 @@ async function request<
 	return response.json();
 }
 
-const trapBase =
-	"0,1,2,3,4,5,6,20,21,22,23,24,25,29,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts,vwd";
+const trapBase = "0,1,2,3,4,5,6,20,21,22,23,24,25,29,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts";
 
 const traps = async (
 	minPos: { lng: number; lat: number },
 	maxPos: { lng: number; lat: number },
 ): Promise<{
 	poiPoints: Feature<Point, radarTrap.Poi>[];
-	polyPoints: Feature<Point, radarTrap.Poly>[];
 	polyLines: Feature<LineString, radarTrap.Poly>[];
 }> => {
 	try {
@@ -84,37 +83,40 @@ const traps = async (
 		const { pois } = await request<radarTrap.AtudoPoi>(
 			`https://cdn2.atudo.net/api/4.0/pois.php?type=${trapBase}&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
 		);
-
 		Value.Default(atudoPoisSchema, pois); // add schemaType to each poi
 		if (!Value.Check(atudoPoisSchema, pois))
 			console.log("POIS SCHEMA ERRORS >>>", [...Value.Errors(atudoPoisSchema, pois)]);
 
+		// nur Hotspots (2015) und Polizeimeldungen (vwd, vwda)
+		const { pois: poisHsPn } = await request<radarTrap.AtudoPoi>(
+			`https://cdn2.atudo.net/api/4.0/pois.php?type=2015,vwd,vwda&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
+		);
+		Value.Default(atudoPoisSchema, poisHsPn); // add schemaType to each poi
+		if (!Value.Check(atudoPoisSchema, poisHsPn))
+			console.log("POISHSPN SCHEMA ERRORS >>>", [...Value.Errors(atudoPoisSchema, poisHsPn)]);
+
 		const { polys } = await request<radarTrap.AtudoPoly>(
 			`https://cdn2.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
 		);
-
 		Value.Default(atudoPolysSchema, polys); // add schemaType to each poly
 		if (!Value.Check(atudoPolysSchema, polys))
 			console.log("POLYS SCHEMA ERRORS >>>", [...Value.Errors(atudoPolysSchema, polys)]);
 
-		const polyPoints = polys.reduce((list: Feature<Point, radarTrap.Poly>[], poly) => {
-			if (poly.type === "sc") return list;
+		console.log("pois >>>", pois.length);
+		if (pois.length > 499) console.log("POIS >>>", pois.length);
 
-			if (poly.type === "closure") {
-				list.push(point([+poly.pos!.lng, +poly.pos!.lat], { ...poly }));
-			}
-			if (poly.type === "20") {
-				list.push(point([+poly.showdelay_pos!.lng, +poly.showdelay_pos!.lat], { ...poly }));
-			}
+		console.log("poisHsPn >>>", poisHsPn.length);
+		if (poisHsPn.length > 499) console.log("POISHSPN >>>", poisHsPn.length);
 
-			return list;
-		}, []);
-
-		const poiPoints = pois.reduce((list: Feature<Point, radarTrap.Poi>[], poi) => {
+		pois.push(...poisHsPn); // add poisHsPn to pois
+		const _poiPoints = pois.reduce((list: Feature<Point, radarTrap.Poi>[], poi) => {
 			list.push(point([+poi.lng, +poi.lat], { ...poi }));
 
 			return list;
 		}, []);
+
+		// delete double police news
+		const poiPoints = uniqBy(_poiPoints, (point) => point.geometry?.coordinates?.join(","));
 
 		const polyLines = polys.reduce((list: Feature<LineString, radarTrap.Poly>[], poly) => {
 			list.push(feature(polyline.toGeoJSON(poly.polyline), { ...poly }));
@@ -122,10 +124,10 @@ const traps = async (
 			return list;
 		}, []);
 
-		return { poiPoints, polyPoints, polyLines };
+		return { poiPoints, polyLines };
 	} catch (error) {
 		console.error("traps: ", error);
-		return { poiPoints: [], polyPoints: [], polyLines: [] };
+		return { poiPoints: [], polyLines: [] };
 	}
 };
 

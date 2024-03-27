@@ -33,7 +33,6 @@ __export(routeTrapsWithTrapInfo_exports, {
 module.exports = __toCommonJS(routeTrapsWithTrapInfo_exports);
 var import_polyline = __toESM(require("@mapbox/polyline"));
 var import_helpers = require("@turf/helpers");
-var import_lodash = require("lodash");
 var import_addTrapInfoToTrapProperties = require("./addTrapInfoToTrapProperties");
 const routeTrapsWithTrapInfo = (data) => {
   if (data.directions === void 0) {
@@ -58,18 +57,7 @@ const routeTrapsWithTrapInfo = (data) => {
     data.directions.flatMap((rec) => rec.polyLineFeatures)
   );
   data.polyLinesFeatureCollection = polyLinesFeatureCollection;
-  let allTraps = data.directions.flatMap(({ routeTraps }) => (0, import_addTrapInfoToTrapProperties.addTrapInfoToTrapProperties)(routeTraps));
-  allTraps = (0, import_lodash.uniqWith)(allTraps, (a, b) => {
-    if (a.properties.schemaType === "POI" && b.properties.schemaType === "POI") {
-      if (!a.properties.linetrap && !b.properties.linetrap && a.properties.lat === b.properties.lat && a.properties.lng === b.properties.lng) {
-        return true;
-      }
-      if (a.properties.linetrap && b.properties.linetrap && a.properties.lat === b.properties.lat && a.properties.lng === b.properties.lng) {
-        return true;
-      }
-    }
-    return false;
-  });
+  const allTraps = data.directions.flatMap(({ routeTraps }) => (0, import_addTrapInfoToTrapProperties.addTrapInfoToTrapProperties)(routeTraps));
   data.trapsFeatureCollection = (0, import_helpers.featureCollection)(allTraps);
 };
 // Annotate the CommonJS export names for ESM import in node:

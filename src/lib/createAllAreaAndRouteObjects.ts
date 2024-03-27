@@ -1,9 +1,11 @@
-import type * as utils from "@iobroker/adapter-core";
 import type { Application } from "../server/declarations";
 import { createAreaObjects } from "./createAreaObjects";
 import { createRouteObjects } from "./createRouteObjects";
 
-const createAllAreaAndRouteObjects = async (that: utils.AdapterInstance, feathers: Application): Promise<void> => {
+const createAllAreaAndRouteObjects = async (
+	that: ioBroker.AdapterInstanceWithI18n,
+	feathers: Application,
+): Promise<void> => {
 	// console.log("createAllAreaAndRouteObjects");
 
 	const routes = await feathers.service("routes").find({
@@ -16,7 +18,15 @@ const createAllAreaAndRouteObjects = async (that: utils.AdapterInstance, feather
 	const areas = await feathers.service("areas").find({
 		query: {
 			$limit: -1,
-			$select: ["_id", "timestamp", "description", "areaTraps", "areaTrapsNew", "areaTrapsRejected"],
+			$select: [
+				"_id",
+				"timestamp",
+				"description",
+				"areaTraps",
+				"areaTrapsEstablished",
+				"areaTrapsNew",
+				"areaTrapsRejected",
+			],
 		},
 	});
 

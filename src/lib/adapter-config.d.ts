@@ -5,14 +5,18 @@ import { Path } from "react-hook-form";
 import { App } from "../../admin/src/App";
 import { atudoPoiSchema, atudoPoiInfoSchema } from "./schemas/atudoPoiSchema";
 import { atudoPolySchema } from "./schemas/atudoPolySchema";
-import type { Static } from "@sinclair/typebox";
 
+import type { Static } from "@sinclair/typebox";
 import type { MatrixResponse } from "@mapbox/mapbox-sdk/services/matrix";
 import type { FeatureCollection, LineString, Point, Feature } from "@turf/helpers/dist/js/lib/geojson";
+import type * as utils from "@iobroker/adapter-core";
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
 	namespace ioBroker {
+		interface AdapterInstanceWithI18n extends utils.AdapterInstance {
+			I18n: Record<string, string>;
+		}
 		interface INativeSettings {
 			httpsEnabled: boolean;
 			domains: string;
@@ -106,11 +110,12 @@ declare global {
 			// from determineTrapTypes.ts
 			type_name?: string;
 			type_text?: string;
-			linetrap?: boolean;
+			type_desc?: string;
+			// linetrap?: boolean;
 			// from trapsChain.ts
 			status?: string;
 			// from getTrapsFromDirection.ts
-			distance?: number;
+			// distance?: number;
 		};
 
 		type PoiInfo = Static<typeof atudoPoiInfoSchema>;
@@ -132,6 +137,7 @@ declare global {
 			createDate?: string | boolean;
 			confirmDate?: string | boolean;
 			vmax?: string | boolean;
+			typeDesc?: string | boolean;
 			typeText?: string | boolean;
 			country?: string | boolean;
 			state?: string | boolean;
@@ -160,7 +166,6 @@ declare global {
 			areaTrapsEstablished?: Record<string, Feature<LineString | Point, Poi>[]>;
 			areaTrapsRejected?: Record<string, Feature<LineString | Point, Poi>[]>;
 			trapsFeatureCollection?: FeatureCollection<Point | LineString, Poi> | null;
-			polysFeatureCollection?: FeatureCollection<Point | LineString, Poly> | null;
 			polyLinesFeatureCollection?: FeatureCollection<LineString, Poly> | null;
 			timestamp?: string;
 		}

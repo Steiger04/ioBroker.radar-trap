@@ -17,6 +17,8 @@ import { useAppData } from "../../App";
 import { mapStyles, useInvisibleBottomButtons, useMapImages, useRadarTrapSource, useResizeMap } from "../../lib";
 import { TrapInfo } from "./TrapInfo";
 
+// import mapboxgl from "mapbox-gl";
+
 import type { FC, ReactElement } from "react";
 
 const RadarTrapMaps: FC = (): ReactElement => {
@@ -51,6 +53,8 @@ const RadarTrapMaps: FC = (): ReactElement => {
 			return;
 		}
 
+		console.log("feature", feature);
+
 		if (trapInfo !== null) {
 			setTrapInfo(null);
 		}
@@ -79,15 +83,14 @@ const RadarTrapMaps: FC = (): ReactElement => {
 				break;
 
 			case "traps":
-				setTimeout(
-					() =>
-						setTrapInfo({
-							...JSON.parse(feature.properties!.trapInfo),
-							longitude: event.lngLat.lng,
-							latitude: event.lngLat.lat,
-						}),
-					0,
-				);
+				setTimeout(() => {
+					console.log("feature.properties!.trapInfo", feature.properties!.trapInfo);
+					setTrapInfo({
+						...JSON.parse(feature.properties!.trapInfo),
+						longitude: event.lngLat.lng,
+						latitude: event.lngLat.lat,
+					});
+				}, 0);
 				break;
 
 			case "speed-traps":
@@ -144,13 +147,14 @@ const RadarTrapMaps: FC = (): ReactElement => {
 				>
 					<Map
 						mapboxAccessToken={savedNative.settings.mbxAccessToken}
+						// mapLib={mapboxgl}
 						/* projection="globe" */
 						ref={setMapRef}
 						logoPosition="bottom-right"
 						reuseMaps={true}
 						attributionControl={false}
 						mapStyle="mapbox://styles/mapbox/streets-v12"
-						interactiveLayerIds={["cluster-traps", "traps", "speed-traps", "traffic-closure"]}
+						interactiveLayerIds={["cluster-traps", "traps", "traffic-closure"]}
 						cursor={cursor}
 						onClick={clickHandler}
 						onMouseEnter={mouseEnterHandler}
@@ -195,28 +199,17 @@ const RadarTrapMaps: FC = (): ReactElement => {
 							<Layer {...(mapStyles.route as LayerProps)} />
 						</Source>
 
-						{/* <Source type="geojson" data={polysFeatureCollection!}>
-							<Layer {...(mapStyles.lineBackground as LayerProps)} />
-							<Layer {...(mapStyles.lineDashed as LayerProps)} />
-							<Layer {...(mapStyles.trafficClosure as LayerProps)} />
-						</Source> */}
-
 						<Source type="geojson" data={polyLinesFeatureCollection!}>
 							<Layer {...(mapStyles.lineBackground as LayerProps)} />
 							<Layer {...(mapStyles.lineDashed as LayerProps)} />
-							<Layer {...(mapStyles.trafficClosure2 as LayerProps)} />
-							<Layer {...(mapStyles.traffic20 as LayerProps)} />
+							<Layer {...(mapStyles.trafficClosure as LayerProps)} />
+							{/* <Layer {...(mapStyles.traffic20 as LayerProps)} /> */}
 						</Source>
 
-						<Source
-							type="geojson"
-							data={trapsFeatureCollection!}
-							cluster={true}
-							clusterMaxZoom={14}
-							clusterRadius={50}
-						>
-							<Layer {...(mapStyles.speedTraps as LayerProps)} />
-							<Layer {...(mapStyles.speedTrapsVmax as LayerProps)} />
+						{/* <Source id="traps" type="geojson" data={trapsFeatureCollection!} cluster> */}
+						<Source type="geojson" data={trapsFeatureCollection!} cluster>
+							{/* <Layer {...(mapStyles.speedTraps as LayerProps)} /> */}
+							{/* <Layer {...(mapStyles.speedTrapsVmax as LayerProps)} /> */}
 							<Layer {...(mapStyles.traps as LayerProps)} />
 							<Layer {...(mapStyles.clusterTraps as LayerProps)} />
 							<Layer {...(mapStyles.clusterTrapsCount as LayerProps)} />

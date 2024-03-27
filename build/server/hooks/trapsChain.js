@@ -23,42 +23,33 @@ __export(trapsChain_exports, {
 module.exports = __toCommonJS(trapsChain_exports);
 var import_lodash = require("lodash");
 const trapsChain = (record = {}, result = {}) => {
-  const newTraps = (0, import_lodash.mapKeys)(
-    (0, import_lodash.mergeWith)(
-      { ...record },
-      result,
-      (recordValue, resultValue) => (0, import_lodash.differenceBy)(resultValue, recordValue || [], "properties.backend").map((item) => ({
-        ...item,
-        properties: { ...item.properties, status: "NEW" }
-      }))
-    ),
-    (_, key) => `${key}New`
+  const newTraps = (0, import_lodash.mergeWith)(
+    { ...record },
+    result,
+    (recordValue, resultValue) => (0, import_lodash.differenceBy)(resultValue, recordValue || [], "properties.backend").map((item) => ({
+      ...item,
+      properties: { ...item.properties, status: "NEW" }
+    }))
   );
-  const establishedTraps = (0, import_lodash.mapKeys)(
-    (0, import_lodash.mergeWith)(
-      { ...record },
-      result,
-      (recordValue, resultValue) => (0, import_lodash.intersectionBy)(recordValue || [], resultValue, "properties.backend").map((item) => ({
-        ...item,
-        properties: { ...item.properties, status: "ESTABLISHED" }
-      }))
-    ),
-    (_, key) => `${key}Established`
+  const establishedTraps = (0, import_lodash.mergeWith)(
+    { ...record },
+    result,
+    (recordValue, resultValue) => (0, import_lodash.intersectionBy)(recordValue || [], resultValue, "properties.backend").map((item) => ({
+      ...item,
+      properties: { ...item.properties, status: "ESTABLISHED" }
+    }))
   );
-  const rejectedTraps = (0, import_lodash.mapKeys)(
-    (0, import_lodash.mergeWith)(
-      { ...record },
-      result,
-      (recordValue, resultValue) => (0, import_lodash.differenceBy)(recordValue || [], resultValue, "properties.backend").map((item) => ({
-        ...item,
-        properties: { ...item.properties, status: "REJECTED" }
-      }))
-    ),
-    (_, key) => `${key}Rejected`
+  const rejectedTraps = (0, import_lodash.mergeWith)(
+    { ...record },
+    result,
+    (recordValue, resultValue) => (0, import_lodash.differenceBy)(recordValue || [], resultValue, "properties.backend").map((item) => ({
+      ...item,
+      properties: { ...item.properties, status: "REJECTED" }
+    }))
   );
   const traps = (0, import_lodash.mergeWith)(
-    { ...(0, import_lodash.mapKeys)(establishedTraps, (_, key) => key.substring(0, key.length - 11)) },
-    (0, import_lodash.mapKeys)(newTraps, (_, key) => key.substring(0, key.length - 3)),
+    { ...establishedTraps },
+    newTraps,
     (objValue, srcValue) => (0, import_lodash.flatten)([objValue, srcValue])
   );
   const newTrapsReduced = (0, import_lodash.reduce)(

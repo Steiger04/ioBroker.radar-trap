@@ -1,4 +1,5 @@
 const mapStyles = {
+	// Routes
 	route: {
 		id: "route",
 		type: "line",
@@ -12,7 +13,25 @@ const mapStyles = {
 			"line-opacity": 0.8,
 		},
 	},
-	speedTraps: {
+
+	// Areas
+	areaSurface: {
+		id: "area-surface",
+		type: "fill",
+		paint: {
+			"fill-color": "#3288bd",
+			"fill-opacity": 0.1,
+		},
+	},
+	areaSurfaceBorder: {
+		id: "area-surface-border",
+		type: "line",
+		paint: {
+			"line-color": "#3288bd",
+			"line-width": 2,
+		},
+	},
+	/* speedTraps: {
 		id: "speed-traps",
 		type: "circle",
 		filter: ["match", ["get", "type_name"], "speed-trap", true, false],
@@ -32,10 +51,11 @@ const mapStyles = {
 			"text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
 			"text-size": 12,
 		},
-	},
-	traps: {
+	}, */
+	/* traps: {
 		id: "traps",
 		type: "symbol",
+		source: "traps",
 		layout: {
 			"icon-allow-overlap": true,
 			"icon-image": [
@@ -46,8 +66,9 @@ const mapStyles = {
 				"mobile-trap",
 				"icon-mobile-trap",
 				"traffic-jam",
+				"icon-20",
 				// "icon-traffic-jam",
-				"",
+				// "",
 				"road-work",
 				"icon-road-work",
 				"accident",
@@ -62,13 +83,17 @@ const mapStyles = {
 				"icon-police-news",
 				"",
 			],
-			"icon-size": ["interpolate", ["linear"], ["zoom"], 0, 0.4, 8, 0.8, 10, 1.2, 14, 1.6],
+			// "icon-size": ["interpolate", ["linear"], ["zoom"], 0, 0.4, 8, 0.8, 10, 1.2, 14, 1.6],
+			"icon-size": ["match", ["get", "type_name"], "traffic-jam", 0.25, 0.8],
+			"icon-anchor": "bottom",
 		},
 		paint: {
-			"icon-color": "#263238",
-			"icon-opacity": 0.7,
+			// "icon-color": "#263238",
+			"icon-color": "rgba(255,0,0,1.0)",
+			// "icon-opacity": 1.0,
 		},
-	},
+	}, */
+	// Cluster
 	clusterTraps: {
 		id: "cluster-traps",
 		type: "circle",
@@ -76,7 +101,7 @@ const mapStyles = {
 		paint: {
 			"circle-opacity": 0.3,
 			"circle-color": ["step", ["get", "point_count"], "#263238", 100, "#263238", 750, "#263238"],
-			"circle-radius": ["step", ["get", "point_count"], 12, 9, 15, 99, 18],
+			"circle-radius": ["step", ["get", "point_count"], 12, 9, 15, 100, 18],
 		},
 	},
 	clusterTrapsCount: {
@@ -90,6 +115,101 @@ const mapStyles = {
 			"text-size": 12,
 		},
 	},
+
+	// resultPolyPoints
+	traps: {
+		id: "traps",
+		type: "symbol",
+		source: "traps",
+		layout: {
+			"icon-allow-overlap": true,
+			"icon-image": [
+				"match",
+				["get", "type"],
+				["1", "2", "107"],
+				"speed-camera",
+				"6",
+				"mobile-distance-speed-camera",
+				"20",
+				"traffic-jam",
+				"21",
+				"accident",
+				["22", "26"],
+				"road-work",
+				"25",
+				"visual-obstruction",
+				"29",
+				"breakdown",
+				"104",
+				"bus-lane",
+				"108",
+				"weight-control",
+				"109",
+				"height-control",
+				"110",
+				"redlight-fixed",
+				"111",
+				"combined-fixed",
+				"112",
+				"section-control-start",
+				"113",
+				"section-control-end",
+				"114",
+				"tunnel-speed-camera",
+				"115",
+				"no-overtaking",
+				/* "2015",
+				"mobile-speed-camera-hotspot", */
+				["vwd", "vwda"],
+				"police-news",
+				"",
+			],
+			"icon-size": ["interpolate", ["linear"], ["zoom"], 8, 0.06, 15, 0.15],
+			"icon-anchor": "center",
+			// ----------- Text ------------
+			"text-allow-overlap": true,
+			"text-anchor": "center",
+			"text-field": [
+				"format",
+				["match", ["get", "type"], ["1", "2", "107", "110", "112"], ["get", "vmax", ["get", "trapInfo"]], ""],
+				{
+					"text-font": ["literal", ["DIN Offc Pro Medium", "Arial Unicode MS Bold"]],
+					"text-color": [
+						"match",
+						["get", "status"],
+						"NEW",
+						"rgba(123,25,25,0.95)",
+						"ESTABLISHED",
+						"rgba(10,34,55,0.95)",
+						"rgba(10,34,55,0.95)",
+					],
+				},
+			],
+			"text-offset": [
+				"match",
+				["get", "type"],
+				"110",
+				["literal", [0.2, 0]],
+				["1", "2", "107", "112"],
+				["literal", [0, 0]],
+				["literal", [0, 0]],
+			],
+			"text-size": ["interpolate", ["linear"], ["zoom"], 8, 8, 15, 16],
+		},
+		paint: {
+			"icon-color": [
+				"match",
+				["get", "status"],
+				"NEW",
+				"rgba(232,10,10,1.0)",
+				"ESTABLISHED",
+				"rgba(13,77,133,1.0)",
+				"rgba(13,77,133,1.0)",
+			],
+		},
+	},
+
+	// resultPolyLines
 	lineBackground: {
 		type: "line",
 		id: "line-background",
@@ -103,84 +223,22 @@ const mapStyles = {
 		type: "line",
 		id: "line-dashed",
 		paint: {
-			/* "line-color": "red", */
-			"line-color": ["match", ["get", "type"], "sc", "blue", "closure", "red", "20", "green", "white"],
+			"line-color": ["match", ["get", "type"], "sc", "blue", "closure", "red", "20", "green", "black"],
 			"line-width": 6,
 			"line-dasharray": [0, 4, 3],
-		},
-	},
-	trafficClosure2: {
-		type: "symbol",
-		id: "traffic-closure2",
-		filter: ["all", ["==", "type", "closure"]],
-		layout: {
-			"icon-allow-overlap": true,
-			"icon-image": "icon-traffic-closure",
-			"icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.2, 10, 0.3, 14, 0.4],
-		},
-		paint: {
-			"icon-opacity": 0.7,
-		},
-	},
-
-	traffic20: {
-		type: "symbol",
-		id: "traffic-20",
-		filter: ["all", ["==", "type", "20"]],
-		layout: {
-			"icon-allow-overlap": true,
-			"icon-image": "icon-20",
-			// "icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.04, 10, 0.05, 14, 0.06],
-			"icon-size": 0.04,
-			"icon-anchor": "bottom",
-		},
-		paint: {
-			"icon-opacity": 1.0,
-			"icon-color": "rgba(13,77,133,0.8)",
 		},
 	},
 	trafficClosure: {
 		type: "symbol",
 		id: "traffic-closure",
-		filter: ["all", ["==", "type", "closure"], ["==", "$type", "Point"]],
+		filter: ["all", ["==", "type", "closure"]], // filter: ["all", ["==", "type", "20"]]
 		layout: {
 			"icon-allow-overlap": true,
 			"icon-image": "icon-traffic-closure",
-			"icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.005, 10, 0.005, 14, 0.005],
+			"icon-size": ["interpolate", ["linear"], ["zoom"], 8, 0.04, 15, 0.1],
 		},
 		paint: {
-			"icon-opacity": 0.7,
-		},
-	},
-	/* lineTraps: {
-		id: "line-traps",
-		type: "line",
-		filter: ["has", "polyline"],
-		layout: {
-			"line-join": "round",
-			"line-cap": "round",
-		},
-		paint: {
-			"line-color": "#ff0000",
-			"line-width": 9,
-			"line-opacity": 1,
-			"line-dasharray": [1, 1.5],
-		},
-	}, */
-	areaSurface: {
-		id: "area-surface",
-		type: "fill",
-		paint: {
-			"fill-color": "#3288bd",
-			"fill-opacity": 0.1,
-		},
-	},
-	areaSurfaceBorder: {
-		id: "area-surface-border",
-		type: "line",
-		paint: {
-			"line-color": "#3288bd",
-			"line-width": 2,
+			"icon-opacity": 1.0,
 		},
 	},
 };

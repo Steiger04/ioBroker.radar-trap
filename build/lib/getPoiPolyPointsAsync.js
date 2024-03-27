@@ -58,11 +58,10 @@ const getPoiPolyPointsAsync = async ({
   const squareBoxGridReduced = squareBoxGrid.features.filter((feature) => !(0, import_turf.booleanDisjoint)(feature, analyzedFeature));
   console.log("squareBoxGridReduced >>>", squareBoxGridReduced.length);
   let resultPoiPoints = [];
-  let resultPolyPoints = [];
   let resultPolyLines = [];
   for (const feature of squareBoxGridReduced) {
     const tmpBbox = (0, import_turf.bbox)(feature);
-    const { poiPoints, polyPoints, polyLines } = await (0, import_traps.traps)(
+    const { poiPoints, polyLines } = await (0, import_traps.traps)(
       {
         lng: tmpBbox[0],
         lat: tmpBbox[1]
@@ -72,19 +71,11 @@ const getPoiPolyPointsAsync = async ({
         lat: tmpBbox[3]
       }
     );
-    console.log("poiPoints >>>", poiPoints.length);
-    if (poiPoints.length > 499)
-      console.log("gridTraps >>>", poiPoints.length);
     resultPoiPoints = resultPoiPoints.concat(poiPoints);
-    resultPolyPoints = resultPolyPoints.concat(polyPoints);
     resultPolyLines = resultPolyLines.concat(polyLines);
   }
   switch (type) {
     case 0 /* POLYGONE */:
-      resultPolyPoints = (0, import_turf.pointsWithinPolygon)(
-        (0, import_turf.featureCollection)(resultPolyPoints),
-        analyzedFeature
-      ).features;
       resultPoiPoints = (0, import_turf.pointsWithinPolygon)(
         (0, import_turf.featureCollection)(resultPoiPoints),
         analyzedFeature
@@ -107,7 +98,7 @@ const getPoiPolyPointsAsync = async ({
     default:
       throw new Error("Invalid type in getPoiPolyPointsAsync");
   }
-  return { resultPoiPoints, resultPolyPoints, resultPolyLines };
+  return { resultPoiPoints, resultPolyLines };
 };
 var getPoiPolyPointsAsync_default = getPoiPolyPointsAsync;
 // Annotate the CommonJS export names for ESM import in node:

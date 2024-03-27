@@ -1,9 +1,7 @@
 import { createCronJobAsync } from "./createCronJob";
-
-import type * as utils from "@iobroker/adapter-core";
 import { Feature, Point, LineString } from "@turf/turf";
 
-const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.Route): Promise<void> => {
+const createRouteObjects = async (that: ioBroker.AdapterInstanceWithI18n, route: radarTrap.Route): Promise<void> => {
 	await that.setObjectAsync(route._id, {
 		type: "device",
 		common: { name: route.description! },
@@ -13,9 +11,9 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 	await createCronJobAsync(that, route._id);
 
 	route.directions?.forEach(async (direction, idx) => {
-		await that.createChannelAsync(`${route._id}`, `direction-${idx}`, {
+		/* await that.createChannelAsync(`${route._id}`, `direction-${idx}`, {
 			name: `Direction-${idx}`,
-		});
+		}); */
 
 		//
 		await that.createChannelAsync(`${route._id}`, `direction-${idx}-infos`, {
@@ -115,25 +113,46 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 				),
 			);
 
-		for (const trapType of ["routeTraps", "routeTrapsNew", "routeTrapsRejected"]) {
+		for (const trapType of ["routeTraps", "routeTrapsEstablished", "routeTrapsNew", "routeTrapsRejected"]) {
 			let totalTrapsCount = 0;
+
+			let channelName = "";
+
+			switch (trapType) {
+				case "routeTraps":
+					channelName = "route-current";
+					break;
+				case "routeTrapsNew":
+					channelName = "route-new";
+					break;
+				case "routeTrapsRejected":
+					channelName = "route-rejected";
+					break;
+				case "routeTrapsEstablished":
+					channelName = "route-established";
+					break;
+				default:
+					break;
+			}
+
+			await that.createChannelAsync(`${route._id}`, `direction-${idx}-${channelName}`, {
+				name: `Direction-${idx}`,
+			});
 
 			for (const [trapName, traps] of Object.entries(
 				direction[trapType as keyof radarTrap.Direction]! as Record<string, Feature<Point | LineString>[]>,
 			)) {
-				const newTraps = traps
-					.filter((trap) => trap.properties?.trapInfo !== null)
-					.map((trap) => ({
-						type: trap.type,
-						geometry: trap.geometry,
-						properties: { ...trap.properties?.trapInfo },
-					}));
+				const newTraps = traps.map((trap) => ({
+					type: trap.type,
+					geometry: trap.geometry,
+					properties: { ...trap.properties?.trapInfo },
+				}));
 
 				totalTrapsCount += newTraps.length;
 
 				await that
-					.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}`, {
-						name: `${trapName}`,
+					.createStateAsync(`${route._id}`, `direction-${idx}-${channelName}`, `${trapName}`, {
+						name: that.I18n[trapName],
 						defAck: true,
 						read: true,
 						write: false,
@@ -141,12 +160,16 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 						role: "list",
 					})
 					.then(() =>
-						that.setStateAsync(`${route._id}.direction-${idx}.${trapName}`, JSON.stringify(newTraps), true),
+						that.setStateAsync(
+							`${route._id}.direction-${idx}-${channelName}.${trapName}`,
+							JSON.stringify(newTraps),
+							true,
+						),
 					);
 
 				await that
-					.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}Count`, {
-						name: `${trapName} Count`,
+					.createStateAsync(`${route._id}`, `direction-${idx}-${channelName}`, `${trapName}Count`, {
+						name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
 						defAck: true,
 						read: true,
 						write: false,
@@ -154,13 +177,17 @@ const createRouteObjects = async (that: utils.AdapterInstance, route: radarTrap.
 						role: "value",
 					})
 					.then(() =>
-						that.setStateAsync(`${route._id}.direction-${idx}.${trapName}Count`, newTraps.length, true),
+						that.setStateAsync(
+							`${route._id}.direction-${idx}-${channelName}.${trapName}Count`,
+							newTraps.length,
+							true,
+						),
 					);
 			}
 
 			await that
 				.createStateAsync(`${route._id}`, `direction-${idx}-infos`, `${trapType}Count`, {
-					name: "totalTraps Count",
+					name: `${that.I18n["count"]}: ${channelName}`,
 					defAck: true,
 					read: true,
 					write: false,

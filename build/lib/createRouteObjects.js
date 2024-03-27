@@ -31,9 +31,6 @@ const createRouteObjects = async (that, route) => {
   });
   await (0, import_createCronJob.createCronJobAsync)(that, route._id);
   (_a = route.directions) == null ? void 0 : _a.forEach(async (direction, idx) => {
-    await that.createChannelAsync(`${route._id}`, `direction-${idx}`, {
-      name: `Direction-${idx}`
-    });
     await that.createChannelAsync(`${route._id}`, `direction-${idx}-infos`, {
       name: `Direction-${idx} Infos`
     });
@@ -111,15 +108,32 @@ const createRouteObjects = async (that, route) => {
         true
       )
     );
-    for (const trapType of ["routeTraps", "routeTrapsNew", "routeTrapsRejected"]) {
+    for (const trapType of ["routeTraps", "routeTrapsEstablished", "routeTrapsNew", "routeTrapsRejected"]) {
       let totalTrapsCount = 0;
+      let channelName = "";
+      switch (trapType) {
+        case "routeTraps":
+          channelName = "route-current";
+          break;
+        case "routeTrapsNew":
+          channelName = "route-new";
+          break;
+        case "routeTrapsRejected":
+          channelName = "route-rejected";
+          break;
+        case "routeTrapsEstablished":
+          channelName = "route-established";
+          break;
+        default:
+          break;
+      }
+      await that.createChannelAsync(`${route._id}`, `direction-${idx}-${channelName}`, {
+        name: `Direction-${idx}`
+      });
       for (const [trapName, traps] of Object.entries(
         direction[trapType]
       )) {
-        const newTraps = traps.filter((trap) => {
-          var _a2;
-          return ((_a2 = trap.properties) == null ? void 0 : _a2.trapInfo) !== null;
-        }).map((trap) => {
+        const newTraps = traps.map((trap) => {
           var _a2;
           return {
             type: trap.type,
@@ -128,29 +142,37 @@ const createRouteObjects = async (that, route) => {
           };
         });
         totalTrapsCount += newTraps.length;
-        await that.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}`, {
-          name: `${trapName}`,
+        await that.createStateAsync(`${route._id}`, `direction-${idx}-${channelName}`, `${trapName}`, {
+          name: that.I18n[trapName],
           defAck: true,
           read: true,
           write: false,
           type: "array",
           role: "list"
         }).then(
-          () => that.setStateAsync(`${route._id}.direction-${idx}.${trapName}`, JSON.stringify(newTraps), true)
+          () => that.setStateAsync(
+            `${route._id}.direction-${idx}-${channelName}.${trapName}`,
+            JSON.stringify(newTraps),
+            true
+          )
         );
-        await that.createStateAsync(`${route._id}`, `direction-${idx}`, `${trapName}Count`, {
-          name: `${trapName} Count`,
+        await that.createStateAsync(`${route._id}`, `direction-${idx}-${channelName}`, `${trapName}Count`, {
+          name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
           defAck: true,
           read: true,
           write: false,
           type: "number",
           role: "value"
         }).then(
-          () => that.setStateAsync(`${route._id}.direction-${idx}.${trapName}Count`, newTraps.length, true)
+          () => that.setStateAsync(
+            `${route._id}.direction-${idx}-${channelName}.${trapName}Count`,
+            newTraps.length,
+            true
+          )
         );
       }
       await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, `${trapType}Count`, {
-        name: "totalTraps Count",
+        name: `${that.I18n["count"]}: ${channelName}`,
         defAck: true,
         read: true,
         write: false,

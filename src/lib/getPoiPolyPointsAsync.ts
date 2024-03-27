@@ -34,7 +34,6 @@ const getPoiPolyPointsAsync = async ({
 	maxTrapDistance,
 }: Options): Promise<{
 	resultPoiPoints: Feature<Point, radarTrap.Poi>[];
-	resultPolyPoints: Feature<Point, radarTrap.Poly>[];
 	resultPolyLines: Feature<LineString, radarTrap.Poly>[];
 }> => {
 	// const areaPolygon = Object.values(data!.areaPolygons!)[0];
@@ -69,13 +68,12 @@ const getPoiPolyPointsAsync = async ({
 	console.log("squareBoxGridReduced >>>", squareBoxGridReduced.length);
 
 	let resultPoiPoints: Feature<Point, radarTrap.Poi>[] = [];
-	let resultPolyPoints: Feature<Point, radarTrap.Poly>[] = [];
 	let resultPolyLines: Feature<LineString, radarTrap.Poly>[] = [];
 
 	for (const feature of squareBoxGridReduced) {
 		const tmpBbox = bbox(feature);
 
-		const { poiPoints, polyPoints, polyLines } = await traps(
+		const { poiPoints, polyLines } = await traps(
 			{
 				lng: tmpBbox[0],
 				lat: tmpBbox[1],
@@ -85,22 +83,13 @@ const getPoiPolyPointsAsync = async ({
 				lat: tmpBbox[3],
 			},
 		);
-		console.log("poiPoints >>>", poiPoints.length);
-
-		if (poiPoints.length > 499) console.log("gridTraps >>>", poiPoints.length);
 
 		resultPoiPoints = resultPoiPoints.concat(poiPoints);
-		resultPolyPoints = resultPolyPoints.concat(polyPoints);
 		resultPolyLines = resultPolyLines.concat(polyLines);
 	}
 
 	switch (type) {
 		case AnalyzedType.POLYGONE:
-			resultPolyPoints = pointsWithinPolygon(
-				featureCollection(resultPolyPoints),
-				analyzedFeature as Feature<Polygon>,
-			).features;
-
 			resultPoiPoints = pointsWithinPolygon(
 				featureCollection(resultPoiPoints),
 				analyzedFeature as Feature<Polygon>,
@@ -129,7 +118,7 @@ const getPoiPolyPointsAsync = async ({
 			throw new Error("Invalid type in getPoiPolyPointsAsync");
 	}
 
-	return { resultPoiPoints, resultPolyPoints, resultPolyLines };
+	return { resultPoiPoints, resultPolyLines };
 };
 
 export default getPoiPolyPointsAsync;

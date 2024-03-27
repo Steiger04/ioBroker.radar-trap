@@ -23,11 +23,11 @@
 		"inlineSourceMap": false,
 		// watch=true breaks CI build steps
 		// "watch": false,
-		"module": "CommonJS"
+		"module": "CommonJS",
 		// yup
 		// "strictNullChecks": false,
 		// "strictFunctionTypes": false
 	},
 	"include": ["**/*.ts", "**/*.d.ts"],
-	"exclude": ["build/**", "node_modules/**", "admin/**"]
+	"exclude": ["build/**", "node_modules/**", "admin/**"],
 }

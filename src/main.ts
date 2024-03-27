@@ -10,8 +10,11 @@ import { routeServiceListener } from "./lib/routeServiceListener";
 import { Scheduler } from "./lib/Scheduler";
 import { feathers, provideFeathers, server } from "./server/createFeathers";
 import logger from "./server/logger";
+import translations from "./lib/i18n";
 
 class RadarTrap2 extends utils.Adapter {
+	private locale: string;
+	public I18n: Record<string, string>;
 	private pause$!: Subject<string>;
 	private resume$!: Subject<string>;
 	private run$!: Subject<string>;
@@ -21,6 +24,9 @@ class RadarTrap2 extends utils.Adapter {
 			...options,
 			name: "radar-trap",
 		});
+
+		this.locale = Intl.DateTimeFormat().resolvedOptions().locale.split("-")[0];
+		this.I18n = JSON.parse(JSON.stringify(translations))[this.locale];
 
 		this.subscribeStreams();
 
@@ -36,7 +42,6 @@ class RadarTrap2 extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration
 	 */
 	private async onReady(): Promise<void> {
-		// console.log("inside main() -> onReady()");
 		process.on("unhandledRejection", (reason, p) => logger.error("Unhandled Rejection at: Promise ", p, reason));
 
 		// Muss in onReady direkt gesetzt werden
@@ -47,7 +52,9 @@ class RadarTrap2 extends utils.Adapter {
 
 		provideFeathers(this, (this.config as ioBroker.INative).settings.feathersPort);
 
-		await createAllAreaAndRouteObjects(this, feathers).catch((ex) => console.log(ex));
+		await createAllAreaAndRouteObjects(this as ioBroker.AdapterInstanceWithI18n, feathers).catch((ex) =>
+			console.log(ex),
+		);
 
 		Scheduler.addThat(this);
 		await Scheduler.scheduleAll().catch((ex) => console.log(ex));

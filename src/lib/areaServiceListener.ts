@@ -2,10 +2,9 @@ import { createAreaObjects } from "./createAreaObjects";
 import { Scheduler } from "./Scheduler";
 
 import type { Application } from "@feathersjs/express";
-import type * as utils from "@iobroker/adapter-core";
 import type { HookContext } from "../server/app";
 
-const areaServiceListener = (that: utils.AdapterInstance, feathers: Application): void => {
+const areaServiceListener = (that: ioBroker.AdapterInstanceWithI18n, feathers: Application): void => {
 	feathers.service("areas").on("status", async (statusWithId: radarTrap.GenericStatusWithId) => {
 		Scheduler.setStatus(statusWithId);
 	});

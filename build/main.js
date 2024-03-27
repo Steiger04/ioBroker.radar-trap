@@ -29,12 +29,15 @@ var import_routeServiceListener = require("./lib/routeServiceListener");
 var import_Scheduler = require("./lib/Scheduler");
 var import_createFeathers = require("./server/createFeathers");
 var import_logger = __toESM(require("./server/logger"));
+var import_i18n = __toESM(require("./lib/i18n"));
 class RadarTrap2 extends utils.Adapter {
   constructor(options = {}) {
     super({
       ...options,
       name: "radar-trap"
     });
+    this.locale = Intl.DateTimeFormat().resolvedOptions().locale.split("-")[0];
+    this.I18n = JSON.parse(JSON.stringify(import_i18n.default))[this.locale];
     this.subscribeStreams();
     this.on("ready", this.onReady.bind(this));
     this.on("stateChange", this.onStateChange.bind(this));
@@ -47,7 +50,9 @@ class RadarTrap2 extends utils.Adapter {
     process.on("unhandledRejection", (reason, p) => import_logger.default.error("Unhandled Rejection at: Promise ", p, reason));
     process.env.MAPBOX_TOKEN = this.config.settings.mbxAccessToken;
     (0, import_createFeathers.provideFeathers)(this, this.config.settings.feathersPort);
-    await (0, import_createAllAreaAndRouteObjects.createAllAreaAndRouteObjects)(this, import_createFeathers.feathers).catch((ex) => console.log(ex));
+    await (0, import_createAllAreaAndRouteObjects.createAllAreaAndRouteObjects)(this, import_createFeathers.feathers).catch(
+      (ex) => console.log(ex)
+    );
     import_Scheduler.Scheduler.addThat(this);
     await import_Scheduler.Scheduler.scheduleAll().catch((ex) => console.log(ex));
     (0, import_routeServiceListener.routeServiceListener)(this, import_createFeathers.feathers);

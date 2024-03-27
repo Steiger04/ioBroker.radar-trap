@@ -103,13 +103,12 @@ const patchOrCreateRoute = (): Hook => {
 					const directionLine = feature<LineString, radarTrap.Poi>(polyline.toGeoJSON(route.geometry));
 
 					// eslint-disable-next-line prefer-const
-					let { resultPoiPoints, resultPolyPoints, resultPolyLines } = await getPoiPolyPointsAsync({
+					let { resultPoiPoints, resultPolyLines } = await getPoiPolyPointsAsync({
 						analyzedFeature: directionLine,
 						type: AnalyzedType.LINESTRING,
 						maxTrapDistance,
 					});
 					console.log("resultPoiPoints >>>", resultPoiPoints.length);
-					console.log("resultPolyPoints >>>", resultPolyPoints.length);
 					console.log("resultPolyLines >>>", resultPolyLines.length);
 
 					const traps = determineTrapTypes(resultPoiPoints as Feature<Point, radarTrap.Poi>[]);
@@ -126,13 +125,15 @@ const patchOrCreateRoute = (): Hook => {
 
 					const {
 						traps: routeTraps,
-						newTrapsReduced,
-						rejectedTrapsReduced,
+						establishedTraps,
+						newTraps,
+						rejectedTraps,
 					} = trapsChain(record?.directions![length - 1].routeTraps, traps);
 
 					data!.directions[length - 1].routeTraps = routeTraps;
-					data!.directions[length - 1].routeTrapsNew = newTrapsReduced;
-					data!.directions[length - 1].routeTrapsRejected = rejectedTrapsReduced;
+					data!.directions[length - 1].routeTrapsEstablished = establishedTraps;
+					data!.directions[length - 1].routeTrapsNew = newTraps;
+					data!.directions[length - 1].routeTrapsRejected = rejectedTraps;
 				} catch (error) {
 					console.log(error);
 				}

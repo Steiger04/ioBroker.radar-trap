@@ -35,12 +35,9 @@ var import_helpers = require("@turf/helpers");
 var import_determineTrapTypes = require("../../lib/atudo/determineTrapTypes");
 var import_Scheduler = require("../../lib/Scheduler");
 var import_trapsChain = require("./trapsChain");
-var import_turf = require("@turf/turf");
-var import_polyline = __toESM(require("@mapbox/polyline"));
 var import_getPoiPolyPointsAsync = __toESM(require("../../lib/getPoiPolyPointsAsync"));
 const patchOrCreateArea = () => {
   return async (context) => {
-    var _a;
     const startTime = performance.now();
     const { data, service, params } = context;
     const { _id } = data;
@@ -48,68 +45,29 @@ const patchOrCreateArea = () => {
     import_Scheduler.Scheduler.pause(_id);
     service.emit("status", { _id: data._id, status: "loading" });
     const [record] = await service.find({
-      query: { _id, $select: ["areaTraps", "polysFeatureCollection"] },
+      query: { _id, $select: ["areaTraps"] },
       paginate: false
     });
     if (params.patchSourceFromClient || params.patchSourceFromServer) {
       const areaPolygon = Object.values(data.areaPolygons)[0];
-      let { resultPoiPoints, resultPolyPoints, resultPolyLines } = await (0, import_getPoiPolyPointsAsync.default)({
+      let { resultPoiPoints, resultPolyLines } = await (0, import_getPoiPolyPointsAsync.default)({
         analyzedFeature: areaPolygon,
         type: import_getPoiPolyPointsAsync.AnalyzedType.POLYGONE
       });
       console.log("resultPoiPoints >>>", resultPoiPoints.length);
-      console.log("resultPolyPoints >>>", resultPolyPoints.length);
       console.log("resultPolyLines >>>", resultPolyLines.length);
-      let resultPolys = [];
-      resultPolys = (0, import_turf.featureReduce)(
-        (0, import_helpers.featureCollection)(resultPolyPoints),
-        (features, currentFeature) => {
-          if (currentFeature.properties.type === "closure") {
-            features.push(currentFeature);
-            if (currentFeature.properties.polyline !== "") {
-              features.push(
-                (0, import_turf.feature)(
-                  import_polyline.default.toGeoJSON(currentFeature.properties.polyline),
-                  {
-                    ...currentFeature.properties,
-                    type: "120"
-                  }
-                )
-              );
-            }
-          }
-          if (currentFeature.properties.type === "20") {
-            if (currentFeature.properties.polyline !== "") {
-              features.push(
-                (0, import_turf.feature)(
-                  import_polyline.default.toGeoJSON(currentFeature.properties.polyline),
-                  {
-                    ...currentFeature.properties,
-                    type: "120"
-                  }
-                )
-              );
-            }
-          }
-          return features;
-        },
-        []
-      );
-      const { traps: allPolys } = (0, import_trapsChain.trapsChain)(
-        { allPolys: ((_a = record == null ? void 0 : record.polysFeatureCollection) == null ? void 0 : _a.features) || [] },
-        { allPolys: resultPolys }
-      );
-      data.polysFeatureCollection = (0, import_helpers.featureCollection)(allPolys.allPolys);
       data.polyLinesFeatureCollection = (0, import_helpers.featureCollection)(resultPolyLines);
       const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
       const {
         traps: areaTraps,
-        newTrapsReduced,
-        rejectedTrapsReduced
+        establishedTraps,
+        newTraps,
+        rejectedTraps
       } = (0, import_trapsChain.trapsChain)(record == null ? void 0 : record.areaTraps, resultTypeTraps);
       data.areaTraps = areaTraps;
-      data.areaTrapsNew = newTrapsReduced;
-      data.areaTrapsRejected = rejectedTrapsReduced;
+      data.areaTrapsEstablished = establishedTraps;
+      data.areaTrapsNew = newTraps;
+      data.areaTrapsRejected = rejectedTraps;
     }
     if (record !== void 0) {
       context.result = await service.patch(_id, data, {
@@ -118,7 +76,7 @@ const patchOrCreateArea = () => {
       });
     }
     const endTime = performance.now();
-    console.log(`patchOrCreateArea2() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
+    console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
     return context;
   };
 };

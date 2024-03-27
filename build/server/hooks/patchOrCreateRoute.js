@@ -106,13 +106,12 @@ const patchOrCreateRoute = () => {
         try {
           const startTime = import_perf_hooks.performance.now();
           const directionLine = (0, import_turf.feature)(import_polyline.default.toGeoJSON(route.geometry));
-          let { resultPoiPoints, resultPolyPoints, resultPolyLines } = await (0, import_getPoiPolyPointsAsync.default)({
+          let { resultPoiPoints, resultPolyLines } = await (0, import_getPoiPolyPointsAsync.default)({
             analyzedFeature: directionLine,
             type: import_getPoiPolyPointsAsync.AnalyzedType.LINESTRING,
             maxTrapDistance
           });
           console.log("resultPoiPoints >>>", resultPoiPoints.length);
-          console.log("resultPolyPoints >>>", resultPolyPoints.length);
           console.log("resultPolyLines >>>", resultPolyLines.length);
           const traps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
           const endTime = import_perf_hooks.performance.now();
@@ -125,12 +124,14 @@ const patchOrCreateRoute = () => {
           });
           const {
             traps: routeTraps,
-            newTrapsReduced,
-            rejectedTrapsReduced
+            establishedTraps,
+            newTraps,
+            rejectedTraps
           } = (0, import_trapsChain.trapsChain)(record == null ? void 0 : record.directions[length - 1].routeTraps, traps);
           data.directions[length - 1].routeTraps = routeTraps;
-          data.directions[length - 1].routeTrapsNew = newTrapsReduced;
-          data.directions[length - 1].routeTrapsRejected = rejectedTrapsReduced;
+          data.directions[length - 1].routeTrapsEstablished = establishedTraps;
+          data.directions[length - 1].routeTrapsNew = newTraps;
+          data.directions[length - 1].routeTrapsRejected = rejectedTraps;
         } catch (error) {
           console.log(error);
         }

@@ -48,18 +48,32 @@ const createAreaObjects = async (that, area) => {
     type: "string",
     role: "text"
   }).then(() => that.setStateAsync(`${area._id}.area-infos.description`, `${area.description}`, true));
-  await that.createChannelAsync(`${area._id}`, "area", {
-    name: "Area"
-  });
-  for (const trapType of ["areaTraps", "areaTrapsNew", "areaTrapsRejected"]) {
+  for (const trapType of ["areaTraps", "areaTrapsEstablished", "areaTrapsNew", "areaTrapsRejected"]) {
     let totalTrapsCount = 0;
+    let channelName = "";
+    switch (trapType) {
+      case "areaTraps":
+        channelName = "area-current";
+        break;
+      case "areaTrapsNew":
+        channelName = "area-new";
+        break;
+      case "areaTrapsRejected":
+        channelName = "area-rejected";
+        break;
+      case "areaTrapsEstablished":
+        channelName = "area-established";
+        break;
+      default:
+        break;
+    }
+    await that.createChannelAsync(`${area._id}`, `${channelName}`, {
+      name: "Area"
+    });
     for (const [trapName, traps] of Object.entries(
       area[trapType]
     )) {
-      const newTraps = traps.filter((trap) => {
-        var _a;
-        return ((_a = trap.properties) == null ? void 0 : _a.trapInfo) !== null;
-      }).map((trap) => {
+      const newTraps = traps.map((trap) => {
         var _a;
         return {
           type: trap.type,
@@ -68,25 +82,27 @@ const createAreaObjects = async (that, area) => {
         };
       });
       totalTrapsCount += newTraps.length;
-      await that.createStateAsync(`${area._id}`, `area`, `${trapName}`, {
-        name: `${trapName}`,
+      await that.createStateAsync(`${area._id}`, `${channelName}`, `${trapName}`, {
+        name: that.I18n[trapName],
         defAck: true,
         read: true,
         write: false,
         type: "array",
         role: "list"
-      }).then(() => that.setStateAsync(`${area._id}.area.${trapName}`, JSON.stringify(newTraps), true));
-      await that.createStateAsync(`${area._id}`, `area`, `${trapName}Count`, {
-        name: `${trapName} Count`,
+      }).then(
+        () => that.setStateAsync(`${area._id}.${channelName}.${trapName}`, JSON.stringify(newTraps), true)
+      );
+      await that.createStateAsync(`${area._id}`, `${channelName}`, `${trapName}Count`, {
+        name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
         defAck: true,
         read: true,
         write: false,
         type: "number",
         role: "value"
-      }).then(() => that.setStateAsync(`${area._id}.area.${trapName}Count`, newTraps.length, true));
+      }).then(() => that.setStateAsync(`${area._id}.${channelName}.${trapName}Count`, newTraps.length, true));
     }
     await that.createStateAsync(`${area._id}`, "area-infos", `${trapType}Count`, {
-      name: "totalTraps Count",
+      name: `${that.I18n["count"]}: ${channelName}`,
       defAck: true,
       read: true,
       write: false,
