@@ -158,8 +158,8 @@ const mapStyles = {
 				"tunnel-speed-camera",
 				"115",
 				"no-overtaking",
-				/* "2015",
-				"mobile-speed-camera-hotspot", */
+				"2015",
+				"mobile-speed-camera-hotspot",
 				["vwd", "vwda"],
 				"police-news",
 				"",
