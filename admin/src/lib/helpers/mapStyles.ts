@@ -99,8 +99,16 @@ const mapStyles = {
 		type: "circle",
 		filter: ["has", "point_count"],
 		paint: {
-			"circle-opacity": 0.3,
-			"circle-color": ["step", ["get", "point_count"], "#263238", 100, "#263238", 750, "#263238"],
+			"circle-opacity": 1.0,
+			"circle-color": [
+				"step",
+				["get", "point_count"],
+				"rgba(197,14,228,0.4)",
+				100,
+				"rgba(197,14,228,0.4)",
+				750,
+				"rgba(197,14,228,0.4)",
+			],
 			"circle-radius": ["step", ["get", "point_count"], 12, 9, 15, 100, 18],
 		},
 	},
@@ -110,9 +118,15 @@ const mapStyles = {
 		filter: ["has", "point_count"],
 		layout: {
 			"text-allow-overlap": true,
-			"text-field": "{point_count_abbreviated}",
-			"text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
 			"text-size": 12,
+			"text-field": [
+				"format",
+				["get", "point_count_abbreviated"],
+				{
+					"text-font": ["literal", ["DIN Offc Pro Medium", "Arial Unicode MS Bold"]],
+					"text-color": "rgba(52,27,57,0.95)",
+				},
+			],
 		},
 	},
 
@@ -126,7 +140,7 @@ const mapStyles = {
 			"icon-image": [
 				"match",
 				["get", "type"],
-				["1", "2", "107"],
+				["1", "2", "107", "ts"],
 				"speed-camera",
 				"6",
 				"mobile-distance-speed-camera",
@@ -161,7 +175,7 @@ const mapStyles = {
 				"2015",
 				"mobile-speed-camera-hotspot",
 				["vwd", "vwda"],
-				"police-news",
+				"police-report",
 				"",
 			],
 			"icon-size": ["interpolate", ["linear"], ["zoom"], 8, 0.06, 15, 0.15],
@@ -171,7 +185,13 @@ const mapStyles = {
 			"text-anchor": "center",
 			"text-field": [
 				"format",
-				["match", ["get", "type"], ["1", "2", "107", "110", "112"], ["get", "vmax", ["get", "trapInfo"]], ""],
+				[
+					"match",
+					["get", "type"],
+					["1", "2", "107", "110", "112", "ts"],
+					["get", "vmax", ["get", "trapInfo"]],
+					"",
+				],
 				{
 					"text-font": ["literal", ["DIN Offc Pro Medium", "Arial Unicode MS Bold"]],
 					"text-color": [

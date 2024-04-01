@@ -7,7 +7,6 @@ import IconAccident from "../../../assets/map-icons/icon-accident.png";
 import IconObject from "../../../assets/map-icons/icon-object.png";
 import IconSleekness from "../../../assets/map-icons/icon-sleekness.png";
 import IconFog from "../../../assets/map-icons/icon-fog.png";
-import IconPoliceNews from "../../../assets/map-icons/icon-police-news.png";
 import IconTrafficClosure from "../../../assets/map-icons/icon-traffic-closure.png";
 import IconMobileDistanceSpeedCamera6 from "../../../assets/map-icons/icon-mobile-distance-speed-camera-6-sdf.png";
 import IconTrafficJam20 from "../../../assets/map-icons/icon-traffic-jam-20-sdf.png";
@@ -28,7 +27,7 @@ import IconFixedTrap113 from "../../../assets/map-icons/icon-fixed-trap-113-sdf.
 import IconFixedTrap114 from "../../../assets/map-icons/icon-fixed-trap-114-sdf.png";
 import IconNoOvertaking115 from "../../../assets/map-icons/icon-no-overtaking-115-sdf.png";
 import IconMobileSpeedCameraHotspot2015 from "../../../assets/map-icons/icon-mobile-speed-camera-hotspot-2015-sdf.png";
-import IconPoliceNews_vwd_vwda from "../../../assets/map-icons/icon-police-news-vwd-vwda-sdf.png";
+import IconPoliceReport_vwd_vwda from "../../../assets/map-icons/icon-police-report-vwd-vwda-sdf.png";
 
 import type { MapRef } from "react-map-gl";
 
@@ -41,7 +40,6 @@ const images = [
 	{ id: "icon-object", png: IconObject },
 	{ id: "icon-sleekness", png: IconSleekness },
 	{ id: "icon-fog", png: IconFog },
-	{ id: "icon-police-news", png: IconPoliceNews },
 	{ id: "icon-traffic-closure", png: IconTrafficClosure },
 	{ id: "mobile-distance-speed-camera", png: IconMobileDistanceSpeedCamera6 },
 	{ id: "traffic-jam", png: IconTrafficJam20 },
@@ -62,7 +60,7 @@ const images = [
 	{ id: "tunnel-speed-camera", png: IconFixedTrap114 },
 	{ id: "no-overtaking", png: IconNoOvertaking115 },
 	{ id: "mobile-speed-camera-hotspot", png: IconMobileSpeedCameraHotspot2015 },
-	{ id: "police-news", png: IconPoliceNews_vwd_vwda },
+	{ id: "police-report", png: IconPoliceReport_vwd_vwda },
 ];
 
 const useMapImages = (map: MapRef | null): { status: radarTrap.GenericStatus } => {

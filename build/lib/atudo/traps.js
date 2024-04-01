@@ -53,24 +53,31 @@ const traps = async (minPos, maxPos) => {
     if (!import_value.Value.Check(import_atudoPoiSchema.atudoPoisSchema, pois))
       console.log("POIS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_atudoPoiSchema.atudoPoisSchema, pois)]);
     const { pois: poisHsPn } = await request(
-      `https://cdn2.atudo.net/api/4.0/pois.php?type=2015,vwd,vwda&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
+      `https://cdn2.atudo.net/api/4.0/pois.php?type=2015,vwd&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
     );
     import_value.Value.Default(import_atudoPoiSchema.atudoPoisSchema, poisHsPn);
     if (!import_value.Value.Check(import_atudoPoiSchema.atudoPoisSchema, poisHsPn))
       console.log("POISHSPN SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_atudoPoiSchema.atudoPoisSchema, poisHsPn)]);
+    const { pois: poisPnA } = await request(
+      `https://cdn2.atudo.net/api/4.0/pois.php?type=vwda&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
+    );
+    import_value.Value.Default(import_atudoPoiSchema.atudoPoisSchema, poisPnA);
+    if (!import_value.Value.Check(import_atudoPoiSchema.atudoPoisSchema, poisPnA))
+      console.log("POISPNA SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_atudoPoiSchema.atudoPoisSchema, poisPnA)]);
     const { polys } = await request(
       `https://cdn2.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`
     );
     import_value.Value.Default(import_atudoPolySchema.atudoPolysSchema, polys);
     if (!import_value.Value.Check(import_atudoPolySchema.atudoPolysSchema, polys))
       console.log("POLYS SCHEMA ERRORS >>>", [...import_value.Value.Errors(import_atudoPolySchema.atudoPolysSchema, polys)]);
-    console.log("pois >>>", pois.length);
     if (pois.length > 499)
       console.log("POIS >>>", pois.length);
-    console.log("poisHsPn >>>", poisHsPn.length);
     if (poisHsPn.length > 499)
       console.log("POISHSPN >>>", poisHsPn.length);
+    if (poisPnA.length > 499)
+      console.log("POISPNA >>>", poisPnA.length);
     pois.push(...poisHsPn);
+    pois.push(...poisPnA.map((pna) => ({ ...pna, type: "vwda" })));
     const _poiPoints = pois.reduce((list, poi) => {
       list.push((0, import_helpers.point)([+poi.lng, +poi.lat], { ...poi }));
       return list;

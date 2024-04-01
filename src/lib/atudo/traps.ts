@@ -87,14 +87,23 @@ const traps = async (
 		if (!Value.Check(atudoPoisSchema, pois))
 			console.log("POIS SCHEMA ERRORS >>>", [...Value.Errors(atudoPoisSchema, pois)]);
 
-		// nur Hotspots (2015) und Polizeimeldungen (vwd, vwda)
+		// nur Hotspots (2015) und Polizeimeldungen (vwd)
 		const { pois: poisHsPn } = await request<radarTrap.AtudoPoi>(
-			`https://cdn2.atudo.net/api/4.0/pois.php?type=2015,vwd,vwda&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
+			`https://cdn2.atudo.net/api/4.0/pois.php?type=2015,vwd&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
 		);
 		Value.Default(atudoPoisSchema, poisHsPn); // add schemaType to each poi
 		if (!Value.Check(atudoPoisSchema, poisHsPn))
 			console.log("POISHSPN SCHEMA ERRORS >>>", [...Value.Errors(atudoPoisSchema, poisHsPn)]);
 
+		// nur archivierte Polizeimeldungen (vwda)
+		const { pois: poisPnA } = await request<radarTrap.AtudoPoi>(
+			`https://cdn2.atudo.net/api/4.0/pois.php?type=vwda&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
+		);
+		Value.Default(atudoPoisSchema, poisPnA); // add schemaType to each poi
+		if (!Value.Check(atudoPoisSchema, poisPnA))
+			console.log("POISPNA SCHEMA ERRORS >>>", [...Value.Errors(atudoPoisSchema, poisPnA)]);
+
+		// Polylines
 		const { polys } = await request<radarTrap.AtudoPoly>(
 			`https://cdn2.atudo.net/api/4.0/polylines.php?type=traffic&z=100&box=${minPos.lat},${minPos.lng},${maxPos.lat},${maxPos.lng}`,
 		);
@@ -102,13 +111,12 @@ const traps = async (
 		if (!Value.Check(atudoPolysSchema, polys))
 			console.log("POLYS SCHEMA ERRORS >>>", [...Value.Errors(atudoPolysSchema, polys)]);
 
-		console.log("pois >>>", pois.length);
 		if (pois.length > 499) console.log("POIS >>>", pois.length);
-
-		console.log("poisHsPn >>>", poisHsPn.length);
 		if (poisHsPn.length > 499) console.log("POISHSPN >>>", poisHsPn.length);
+		if (poisPnA.length > 499) console.log("POISPNA >>>", poisPnA.length);
 
 		pois.push(...poisHsPn); // add poisHsPn to pois
+		pois.push(...poisPnA.map((pna) => ({ ...pna, type: "vwda" }))); // add poisPnA to pois
 		const _poiPoints = pois.reduce((list: Feature<Point, radarTrap.Poi>[], poi) => {
 			list.push(point([+poi.lng, +poi.lat], { ...poi }));
 
