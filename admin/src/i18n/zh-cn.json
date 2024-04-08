@@ -100,5 +100,6 @@
     "section control end": "段控制端",
     "speed camera in tunnel": "隧道内测速摄像头",
     "no overtaking": "没有超车",
-    "speed camera, semi-stationary": "测速摄像机，半固定式"
+    "speed camera, semi-stationary": "测速摄像机，半固定式",
+    "kind": "种类"
 }

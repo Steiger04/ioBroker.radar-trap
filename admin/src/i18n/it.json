@@ -100,5 +100,6 @@
     "section control end": "fine del controllo della sezione",
     "speed camera in tunnel": "autovelox nel tunnel",
     "no overtaking": "divieto di sorpasso",
-    "speed camera, semi-stationary": "autovelox, semi-stazionario"
+    "speed camera, semi-stationary": "autovelox, semi-stazionario",
+    "kind": "Tipo"
 }

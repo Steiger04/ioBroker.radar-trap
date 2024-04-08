@@ -1,21 +1,22 @@
 import { useCallback, useEffect, useState } from "react";
-import IconFixedTrap from "../../../assets/map-icons/icon-fixed-trap.png";
-import IconMobileTrap from "../../../assets/map-icons/icon-mobile-trap.png";
-import IconTrafficJam from "../../../assets/map-icons/icon-traffic-jam.png";
-import IconRoadWork from "../../../assets/map-icons/icon-road-work.png";
-import IconAccident from "../../../assets/map-icons/icon-accident.png";
-import IconObject from "../../../assets/map-icons/icon-object.png";
-import IconSleekness from "../../../assets/map-icons/icon-sleekness.png";
-import IconFog from "../../../assets/map-icons/icon-fog.png";
+
+import type { MapRef } from "react-map-gl";
+
 import IconTrafficClosure from "../../../assets/map-icons/icon-traffic-closure.png";
+import IconUnknown0 from "../../../assets/map-icons/icon-unknown-0-sdf.png";
+import IconGeneralTrafficControl4 from "../../../assets/map-icons/icon-general-traffic-control-4-sdf.png";
+import IconAlcoholControl5 from "../../../assets/map-icons/icon-alcohol-control-5-sdf.png";
+import IconRampControl103 from "../../../assets/map-icons/icon-ramp-control-103-sdf.png";
+import IconPedestrianCrossing106 from "../../../assets/map-icons/icon-pedestrian-crossing-106-sdf.png";
 import IconMobileDistanceSpeedCamera6 from "../../../assets/map-icons/icon-mobile-distance-speed-camera-6-sdf.png";
 import IconTrafficJam20 from "../../../assets/map-icons/icon-traffic-jam-20-sdf.png";
 import IconAccident21 from "../../../assets/map-icons/icon-accident-21-sdf.png";
-import IconObject23 from "../../../assets/map-icons/icon-object-23-sdf.png";
-import IconSleekness24 from "../../../assets/map-icons/icon-sleekness-24-sdf.png";
+import IconObstacle23 from "../../../assets/map-icons/icon-obstacle-23-sdf.png";
+import IconRiskOfSlipping24 from "../../../assets/map-icons/icon-risk-of-slipping-24-sdf.png";
 import IconVisualObstruction25 from "../../../assets/map-icons/icon-visual-obstruction-25-sdf.png";
 import IconRoadWork22_26 from "../../../assets/map-icons/icon-road-work-22-26-sdf.png";
 import IconBreakdown29 from "../../../assets/map-icons/icon-breakdown-29-sdf.png";
+import IconFixedDistanceSpeedCamera101 from "../../../assets/map-icons/icon-fixed-distance-speed-camera-101-sdf.png";
 import IconBusLane104 from "../../../assets/map-icons/icon-bus-lane-104-sdf.png";
 import IconFixedTrap1_2_107 from "../../../assets/map-icons/icon-fixed-trap-1-2-107-sdf.png";
 import IconWeightControl108 from "../../../assets/map-icons/icon-weight-control-108-sdf.png";
@@ -29,32 +30,28 @@ import IconNoOvertaking115 from "../../../assets/map-icons/icon-no-overtaking-11
 import IconMobileSpeedCameraHotspot2015 from "../../../assets/map-icons/icon-mobile-speed-camera-hotspot-2015-sdf.png";
 import IconPoliceReport_vwd_vwda from "../../../assets/map-icons/icon-police-report-vwd-vwda-sdf.png";
 
-import type { MapRef } from "react-map-gl";
-
 const images = [
-	{ id: "icon-fixed-trap", png: IconFixedTrap },
-	{ id: "icon-mobile-trap", png: IconMobileTrap },
-	{ id: "icon-traffic-jam", png: IconTrafficJam },
-	{ id: "icon-road-work", png: IconRoadWork },
-	{ id: "icon-accident", png: IconAccident },
-	{ id: "icon-object", png: IconObject },
-	{ id: "icon-sleekness", png: IconSleekness },
-	{ id: "icon-fog", png: IconFog },
 	{ id: "icon-traffic-closure", png: IconTrafficClosure },
+	{ id: "unknown", png: IconUnknown0 },
+	{ id: "general-traffic-control", png: IconGeneralTrafficControl4 },
+	{ id: "alcohol-control", png: IconAlcoholControl5 },
 	{ id: "mobile-distance-speed-camera", png: IconMobileDistanceSpeedCamera6 },
 	{ id: "traffic-jam", png: IconTrafficJam20 },
 	{ id: "accident", png: IconAccident21 },
-	{ id: "object", png: IconObject23 },
-	{ id: "sleekness", png: IconSleekness24 },
+	{ id: "obstacle", png: IconObstacle23 },
+	{ id: "risk-of-slipping", png: IconRiskOfSlipping24 },
 	{ id: "visual-obstruction", png: IconVisualObstruction25 },
 	{ id: "road-work", png: IconRoadWork22_26 },
 	{ id: "breakdown", png: IconBreakdown29 },
+	{ id: "fixed-distance-speed-camera", png: IconFixedDistanceSpeedCamera101 },
+	{ id: "ramp-control", png: IconRampControl103 },
 	{ id: "bus-lane", png: IconBusLane104 },
+	{ id: "pedestrian-crossing", png: IconPedestrianCrossing106 },
 	{ id: "speed-camera", png: IconFixedTrap1_2_107 },
 	{ id: "weight-control", png: IconWeightControl108 },
 	{ id: "height-control", png: IconHeightControl109 },
-	{ id: "redlight-fixed", png: IconFixedTrap110 },
-	{ id: "combined-fixed", png: IconFixedTrap111 },
+	{ id: "combined-fixed", png: IconFixedTrap110 },
+	{ id: "redlight-fixed", png: IconFixedTrap111 },
 	{ id: "section-control-start", png: IconFixedTrap112 },
 	{ id: "section-control-end", png: IconFixedTrap113 },
 	{ id: "tunnel-speed-camera", png: IconFixedTrap114 },

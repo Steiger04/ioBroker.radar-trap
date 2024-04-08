@@ -84,7 +84,6 @@ const RadarTrapMaps: FC = (): ReactElement => {
 
 			case "traps":
 				setTimeout(() => {
-					console.log("feature.properties!.trapInfo", feature.properties!.trapInfo);
 					setTrapInfo({
 						...JSON.parse(feature.properties!.trapInfo),
 						longitude: event.lngLat.lng,

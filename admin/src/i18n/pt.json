@@ -100,5 +100,6 @@
     "section control end": "final de controle de seção",
     "speed camera in tunnel": "radar de velocidade no túnel",
     "no overtaking": "Sem ultrapassagens",
-    "speed camera, semi-stationary": "radar de velocidade, semiestacionário"
+    "speed camera, semi-stationary": "radar de velocidade, semiestacionário",
+    "kind": "tipo"
 }

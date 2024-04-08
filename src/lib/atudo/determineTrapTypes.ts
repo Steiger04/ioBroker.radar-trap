@@ -5,9 +5,10 @@ const descriptions: Record<string, string> = {
 	"22,26": "construction site", // Baustelle
 	"20": "traffic jam end", // Stauende
 	"21,23,24,25,29": "danger spot", // Gefahrenstelle
+	// "101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,201,206": "fixed speed camera", // Blitzer fest
 	"101,102,103,104,105,106,107,108,109,110,111,112,113,114,115": "fixed speed camera", // Blitzer fest
 	ts: "semi-stationary speed camera", // Blitzer teilstationär
-	"0,1,2,3,4,5,6": "mobile speed camera", // Blitzer mobil
+	"0,1,2,3,4,5,6,7,11,12": "mobile speed camera", // Blitzer mobil
 	"2015": "mobile speed camera hotspot", // Mobiler Blitzer Hotspot
 	vwd: "police report", // Polizeimeldung
 	vwda: "police report, archive", // Polizeimeldung, Archiv
@@ -47,8 +48,8 @@ const type_text: Record<string, string> = {
 	"113": "section control end", // Section Control Ende
 	"114": "speed camera in tunnel", // Blitzer im Tunnel
 	"115": "no overtaking", // Überholverbot
-	"201": "speed camera", // Geschwindigkeitsblitzer
-	"206": "distance control", // Abstandskontrolle
+	// "201": "speed camera", // Geschwindigkeitsblitzer
+	// "206": "distance control", // Abstandskontrolle
 	"2015": "mobile speed camera hotspot", // Mobiler Blitzer Hotspot
 	vwd: "police report", // Polizeimeldung
 	vwda: "police report, archive", // Polizeimeldung, Archiv
@@ -202,14 +203,14 @@ const determineTrapTypes = (
 					resultTrap.properties.type_name = "noOvertaking";
 					list.noOvertaking.push(resultTrap);
 					break;
-				case "201":
+				/* case "201":
 					resultTrap.properties.type_name = "speedCamera";
 					list.speedCamera.push(resultTrap);
 					break;
 				case "206":
 					resultTrap.properties.type_name = "distanceControl";
 					list.distanceControl.push(resultTrap);
-					break;
+					break; */
 				case "2015":
 					resultTrap.properties.type_name = "mobileSpeedCameraHotspot";
 					list.mobileSpeedCameraHotspot.push(resultTrap);

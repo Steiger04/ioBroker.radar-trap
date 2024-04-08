@@ -43,7 +43,7 @@ async function request(url, config = {}) {
   const response = await (0, import_cross_fetch.fetch)(url, config);
   return response.json();
 }
-const trapBase = "0,1,2,3,4,5,6,20,21,22,23,24,25,29,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts";
+const trapBase = "0,1,2,3,4,5,6,7,11,12,20,21,22,23,24,25,29,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,ts";
 const traps = async (minPos, maxPos) => {
   try {
     const { pois } = await request(

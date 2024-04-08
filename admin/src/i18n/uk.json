@@ -100,5 +100,6 @@
     "section control end": "кінець контролю розділу",
     "speed camera in tunnel": "камера контролю швидкості в тунелі",
     "no overtaking": "без обгону",
-    "speed camera, semi-stationary": "камера контролю швидкості, напівстаціонарна"
+    "speed camera, semi-stationary": "камера контролю швидкості, напівстаціонарна",
+    "kind": "вид"
 }
