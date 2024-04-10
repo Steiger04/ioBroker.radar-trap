@@ -54,8 +54,10 @@ const patchOrCreateArea = () => {
         analyzedFeature: areaPolygon,
         type: import_getPoiPolyPointsAsync.AnalyzedType.POLYGONE
       });
-      console.log("resultPoiPoints >>>", resultPoiPoints.length);
-      console.log("resultPolyLines >>>", resultPolyLines.length);
+      if (false) {
+        console.log("resultPoiPoints >>>", resultPoiPoints.length);
+        console.log("resultPolyLines >>>", resultPolyLines.length);
+      }
       data.polyLinesFeatureCollection = (0, import_helpers.featureCollection)(resultPolyLines);
       const resultTypeTraps = (0, import_determineTrapTypes.determineTrapTypes)(resultPoiPoints);
       const {
@@ -76,7 +78,8 @@ const patchOrCreateArea = () => {
       });
     }
     const endTime = performance.now();
-    console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
+    if (false)
+      console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1e3} Sekunden`);
     return context;
   };
 };

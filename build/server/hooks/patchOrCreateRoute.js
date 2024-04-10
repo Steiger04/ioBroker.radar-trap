@@ -78,7 +78,8 @@ const patchOrCreateRoute = () => {
         profile: activeProfile.name,
         annotations: ["duration", "distance"]
       }).send().then((response) => response.body);
-      console.log("matrix", matrix);
+      if (false)
+        console.log("matrix", matrix);
       const directions = await directionsService.getDirections({
         profile: activeProfile.name,
         exclude: activeProfile.actualExclusion.length > 0 ? activeProfile.actualExclusion.join(",") : void 0,

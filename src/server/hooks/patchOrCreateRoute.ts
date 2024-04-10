@@ -63,7 +63,7 @@ const patchOrCreateRoute = (): Hook => {
 				.send()
 				.then((response) => response.body);
 
-			console.log("matrix", matrix);
+			if (process.env.NODE_ENV === "development") console.log("matrix", matrix);
 
 			const directions = await directionsService
 				.getDirections({

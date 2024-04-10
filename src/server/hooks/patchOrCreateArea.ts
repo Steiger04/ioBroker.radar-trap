@@ -31,8 +31,11 @@ const patchOrCreateArea = (): Hook => {
 				analyzedFeature: areaPolygon,
 				type: AnalyzedType.POLYGONE,
 			});
-			console.log("resultPoiPoints >>>", resultPoiPoints.length);
-			console.log("resultPolyLines >>>", resultPolyLines.length);
+
+			if (process.env.NODE_ENV === "development") {
+				console.log("resultPoiPoints >>>", resultPoiPoints.length);
+				console.log("resultPolyLines >>>", resultPolyLines.length);
+			}
 
 			data!.polyLinesFeatureCollection = featureCollection(resultPolyLines);
 
@@ -60,7 +63,8 @@ const patchOrCreateArea = (): Hook => {
 		}
 
 		const endTime = performance.now();
-		console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1_000} Sekunden`);
+		if (process.env.NODE_ENV === "development")
+			console.log(`patchOrCreateArea() dauerte: ${(endTime - startTime) / 1_000} Sekunden`);
 
 		return context;
 	};

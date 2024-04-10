@@ -41,10 +41,10 @@ const getPoiPolyPointsAsync = async ({
 	const analyzedBox = bboxPolygon(analyzedBbox);
 
 	const sideLength = Math.sqrt(area(analyzedBox)) / 1_000;
-	console.log("sideLength >>>", sideLength);
+	if (process.env.NODE_ENV === "development") console.log("sideLength >>>", sideLength);
 
 	const sideLengthDivisor = getDevisor(sideLength);
-	console.log("sideLengthDivisor >>>", sideLengthDivisor);
+	if (process.env.NODE_ENV === "development") console.log("sideLengthDivisor >>>", sideLengthDivisor);
 
 	const cellWidth = sideLength / sideLengthDivisor;
 
@@ -62,10 +62,10 @@ const getPoiPolyPointsAsync = async ({
 	}
 
 	const squareBoxGrid = squareGrid(bufferedBbox, cellWidth);
-	console.log("squareBoxGrid >>>", squareBoxGrid.features.length);
+	if (process.env.NODE_ENV === "development") console.log("squareBoxGrid >>>", squareBoxGrid.features.length);
 
 	const squareBoxGridReduced = squareBoxGrid.features.filter((feature) => !booleanDisjoint(feature, analyzedFeature));
-	console.log("squareBoxGridReduced >>>", squareBoxGridReduced.length);
+	if (process.env.NODE_ENV === "development") console.log("squareBoxGridReduced >>>", squareBoxGridReduced.length);
 
 	let resultPoiPoints: Feature<Point, radarTrap.Poi>[] = [];
 	let resultPolyLines: Feature<LineString, radarTrap.Poly>[] = [];

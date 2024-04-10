@@ -38,9 +38,11 @@ const getPoiPolyPointsAsync = async ({
   const analyzedBbox = (0, import_turf.bbox)(analyzedFeature);
   const analyzedBox = (0, import_turf.bboxPolygon)(analyzedBbox);
   const sideLength = Math.sqrt((0, import_turf.area)(analyzedBox)) / 1e3;
-  console.log("sideLength >>>", sideLength);
+  if (false)
+    console.log("sideLength >>>", sideLength);
   const sideLengthDivisor = (0, import_getDevisor.getDevisor)(sideLength);
-  console.log("sideLengthDivisor >>>", sideLengthDivisor);
+  if (false)
+    console.log("sideLengthDivisor >>>", sideLengthDivisor);
   const cellWidth = sideLength / sideLengthDivisor;
   let bufferedBbox;
   switch (type) {
@@ -54,9 +56,11 @@ const getPoiPolyPointsAsync = async ({
       throw new Error("Invalid type in getPoiPolyPointsAsync");
   }
   const squareBoxGrid = (0, import_turf.squareGrid)(bufferedBbox, cellWidth);
-  console.log("squareBoxGrid >>>", squareBoxGrid.features.length);
+  if (false)
+    console.log("squareBoxGrid >>>", squareBoxGrid.features.length);
   const squareBoxGridReduced = squareBoxGrid.features.filter((feature) => !(0, import_turf.booleanDisjoint)(feature, analyzedFeature));
-  console.log("squareBoxGridReduced >>>", squareBoxGridReduced.length);
+  if (false)
+    console.log("squareBoxGridReduced >>>", squareBoxGridReduced.length);
   let resultPoiPoints = [];
   let resultPolyLines = [];
   for (const feature of squareBoxGridReduced) {
