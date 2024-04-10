@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "1.3.1",
+    "version": "2.0.0",
     "news": {
+      "2.0.0": {
+        "en": "!!! No VIS widgets anymore. Continue using v1.3.1 for VIS widgets. Starting from this version, only VIS-2 widgets are supported. !!! \nChanged Wiki\nMany optimizations and bug fixes",
+        "de": "! Keine VIS Widgets mehr. Verwenden Sie v1.3.1 für VIS Widgets weiter. Ab dieser Version werden nur VIS-2 Widgets unterstützt. !\nWiki ändern\nViele Optimierungen und Fehlerbehebungen",
+        "ru": "!!! Больше никаких виджетов VIS. Продолжать использовать v1.3.1 для виджетов VIS. Начиная с этой версии поддерживаются только виджеты VIS-2. !!!\nИзменение Wiki\nМногие оптимизации и исправления ошибок",
+        "pt": "? Já não há widgets VIS. Continue usando v1.3.1 para widgets VIS. A partir desta versão, apenas os widgets VIS-2 são suportados. !\nMudança de Wiki\nMuitas otimizações e correções de bugs",
+        "nl": "!!! Geen VIS-widgets meer. Blijf v1.3.1 gebruiken voor VIS-widgets. Vanaf deze versie worden alleen VIS-2 widgets ondersteund. !!!\nWiki gewijzigd\nVeel optimalisaties en bugfixes",
+        "fr": "!!! Plus de widgets VIS. Continuer à utiliser v1.3.1 pour les widgets VIS. A partir de cette version, seuls les widgets VIS-2 sont pris en charge. !!!\nWiki modifié\nDe nombreuses optimisations et corrections de bugs",
+        "it": "♪ Nessun widget VIS più. Continua a usare v1.3.1 per i widget VIS. A partire da questa versione, sono supportati solo i widget VIS-2. ♪!\nModificato Wiki\nMolte ottimizzazioni e correzioni di bug",
+        "es": "!!! Ya no hay widgets VIS. Siga utilizando v1.3.1 para los widgets VIS. A partir de esta versión, solo se admiten widgets VIS-2. !!!\nCambio de Wiki\nMuchas optimizaciones y correcciones de errores",
+        "pl": "! Nie ma już widżetów VIS. Kontynuować stosowanie v1.3.1 dla widżetów VIS. Od tej wersji obsługiwane są tylko widżety VIS-2.!\nZmieniono Wiki\nWiele optymalizacji i poprawek błędów",
+        "uk": "Про нас Без віджетів VIS більше. Продовжити використання v1.3.1 для віджетів VIS. За допомогою цієї версії підтримується тільки віджети VIS-2. Про нас!\nЗмінено Вікі\nБагато оптимізація і виправлення помилок",
+        "zh-cn": "快点! 没有VIS部件了。 对VIS部件继续使用v1.3.1. 从这个版本开始,只支持VIS-2部件. 快点!\n已更改的 Wiki\n许多优化和错误修正"
+      },
       "1.3.1": {
         "en": "bug fixes trapInfo for traps",
         "de": "bugfixes trapInfo für Fallen",
@@ -80,19 +93,6 @@
         "pl": "niektóre zoptymalizacje GUI",
         "uk": "деякі оптимізації інтерфейсу",
         "zh-cn": "一些图形用户界面优化"
-      },
-      "1.1.2": {
-        "en": "fixed version conflict between react 17 and react 18",
-        "de": "festversionskonflikt zwischen reaktion 17 und reaktion 18",
-        "ru": "конфликт между реакцией 17 и реакцией 18",
-        "pt": "conflito de versão fixa entre reagir 17 e reagir 18",
-        "nl": "vaste versie conflict tussen reactie 17 en reactie 18",
-        "fr": "conflit de version fixe entre réaction 17 et réaction 18",
-        "it": "versione fissa conflitto tra reagire 17 e reagire 18",
-        "es": "conflicto de la versión fija entre reaccionar 17 y reaccionar 18",
-        "pl": "stały konflikt wersji między reakcją 17 i reakcją 18",
-        "uk": "виправлений варіант конфлікту між реагацією 17 та реагацією 18",
-        "zh-cn": "反应17和反应18之间的固定版本冲突"
       }
     },
     "title": "Radar Trap",

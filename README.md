@@ -21,7 +21,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.0.0 (2024-04-10)
 * (Steiger04) !!! No VIS widgets anymore. Continue using v1.3.1 for VIS widgets. Starting from this version, only VIS-2 widgets are supported. !!! 
 * (Steiger04) Changed Wiki
 * (Steiger04) Many optimizations and bug fixes
