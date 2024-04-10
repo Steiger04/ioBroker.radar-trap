@@ -42,3 +42,6 @@ admin/i18n
 
 # maintenance scripts
 maintenance/**
+
+# widgets for vis
+widgets/
