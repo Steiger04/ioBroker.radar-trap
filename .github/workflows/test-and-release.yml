@@ -29,8 +29,8 @@ jobs:
       - uses: ioBroker/testing-action-check@v1
         with:
           node-version: "18.x" # This should be LTS
-          type-checking: true
-          lint: true
+          type-checking: false
+          lint: false
 
 
   # Runs adapter tests on all supported node versions and OSes

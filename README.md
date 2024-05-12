@@ -21,6 +21,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (Steiger04) test-and-release.yml changed
+
 ### 2.1.0 (2024-05-12)
 * (Steiger04) Dependencies updated
 * (Steiger04) Some code optimizations
