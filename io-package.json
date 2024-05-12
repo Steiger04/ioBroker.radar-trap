@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "news": {
+      "2.1.2": {
+        "en": "test-and-release.yml changed",
+        "de": "test-and-release.yml geändert",
+        "ru": "test-and-release.yml изменен",
+        "pt": "test-and-release.yml mudou",
+        "nl": "test-and-release.yml gewijzigd",
+        "fr": "test-and-release.yml modifié",
+        "it": "test-and-release.yml cambiato",
+        "es": "test-and-release.yml cambió",
+        "pl": "test- and- releasase.yml zmienione",
+        "uk": "тест-і-випуск.yml змінився",
+        "zh-cn": "测试和释放.yml已更改"
+      },
       "2.1.1": {
         "en": "test-and-release.yml changed",
         "de": "test-and-release.yml geändert",
@@ -80,19 +93,6 @@
         "pl": "dodany nowy stan ostatni Aktualizacja\nInterfejs zoptymalizowany",
         "uk": "додано новий стан Ажурирано\nUI оптимізовано",
         "zh-cn": "最后添加新状态 更新\nUI 优化"
-      },
-      "1.1.5": {
-        "en": "createTheme added",
-        "de": "erstellen Thema hinzugefügt",
-        "ru": "создание Тема добавлена",
-        "pt": "criar Tema adicionado",
-        "nl": "aanmaken Thema toegevoegd",
-        "fr": "créer Thème ajouté",
-        "it": "creare Tema aggiunto",
-        "es": "crear Tema añadido",
-        "pl": "create Motyw dodany",
-        "uk": "створення Тема додано",
-        "zh-cn": "创建 添加主题"
       }
     },
     "title": "Radar Trap",
