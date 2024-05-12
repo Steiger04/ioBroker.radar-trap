@@ -1,193 +1,203 @@
 {
-	"common": {
-		"name": "radar-trap",
-		"version": "2.0.0",
-		"news": {
-			"2.0.0": {
-				"en": "!!! No VIS widgets anymore. Continue using v1.3.1 for VIS widgets. Starting from this version, only VIS-2 widgets are supported. !!! \nChanged Wiki\nMany optimizations and bug fixes",
-				"de": "! Keine VIS Widgets mehr. Verwenden Sie v1.3.1 für VIS Widgets weiter. Ab dieser Version werden nur VIS-2 Widgets unterstützt. !\nWiki ändern\nViele Optimierungen und Fehlerbehebungen",
-				"ru": "!!! Больше никаких виджетов VIS. Продолжать использовать v1.3.1 для виджетов VIS. Начиная с этой версии поддерживаются только виджеты VIS-2. !!!\nИзменение Wiki\nМногие оптимизации и исправления ошибок",
-				"pt": "? Já não há widgets VIS. Continue usando v1.3.1 para widgets VIS. A partir desta versão, apenas os widgets VIS-2 são suportados. !\nMudança de Wiki\nMuitas otimizações e correções de bugs",
-				"nl": "!!! Geen VIS-widgets meer. Blijf v1.3.1 gebruiken voor VIS-widgets. Vanaf deze versie worden alleen VIS-2 widgets ondersteund. !!!\nWiki gewijzigd\nVeel optimalisaties en bugfixes",
-				"fr": "!!! Plus de widgets VIS. Continuer à utiliser v1.3.1 pour les widgets VIS. A partir de cette version, seuls les widgets VIS-2 sont pris en charge. !!!\nWiki modifié\nDe nombreuses optimisations et corrections de bugs",
-				"it": "♪ Nessun widget VIS più. Continua a usare v1.3.1 per i widget VIS. A partire da questa versione, sono supportati solo i widget VIS-2. ♪!\nModificato Wiki\nMolte ottimizzazioni e correzioni di bug",
-				"es": "!!! Ya no hay widgets VIS. Siga utilizando v1.3.1 para los widgets VIS. A partir de esta versión, solo se admiten widgets VIS-2. !!!\nCambio de Wiki\nMuchas optimizaciones y correcciones de errores",
-				"pl": "! Nie ma już widżetów VIS. Kontynuować stosowanie v1.3.1 dla widżetów VIS. Od tej wersji obsługiwane są tylko widżety VIS-2.!\nZmieniono Wiki\nWiele optymalizacji i poprawek błędów",
-				"uk": "Про нас Без віджетів VIS більше. Продовжити використання v1.3.1 для віджетів VIS. За допомогою цієї версії підтримується тільки віджети VIS-2. Про нас!\nЗмінено Вікі\nБагато оптимізація і виправлення помилок",
-				"zh-cn": "快点! 没有VIS部件了。 对VIS部件继续使用v1.3.1. 从这个版本开始,只支持VIS-2部件. 快点!\n已更改的 Wiki\n许多优化和错误修正"
-			},
-			"1.3.1": {
-				"en": "bug fixes trapInfo for traps",
-				"de": "bugfixes trapInfo für Fallen",
-				"ru": "bug correctedes trapInfo для ловушек",
-				"pt": "correções de bugs trapInfo para armadilhas",
-				"nl": "bug repareert valInfo voor vallen",
-				"fr": "bug corrige le piègeInfo pour les pièges",
-				"it": "bug correzioni trapInfo per trappole",
-				"es": "bug arregla trampaInfo para trampas",
-				"pl": "błąd poprawki trapInfo dla pułapek",
-				"uk": "виправлення помилок для пасток",
-				"zh-cn": "错误修正陷阱信息"
-			},
-			"1.3.0": {
-				"en": "Steiger04) new states for new and rejected traps",
-				"de": "Steiger04) neue Staaten für neue und abgelehnte Fallen",
-				"ru": "Steiger04) новые состояния для новых и отвергнутых ловушек",
-				"pt": "Steiger04) novos estados para armadilhas novas e rejeitadas",
-				"nl": "Steiger04) nieuwe staten voor nieuwe en afgewezen vallen",
-				"fr": "Steiger04) nouveaux États pour les nouveaux et rejetés pièges",
-				"it": "Steiger04) nuovi stati per trappole nuove e respinte",
-				"es": "Steiger04) nuevos estados para trampas nuevas y rechazadas",
-				"pl": "Steiger04) nowe państwa dla nowych i odrzuconych pułapek",
-				"uk": "Steiger04) нові держави для нових і відхилених пасток",
-				"zh-cn": "Steiger04 新的州,用于新的和被拒绝的陷阱"
-			},
-			"1.2.0": {
-				"en": "added new state lastUpdated\nUI optimized",
-				"de": "neuer Zustand letztes Aktualisierung\nUI optimiert",
-				"ru": "добавленное новое состояние Обновлено\nUI оптимизирован",
-				"pt": "adicionado novo estado último Atualizado\nUI otimizado",
-				"nl": "laatste nieuwe status toegevoegd Bijgewerkt\nUI geoptimaliseerd",
-				"fr": "dernier état ajouté Mise à jour\nL'interface utilisateur optimisée",
-				"it": "aggiunto nuovo stato ultimo Aggiornato\nUI ottimizzato",
-				"es": "nuevo estado último Actualizado\nUI optimizado",
-				"pl": "dodany nowy stan ostatni Aktualizacja\nInterfejs zoptymalizowany",
-				"uk": "додано новий стан Ажурирано\nUI оптимізовано",
-				"zh-cn": "最后添加新状态 更新\nUI 优化"
-			},
-			"1.1.5": {
-				"en": "createTheme added",
-				"de": "erstellen Thema hinzugefügt",
-				"ru": "создание Тема добавлена",
-				"pt": "criar Tema adicionado",
-				"nl": "aanmaken Thema toegevoegd",
-				"fr": "créer Thème ajouté",
-				"it": "creare Tema aggiunto",
-				"es": "crear Tema añadido",
-				"pl": "create Motyw dodany",
-				"uk": "створення Тема додано",
-				"zh-cn": "创建 添加主题"
-			},
-			"1.1.4": {
-				"en": "legacy-peer-deps added",
-				"de": "legacy-peer-deps hinzugefügt",
-				"ru": "добавлено:",
-				"pt": "legado-peer-deps adicionado",
-				"nl": "legacy-peer-deps toegevoegd",
-				"fr": "legacy-peer-deps ajouté",
-				"it": "aggiunto",
-				"es": "legado-peer-deps añadido",
-				"pl": "legacy- peer- deps",
-				"uk": "додано legacy-peer-deps",
-				"zh-cn": "添加了 leg-peer- dips"
-			},
-			"1.1.3": {
-				"en": "some GUI optimizations",
-				"de": "einige GUI-Optimierungen",
-				"ru": "некоторые GUI оптимизации",
-				"pt": "algumas otimizações de GUI",
-				"nl": "sommige GUI optimalisaties",
-				"fr": "quelques optimisations GUI",
-				"it": "alcune ottimizzazioni GUI",
-				"es": "algunas optimizaciones GUI",
-				"pl": "niektóre zoptymalizacje GUI",
-				"uk": "деякі оптимізації інтерфейсу",
-				"zh-cn": "一些图形用户界面优化"
-			}
-		},
-		"title": "Radar Trap",
-		"titleLang": {
-			"en": "Radar Trap",
-			"de": "Radarfalle",
-			"ru": "Радарная ловушка",
-			"pt": "Armadilha de radar",
-			"nl": "Radarval",
-			"fr": "Piège radar",
-			"it": "Trappola radar",
-			"es": "Trampa de radar",
-			"pl": "Pułapka radarowa",
-			"zh-cn": "雷达陷阱",
-			"uk": "Радарна пастка"
-		},
-		"desc": {
-			"en": "Detect speed traps and obstacles on routes",
-			"de": "Radarfallen und Hindernisse auf Strecken erkennen",
-			"ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
-			"pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
-			"nl": "Detecteer snelheidscontroles en obstakels op routes",
-			"fr": "Détecter les radars et les obstacles sur les routes",
-			"it": "Rileva autovelox e ostacoli sui percorsi",
-			"es": "Detecta trampas de velocidad y obstáculos en las rutas",
-			"pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
-			"zh-cn": "检测路线上的速度陷阱和障碍物",
-			"uk": "Виявляйте радари та перешкоди на маршрутах"
-		},
-		"authors": ["Steiger04 <steiger04@posteo.de>"],
-		"keywords": ["speed traps", "obstacles on routes"],
-		"license": "MIT",
-		"stopBeforeUpdate": true,
-		"platform": "Javascript/Node.js",
-		"main": "build/main.js",
-		"icon": "radar-trap.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
-		"readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
-		"loglevel": "info",
-		"ereaseUpload": true,
-		"mode": "daemon",
-		"type": "geoposition",
-		"compact": true,
-		"connectionType": "cloud",
-		"dataSource": "poll",
-		"materialize": true,
-		"singletonHost": true,
-		"supportCustoms": false,
-		"jsonCustom": false,
-		"eraseOnUpload": true,
-		"restartAdapters": ["vis", "vis-2"],
-		"dependencies": [
-			{
-				"js-controller": ">=5.0.17"
-			}
-		],
-		"adminUI": {
-			"config": "materialize"
-		},
-		"visWidgets": {
-			"ignoreInVersions": [2]
-		},
-		"installedFrom": "D:\\dev-workspace\\ioBroker.radar-trap"
-	},
-	"native": {
-		"settings": {
-			"httpsEnabled": false,
-			"domains": "localhost",
-			"feathersPort": 3040,
-			"mbxAccessToken": ""
-		}
-	},
-	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "info",
-			"type": "channel",
-			"common": {
-				"name": "Information"
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.connection",
-			"type": "state",
-			"common": {
-				"role": "indicator.connected",
-				"name": "Feathers-Server started",
-				"type": "boolean",
-				"read": true,
-				"write": false,
-				"def": true
-			},
-			"native": {}
-		}
-	]
+  "common": {
+    "name": "radar-trap",
+    "version": "2.1.0",
+    "news": {
+      "2.1.0": {
+        "en": "Dependencies updated\nSome code optimizations",
+        "de": "Ausgaben aktualisiert\nEinige Codeoptimierungen",
+        "ru": "Обновленные данные о зависимостях\nНекоторые оптимизации кода",
+        "pt": "Dependências atualizadas\nAlgumas otimizações de código",
+        "nl": "Afhankelijkheden bijgewerkt\nSommige code optimalisaties",
+        "fr": "Dépendances actualisées\nQuelques optimisations de code",
+        "it": "Dipendenze aggiornate\nAlcune ottimizzazioni di codice",
+        "es": "Actualización de las dependencias\nAlgunas optimizaciones de código",
+        "pl": "Aktualizacja zależności\nNiektóre optymalizacje kodu",
+        "uk": "Залежність оновлено\nДеякі оптимізації коду",
+        "zh-cn": "更新的依赖关系\n一些代码优化"
+      },
+      "2.0.0": {
+        "en": "!!! No VIS widgets anymore. Continue using v1.3.1 for VIS widgets. Starting from this version, only VIS-2 widgets are supported. !!! \nChanged Wiki\nMany optimizations and bug fixes",
+        "de": "! Keine VIS Widgets mehr. Verwenden Sie v1.3.1 für VIS Widgets weiter. Ab dieser Version werden nur VIS-2 Widgets unterstützt. !\nWiki ändern\nViele Optimierungen und Fehlerbehebungen",
+        "ru": "!!! Больше никаких виджетов VIS. Продолжать использовать v1.3.1 для виджетов VIS. Начиная с этой версии поддерживаются только виджеты VIS-2. !!!\nИзменение Wiki\nМногие оптимизации и исправления ошибок",
+        "pt": "? Já não há widgets VIS. Continue usando v1.3.1 para widgets VIS. A partir desta versão, apenas os widgets VIS-2 são suportados. !\nMudança de Wiki\nMuitas otimizações e correções de bugs",
+        "nl": "!!! Geen VIS-widgets meer. Blijf v1.3.1 gebruiken voor VIS-widgets. Vanaf deze versie worden alleen VIS-2 widgets ondersteund. !!!\nWiki gewijzigd\nVeel optimalisaties en bugfixes",
+        "fr": "!!! Plus de widgets VIS. Continuer à utiliser v1.3.1 pour les widgets VIS. A partir de cette version, seuls les widgets VIS-2 sont pris en charge. !!!\nWiki modifié\nDe nombreuses optimisations et corrections de bugs",
+        "it": "♪ Nessun widget VIS più. Continua a usare v1.3.1 per i widget VIS. A partire da questa versione, sono supportati solo i widget VIS-2. ♪!\nModificato Wiki\nMolte ottimizzazioni e correzioni di bug",
+        "es": "!!! Ya no hay widgets VIS. Siga utilizando v1.3.1 para los widgets VIS. A partir de esta versión, solo se admiten widgets VIS-2. !!!\nCambio de Wiki\nMuchas optimizaciones y correcciones de errores",
+        "pl": "! Nie ma już widżetów VIS. Kontynuować stosowanie v1.3.1 dla widżetów VIS. Od tej wersji obsługiwane są tylko widżety VIS-2.!\nZmieniono Wiki\nWiele optymalizacji i poprawek błędów",
+        "uk": "Про нас Без віджетів VIS більше. Продовжити використання v1.3.1 для віджетів VIS. За допомогою цієї версії підтримується тільки віджети VIS-2. Про нас!\nЗмінено Вікі\nБагато оптимізація і виправлення помилок",
+        "zh-cn": "快点! 没有VIS部件了。 对VIS部件继续使用v1.3.1. 从这个版本开始,只支持VIS-2部件. 快点!\n已更改的 Wiki\n许多优化和错误修正"
+      },
+      "1.3.1": {
+        "en": "bug fixes trapInfo for traps",
+        "de": "bugfixes trapInfo für Fallen",
+        "ru": "bug correctedes trapInfo для ловушек",
+        "pt": "correções de bugs trapInfo para armadilhas",
+        "nl": "bug repareert valInfo voor vallen",
+        "fr": "bug corrige le piègeInfo pour les pièges",
+        "it": "bug correzioni trapInfo per trappole",
+        "es": "bug arregla trampaInfo para trampas",
+        "pl": "błąd poprawki trapInfo dla pułapek",
+        "uk": "виправлення помилок для пасток",
+        "zh-cn": "错误修正陷阱信息"
+      },
+      "1.3.0": {
+        "en": "Steiger04) new states for new and rejected traps",
+        "de": "Steiger04) neue Staaten für neue und abgelehnte Fallen",
+        "ru": "Steiger04) новые состояния для новых и отвергнутых ловушек",
+        "pt": "Steiger04) novos estados para armadilhas novas e rejeitadas",
+        "nl": "Steiger04) nieuwe staten voor nieuwe en afgewezen vallen",
+        "fr": "Steiger04) nouveaux États pour les nouveaux et rejetés pièges",
+        "it": "Steiger04) nuovi stati per trappole nuove e respinte",
+        "es": "Steiger04) nuevos estados para trampas nuevas y rechazadas",
+        "pl": "Steiger04) nowe państwa dla nowych i odrzuconych pułapek",
+        "uk": "Steiger04) нові держави для нових і відхилених пасток",
+        "zh-cn": "Steiger04 新的州,用于新的和被拒绝的陷阱"
+      },
+      "1.2.0": {
+        "en": "added new state lastUpdated\nUI optimized",
+        "de": "neuer Zustand letztes Aktualisierung\nUI optimiert",
+        "ru": "добавленное новое состояние Обновлено\nUI оптимизирован",
+        "pt": "adicionado novo estado último Atualizado\nUI otimizado",
+        "nl": "laatste nieuwe status toegevoegd Bijgewerkt\nUI geoptimaliseerd",
+        "fr": "dernier état ajouté Mise à jour\nL'interface utilisateur optimisée",
+        "it": "aggiunto nuovo stato ultimo Aggiornato\nUI ottimizzato",
+        "es": "nuevo estado último Actualizado\nUI optimizado",
+        "pl": "dodany nowy stan ostatni Aktualizacja\nInterfejs zoptymalizowany",
+        "uk": "додано новий стан Ажурирано\nUI оптимізовано",
+        "zh-cn": "最后添加新状态 更新\nUI 优化"
+      },
+      "1.1.5": {
+        "en": "createTheme added",
+        "de": "erstellen Thema hinzugefügt",
+        "ru": "создание Тема добавлена",
+        "pt": "criar Tema adicionado",
+        "nl": "aanmaken Thema toegevoegd",
+        "fr": "créer Thème ajouté",
+        "it": "creare Tema aggiunto",
+        "es": "crear Tema añadido",
+        "pl": "create Motyw dodany",
+        "uk": "створення Тема додано",
+        "zh-cn": "创建 添加主题"
+      },
+      "1.1.4": {
+        "en": "legacy-peer-deps added",
+        "de": "legacy-peer-deps hinzugefügt",
+        "ru": "добавлено:",
+        "pt": "legado-peer-deps adicionado",
+        "nl": "legacy-peer-deps toegevoegd",
+        "fr": "legacy-peer-deps ajouté",
+        "it": "aggiunto",
+        "es": "legado-peer-deps añadido",
+        "pl": "legacy- peer- deps",
+        "uk": "додано legacy-peer-deps",
+        "zh-cn": "添加了 leg-peer- dips"
+      }
+    },
+    "title": "Radar Trap",
+    "titleLang": {
+      "en": "Radar Trap",
+      "de": "Radarfalle",
+      "ru": "Радарная ловушка",
+      "pt": "Armadilha de radar",
+      "nl": "Radarval",
+      "fr": "Piège radar",
+      "it": "Trappola radar",
+      "es": "Trampa de radar",
+      "pl": "Pułapka radarowa",
+      "zh-cn": "雷达陷阱",
+      "uk": "Радарна пастка"
+    },
+    "desc": {
+      "en": "Detect speed traps and obstacles on routes",
+      "de": "Radarfallen und Hindernisse auf Strecken erkennen",
+      "ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
+      "pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
+      "nl": "Detecteer snelheidscontroles en obstakels op routes",
+      "fr": "Détecter les radars et les obstacles sur les routes",
+      "it": "Rileva autovelox e ostacoli sui percorsi",
+      "es": "Detecta trampas de velocidad y obstáculos en las rutas",
+      "pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
+      "zh-cn": "检测路线上的速度陷阱和障碍物",
+      "uk": "Виявляйте радари та перешкоди на маршрутах"
+    },
+    "authors": [
+      "Steiger04 <steiger04@posteo.de>"
+    ],
+    "keywords": [
+      "speed traps",
+      "obstacles on routes"
+    ],
+    "license": "MIT",
+    "stopBeforeUpdate": true,
+    "platform": "Javascript/Node.js",
+    "main": "build/main.js",
+    "icon": "radar-trap.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
+    "readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
+    "loglevel": "info",
+    "ereaseUpload": true,
+    "mode": "daemon",
+    "type": "geoposition",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "materialize": true,
+    "singletonHost": true,
+    "supportCustoms": false,
+    "jsonCustom": false,
+    "eraseOnUpload": true,
+    "restartAdapters": [
+      "vis",
+      "vis-2"
+    ],
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.17"
+      }
+    ],
+    "adminUI": {
+      "config": "materialize"
+    },
+    "visWidgets": {
+      "ignoreInVersions": [
+        2
+      ]
+    },
+    "installedFrom": "D:\\dev-workspace\\ioBroker.radar-trap"
+  },
+  "native": {
+    "settings": {
+      "httpsEnabled": false,
+      "domains": "localhost",
+      "feathersPort": 3040,
+      "mbxAccessToken": ""
+    }
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Feathers-Server started",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": true
+      },
+      "native": {}
+    }
+  ]
 }
