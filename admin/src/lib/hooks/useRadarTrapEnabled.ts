@@ -4,15 +4,15 @@ import { useAppData } from "../../App";
 import { radarTrapEnabled$ } from "../helpers/radarTrapEnabledStream";
 
 const useRadarTrapEnabled = (): { enabled: boolean } => {
-	const { that } = useAppData();
+	const { socket, instanceId } = useAppData();
 	const [enabled, setEnabled] = useState<boolean>(false);
 
 	useEffect(() => {
 		let sub: Subscription;
 
-		that.socket
-			.getObject(that.instanceId)
-			.then((instanceObj: ioBroker.Object) => {
+		socket
+			.getObject(instanceId)
+			.then((instanceObj) => {
 				sub = radarTrapEnabled$.subscribe((radarTrapEnabled) => {
 					// console.log("radarTrapEnabled", radarTrapEnabled);
 
@@ -27,7 +27,7 @@ const useRadarTrapEnabled = (): { enabled: boolean } => {
 		return () => {
 			if (sub !== undefined) sub.unsubscribe();
 		};
-	}, [that]);
+	}, [instanceId, socket]);
 
 	return { enabled };
 };

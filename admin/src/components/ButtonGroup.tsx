@@ -36,14 +36,14 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
 	isValid,
 	isDirty,
 }): ReactElement => {
-	const { that } = useAppData();
+	const { socket, adapterName, instance } = useAppData();
 
 	const { cronCounterHHMMSS } = useCronCounterHHMMSS(_id);
 
 	const cronHandler = (event: SyntheticEvent, name: string) => {
 		event.stopPropagation();
-		that.socket
-			.setState(`${that.adapterName}.${that.instance}.${_id}.cron-job.${name}`, {
+		socket
+			.setState(`${adapterName}.${instance}.${_id}.cron-job.${name}`, {
 				val: true,
 				ack: false,
 			})

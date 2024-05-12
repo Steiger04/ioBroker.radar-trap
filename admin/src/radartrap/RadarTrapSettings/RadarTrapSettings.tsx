@@ -9,7 +9,7 @@ import { IbrTextField } from "../../ibr";
 import { nativeSettingsSchema } from "../../lib";
 
 const RadarTrapSettings: FC = (): ReactElement => {
-	const { that, native, updateNativeValue } = useAppData();
+	const { that, native, savedNative, updateNativeValue } = useAppData();
 
 	const methods = useForm<ioBroker.INative>({
 		resolver: yupResolver(nativeSettingsSchema),
@@ -30,10 +30,19 @@ const RadarTrapSettings: FC = (): ReactElement => {
 	} = methods;
 
 	useEffect(() => {
-		handleSubmit(
-			(data: ioBroker.INative) => !isValidating && isValid && updateNativeValue("settings", { ...data.settings }),
-			() => that.setState({ changed: false }),
-		)().catch((ex) => console.log(ex));
+		if (!isValid) return that.setState({ changed: false });
+
+		handleSubmit((data: ioBroker.INative) => {
+			if (!isValidating && isValid) {
+				updateNativeValue("settings", { ...data.settings }, () => {
+					if (JSON.stringify(savedNative) !== JSON.stringify(data)) {
+						that.setState({ changed: true });
+					} else {
+						that.setState({ changed: false });
+					}
+				});
+			}
+		})().catch((ex) => console.log(ex));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isValidating, isValid]);
 

@@ -53,8 +53,6 @@ const RadarTrapMaps: FC = (): ReactElement => {
 			return;
 		}
 
-		console.log("feature", feature);
-
 		if (trapInfo !== null) {
 			setTrapInfo(null);
 		}

@@ -11,14 +11,14 @@
 		"sourceRoot": "./src",
 		"noImplicitAny": false,
 		"lib": ["es2018", "DOM"],
-		"esModuleInterop": true,
+		"esModuleInterop": true
 	},
 	"include": [
 		"./**/*.ts",
 		"./**/*.tsx",
 		"../src/lib/adapter-config.d.ts",
 		"./assets/map-icons/index.d.ts",
-		"../src/lib/i18n.ts",
+		"../src/lib/i18n.ts"
 	],
-	"exclude": ["./**/*.test.ts", "./**/*.test.tsx"],
+	"exclude": ["./**/*.test.ts", "./**/*.test.tsx"]
 }

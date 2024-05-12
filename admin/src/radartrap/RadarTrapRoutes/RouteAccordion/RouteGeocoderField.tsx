@@ -88,7 +88,16 @@ const RouteGeocoderField: FC<RouteGeocoderFieldProps> = ({
 						}
 					});
 		}
-	}, [watchAddress, that.geocodingService]);
+	}, [
+		watchAddress,
+		that.geocodingService,
+		geocoderAddressAndGeometry.address,
+		defaultAddress,
+		language,
+		setValue,
+		addressPath,
+		geometryPath,
+	]);
 
 	const handlePress = (e: KeyboardEvent<HTMLElement>) => {
 		e.stopPropagation();

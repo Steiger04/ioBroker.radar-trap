@@ -10,6 +10,7 @@ import type { Static } from "@sinclair/typebox";
 import type { MatrixResponse } from "@mapbox/mapbox-sdk/services/matrix";
 import type { FeatureCollection, LineString, Point, Feature } from "@turf/helpers/dist/js/lib/geojson";
 import type * as utils from "@iobroker/adapter-core";
+import { AdminConnection } from "@iobroker/adapter-react-v5";
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
@@ -33,12 +34,17 @@ declare global {
 		interface IAppContext {
 			that: App;
 			savedNative: INative;
-			updateNativeValue: (attr: nativeKeys, value: any, cb?: () => void) => void;
+			updateNativeValue: (attr: string, value: any, cb: () => void) => void;
 			native: INative | Partial<INative>;
 			feathers: createApplication.Application<any> & {
 				io: SocketIOClient.Socket;
 			};
 			language: string;
+			socket: AdminConnection;
+			adapterName: string;
+			instance: number;
+			instanceId: string;
+			common: any;
 		}
 	}
 }

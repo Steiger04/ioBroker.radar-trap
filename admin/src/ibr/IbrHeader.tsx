@@ -5,7 +5,7 @@ import { useAppData } from "../App";
 import type { FC, ReactElement } from "react";
 
 const IbrHeader: FC = (): ReactElement => {
-	const { that } = useAppData();
+	const { that, instance, common } = useAppData();
 
 	return (
 		<Box
@@ -17,9 +17,9 @@ const IbrHeader: FC = (): ReactElement => {
 			}
 		>
 			<Logo
-				common={that.common}
+				common={common}
 				native={that.state.native}
-				instance={that.instance}
+				instance={instance}
 				onError={(text): void => that.setState({ errorText: text })}
 				onLoad={that.onLoadConfig.bind(that)}
 			/>

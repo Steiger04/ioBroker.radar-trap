@@ -1,40 +1,41 @@
-import Geocoding from "@mapbox/mapbox-sdk/services/geocoding";
+// import Geocoding from "@mapbox/mapbox-sdk/services/geocoding";
 import Box from "@mui/material/Box";
 import type { BaseSyntheticEvent, FC, PropsWithChildren, ReactElement } from "react";
-import { useAppData } from "../App";
+import { useAppData, connectionReady } from "../App";
 
 const SaveCloseButtonsWrapper: FC<PropsWithChildren> = ({ children }): ReactElement => {
-	const { that, native } = useAppData();
+	const { that, native, socket, instanceId } = useAppData();
 
 	const onClickHandler = (event: BaseSyntheticEvent) => {
 		const saveType =
 			event.target.ariaLabel ||
+			event.target.parentElement.ariaLabel ||
 			event.target.parentElement.parentElement.ariaLabel ||
 			event.target.parentElement.parentElement.parentElement.ariaLabel;
 
-		if (
-			saveType === "Save" &&
-			native.settings!.mbxAccessToken /* &&
-			native.settings?.mbxAccessToken !==
-				savedNative.settings.mbxAccessToken */
-		) {
+		if (saveType === "Save") {
+			connectionReady(that, native as ioBroker.INative, socket, instanceId);
+		}
+
+		/* if (saveType === "Save" && native.settings!.mbxAccessToken) {
+			console.log("Save", native.settings!.mbxAccessToken);
 			setTimeout(
 				() =>
-					that.socket
-						.getObject(that.instanceId)
-						.then((instanceObj: ioBroker.Object) => {
+					socket
+						.getObject(instanceId)
+						.then((instanceObj) => {
 							if (instanceObj) {
 								that.geocodingService = Geocoding({
 									accessToken: native.settings!.mbxAccessToken,
 								});
 
-								that.socket.setObject(that.instanceId, instanceObj).catch((ex: any) => console.log(ex));
+								socket.setObject(instanceId, instanceObj).catch((ex: any) => console.log(ex));
 							}
 						})
 						.catch((ex: any) => console.log(ex)),
 				1000,
 			);
-		}
+		} */
 	};
 
 	return <Box onClick={onClickHandler}>{children}</Box>;
