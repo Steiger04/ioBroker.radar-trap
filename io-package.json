@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "news": {
+      "2.1.3": {
+        "en": "new build run",
+        "de": "neuer bauablauf",
+        "ru": "новый сбор",
+        "pt": "nova versão de compilação",
+        "nl": "nieuwe uitvoering",
+        "fr": "nouveau cycle de construction",
+        "it": "nuova costruzione",
+        "es": "nueva construcción",
+        "pl": "nowa budowa",
+        "uk": "новий проект будівництва",
+        "zh-cn": "新构建运行"
+      },
       "2.1.2": {
         "en": "test-and-release.yml changed",
         "de": "test-and-release.yml geändert",
@@ -80,19 +93,6 @@
         "pl": "Steiger04) nowe państwa dla nowych i odrzuconych pułapek",
         "uk": "Steiger04) нові держави для нових і відхилених пасток",
         "zh-cn": "Steiger04 新的州,用于新的和被拒绝的陷阱"
-      },
-      "1.2.0": {
-        "en": "added new state lastUpdated\nUI optimized",
-        "de": "neuer Zustand letztes Aktualisierung\nUI optimiert",
-        "ru": "добавленное новое состояние Обновлено\nUI оптимизирован",
-        "pt": "adicionado novo estado último Atualizado\nUI otimizado",
-        "nl": "laatste nieuwe status toegevoegd Bijgewerkt\nUI geoptimaliseerd",
-        "fr": "dernier état ajouté Mise à jour\nL'interface utilisateur optimisée",
-        "it": "aggiunto nuovo stato ultimo Aggiornato\nUI ottimizzato",
-        "es": "nuevo estado último Actualizado\nUI optimizado",
-        "pl": "dodany nowy stan ostatni Aktualizacja\nInterfejs zoptymalizowany",
-        "uk": "додано новий стан Ажурирано\nUI оптимізовано",
-        "zh-cn": "最后添加新状态 更新\nUI 优化"
       }
     },
     "title": "Radar Trap",

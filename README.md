@@ -21,7 +21,7 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.1.3 (2024-05-12)
 * (Steiger04) new build run
 
 ### 2.1.2 (2024-05-12)
