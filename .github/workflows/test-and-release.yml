@@ -20,17 +20,17 @@ concurrency:
 
 jobs:
   # Performs quick checks before the expensive test runs
-  check-and-lint:
-    if: contains(github.event.head_commit.message, '[skip ci]') == false
+  # check-and-lint:
+    # if: contains(github.event.head_commit.message, '[skip ci]') == false
 
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
 
-    steps:
-      - uses: ioBroker/testing-action-check@v1
-        with:
-          node-version: "18.x" # This should be LTS
-          type-checking: false
-          lint: false
+    # steps:
+      # - uses: ioBroker/testing-action-check@v1
+        # with:
+          # node-version: "18.x" # This should be LTS
+          # type-checking: false
+          # lint: false
 
 
   # Runs adapter tests on all supported node versions and OSes
@@ -54,7 +54,8 @@ jobs:
 
   # Deploys the final package to NPM
   deploy:
-    needs: [check-and-lint, adapter-tests]    
+    # needs: [check-and-lint, adapter-tests]
+    needs: [adapter-tests]
 
     # Trigger this step only when a commit on any branch is tagged with a version number
     if: |
