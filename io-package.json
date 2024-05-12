@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "radar-trap",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "news": {
+      "2.1.1": {
+        "en": "test-and-release.yml changed",
+        "de": "test-and-release.yml geändert",
+        "ru": "test-and-release.yml изменен",
+        "pt": "test-and-release.yml mudou",
+        "nl": "test-and-release.yml gewijzigd",
+        "fr": "test-and-release.yml modifié",
+        "it": "test-and-release.yml cambiato",
+        "es": "test-and-release.yml cambió",
+        "pl": "test- and- releasase.yml zmienione",
+        "uk": "тест-і-випуск.yml змінився",
+        "zh-cn": "测试和释放.yml已更改"
+      },
       "2.1.0": {
         "en": "Dependencies updated\nSome code optimizations",
         "de": "Ausgaben aktualisiert\nEinige Codeoptimierungen",
@@ -80,19 +93,6 @@
         "pl": "create Motyw dodany",
         "uk": "створення Тема додано",
         "zh-cn": "创建 添加主题"
-      },
-      "1.1.4": {
-        "en": "legacy-peer-deps added",
-        "de": "legacy-peer-deps hinzugefügt",
-        "ru": "добавлено:",
-        "pt": "legado-peer-deps adicionado",
-        "nl": "legacy-peer-deps toegevoegd",
-        "fr": "legacy-peer-deps ajouté",
-        "it": "aggiunto",
-        "es": "legado-peer-deps añadido",
-        "pl": "legacy- peer- deps",
-        "uk": "додано legacy-peer-deps",
-        "zh-cn": "添加了 leg-peer- dips"
       }
     },
     "title": "Radar Trap",
