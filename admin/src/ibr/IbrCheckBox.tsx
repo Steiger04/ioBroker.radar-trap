@@ -9,7 +9,7 @@ interface IbrCheckBoxProps {
 	sx?: SxProps<Theme>;
 	control: Control<ioBroker.INative>;
 	name: ioBroker.nativeKeys;
-	label: string;
+	label: AdminWord;
 }
 
 const IbrCheckBox: FC<IbrCheckBoxProps> = ({ sx = [], control, name, label }): ReactElement => {

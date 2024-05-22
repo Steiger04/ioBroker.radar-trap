@@ -44,7 +44,7 @@ const MapList: FC<MapListProps> = ({
 			.sort((a, b) => a.description!.localeCompare(b.description!))
 			.map((data) => {
 				const actualExclusionsList = data
-					.activeProfile!.actualExclusion.map((excl) => I18n.t(excl as string))
+					.activeProfile!.actualExclusion.map((excl) => I18n.t(excl as AdminWord))
 					.join(", ");
 
 				const primaryText = (

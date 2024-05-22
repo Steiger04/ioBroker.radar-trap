@@ -97,7 +97,7 @@ const RouteProfileGroup: FC<RouteProfileGroupProps> = ({ disabled }): ReactEleme
 									checked={activeProfile.actualExclusion.includes(exclusion)}
 								/>
 							}
-							label={I18n.t(exclusion as string)}
+							label={I18n.t(exclusion as AdminWord)}
 						/>
 					))}
 			</FormGroup>

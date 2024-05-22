@@ -1,8 +1,11 @@
 module.exports = {
 	reactRaw: {
-		// assetNames: "assets/[name]-[hash]",
+		define: {
+			"global": "window",
+		},
 		loader: {
 			".png": "dataurl",
+			".svg": "text",
 		},
 	},
 };

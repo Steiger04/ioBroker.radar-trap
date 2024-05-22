@@ -1,5 +1,8 @@
 import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import CircleSvg from "../../../assets/circle.svg";
+import MapSvg from "../../../assets/map.svg";
+import type { DrawControlProps } from "./DrawControl";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { CircleMode, DragCircleMode, DirectMode, SimpleSelectMode } = require("maplibre-gl-draw-circle");
 
@@ -18,7 +21,7 @@ class ExtendMapboxDraw extends MapboxDraw implements mapboxgl.IControl {
 	onAddOrig: (map: mapboxgl.Map) => HTMLElement;
 	onRemoveOrig: (map: mapboxgl.Map) => void;
 
-	constructor(props: ConstructorParameters<typeof MapboxDraw>[0]) {
+	constructor(props: DrawControlProps) {
 		super({
 			...props,
 			modes: {
@@ -37,7 +40,13 @@ class ExtendMapboxDraw extends MapboxDraw implements mapboxgl.IControl {
 					this.changeMode("draw_circle", { initialRadiusInKm: 5.0 });
 				},
 				classes: ["mapbox-gl-draw_ctrl-draw-btn"],
-				buttonStyle: "background-image: url(./assets/circle.svg);background-size: 15px 15px;",
+				buttonStyle: `background-image: url(data:image/svg+xml;base64,${btoa(CircleSvg)});background-size: 20px 20px;`,
+			},
+			{
+				on: "click",
+				action: () => props.setToggle!((prev) => !prev),
+				classes: ["mapbox-gl-draw_ctrl-draw-btn"],
+				buttonStyle: `background-image: url(data:image/svg+xml;base64,${btoa(MapSvg)});background-size: 20px 20px;`,
 			},
 		];
 

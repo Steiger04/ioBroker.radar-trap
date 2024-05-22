@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import { Feature, featureCollection } from "@turf/helpers";
+import bbox from "@turf/bbox";
 import { FC, ReactElement, useCallback, useEffect, useState, useRef } from "react";
 import Map, { MapRef, ScaleControl, FullscreenControl } from "react-map-gl";
 import { useAppData } from "../../App";
@@ -8,10 +9,12 @@ import { DrawControl } from "./DrawControl";
 import { useFormContext } from "react-hook-form";
 
 import type { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
+import { AreaAutocomplete } from "./AreaAutocomplete";
 
 const AreaTrapMap: FC = (): ReactElement => {
 	const { savedNative, feathers } = useAppData();
-	// const mapRef = useRef<MapRef>(null);
+	const [toggle, setToggle] = useState(false);
+	const [landkreisFeature, setLandkreisFeature] = useState<radarTrap.AreaPolygons | null>(null);
 	const [mapRef, setMapRef] = useState<MapRef | null>(null);
 	const drawRef = useRef<MapboxDraw>(null);
 	const { setValue, getValues } = useFormContext<radarTrap.Area>();
@@ -20,9 +23,15 @@ const AreaTrapMap: FC = (): ReactElement => {
 		(e: DrawUpdateEvent | DrawCreateEvent) => {
 			if (!drawRef.current) return;
 
+			console.log("onUpdate");
+
 			const tmpFeature = e.features[0] as Feature<GeoJSON.Polygon, GeoJSON.GeoJsonProperties>;
 
+			console.log("tmpFeature", tmpFeature);
+
 			const newFeatures = { ...getValues("areaPolygons") };
+
+			console.log("newFeatures", newFeatures);
 
 			if (tmpFeature.id !== Object.keys(newFeatures)[0]) {
 				drawRef.current.delete(Object.keys(newFeatures)[0]);
@@ -72,6 +81,29 @@ const AreaTrapMap: FC = (): ReactElement => {
 		resizeMap(false);
 	}, [drawRef, resizeMap, boxStatus, getValues]);
 
+	useEffect(() => {
+		if (landkreisFeature && drawRef.current && mapRef) {
+			drawRef.current.deleteAll();
+
+			drawRef.current.add(featureCollection(Object.values(landkreisFeature)));
+
+			setValue("areaPolygons", landkreisFeature, {
+				shouldValidate: true,
+				shouldDirty: true,
+			});
+
+			const areaPolygonsBbox = bbox(featureCollection(Object.values(landkreisFeature)));
+
+			mapRef.fitBounds(
+				[
+					[areaPolygonsBbox[0], areaPolygonsBbox[1]],
+					[areaPolygonsBbox[2], areaPolygonsBbox[3]],
+				],
+				{ animate: false, padding: 10 },
+			);
+		}
+	}, [drawRef, mapRef, landkreisFeature, setValue]);
+
 	return (
 		<Box
 			sx={{
@@ -86,8 +118,6 @@ const AreaTrapMap: FC = (): ReactElement => {
 				attributionControl={false}
 				mapStyle="mapbox://styles/mapbox/streets-v12"
 			>
-				<FullscreenControl position="top-right" />
-
 				<DrawControl
 					ref={drawRef}
 					position="top-left"
@@ -100,7 +130,12 @@ const AreaTrapMap: FC = (): ReactElement => {
 					onCreate={onUpdate}
 					onUpdate={onUpdate}
 					onDelete={onDelete}
+					setToggle={setToggle}
 				/>
+
+				<FullscreenControl position="top-right" />
+
+				<AreaAutocomplete toggle={toggle} setToggle={setToggle} setLandkreisFeature={setLandkreisFeature} />
 
 				<ScaleControl position="bottom-left" />
 			</Map>

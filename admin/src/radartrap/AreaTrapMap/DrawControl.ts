@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import MapboxDraw, { DrawCreateEvent, DrawDeleteEvent, DrawUpdateEvent } from "@mapbox/mapbox-gl-draw";
 import ExtendMapboxDraw from "./ExtendMapboxDraw";
-import { forwardRef, useImperativeHandle } from "react";
+import { Dispatch, forwardRef, useImperativeHandle } from "react";
 import { useControl } from "react-map-gl";
 
 import type { ControlPosition } from "react-map-gl";
@@ -13,6 +13,8 @@ type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
 	onCreate?: (evt: DrawUpdateEvent | DrawCreateEvent) => void;
 	onUpdate?: (evt: DrawUpdateEvent | DrawCreateEvent) => void;
 	onDelete?: (evt: DrawDeleteEvent) => void;
+
+	setToggle?: Dispatch<React.SetStateAction<boolean>>;
 };
 
 const DrawControl = forwardRef((props: DrawControlProps, ref): null => {
@@ -40,4 +42,4 @@ const DrawControl = forwardRef((props: DrawControlProps, ref): null => {
 	return null;
 });
 
-export { DrawControl };
+export { DrawControl, DrawControlProps };

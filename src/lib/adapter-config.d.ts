@@ -159,7 +159,7 @@ declare global {
 			isValid: boolean;
 		}
 
-		type AreaPolygons = Record<string, Feature<GeoJSON.Polygon>>;
+		type AreaPolygons = Record<string, Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>>;
 
 		interface Area {
 			id?: string;

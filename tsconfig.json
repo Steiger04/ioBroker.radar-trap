@@ -20,13 +20,14 @@
 		// "importsNotUsedAsValues": "error",
 		// Required for TS debugging
 		"sourceMap": true,
-		"inlineSourceMap": false
+		"inlineSourceMap": false,
 		// watch=true breaks CI build steps
 		// "watch": false,
 		// "module": "CommonJS"
 		// yup
 		// "strictNullChecks": false,
 		// "strictFunctionTypes": false
+		"resolveJsonModule": true
 	},
 	"include": ["**/*.ts", "**/*.d.ts"],
 	"exclude": ["build/**", "node_modules/**", "admin/**", "widgets/**"]

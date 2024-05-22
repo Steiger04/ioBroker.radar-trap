@@ -1,4 +1,5 @@
 export { AreaTrapMap } from "./AreaTrapMap/AreaTrapMap";
+export { AreaAutocomplete } from "./AreaTrapMap/AreaAutocomplete";
 export { RadarTrapAccordion } from "./RadarTrapAccordion";
 export { RadarTrapActiveInfo } from "./RadarTrapActiveInfo";
 export { AreaModal } from "./RadarTrapAreas/AreaModal";

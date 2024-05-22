@@ -45,7 +45,7 @@ const TrapInfo: FC<TrapInfoProps> = ({ info }): ReactElement => {
 				<Box sx={{ bgcolor: "primary.main", px: 1, borderBottom: 2 }}>
 					{info.typeDesc && (
 						<Typography align="center" variant="h6">
-							{I18n.t(info.typeDesc as string)}
+							{I18n.t(info.typeDesc as AdminWord)}
 						</Typography>
 					)}
 				</Box>
@@ -53,7 +53,7 @@ const TrapInfo: FC<TrapInfoProps> = ({ info }): ReactElement => {
 					{info.typeText && (
 						<Typography variant="subtitle2">
 							<b>{`${I18n.t("kind")}: `}</b>
-							{I18n.t(info.typeText as string)}
+							{I18n.t(info.typeText as AdminWord)}
 						</Typography>
 					)}
 					{vmax && (

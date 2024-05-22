@@ -2,6 +2,7 @@ import {
 	BBox,
 	Feature,
 	LineString,
+	MultiPolygon,
 	Point,
 	Polygon,
 	area,
@@ -23,7 +24,7 @@ export enum AnalyzedType {
 }
 
 type Options = {
-	analyzedFeature: Feature<Polygon> | Feature<LineString>;
+	analyzedFeature: Feature<Polygon | MultiPolygon> | Feature<LineString>;
 	type: AnalyzedType;
 	maxTrapDistance?: number | undefined;
 };

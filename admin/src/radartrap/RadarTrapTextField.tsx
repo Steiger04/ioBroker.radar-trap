@@ -22,7 +22,7 @@ const RadarTrapTextField: FC<RadarTrapTextFieldProps> = ({ inputProps, disabled,
 				fullWidth={true}
 				disabled={disabled}
 				inputProps={inputProps}
-				label={I18n.t(label)}
+				label={I18n.t(label as AdminWord)}
 				type={type}
 				{...register(name, { valueAsNumber: type === "number" })}
 				error={Boolean(error)}

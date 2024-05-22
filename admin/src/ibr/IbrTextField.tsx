@@ -7,7 +7,7 @@ import type { UseFormReturn } from "react-hook-form";
 interface IbrTextFieldProps {
 	methods: UseFormReturn<ioBroker.INative, any>;
 	name: ioBroker.nativeKeys;
-	label: string;
+	label: AdminWord;
 	type: HTMLInputTypeAttribute;
 }
 
