@@ -156,8 +156,7 @@
     ],
     "adminUI": {
       "config": "materialize"
-    },
-    "installedFrom": "D:\\dev-workspace\\ioBroker.radar-trap"
+    }    
   },
   "native": {
     "settings": {
