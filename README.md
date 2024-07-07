@@ -21,9 +21,8 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.2.1 (2024-07-07)
 * (Steiger04) Dependencies updated
-
 
 ### 2.2.0 (2024-05-22)
 * (Steiger04) Added counties selection for areas
