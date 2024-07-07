@@ -95,7 +95,6 @@
 				"zh-cn": "错误修正陷阱信息"
 			}
 		},
-		"title": "Radar Trap",
 		"titleLang": {
 			"en": "Radar Trap",
 			"de": "Radarfalle",
@@ -124,7 +123,11 @@
 		},
 		"authors": ["Steiger04 <steiger04@posteo.de>"],
 		"keywords": ["speed traps", "obstacles on routes"],
-		"license": "MIT",
+		"licenseInformation": {
+			"license": "MIT",
+			"type": "free"
+		},
+		"tier": 3,
 		"stopBeforeUpdate": true,
 		"platform": "Javascript/Node.js",
 		"main": "build/main.js",
@@ -151,8 +154,7 @@
 		],
 		"adminUI": {
 			"config": "materialize"
-		},
-		"installedFrom": "D:\\dev-workspace\\ioBroker.radar-trap"
+		}
 	},
 	"native": {
 		"settings": {
