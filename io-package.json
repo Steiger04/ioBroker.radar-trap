@@ -188,4 +188,196 @@
 			"native": {}
 		}
 	]
+=======
+  "common": {
+    "name": "radar-trap",
+    "version": "2.2.0",
+    "news": {
+      "2.2.0": {
+        "en": "Added counties selection for areas",
+        "de": "Auswahl der Gebiete hinzugefügt",
+        "ru": "Добавлен выбор округов для областей",
+        "pt": "Adicionado seleção de condados para áreas",
+        "nl": "Selectie districten toegevoegd voor gebieden",
+        "fr": "Sélection de comtés pour les zones",
+        "it": "Selezione delle contee aggiuntive per le aree",
+        "es": "Selección de condados adicionales para áreas",
+        "pl": "Dodano wybór okręgów dla obszarów",
+        "uk": "Доданий вибір підрахунків для зон",
+        "zh-cn": "新增区域选择"
+      },
+      "2.1.3": {
+        "en": "new build run",
+        "de": "neuer bauablauf",
+        "ru": "новый сбор",
+        "pt": "nova versão de compilação",
+        "nl": "nieuwe uitvoering",
+        "fr": "nouveau cycle de construction",
+        "it": "nuova costruzione",
+        "es": "nueva construcción",
+        "pl": "nowa budowa",
+        "uk": "новий проект будівництва",
+        "zh-cn": "新构建运行"
+      },
+      "2.1.2": {
+        "en": "test-and-release.yml changed",
+        "de": "test-and-release.yml geändert",
+        "ru": "test-and-release.yml изменен",
+        "pt": "test-and-release.yml mudou",
+        "nl": "test-and-release.yml gewijzigd",
+        "fr": "test-and-release.yml modifié",
+        "it": "test-and-release.yml cambiato",
+        "es": "test-and-release.yml cambió",
+        "pl": "test- and- releasase.yml zmienione",
+        "uk": "тест-і-випуск.yml змінився",
+        "zh-cn": "测试和释放.yml已更改"
+      },
+      "2.1.1": {
+        "en": "test-and-release.yml changed",
+        "de": "test-and-release.yml geändert",
+        "ru": "test-and-release.yml изменен",
+        "pt": "test-and-release.yml mudou",
+        "nl": "test-and-release.yml gewijzigd",
+        "fr": "test-and-release.yml modifié",
+        "it": "test-and-release.yml cambiato",
+        "es": "test-and-release.yml cambió",
+        "pl": "test- and- releasase.yml zmienione",
+        "uk": "тест-і-випуск.yml змінився",
+        "zh-cn": "测试和释放.yml已更改"
+      },
+      "2.1.0": {
+        "en": "Dependencies updated\nSome code optimizations",
+        "de": "Ausgaben aktualisiert\nEinige Codeoptimierungen",
+        "ru": "Обновленные данные о зависимостях\nНекоторые оптимизации кода",
+        "pt": "Dependências atualizadas\nAlgumas otimizações de código",
+        "nl": "Afhankelijkheden bijgewerkt\nSommige code optimalisaties",
+        "fr": "Dépendances actualisées\nQuelques optimisations de code",
+        "it": "Dipendenze aggiornate\nAlcune ottimizzazioni di codice",
+        "es": "Actualización de las dependencias\nAlgunas optimizaciones de código",
+        "pl": "Aktualizacja zależności\nNiektóre optymalizacje kodu",
+        "uk": "Залежність оновлено\nДеякі оптимізації коду",
+        "zh-cn": "更新的依赖关系\n一些代码优化"
+      },
+      "2.0.0": {
+        "en": "!!! No VIS widgets anymore. Continue using v1.3.1 for VIS widgets. Starting from this version, only VIS-2 widgets are supported. !!! \nChanged Wiki\nMany optimizations and bug fixes",
+        "de": "! Keine VIS Widgets mehr. Verwenden Sie v1.3.1 für VIS Widgets weiter. Ab dieser Version werden nur VIS-2 Widgets unterstützt. !\nWiki ändern\nViele Optimierungen und Fehlerbehebungen",
+        "ru": "!!! Больше никаких виджетов VIS. Продолжать использовать v1.3.1 для виджетов VIS. Начиная с этой версии поддерживаются только виджеты VIS-2. !!!\nИзменение Wiki\nМногие оптимизации и исправления ошибок",
+        "pt": "? Já não há widgets VIS. Continue usando v1.3.1 para widgets VIS. A partir desta versão, apenas os widgets VIS-2 são suportados. !\nMudança de Wiki\nMuitas otimizações e correções de bugs",
+        "nl": "!!! Geen VIS-widgets meer. Blijf v1.3.1 gebruiken voor VIS-widgets. Vanaf deze versie worden alleen VIS-2 widgets ondersteund. !!!\nWiki gewijzigd\nVeel optimalisaties en bugfixes",
+        "fr": "!!! Plus de widgets VIS. Continuer à utiliser v1.3.1 pour les widgets VIS. A partir de cette version, seuls les widgets VIS-2 sont pris en charge. !!!\nWiki modifié\nDe nombreuses optimisations et corrections de bugs",
+        "it": "♪ Nessun widget VIS più. Continua a usare v1.3.1 per i widget VIS. A partire da questa versione, sono supportati solo i widget VIS-2. ♪!\nModificato Wiki\nMolte ottimizzazioni e correzioni di bug",
+        "es": "!!! Ya no hay widgets VIS. Siga utilizando v1.3.1 para los widgets VIS. A partir de esta versión, solo se admiten widgets VIS-2. !!!\nCambio de Wiki\nMuchas optimizaciones y correcciones de errores",
+        "pl": "! Nie ma już widżetów VIS. Kontynuować stosowanie v1.3.1 dla widżetów VIS. Od tej wersji obsługiwane są tylko widżety VIS-2.!\nZmieniono Wiki\nWiele optymalizacji i poprawek błędów",
+        "uk": "Про нас Без віджетів VIS більше. Продовжити використання v1.3.1 для віджетів VIS. За допомогою цієї версії підтримується тільки віджети VIS-2. Про нас!\nЗмінено Вікі\nБагато оптимізація і виправлення помилок",
+        "zh-cn": "快点! 没有VIS部件了。 对VIS部件继续使用v1.3.1. 从这个版本开始,只支持VIS-2部件. 快点!\n已更改的 Wiki\n许多优化和错误修正"
+      },
+      "1.3.1": {
+        "en": "bug fixes trapInfo for traps",
+        "de": "bugfixes trapInfo für Fallen",
+        "ru": "bug correctedes trapInfo для ловушек",
+        "pt": "correções de bugs trapInfo para armadilhas",
+        "nl": "bug repareert valInfo voor vallen",
+        "fr": "bug corrige le piègeInfo pour les pièges",
+        "it": "bug correzioni trapInfo per trappole",
+        "es": "bug arregla trampaInfo para trampas",
+        "pl": "błąd poprawki trapInfo dla pułapek",
+        "uk": "виправлення помилок для пасток",
+        "zh-cn": "错误修正陷阱信息"
+      }
+    },
+    "title": "Radar Trap",
+    "titleLang": {
+      "en": "Radar Trap",
+      "de": "Radarfalle",
+      "ru": "Радарная ловушка",
+      "pt": "Armadilha de radar",
+      "nl": "Radarval",
+      "fr": "Piège radar",
+      "it": "Trappola radar",
+      "es": "Trampa de radar",
+      "pl": "Pułapka radarowa",
+      "zh-cn": "雷达陷阱",
+      "uk": "Радарна пастка"
+    },
+    "desc": {
+      "en": "Detect speed traps and obstacles on routes",
+      "de": "Radarfallen und Hindernisse auf Strecken erkennen",
+      "ru": "Обнаружение скоростных ловушек и препятствий на маршрутах",
+      "pt": "Detectar armadilhas de velocidade e obstáculos nas rotas",
+      "nl": "Detecteer snelheidscontroles en obstakels op routes",
+      "fr": "Détecter les radars et les obstacles sur les routes",
+      "it": "Rileva autovelox e ostacoli sui percorsi",
+      "es": "Detecta trampas de velocidad y obstáculos en las rutas",
+      "pl": "Wykrywaj pułapki prędkości i przeszkody na trasach",
+      "zh-cn": "检测路线上的速度陷阱和障碍物",
+      "uk": "Виявляйте радари та перешкоди на маршрутах"
+    },
+    "authors": [
+      "Steiger04 <steiger04@posteo.de>"
+    ],
+    "keywords": [
+      "speed traps",
+      "obstacles on routes"
+    ],
+    "license": "MIT",
+    "stopBeforeUpdate": true,
+    "platform": "Javascript/Node.js",
+    "main": "build/main.js",
+    "icon": "radar-trap.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
+    "readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
+    "loglevel": "info",
+    "ereaseUpload": true,
+    "mode": "daemon",
+    "type": "geoposition",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "materialize": true,
+    "singletonHost": true,
+    "supportCustoms": false,
+    "jsonCustom": false,
+    "eraseOnUpload": true,
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.17"
+      }
+    ],
+    "adminUI": {
+      "config": "materialize"
+    }    
+  },
+  "native": {
+    "settings": {
+      "httpsEnabled": false,
+      "domains": "localhost",
+      "feathersPort": 3040,
+      "mbxAccessToken": ""
+    }
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Feathers-Server started",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": true
+      },
+      "native": {}
+    }
+  ]
 }
