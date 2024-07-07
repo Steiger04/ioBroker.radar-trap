@@ -95,6 +95,7 @@
 				"zh-cn": "错误修正陷阱信息"
 			}
 		},
+		"title": "Radar Trap",
 		"titleLang": {
 			"en": "Radar Trap",
 			"de": "Radarfalle",
@@ -123,11 +124,7 @@
 		},
 		"authors": ["Steiger04 <steiger04@posteo.de>"],
 		"keywords": ["speed traps", "obstacles on routes"],
-		"licenseInformation": {
-			"license": "MIT",
-			"type": "free"
-		},
-		"tier": 3,
+		"license": "MIT",
 		"stopBeforeUpdate": true,
 		"platform": "Javascript/Node.js",
 		"main": "build/main.js",
