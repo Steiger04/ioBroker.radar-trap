@@ -31,83 +31,85 @@ const createRouteObjects = async (that, route) => {
   });
   await (0, import_createCronJob.createCronJobAsync)(that, route._id);
   (_a = route.directions) == null ? void 0 : _a.forEach(async (direction, idx) => {
-    await that.createChannelAsync(`${route._id}`, `direction-${idx}-infos`, {
-      name: `Direction-${idx} Infos`
+    await that.setObjectAsync(`${route._id}.direction-${idx}-infos`, {
+      type: "channel",
+      common: { name: `Direction-${idx} Infos` },
+      native: {}
     });
-    await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "lastUpdated", {
-      name: "Last Updated",
-      defAck: true,
-      read: true,
-      write: false,
-      type: "string",
-      role: "text"
-    }).then(
-      () => that.setStateAsync(`${route._id}.direction-${idx}-infos.lastUpdated`, `${route.timestamp}`, true)
-    );
-    await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "description", {
-      name: "Description",
-      defAck: true,
-      read: true,
-      write: false,
-      type: "string",
-      role: "text"
-    }).then(
-      () => that.setStateAsync(`${route._id}.direction-${idx}-infos.description`, `${route.description}`, true)
-    );
-    await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "profile", {
-      name: "Profile",
-      defAck: true,
-      read: true,
-      write: false,
-      type: "string",
-      role: "text"
-    }).then(
-      () => that.setStateAsync(`${route._id}.direction-${idx}-infos.profile`, `${route.activeProfile.name}`, true)
-    );
-    await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "exclusions", {
-      name: "Exclusions",
-      defAck: true,
-      read: true,
-      write: false,
-      type: "array",
-      role: "list"
-    }).then(
-      () => that.setStateAsync(
-        `${route._id}.direction-${idx}-infos.exclusions`,
-        `${JSON.stringify(route.activeProfile.actualExclusion)}`,
-        true
-      )
-    );
-    await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "duration", {
-      name: "Duration",
-      unit: "s",
-      defAck: true,
-      read: true,
-      write: false,
-      type: "number",
-      role: "value"
-    }).then(
-      () => that.setStateAsync(
-        `${route._id}.direction-${idx}-infos.duration`,
-        Math.round(direction.direction.duration),
-        true
-      )
-    );
-    await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, "distance", {
-      name: "Distance",
-      unit: "m",
-      defAck: true,
-      read: true,
-      write: false,
-      type: "number",
-      role: "value"
-    }).then(
-      () => that.setStateAsync(
-        `${route._id}.direction-${idx}-infos.distance`,
-        Math.round(direction.direction.distance),
-        true
-      )
-    );
+    await that.setObjectAsync(`${route._id}.direction-${idx}-infos.description.lastUpdated`, {
+      type: "state",
+      common: {
+        name: "Last Updated",
+        defAck: true,
+        type: "string",
+        role: "text",
+        read: true,
+        write: false
+      },
+      native: {}
+    }).then(() => that.setState(`${route._id}.direction-${idx}-infos.description.lastUpdated`, `${route.timestamp}`, true));
+    await that.setObjectAsync(`${route._id}.direction-${idx}-infos.description`, {
+      type: "state",
+      common: {
+        name: "Description",
+        defAck: true,
+        type: "string",
+        role: "text",
+        read: true,
+        write: false
+      },
+      native: {}
+    }).then(() => that.setState(`${route._id}.direction-${idx}-infos.description`, `${route.description}`, true));
+    await that.setObjectAsync(`${route._id}.direction-${idx}-infos.profile`, {
+      type: "state",
+      common: {
+        name: "Profile",
+        defAck: true,
+        type: "string",
+        role: "text",
+        read: true,
+        write: false
+      },
+      native: {}
+    }).then(() => that.setState(`${route._id}.direction-${idx}-infos.profile`, `${route.activeProfile.name}`, true));
+    await that.setObjectAsync(`${route._id}.direction-${idx}-infos.exclusions`, {
+      type: "state",
+      common: {
+        name: "Exclusions",
+        defAck: true,
+        type: "array",
+        role: "list",
+        read: true,
+        write: false
+      },
+      native: {}
+    }).then(() => that.setState(`${route._id}.direction-${idx}-infos.exclusions`, `${JSON.stringify(route.activeProfile.actualExclusion)}`, true));
+    await that.setObjectAsync(`${route._id}.direction-${idx}-infos.duration`, {
+      type: "state",
+      common: {
+        name: "Duration",
+        unit: "s",
+        defAck: true,
+        type: "number",
+        role: "value",
+        read: true,
+        write: false
+      },
+      native: {}
+    }).then(() => that.setState(`${route._id}.direction-${idx}-infos.duration`, Math.round(direction.direction.duration), true));
+    await that.setObjectAsync(`${route._id}.direction-${idx}-infos.distance`, {
+      type: "state",
+      common: {
+        name: "Distance",
+        unit: "m",
+        defAck: true,
+        type: "number",
+        role: "value",
+        read: true,
+        write: false
+      },
+      native: {}
+    }).then(() => that.setState(`${route._id}.direction-${idx}-infos.distance`, Math.round(direction.direction.distance), true));
     for (const trapType of ["routeTraps", "routeTrapsEstablished", "routeTrapsNew", "routeTrapsRejected"]) {
       let totalTrapsCount = 0;
       let channelName = "";
@@ -127,8 +129,10 @@ const createRouteObjects = async (that, route) => {
         default:
           break;
       }
-      await that.createChannelAsync(`${route._id}`, `direction-${idx}-${channelName}`, {
-        name: `Direction-${idx}`
+      await that.setObjectAsync(`${route._id}.direction-${idx}-${channelName}`, {
+        type: "channel",
+        common: { name: `Direction-${idx}` },
+        native: {}
       });
       for (const [trapName, traps] of Object.entries(
         direction[trapType]
@@ -142,45 +146,43 @@ const createRouteObjects = async (that, route) => {
           };
         });
         totalTrapsCount += newTraps.length;
-        await that.createStateAsync(`${route._id}`, `direction-${idx}-${channelName}`, `${trapName}`, {
-          name: that.I18n[trapName],
-          defAck: true,
-          read: true,
-          write: false,
-          type: "array",
-          role: "list"
-        }).then(
-          () => that.setStateAsync(
-            `${route._id}.direction-${idx}-${channelName}.${trapName}`,
-            JSON.stringify(newTraps),
-            true
-          )
-        );
-        await that.createStateAsync(`${route._id}`, `direction-${idx}-${channelName}`, `${trapName}Count`, {
-          name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
-          defAck: true,
-          read: true,
-          write: false,
-          type: "number",
-          role: "value"
-        }).then(
-          () => that.setStateAsync(
-            `${route._id}.direction-${idx}-${channelName}.${trapName}Count`,
-            newTraps.length,
-            true
-          )
-        );
+        await that.setObjectAsync(`${route._id}.direction-${idx}-${channelName}.${trapName}`, {
+          type: "state",
+          common: {
+            name: that.I18n[trapName],
+            defAck: true,
+            type: "array",
+            role: "list",
+            read: true,
+            write: false
+          },
+          native: {}
+        }).then(() => that.setState(`${route._id}.direction-${idx}-${channelName}.${trapName}`, JSON.stringify(newTraps), true));
+        await that.setObjectAsync(`${route._id}.direction-${idx}-${channelName}.${trapName}Count`, {
+          type: "state",
+          common: {
+            name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
+            defAck: true,
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+          },
+          native: {}
+        }).then(() => that.setState(`${route._id}.direction-${idx}-${channelName}.${trapName}Count`, newTraps.length, true));
       }
-      await that.createStateAsync(`${route._id}`, `direction-${idx}-infos`, `${trapType}Count`, {
-        name: `${that.I18n["count"]}: ${channelName}`,
-        defAck: true,
-        read: true,
-        write: false,
-        type: "number",
-        role: "value"
-      }).then(
-        () => that.setStateAsync(`${route._id}.direction-${idx}-infos.${trapType}Count`, totalTrapsCount, true)
-      );
+      await that.setObjectAsync(`${route._id}.direction-${idx}-infos.${trapType}Count`, {
+        type: "state",
+        common: {
+          name: `${that.I18n["count"]}: ${channelName}`,
+          defAck: true,
+          type: "number",
+          role: "value",
+          read: true,
+          write: false
+        },
+        native: {}
+      }).then(() => that.setState(`${route._id}.direction-${idx}-infos.${trapType}Count`, totalTrapsCount, true));
     }
   });
 };

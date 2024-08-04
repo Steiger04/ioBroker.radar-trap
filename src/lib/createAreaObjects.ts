@@ -10,33 +10,38 @@ const createAreaObjects = async (that: ioBroker.AdapterInstanceWithI18n, area: r
 
 	await createCronJobAsync(that, area._id);
 
-	await that.createChannelAsync(`${area._id}`, "area-infos", {
-		name: "Area Infos",
+	await that.setObjectAsync(`${area._id}.area-infos`, {
+		type: "channel",
+		common: { name: "Area Infos" },
+		native: {}
 	});
 
-	await that
-		.createStateAsync(`${area._id}`, "area-infos", "lastUpdated", {
+	await that.setObjectAsync(`${area._id}.area-infos.lastUpdated`, {
+		type: "state",
+		common: {
 			name: "Last Updated",
 			defAck: true,
-			read: true,
-			write: false,
 			type: "string",
 			role: "text",
-		})
-		.then(() => that.setStateAsync(`${area._id}.area-infos.lastUpdated`, `${area.timestamp}`, true));
+			read: true,
+			write: false,
+		},
+		native: {},
+	}).then(() => that.setState(`${area._id}.area-infos.lastUpdated`, `${area.timestamp}`, true));
 
-	await that
-		.createStateAsync(`${area._id}`, "area-infos", "description", {
+	await that.setObjectAsync(`${area._id}.area-infos.description`, {
+		type: "state",
+		common: {
 			name: "Description",
 			defAck: true,
-			read: true,
-			write: false,
 			type: "string",
 			role: "text",
-		})
-		.then(() => that.setStateAsync(`${area._id}.area-infos.description`, `${area.description}`, true));
+			read: true,
+			write: false,
+		},
+		native: {},
+	}).then(() => that.setState(`${area._id}.area-infos.description`, `${area.description}`, true));
 
-	// for (const trapType of ["areaTrapsNew", "areaTrapsEstablished", "areaTrapsRejected"]) {
 	for (const trapType of ["areaTraps", "areaTrapsEstablished", "areaTrapsNew", "areaTrapsRejected"]) {
 		let totalTrapsCount = 0;
 
@@ -59,8 +64,10 @@ const createAreaObjects = async (that: ioBroker.AdapterInstanceWithI18n, area: r
 				break;
 		}
 
-		await that.createChannelAsync(`${area._id}`, `${channelName}`, {
-			name: "Area",
+		await that.setObjectAsync(`${area._id}.${channelName}`, {
+			type: "channel",
+			common: { name: "Area" },
+			native: {},
 		});
 
 		for (const [trapName, traps] of Object.entries(
@@ -74,41 +81,47 @@ const createAreaObjects = async (that: ioBroker.AdapterInstanceWithI18n, area: r
 
 			totalTrapsCount += newTraps.length;
 
-			await that
-				.createStateAsync(`${area._id}`, `${channelName}`, `${trapName}`, {
+			await that.setObjectAsync(`${area._id}.${channelName}.${trapName}`, {
+				type: "state",
+				common: {
 					name: that.I18n[trapName],
 					defAck: true,
-					read: true,
-					write: false,
 					type: "array",
 					role: "list",
-				})
-				.then(() =>
-					that.setStateAsync(`${area._id}.${channelName}.${trapName}`, JSON.stringify(newTraps), true),
-				);
-
-			await that
-				.createStateAsync(`${area._id}`, `${channelName}`, `${trapName}Count`, {
-					name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
-					defAck: true,
 					read: true,
 					write: false,
+				},
+				native: {},
+			}).then(() =>
+				that.setState(`${area._id}.${channelName}.${trapName}`, JSON.stringify(newTraps), true),
+			);
+
+			await that.setObjectAsync(`${area._id}.${channelName}.${trapName}Count`, {
+				type: "state",
+				common: {
+					name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
+					defAck: true,
 					type: "number",
 					role: "value",
-				})
-				.then(() => that.setStateAsync(`${area._id}.${channelName}.${trapName}Count`, newTraps.length, true));
+					read: true,
+					write: false,
+				},
+				native: {},
+			}).then(() => that.setState(`${area._id}.${channelName}.${trapName}Count`, newTraps.length, true));
 		}
 
-		await that
-			.createStateAsync(`${area._id}`, "area-infos", `${trapType}Count`, {
+		await that.setObjectAsync(`${area._id}.area-infos.${trapType}Count`, {
+			type: "state",
+			common: {
 				name: `${that.I18n["count"]}: ${channelName}`,
 				defAck: true,
-				read: true,
-				write: false,
 				type: "number",
 				role: "value",
-			})
-			.then(() => that.setStateAsync(`${area._id}.area-infos.${trapType}Count`, totalTrapsCount, true));
+				read: true,
+				write: false,
+			},
+			native: {},
+		}).then(() => that.setState(`${area._id}.area-infos.${trapType}Count`, totalTrapsCount, true));
 	}
 };
 

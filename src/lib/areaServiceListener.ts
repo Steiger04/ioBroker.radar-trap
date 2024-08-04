@@ -10,7 +10,7 @@ const areaServiceListener = (that: ioBroker.AdapterInstanceWithI18n, feathers: A
 	});
 
 	feathers.service("areas").on("removed", async (area: radarTrap.Area) => {
-		await that.deleteDeviceAsync(area._id);
+		await that.delObjectAsync(area._id, { recursive: true });
 
 		Scheduler.delete(area._id);
 	});

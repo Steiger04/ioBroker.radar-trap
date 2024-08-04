@@ -10,7 +10,7 @@ const routeServiceListener = (that: ioBroker.AdapterInstanceWithI18n, feathers: 
 	});
 
 	feathers.service("routes").on("removed", async (route: radarTrap.Route) => {
-		await that.deleteDeviceAsync(route._id);
+		await that.delObjectAsync(route._id, { recursive: true });
 
 		Scheduler.delete(route._id);
 	});

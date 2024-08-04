@@ -28,7 +28,7 @@ const areaServiceListener = (that, feathers) => {
     import_Scheduler.Scheduler.setStatus(statusWithId);
   });
   feathers.service("areas").on("removed", async (area) => {
-    await that.deleteDeviceAsync(area._id);
+    await that.delObjectAsync(area._id, { recursive: true });
     import_Scheduler.Scheduler.delete(area._id);
   });
   feathers.service("areas").on("created", async (area, ctx) => {

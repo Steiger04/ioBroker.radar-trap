@@ -28,7 +28,7 @@ const routeServiceListener = (that, feathers) => {
     import_Scheduler.Scheduler.setStatus(statusWithId);
   });
   feathers.service("routes").on("removed", async (route) => {
-    await that.deleteDeviceAsync(route._id);
+    await that.delObjectAsync(route._id, { recursive: true });
     import_Scheduler.Scheduler.delete(route._id);
   });
   feathers.service("routes").on("created", async (route, ctx) => {

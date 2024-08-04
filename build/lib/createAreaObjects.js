@@ -29,25 +29,35 @@ const createAreaObjects = async (that, area) => {
     native: { type: "AREA" }
   });
   await (0, import_createCronJob.createCronJobAsync)(that, area._id);
-  await that.createChannelAsync(`${area._id}`, "area-infos", {
-    name: "Area Infos"
+  await that.setObjectAsync(`${area._id}.area-infos`, {
+    type: "channel",
+    common: { name: "Area Infos" },
+    native: {}
   });
-  await that.createStateAsync(`${area._id}`, "area-infos", "lastUpdated", {
-    name: "Last Updated",
-    defAck: true,
-    read: true,
-    write: false,
-    type: "string",
-    role: "text"
-  }).then(() => that.setStateAsync(`${area._id}.area-infos.lastUpdated`, `${area.timestamp}`, true));
-  await that.createStateAsync(`${area._id}`, "area-infos", "description", {
-    name: "Description",
-    defAck: true,
-    read: true,
-    write: false,
-    type: "string",
-    role: "text"
-  }).then(() => that.setStateAsync(`${area._id}.area-infos.description`, `${area.description}`, true));
+  await that.setObjectAsync(`${area._id}.area-infos.lastUpdated`, {
+    type: "state",
+    common: {
+      name: "Last Updated",
+      defAck: true,
+      type: "string",
+      role: "text",
+      read: true,
+      write: false
+    },
+    native: {}
+  }).then(() => that.setState(`${area._id}.area-infos.lastUpdated`, `${area.timestamp}`, true));
+  await that.setObjectAsync(`${area._id}.area-infos.description`, {
+    type: "state",
+    common: {
+      name: "Description",
+      defAck: true,
+      type: "string",
+      role: "text",
+      read: true,
+      write: false
+    },
+    native: {}
+  }).then(() => that.setState(`${area._id}.area-infos.description`, `${area.description}`, true));
   for (const trapType of ["areaTraps", "areaTrapsEstablished", "areaTrapsNew", "areaTrapsRejected"]) {
     let totalTrapsCount = 0;
     let channelName = "";
@@ -67,8 +77,10 @@ const createAreaObjects = async (that, area) => {
       default:
         break;
     }
-    await that.createChannelAsync(`${area._id}`, `${channelName}`, {
-      name: "Area"
+    await that.setObjectAsync(`${area._id}.${channelName}`, {
+      type: "channel",
+      common: { name: "Area" },
+      native: {}
     });
     for (const [trapName, traps] of Object.entries(
       area[trapType]
@@ -82,33 +94,45 @@ const createAreaObjects = async (that, area) => {
         };
       });
       totalTrapsCount += newTraps.length;
-      await that.createStateAsync(`${area._id}`, `${channelName}`, `${trapName}`, {
-        name: that.I18n[trapName],
-        defAck: true,
-        read: true,
-        write: false,
-        type: "array",
-        role: "list"
+      await that.setObjectAsync(`${area._id}.${channelName}.${trapName}`, {
+        type: "state",
+        common: {
+          name: that.I18n[trapName],
+          defAck: true,
+          type: "array",
+          role: "list",
+          read: true,
+          write: false
+        },
+        native: {}
       }).then(
-        () => that.setStateAsync(`${area._id}.${channelName}.${trapName}`, JSON.stringify(newTraps), true)
+        () => that.setState(`${area._id}.${channelName}.${trapName}`, JSON.stringify(newTraps), true)
       );
-      await that.createStateAsync(`${area._id}`, `${channelName}`, `${trapName}Count`, {
-        name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
-        defAck: true,
-        read: true,
-        write: false,
-        type: "number",
-        role: "value"
-      }).then(() => that.setStateAsync(`${area._id}.${channelName}.${trapName}Count`, newTraps.length, true));
+      await that.setObjectAsync(`${area._id}.${channelName}.${trapName}Count`, {
+        type: "state",
+        common: {
+          name: `${that.I18n["count"]}: ${that.I18n[trapName]}`,
+          defAck: true,
+          type: "number",
+          role: "value",
+          read: true,
+          write: false
+        },
+        native: {}
+      }).then(() => that.setState(`${area._id}.${channelName}.${trapName}Count`, newTraps.length, true));
     }
-    await that.createStateAsync(`${area._id}`, "area-infos", `${trapType}Count`, {
-      name: `${that.I18n["count"]}: ${channelName}`,
-      defAck: true,
-      read: true,
-      write: false,
-      type: "number",
-      role: "value"
-    }).then(() => that.setStateAsync(`${area._id}.area-infos.${trapType}Count`, totalTrapsCount, true));
+    await that.setObjectAsync(`${area._id}.area-infos.${trapType}Count`, {
+      type: "state",
+      common: {
+        name: `${that.I18n["count"]}: ${channelName}`,
+        defAck: true,
+        type: "number",
+        role: "value",
+        read: true,
+        write: false
+      },
+      native: {}
+    }).then(() => that.setState(`${area._id}.area-infos.${trapType}Count`, totalTrapsCount, true));
   }
 };
 // Annotate the CommonJS export names for ESM import in node:
