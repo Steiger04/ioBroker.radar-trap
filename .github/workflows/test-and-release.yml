@@ -54,6 +54,9 @@ jobs:
 
   # Deploys the final package to NPM
   deploy:
+    permissions:
+      contents: write
+      id-token: write
     # needs: [check-and-lint, adapter-tests]
     needs: [adapter-tests]
 
@@ -70,5 +73,5 @@ jobs:
         with:
           node-version: "18.x" # This should be LTS
           # build: 'true'
-          npm-token: ${{ secrets.NPM_TOKEN }}
+          # npm-token: ${{ secrets.NPM_TOKEN }}  # Commented out for migration to Trusted Publishing
           github-token: ${{ secrets.GITHUB_TOKEN }}
