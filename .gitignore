@@ -15,3 +15,6 @@ admin/i18n/*/flat.txt
 
 # widgets for vis
 widgets/
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
