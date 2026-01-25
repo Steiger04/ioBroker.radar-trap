@@ -13,6 +13,7 @@
   "homepage": "https://github.com/Steiger04/ioBroker.radar-trap",
   "license": "MIT",
   "keywords": [
+    "ioBroker",
     "speed traps",
     "obstacles on routes"
   ],
