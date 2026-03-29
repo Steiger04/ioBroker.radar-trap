@@ -1,6 +1,6 @@
 import express from "express";
-import http from "http";
-import http2 from "http2";
+import http from "node:http";
+import http2 from "node:http2";
 import { getCertificate } from "./getCertificate";
 
 const httpsOrHttp = async (options: any, callback: any): Promise<void> => {

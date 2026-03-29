@@ -2,9 +2,9 @@ import type * as utils from "@iobroker/adapter-core";
 import app from "./app";
 import logger from "./logger";
 import { getCertificate } from "./httpsOrHttp/getCertificate";
-import https from "https";
+import https from "node:https";
 
-import type { Server } from "http";
+import type { Server } from "node:http";
 
 // console.log("### CREATEFEATHERS.TS ###");
 
