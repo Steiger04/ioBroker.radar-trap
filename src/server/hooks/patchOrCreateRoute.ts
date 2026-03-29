@@ -4,7 +4,7 @@ import Directions, {
 	DirectionsWaypoint,
 } from "@mapbox/mapbox-sdk/services/directions";
 import Matrix, { MatrixService } from "@mapbox/mapbox-sdk/services/matrix";
-import { performance } from "perf_hooks";
+import { performance } from "node:perf_hooks";
 import { Scheduler } from "../../lib/Scheduler";
 import { trapsChain } from "./trapsChain";
 

@@ -7,7 +7,7 @@ import socketio from "@feathersjs/socketio";
 import compress from "compression";
 import cors from "cors";
 import helmet from "helmet";
-import path from "path";
+import path from "node:path";
 
 import appHooks from "./app.hooks";
 import channels from "./channels";

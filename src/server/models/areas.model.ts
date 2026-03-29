@@ -1,5 +1,5 @@
 import NeDB from "@seald-io/nedb";
-import path from "path";
+import path from "node:path";
 import type { Application } from "../declarations";
 
 export default function (app: Application): NeDB<any> {
