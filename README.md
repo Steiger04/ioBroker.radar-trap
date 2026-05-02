@@ -21,6 +21,9 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
+
 ### 2.2.2 (2024-08-04)
 * (Steiger04) Deprecated createState, createChannel, createDevice replaced with setObject and delDevice replaced with delObject
 
