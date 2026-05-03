@@ -121,6 +121,8 @@
 ### 1.0.1 (2023-05-17)
 * (Steiger04) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 MIT License
