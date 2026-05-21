@@ -152,7 +152,7 @@
     "eraseOnUpload": true,
     "dependencies": [
       {
-        "js-controller": ">=5.0.17"
+        "js-controller": ">=6.0.11"
       }
     ],
     "adminUI": {
