@@ -21,6 +21,10 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 2.2.2 (2024-08-04)
 * (Steiger04) Deprecated createState, createChannel, createDevice replaced with setObject and delDevice replaced with delObject
 
