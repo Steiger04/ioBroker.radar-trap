@@ -1,3 +1,3 @@
 module.exports = {
-	nedb: "../../../../../iobroker-data/files/radarTrapDB",
+    nedb: '../../../../../iobroker-data/files/radarTrapDB',
 };

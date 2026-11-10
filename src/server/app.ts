@@ -1,38 +1,38 @@
 // Import favicon from 'serve-favicon';
 // import configuration from '@feathersjs/configuration';
 
-import express from "@feathersjs/express";
-import feathers, { HookContext as FeathersHookContext } from "@feathersjs/feathers";
-import socketio from "@feathersjs/socketio";
-import compress from "compression";
-import cors from "cors";
-import helmet from "helmet";
-import path from "path";
+import express from '@feathersjs/express';
+import type { HookContext as FeathersHookContext } from '@feathersjs/feathers';
+import feathers from '@feathersjs/feathers';
+import socketio from '@feathersjs/socketio';
+import compress from 'compression';
+import cors from 'cors';
+import helmet from 'helmet';
+import path from 'path';
 
-import appHooks from "./app.hooks";
-import channels from "./channels";
-import logger from "./logger";
-import middleware from "./middleware";
-import services from "./services";
+import appHooks from './app.hooks';
+import channels from './channels';
+import logger from './logger';
+import middleware from './middleware';
+import services from './services';
 
-import type { Application } from "./declarations";
+import type { Application } from './declarations';
 
 // console.log("### APP.TS ###");
 
 // Don't remove this comment. It's needed to format import lines nicely.
 
-process.env.NODE_CONFIG_DIR = path.join(__dirname, "config/");
+process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/');
 // Process.env['NODE_ENV'] = 'production';
 
 // console.log("NODE_CONFIG_DIR", process.env.NODE_CONFIG_DIR);
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const configuration = require("@feathersjs/configuration");
+const configuration = require('@feathersjs/configuration');
 
 const app: Application = express(feathers());
 
 export type HookContext<T = any> = {
-	app: Application;
+    app: Application;
 } & FeathersHookContext<T>;
 
 // Load app configuration
@@ -40,9 +40,9 @@ app.configure(configuration());
 
 // Enable security, CORS, compression, favicon and body parsing
 app.use(
-	helmet({
-		contentSecurityPolicy: false,
-	}),
+    helmet({
+        contentSecurityPolicy: false,
+    }),
 );
 app.use(cors());
 app.use(compress());

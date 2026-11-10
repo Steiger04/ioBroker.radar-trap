@@ -14,6 +14,35 @@
 
 [English radar-trap Wiki](https://github.com/Steiger04/ioBroker.radar-trap/wiki/radar-trap-Adapter-(english))
 
+## Configuration
+The configuration is a JSON-Config page and needs **admin 8.3.10** or newer. Its maps are drawn with MapLibre, by
+default on OpenStreetMap; with a mapbox token the styles of mapbox can be chosen as well.
+
+- **Map**: shows a route or an area of the running instance with its traps.
+- **Routes**: start and destination (searched with mapbox, or with Photon/OpenStreetMap without a token), the
+  profile, the excluded road types, the maximal distance of a trap from the route and the schedule.
+- **Areas**: drawn as a polygon or a circle, or taken from a German county, with their schedule.
+- **Settings**: the mapbox token, the style of the maps and the port of the internal server.
+
+Routes and areas are now stored in the configuration of the instance. On the first start after the update the
+instance takes over the routes and areas of its database and restarts once. When the configuration is saved, the
+instance computes new or changed routes and areas; computing a route needs the mapbox token.
+
+## Widgets
+The adapter brings its widgets itself:
+
+- **vis-2**: the widget set "Radar trap" with the map of an area, the map of a route and the list of the traps (as
+  the former adapter `vis-2-widgets-radar-trap`, which is no longer needed). Widgets made with the former adapter keep
+  their settings; uninstall it, so that the widgets are not there twice. The maps need a running instance and a
+  mapbox token.
+- **Devices app**: the tile "Radar traps" shows the number of traps of a route or an area, by category, and the list
+  of them.
+- **Web component** `<iob-radar-trap-traps>`: the same for every host of web components (vis-2, devices, Aura,
+  admin).
+
+The tile and the web component read the states of the route or area, so they need neither the port of the
+internal server nor a mapbox token.
+
 ---
 
 ## Changelog
@@ -21,6 +50,17 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### **WORK IN PROGRESS**
+* (GermanBluefox) The vis-2 widgets of `vis-2-widgets-radar-trap` were moved into the adapter; the separate adapter is no longer needed
+* (GermanBluefox) Added a tile for the devices app and the web component `<iob-radar-trap-traps>`
+* (GermanBluefox) The configuration was rewritten as JSON-Config with web components (needs admin 8.3.10); its maps use MapLibre and OpenStreetMap, mapbox is optional there
+* (GermanBluefox) Routes and areas are stored in the configuration of the instance; the ones of the database are taken over automatically
+* (GermanBluefox) Breaking: requires Node.js 22.19, js-controller 6.0.11 and admin 8.3.10 or newer
+* (GermanBluefox) The adapter was refactored: TypeScript 6, ESLint 9 with `@iobroker/eslint-config`, build with `tasks.ts`, tests with `@iobroker/testing` 6; it can be installed from npm only (`build/` is no longer committed)
+* (GermanBluefox) Fixed the start error "Cannot find module '@turf/helpers'": the packages that the adapter imports directly are declared as dependencies
+* (GermanBluefox) Added the map of a route or an area as a widget for devices, vis-2 and aura (web component `<iob-radar-trap-map>`), optionally with the live traffic (jams) of mapbox
+* (GermanBluefox) The route or area of the devices tile and of the vis-2 widgets is chosen from a drop-down list; the vis-2 settings no longer need the feathers port
+* (GermanBluefox) The 1x1 devices tile keeps its icon below the star and the settings button
 ### 2.2.2 (2024-08-04)
 * (Steiger04) Deprecated createState, createChannel, createDevice replaced with setObject and delDevice replaced with delObject
 

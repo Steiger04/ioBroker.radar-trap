@@ -1,75 +1,75 @@
 import {
-	alterItems,
-	disablePagination,
-	disallow,
-	iff,
-	iffElse,
-	isProvider,
-	paramsFromClient,
-} from "feathers-hooks-common";
-import { Scheduler } from "../../../lib/Scheduler";
-import { routeTrapsWithTrapInfo, patchOrCreateRoute, setActiveProfile } from "../../hooks";
+    alterItems,
+    disablePagination,
+    disallow,
+    iff,
+    iffElse,
+    isProvider,
+    paramsFromClient,
+} from 'feathers-hooks-common';
+import { Scheduler } from '../../../lib/Scheduler';
+import { routeTrapsWithTrapInfo, patchOrCreateRoute, setActiveProfile } from '../../hooks';
 
-import type { HookContext } from "@feathersjs/feathers";
+import type { HookContext } from '@feathersjs/feathers';
 
 export default {
-	before: {
-		all: [],
-		find: [
-			iff(
-				(ctx: HookContext) => isProvider("server")(ctx) || isProvider("rest")(ctx),
-				(ctx: HookContext) => {
-					if (ctx.params.query) {
-						ctx.params.query.$limit = -1;
-					}
+    before: {
+        all: [],
+        find: [
+            iff(
+                (ctx: HookContext) => isProvider('server')(ctx) || isProvider('rest')(ctx),
+                (ctx: HookContext) => {
+                    if (ctx.params.query) {
+                        ctx.params.query.$limit = -1;
+                    }
 
-					return ctx;
-				},
-				disablePagination(),
-			),
-		],
-		get: [],
-		create: [
-			disallow("rest"),
-			iffElse(
-				isProvider("external"),
-				[alterItems(setActiveProfile), paramsFromClient("patchSourceFromClient"), patchOrCreateRoute()],
-				[patchOrCreateRoute()],
-			),
-		],
-		update: [disallow("rest")],
-		patch: [disallow("rest")],
-		remove: [disallow("rest")],
-	},
+                    return ctx;
+                },
+                disablePagination(),
+            ),
+        ],
+        get: [],
+        create: [
+            disallow('rest'),
+            iffElse(
+                isProvider('external'),
+                [alterItems(setActiveProfile), paramsFromClient('patchSourceFromClient'), patchOrCreateRoute()],
+                [patchOrCreateRoute()],
+            ),
+        ],
+        update: [disallow('rest')],
+        patch: [disallow('rest')],
+        remove: [disallow('rest')],
+    },
 
-	after: {
-		all: [],
-		find: [alterItems(routeTrapsWithTrapInfo)],
-		get: [alterItems(routeTrapsWithTrapInfo)],
-		create: [
-			alterItems(routeTrapsWithTrapInfo),
-			(ctx: HookContext): HookContext => {
-				ctx.service.emit("status", {
-					_id: ctx.data._id,
-					status: "success",
-				});
-				Scheduler.resume(ctx.data._id);
+    after: {
+        all: [],
+        find: [alterItems(routeTrapsWithTrapInfo)],
+        get: [alterItems(routeTrapsWithTrapInfo)],
+        create: [
+            alterItems(routeTrapsWithTrapInfo),
+            (ctx: HookContext): HookContext => {
+                ctx.service.emit('status', {
+                    _id: ctx.data._id,
+                    status: 'success',
+                });
+                Scheduler.resume(ctx.data._id);
 
-				return ctx;
-			},
-		],
-		update: [],
-		patch: [],
-		remove: [],
-	},
+                return ctx;
+            },
+        ],
+        update: [],
+        patch: [],
+        remove: [],
+    },
 
-	error: {
-		all: [],
-		find: [],
-		get: [],
-		create: [],
-		update: [],
-		patch: [],
-		remove: [],
-	},
+    error: {
+        all: [],
+        find: [],
+        get: [],
+        create: [],
+        update: [],
+        patch: [],
+        remove: [],
+    },
 };

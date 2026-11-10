@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "useDefineForClassFields": true,
+        "lib": ["DOM", "DOM.Iterable", "ES2022"],
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "types": ["@iobroker/types", "node", "vite/client", "geojson"],
+        "paths": {
+            // what the components know about traps and the layers of the maps, shared with the widgets
+            "@radar-trap/*": ["../src-shared/src/*"]
+        }
+    },
+    "include": ["src", "vite.config.ts"]
+}

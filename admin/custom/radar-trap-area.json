@@ -1,0 +1,82 @@
+{
+    "manifestVersion": 1,
+    "tag": "iob-radar-trap-area",
+    "module": "./radar-trap-area.js",
+    "name": {
+        "en": "Area of radar traps",
+        "de": "Gebiet für Blitzer"
+    },
+    "description": {
+        "en": "Draws an area as a polygon or a circle, or takes a German county",
+        "de": "Zeichnet ein Gebiet als Polygon oder Kreis oder übernimmt einen Landkreis"
+    },
+    "size": {
+        "width": 600,
+        "height": 440
+    },
+    "editsValue": true,
+    "settings": {
+        "type": "panel",
+        "items": {
+            "token": {
+                "type": "text",
+                "label": {
+                    "en": "Mapbox token",
+                    "de": "Mapbox-Token"
+                }
+            },
+            "style": {
+                "type": "select",
+                "label": {
+                    "en": "Style of the map",
+                    "de": "Stil der Karte"
+                },
+                "options": [
+                    {
+                        "value": "osm",
+                        "label": "OpenStreetMap"
+                    },
+                    {
+                        "value": "osm-dark",
+                        "label": {
+                            "en": "OpenStreetMap, dark",
+                            "de": "OpenStreetMap, dunkel"
+                        }
+                    },
+                    {
+                        "value": "liberty",
+                        "label": "OpenFreeMap Liberty"
+                    },
+                    {
+                        "value": "positron",
+                        "label": "OpenFreeMap Positron"
+                    },
+                    {
+                        "value": "mapbox-streets-v12",
+                        "label": "Mapbox Streets"
+                    },
+                    {
+                        "value": "mapbox-outdoors-v12",
+                        "label": "Mapbox Outdoors"
+                    },
+                    {
+                        "value": "mapbox-light-v11",
+                        "label": "Mapbox Light"
+                    },
+                    {
+                        "value": "mapbox-dark-v11",
+                        "label": "Mapbox Dark"
+                    },
+                    {
+                        "value": "mapbox-satellite-streets-v12",
+                        "label": {
+                            "en": "Mapbox Satellite",
+                            "de": "Mapbox Satellit"
+                        }
+                    }
+                ],
+                "default": "osm"
+            }
+        }
+    }
+}

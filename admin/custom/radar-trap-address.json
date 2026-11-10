@@ -1,0 +1,30 @@
+{
+    "manifestVersion": 1,
+    "tag": "iob-radar-trap-address",
+    "module": "./radar-trap-address.js",
+    "name": {
+        "en": "Address of a route",
+        "de": "Adresse einer Route"
+    },
+    "description": {
+        "en": "Searches an address and stores it with its position",
+        "de": "Sucht eine Adresse und speichert sie mit ihrer Position"
+    },
+    "size": {
+        "width": 400,
+        "height": 64
+    },
+    "editsValue": true,
+    "settings": {
+        "type": "panel",
+        "items": {
+            "token": {
+                "type": "text",
+                "label": {
+                    "en": "Mapbox token",
+                    "de": "Mapbox-Token"
+                }
+            }
+        }
+    }
+}

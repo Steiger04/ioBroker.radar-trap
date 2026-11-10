@@ -6,6 +6,13 @@
 node_modules
 data
 
+# the compiled backend: built by `npm run build` and in the CI, never committed (common.nogit)
+build
+*.tsbuildinfo
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
+
 # npm package files
 iobroker.*.tgz
 
@@ -13,5 +20,6 @@ iobroker.*.tgz
 admin/i18n/flat.txt
 admin/i18n/*/flat.txt
 
-# widgets for vis
-widgets/
+# build output of the front-end sub-projects; the copies in widgets/ and admin/ are committed
+src-*/build/
+.__mf__temp/
