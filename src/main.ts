@@ -4,6 +4,7 @@
 // you need to create an adapter
 import * as utils from '@iobroker/adapter-core';
 import { EMPTY, mergeMap, of, Subject } from 'rxjs';
+import { setAdapter } from './lib/adapterRef';
 import { areaServiceListener } from './lib/areaServiceListener';
 import { migrateDatabase, syncConfig } from './lib/configSync';
 import { createAllAreaAndRouteObjects } from './lib/createAllAreaAndRouteObjects';
@@ -49,6 +50,8 @@ class RadarTrap2 extends utils.Adapter {
      */
     private async onReady(): Promise<void> {
         process.on('unhandledRejection', (reason, p) => logger.error('Unhandled Rejection at: Promise ', p, reason));
+        // the hooks of feathers, which compute the routes and areas, log and wait through the adapter
+        setAdapter(this);
 
         // Muss in onReady direkt gesetzt werden
         process.env.MAPBOX_TOKEN = (this.config as ioBroker.INative).settings.mbxAccessToken;

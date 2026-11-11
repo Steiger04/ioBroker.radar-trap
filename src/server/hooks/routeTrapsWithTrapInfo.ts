@@ -33,12 +33,13 @@ const routeTrapsWithTrapInfo = (data: radarTrap.Route): void => {
     data.directionsFeatureCollection = directionsFeatureCollection;
 
     const polyLinesFeatureCollection = featureCollection<LineString, radarTrap.Poly>(
-        data.directions.flatMap(rec => rec.polyLineFeatures!),
+        data.directions.flatMap(rec => rec.polyLineFeatures || []),
     );
 
     data.polyLinesFeatureCollection = polyLinesFeatureCollection;
 
-    const allTraps = data.directions.flatMap(({ routeTraps }) => addTrapInfoToTrapProperties(routeTraps!));
+    // a way whose traps could not be computed has none
+    const allTraps = data.directions.flatMap(({ routeTraps }) => addTrapInfoToTrapProperties(routeTraps || {}));
 
     data.trapsFeatureCollection = featureCollection(allTraps);
 };

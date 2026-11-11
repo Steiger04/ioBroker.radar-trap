@@ -15,7 +15,7 @@ const atudoPoiInfoSchema = Type.Object({
     desc: Type.Optional(Type.String()),
     length: Type.Optional(Type.Union([Type.String(), Type.Null()])),
     duration: Type.Optional(Type.Union([Type.String(), Type.Number(), Type.Null()])),
-    delay: Type.Optional(Type.Union([Type.Number(), Type.Null()])),
+    delay: Type.Optional(Type.Union([Type.Number(), Type.String(), Type.Null()])),
     lat_end: Type.Optional(Type.Union([Type.String(), Type.Number(), Type.Null()])),
     lng_end: Type.Optional(Type.Union([Type.String(), Type.Number(), Type.Null()])),
     refid_start: Type.Optional(Type.Union([Type.String(), Type.Null()])),
@@ -25,6 +25,8 @@ const atudoPoiSchema = Type.Object(
     {
         schemaType: Type.String({ default: 'POI' }),
         id: Type.String(),
+        // the ID of the map of blitzer.de (a UUID), beside `backend`
+        key: Type.Optional(Type.String()),
         lat: Type.String(),
         lng: Type.String(),
         street: Type.Optional(Type.String()),

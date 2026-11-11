@@ -268,4 +268,12 @@ const determineTrapTypes = (
         },
     );
 
-export { determineTrapTypes };
+/**
+ * How many traps the kinds of a route or an area hold
+ *
+ * @param traps the traps by kind, as `determineTrapTypes` and `trapsChain` give them
+ */
+const countTraps = (traps: Record<string, unknown[]> | undefined): number =>
+    Object.values(traps || {}).reduce((count, list) => count + (Array.isArray(list) ? list.length : 0), 0);
+
+export { countTraps, determineTrapTypes };

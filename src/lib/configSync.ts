@@ -11,6 +11,7 @@
 import { Cron } from 'croner';
 
 import type { Application } from '../server/declarations';
+import { TRAPS_SOURCE } from './atudo/traps';
 
 /** The profiles of mapbox and the exclusions each of them allows */
 const ALLOWED_EXCLUSIONS: Readonly<Record<radarTrap.ProfileName, radarTrap.Exclusions[]>> = {
@@ -33,10 +34,11 @@ const ROUTE_FIELDS = [
     'maxTrapDistance',
     'cron',
     'directions',
+    'trapsSource',
 ];
 
 /** What an area needs from the database to compare it with the configuration */
-const AREA_FIELDS = ['_id', 'description', 'areaPolygons', 'cron', 'areaTraps'];
+const AREA_FIELDS = ['_id', 'description', 'areaPolygons', 'cron', 'areaTraps', 'trapsSource'];
 
 /**
  * The profiles of a route as the database stores them: all four, the chosen one active with its exclusions
@@ -301,12 +303,17 @@ async function syncConfig(adapter: ioBroker.AdapterInstanceWithI18n, feathers: A
         const route = configToRoute({ ...item, _id: id });
         const stored = dbRoutes.find(dbRoute => dbRoute._id === id);
         try {
-            if (!stored || !stored.directions?.length || routeSource(stored) !== routeSource(route)) {
+            const outdated = !!stored?.directions?.length && stored.trapsSource !== TRAPS_SOURCE;
+            if (!stored || !stored.directions?.length || outdated || routeSource(stored) !== routeSource(route)) {
                 if (!hasToken) {
                     adapter.log.warn(`The route "${route.description}" is not computed: the mapbox token is missing`);
                     continue;
                 }
-                adapter.log.info(`Computing the route "${route.description}"`);
+                adapter.log.info(
+                    outdated
+                        ? `Computing the route "${route.description}" again: its traps are from atudo, which no longer answers`
+                        : `Computing the route "${route.description}"`,
+                );
                 await routeService.create(route, { patchSourceFromServer: true });
             } else if (
                 stored.description !== route.description ||
@@ -358,8 +365,18 @@ async function syncConfig(adapter: ioBroker.AdapterInstanceWithI18n, feathers: A
         };
         const stored = dbAreas.find(dbArea => dbArea._id === id);
         try {
-            if (!stored || !stored.areaTraps || areaSource(stored.areaPolygons) !== areaSource(area.areaPolygons)) {
-                adapter.log.info(`Computing the area "${area.description}"`);
+            const outdated = !!stored?.areaTraps && stored.trapsSource !== TRAPS_SOURCE;
+            if (
+                !stored ||
+                !stored.areaTraps ||
+                outdated ||
+                areaSource(stored.areaPolygons) !== areaSource(area.areaPolygons)
+            ) {
+                adapter.log.info(
+                    outdated
+                        ? `Computing the area "${area.description}" again: its traps are from atudo, which no longer answers`
+                        : `Computing the area "${area.description}"`,
+                );
                 await areaService.create(area, { patchSourceFromServer: true });
             } else if (
                 stored.description !== area.description ||

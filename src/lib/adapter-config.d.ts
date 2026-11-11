@@ -84,6 +84,8 @@ declare global {
             trapsFeatureCollection?: FeatureCollection<Point | LineString, Poi> | null;
             polyLinesFeatureCollection?: FeatureCollection<LineString, Poly> | null;
             timestamp?: string;
+            /** Where the traps come from (`TRAPS_SOURCE`); missing for what 2.2.x computed from atudo */
+            trapsSource?: string;
         }
 
         type Routes = Route[];
@@ -174,6 +176,8 @@ declare global {
             trapsFeatureCollection?: FeatureCollection<Point | LineString, Poi> | null;
             polyLinesFeatureCollection?: FeatureCollection<LineString, Poly> | null;
             timestamp?: string;
+            /** Where the traps come from (`TRAPS_SOURCE`); missing for what 2.2.x computed from atudo */
+            trapsSource?: string;
         }
 
         type Areas = Area[];

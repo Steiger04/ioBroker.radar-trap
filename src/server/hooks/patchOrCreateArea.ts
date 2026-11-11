@@ -1,5 +1,7 @@
 import { featureCollection } from '@turf/helpers';
-import { determineTrapTypes } from '../../lib/atudo/determineTrapTypes';
+import { countTraps, determineTrapTypes } from '../../lib/atudo/determineTrapTypes';
+import { getAdapterLog } from '../../lib/adapterRef';
+import { TRAPS_SOURCE } from '../../lib/atudo/traps';
 // import { traps } from "../../lib/atudo/traps";
 import { Scheduler } from '../../lib/Scheduler';
 
@@ -25,6 +27,7 @@ const patchOrCreateArea = (): Hook => {
 
         if (params.patchSourceFromClient || params.patchSourceFromServer) {
             const areaPolygon = Object.values(data!.areaPolygons!)[0];
+            data!.trapsSource = TRAPS_SOURCE;
 
             // eslint-disable-next-line prefer-const
             let { resultPoiPoints, resultPolyLines } = await getPoiPolyPointsAsync({
@@ -53,6 +56,11 @@ const patchOrCreateArea = (): Hook => {
             data!.areaTrapsRejected = rejectedTraps;
             // data!.areaTrapsNew = newTraps;
             // data!.areaTrapsRejected = rejectedTraps;
+
+            // the scheduler passes the area without its name
+            getAdapterLog().info(
+                `The area "${data!.description || _id}": ${countTraps(areaTraps)} traps and ${resultPolyLines.length} closed roads`,
+            );
         }
 
         if (record !== undefined) {

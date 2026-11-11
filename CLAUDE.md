@@ -6,7 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `iobroker.radar-trap` is an ioBroker adapter that finds speed traps, traffic jams, road works and closures along
 **routes** (computed with mapbox directions) and inside **areas** (polygons, circles or German counties). The traps
-come from the public API of atudo (`cdn2.atudo.net`, the data of blitzer.de). Every route and area is recomputed by
+come from the undocumented API of the map of blitzer.de (`www.blitzer.de/karte/api/markers`); atudo's
+`cdn2.atudo.net`, which 2.2.x asked, does not answer since October 2026. Every route and area is recomputed by
 its own CRON schedule and written as states.
 
 TypeScript (CommonJS output). The backend lives in `src/`, the runnable code is the compiled `build/`
@@ -47,7 +48,8 @@ not the package.
 | `src/lib/configSync.ts` | `migrateDatabase` and `syncConfig`: configuration ↔ database | |
 | `src/lib/Scheduler.ts` | one croner job per route/area, the countdown state, run/pause/resume | |
 | `src/lib/create*Objects.ts` | the objects and states of a route/area | |
-| `src/lib/atudo/` | download of the traps and their kinds (`determineTrapTypes.ts`) | |
+| `src/lib/atudo/` | download of the traps from blitzer.de (`traps.ts`) and their kinds (`determineTrapTypes.ts`) | |
+| `src/lib/adapterRef.ts` | log and `delay` of the adapter for the hooks of feathers, which have no adapter | |
 | `src/server/` | feathers 4 app: services `routes` and `areas` on NeDB, hooks that compute them | |
 | `src/lib/adapter-config.d.ts` | `ioBroker.INative` and the `radarTrap` namespace (routes, areas, traps) | |
 | `src-admin/` | web components of the configuration (`<iob-radar-trap-map/-address/-area>`), MapLibre, no React; the map is also a widget (`common.webComponents`) | `admin/custom/` |
@@ -79,6 +81,26 @@ traps, polylines — lives in NeDB (`@seald-io/nedb`), behind the feathers servi
 The NeDB path is `nedb` in `src/server/config/production.ts`: `../../../../../iobroker-data/files/radarTrapDB`,
 **relative to `build/server/config/`** (`NODE_CONFIG_DIR` is set in `src/server/app.ts`). Moving the config files to
 another depth of `build/` moves the database.
+
+### Traps from blitzer.de
+
+`getPoiPolyPointsAsync` lays a grid of boxes (up to 35 km) over the route or area and asks `traps()` for each. The
+endpoint `www.blitzer.de/karte/api/markers?type=…&box=S,W,N,E&z=18` is undocumented (it is what the map of blitzer.de
+reads; the Home Assistant integrations use it too) - what `traps.ts` relies on was measured, not read anywhere:
+
+- The answer has numbers where atudo had strings (`type`, `vmax`, `lat`, `info.partly_fixed`, the figures of a jam).
+  `toPoi` turns them back into the atudo form, because `determineTrapTypes` compares `type` and `partly_fixed` as
+  strings and the trap info checks `vmax`, `length`, … with lodash `isEmpty` (true for every number).
+- A box wider than a few km comes back with groups: `type >= 1000`, empty `backend`, at the centre of their members.
+  `markers()` asks such a box again in its quarters (up to 5 levels), but only quarters that `context.wanted` - inside
+  the area, or within `maxTrapDistance` of the route. Quarters, not boxes around each group: those overlap, and in
+  Berlin cost five times the requests for the same traps.
+- Closed roads are markers of the type `closure` with an encoded `polyline`; they become the polylines of the type
+  `closure` that the maps draw. `/karte/api/lines` is not used (its parameters are unknown; the probe answered
+  `polys: null`).
+- All requests of the instance go through one queue with 500 ms between them, at most `MAX_REQUESTS` (300) per
+  computation. A failure pauses blitzer.de for 15 minutes (it blocks addresses that ask too often); the caller logs
+  one warning per computation with the reason and the time of the next try.
 
 ### Feathers server
 

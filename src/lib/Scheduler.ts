@@ -175,7 +175,9 @@ class Scheduler<T extends radarTrap.Route | radarTrap.Area> {
                 });
             }
         } catch (ex) {
-            console.log(ex);
+            Scheduler.#adapter.log.warn(
+                `Cannot compute the ${_schedule.dataType === 'AREA' ? 'area' : 'route'} ${id}: ${(ex as Error)?.message || String(ex)}`,
+            );
         }
 
         Scheduler.resume(id);

@@ -94,7 +94,8 @@ const ICONS = {
 };
 
 const CSS = `
-:host { display: block; font-family: var(--iob-font-family, inherit); font-size: var(--iob-font-size, 14px); color: var(--iob-text, inherit); }
+/* fills the box of the host: a widget of vis-2 or devices, the item of JSON-Config with its height */
+:host { display: block; width: 100%; height: 100%; font-family: var(--iob-font-family, inherit); font-size: var(--iob-font-size, 14px); color: var(--iob-text, inherit); }
 .root { display: flex; flex-direction: column; height: 100%; gap: 6px; box-sizing: border-box; }
 .root.widget { padding: 8px 10px 10px; }
 /* devices puts its own buttons over the top corners while it is edited */

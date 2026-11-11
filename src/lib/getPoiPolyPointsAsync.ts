@@ -10,8 +10,11 @@ import {
     pointsWithinPolygon,
     squareGrid,
 } from '@turf/turf';
+import { uniqBy } from 'lodash';
+import { getAdapterLog } from './adapterRef';
 import { getDevisor } from './getDevisor';
-import { traps } from './atudo/traps';
+import type { TrapsContext } from './atudo/traps';
+import { MAX_REQUESTS, pausedUntil, traps } from './atudo/traps';
 
 export enum AnalyzedType {
     POLYGONE,
@@ -23,6 +26,21 @@ type Options = {
     type: AnalyzedType;
     maxTrapDistance?: number | undefined;
 };
+
+/**
+ * A box made wider by a distance on every side
+ *
+ * @param box west, south, east, north
+ * @param meters the distance
+ */
+function widen(box: BBox, meters: number): BBox {
+    if (!meters) {
+        return box;
+    }
+    const lat = meters / 111_320;
+    const lng = meters / (111_320 * Math.max(Math.cos((((box[1] + box[3]) / 2) * Math.PI) / 180), 0.01));
+    return [box[0] - lng, box[1] - lat, box[2] + lng, box[3] + lat];
+}
 
 const getPoiPolyPointsAsync = async ({
     analyzedFeature,
@@ -74,22 +92,50 @@ const getPoiPolyPointsAsync = async ({
     let resultPoiPoints: Feature<Point, radarTrap.Poi>[] = [];
     let resultPolyLines: Feature<LineString, radarTrap.Poly>[] = [];
 
+    // blitzer.de is asked box by box; a group of traps is resolved only where its traps matter: inside the area, or
+    // within the distance of the route
+    const margin = type === AnalyzedType.LINESTRING ? maxTrapDistance || 0 : 0;
+    const context: TrapsContext = {
+        requests: 0,
+        unresolvedGroups: 0,
+        deepGroups: 0,
+        wanted: box => !booleanDisjoint(bboxPolygon(widen(box, margin)), analyzedFeature),
+    };
+
+    // one warning for all boxes blitzer.de did not answer
+    let failedBoxes = 0;
+    let failure = '';
+
     for (const feature of squareBoxGridReduced) {
-        const tmpBbox = bbox(feature);
+        const { poiPoints, polyLines, error } = await traps(bbox(feature), context);
 
-        const { poiPoints, polyLines } = await traps(
-            {
-                lng: tmpBbox[0],
-                lat: tmpBbox[1],
-            },
-            {
-                lng: tmpBbox[2],
-                lat: tmpBbox[3],
-            },
-        );
-
+        if (error) {
+            failedBoxes++;
+            failure ||= error;
+        }
         resultPoiPoints = resultPoiPoints.concat(poiPoints);
         resultPolyLines = resultPolyLines.concat(polyLines);
+    }
+    // a trap or a closed road on the edge of two parts comes from both
+    resultPoiPoints = uniqBy(resultPoiPoints, point => point.geometry?.coordinates?.join(','));
+    resultPolyLines = uniqBy(resultPolyLines, line => line.properties.backend || line.properties.id);
+
+    const log = getAdapterLog();
+    const parts = squareBoxGridReduced.length;
+    const deep = context.deepGroups ? `, ${context.deepGroups} groups still groups in the smallest box` : '';
+    log.debug(`blitzer.de: ${context.requests} requests for ${parts} parts${deep}`);
+    if (failedBoxes) {
+        const again = pausedUntil();
+        log.warn(
+            `Cannot load the traps from blitzer.de for ${failedBoxes} of ${parts} parts: ${failure}. ` +
+                `The result lacks their traps and closed roads${again ? `; blitzer.de is asked again after ${again}` : ''}`,
+        );
+    }
+    if (context.unresolvedGroups) {
+        log.warn(
+            `${context.unresolvedGroups} groups of traps were not resolved: a computation asks blitzer.de at most ` +
+                `${MAX_REQUESTS} times. The result may lack some traps`,
+        );
     }
 
     switch (type) {

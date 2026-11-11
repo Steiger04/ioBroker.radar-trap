@@ -43,6 +43,19 @@ The adapter brings its widgets itself:
 The tile and the web component read the states of the route or area, so they need neither the port of the
 internal server nor a mapbox token.
 
+## Data source
+The traps, hazards, reports of the police and closed roads come from the map of
+[blitzer.de](https://www.blitzer.de/karte/). There is no official, documented API: the adapter reads what that map
+reads, as it read the server of atudo, the company behind blitzer.de, before. The answer may change at any time.
+
+- The terms of use of blitzer.de allow only the private use of their apps, and the use of their data only with their
+  written consent. Use the adapter at your own risk.
+- blitzer.de blocks an address that asks too often. Keep the schedule of the routes and areas at once an hour (the
+  default, `10 * * * *`) or rarer. A computation asks once per part of the route or area, and more often where many
+  traps lie close together - at most 300 times. After a refusal or no answer the adapter does not ask for 15 minutes.
+- The archive of the reports of the police and the lines of jams and section controls are no longer delivered; a jam
+  is still shown by its end.
+
 ---
 
 ## Changelog
@@ -61,6 +74,10 @@ internal server nor a mapbox token.
 * (GermanBluefox) Added the map of a route or an area as a widget for devices, vis-2 and aura (web component `<iob-radar-trap-map>`), optionally with the live traffic (jams) of mapbox
 * (GermanBluefox) The route or area of the devices tile and of the vis-2 widgets is chosen from a drop-down list; the vis-2 settings no longer need the feathers port
 * (GermanBluefox) The 1x1 devices tile keeps its icon below the star and the settings button
+* (GermanBluefox) The traps come from the map of blitzer.de: the server of atudo (`cdn2.atudo.net`) does not answer since October 2026, so no traps were found anymore. The closed roads come with the traps; the archive of the reports of the police and the lines of jams are no longer delivered
+* (GermanBluefox) blitzer.de is asked one request after the other, at most 300 times per computation; after a failure it is not asked for 15 minutes, and a warning says why and until when instead of an empty result without a word
+* (GermanBluefox) On the first start after the update the routes and areas are computed again: what was computed from atudo stayed empty until its next scheduled run. Every computation logs how many traps it found; errors while computing a route or an area (from mapbox too) are logged instead of only printed to the console
+* (GermanBluefox) The map widget fills its whole box in vis-2 and devices
 ### 2.2.2 (2024-08-04)
 * (Steiger04) Deprecated createState, createChannel, createDevice replaced with setObject and delDevice replaced with delObject
 

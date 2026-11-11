@@ -1,4 +1,4 @@
-import type { DirectionsResponse, DirectionsService, DirectionsWaypoint } from '@mapbox/mapbox-sdk/services/directions';
+import type { DirectionsService, DirectionsWaypoint } from '@mapbox/mapbox-sdk/services/directions';
 import Directions from '@mapbox/mapbox-sdk/services/directions';
 import type { MatrixService } from '@mapbox/mapbox-sdk/services/matrix';
 import Matrix from '@mapbox/mapbox-sdk/services/matrix';
@@ -11,7 +11,15 @@ import polyline from '@mapbox/polyline';
 import type { LineString } from '@turf/turf';
 import { feature } from '@turf/turf';
 import getPoiPolyPointsAsync, { AnalyzedType } from '../../lib/getPoiPolyPointsAsync';
-import { determineTrapTypes } from '../../lib/atudo/determineTrapTypes';
+import { countTraps, determineTrapTypes } from '../../lib/atudo/determineTrapTypes';
+import { TRAPS_SOURCE } from '../../lib/atudo/traps';
+import { getAdapterLog } from '../../lib/adapterRef';
+
+/** What mapbox says when it refuses: the status and its message (an invalid or URL-restricted token, a quota) */
+function mapboxError(error: unknown): string {
+    const reason = error as { statusCode?: number; message?: string; body?: { message?: string } } | undefined;
+    return [reason?.statusCode, reason?.body?.message || reason?.message].filter(Boolean).join(' ') || String(error);
+}
 
 const patchOrCreateRoute = (): Hook => {
     let directionsService: DirectionsService | null = null;
@@ -32,6 +40,8 @@ const patchOrCreateRoute = (): Hook => {
 
         const { data, service, params } = context;
         const { _id, activeProfile, maxTrapDistance } = data!;
+        // the scheduler passes the route without its name
+        const name = data!.description || _id;
 
         data!.timestamp = new Date().toString();
 
@@ -60,7 +70,10 @@ const patchOrCreateRoute = (): Hook => {
                     annotations: ['duration', 'distance'],
                 })
                 .send()
-                .then(response => response.body);
+                .then(response => response.body)
+                .catch(ex => {
+                    throw new Error(`mapbox cannot compute the travel time of the route "${name}": ${mapboxError(ex)}`);
+                });
 
             if (process.env.NODE_ENV === 'development') {
                 console.log('matrix', matrix);
@@ -93,12 +106,13 @@ const patchOrCreateRoute = (): Hook => {
                 .send()
                 .then(response => response.body)
                 .catch(ex => {
-                    console.log('Error in directionsService.getDirections()', ex);
+                    throw new Error(`mapbox cannot compute the route "${name}": ${mapboxError(ex)}`);
                 });
 
             data!.directions = [];
+            data!.trapsSource = TRAPS_SOURCE;
 
-            for (const route of (directions as DirectionsResponse<string>).routes) {
+            for (const route of directions.routes || []) {
                 try {
                     const startTime = performance.now();
                     const directionLine = feature<LineString, radarTrap.Poi>(polyline.toGeoJSON(route.geometry));
@@ -129,16 +143,31 @@ const patchOrCreateRoute = (): Hook => {
                         establishedTraps,
                         newTraps,
                         rejectedTraps,
-                    } = trapsChain(record?.directions![length - 1].routeTraps, traps);
+                    } = trapsChain(record?.directions?.[length - 1]?.routeTraps, traps);
 
                     data!.directions[length - 1].routeTraps = routeTraps;
                     data!.directions[length - 1].routeTrapsEstablished = establishedTraps;
                     data!.directions[length - 1].routeTrapsNew = newTraps;
                     data!.directions[length - 1].routeTrapsRejected = rejectedTraps;
                 } catch (error) {
-                    console.log(error);
+                    getAdapterLog().warn(
+                        `Cannot compute the traps of the route "${name}": ${(error as Error)?.message || String(error)}`,
+                    );
                 }
             }
+
+            const log = getAdapterLog();
+            if (!data!.directions.length) {
+                log.warn(`mapbox found no way for the route "${name}"`);
+            }
+            data!.directions.forEach((direction, index) => {
+                const traps = countTraps(direction.routeTraps);
+                const closures = direction.polyLineFeatures?.length || 0;
+                const which = data!.directions!.length > 1 ? ` (way ${index + 1})` : '';
+                log.info(
+                    `The route "${name}"${which}: ${traps} traps and ${closures} closed roads within ${maxTrapDistance} m`,
+                );
+            });
         }
 
         if (record !== undefined) {
