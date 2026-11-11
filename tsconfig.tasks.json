@@ -1,0 +1,11 @@
+// Type checking of tasks.ts (`npm run check:tasks`); tsx runs it without checking
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "rootDir": ".",
+        "types": ["node"]
+    },
+    "include": ["tasks.ts"],
+    "exclude": ["node_modules/**", "src/**", "src-*/**", "test/**", "build/**"]
+}

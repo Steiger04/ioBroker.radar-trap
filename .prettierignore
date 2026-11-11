@@ -1,7 +1,0 @@
-.*/
-admin/.watch/
-**/build/
-widgets/radar-trap/js/mapbox/
-package.json
-package-lock.json
-README.md

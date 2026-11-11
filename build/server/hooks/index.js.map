@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/server/hooks/index.ts"],
-  "sourcesContent": ["export { routeTrapsWithTrapInfo } from \"./routeTrapsWithTrapInfo\";\nexport { patchOrCreateArea } from \"./patchOrCreateArea\";\nexport { patchOrCreateRoute } from \"./patchOrCreateRoute\";\nexport { setActiveProfile } from \"./setActiveProfile\";\nexport { areaTrapsWithTrapInfo } from \"./areaTrapsWithTrapInfo\";\nexport { addTrapInfoToTrapProperties } from \"./addTrapInfoToTrapProperties\";\nexport { trapsChain } from \"./trapsChain\";\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,oCAAuC;AACvC,+BAAkC;AAClC,gCAAmC;AACnC,8BAAiC;AACjC,mCAAsC;AACtC,yCAA4C;AAC5C,wBAA2B;",
-  "names": []
-}

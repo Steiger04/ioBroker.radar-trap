@@ -13,49 +13,48 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+-**"
   pull_request: {}
 
-  # Cancel previous PR/branch runs when a new commit is pushed
+# Cancel previous PR/branch runs when a new commit is pushed
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   # Performs quick checks before the expensive test runs
-  # check-and-lint:
-    # if: contains(github.event.head_commit.message, '[skip ci]') == false
-
-    # runs-on: ubuntu-latest
-
-    # steps:
-      # - uses: ioBroker/testing-action-check@v1
-        # with:
-          # node-version: "18.x" # This should be LTS
-          # type-checking: false
-          # lint: false
-
+  check-and-lint:
+    if: contains(github.event.head_commit.message, '[skip ci]') == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ioBroker/testing-action-check@v2
+        with:
+          node-version: 24.x
+          type-checking: true
+          lint: true
 
   # Runs adapter tests on all supported node versions and OSes
   adapter-tests:
+    needs: [check-and-lint]
     if: contains(github.event.head_commit.message, '[skip ci]') == false
-
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [22.x, 24.x, 26.x]
         os: [ubuntu-latest, windows-latest, macos-latest]
-
     steps:
       - uses: ioBroker/testing-action-adapter@v1
         with:
           node-version: ${{ matrix.node-version }}
           os: ${{ matrix.os }}
-          # build: true
-          build: false
-          
+          # build/ is not committed (common.nogit): the tests need the compiled backend
+          build: true
 
   # Deploys the final package to NPM
   deploy:
-    # needs: [check-and-lint, adapter-tests]
-    needs: [adapter-tests]
+    needs: [check-and-lint, adapter-tests]
+
+    # Permissions are required to create GitHub releases and for npm trusted publishing
+    permissions:
+      contents: write
+      id-token: write
 
     # Trigger this step only when a commit on any branch is tagged with a version number
     if: |
@@ -68,7 +67,9 @@ jobs:
     steps:
       - uses: ioBroker/testing-action-deploy@v1
         with:
-          node-version: "18.x" # This should be LTS
-          # build: 'true'
+          node-version: '24.x'
+          # without it the package would be published without build/
+          build: true
+          # remove once npm trusted publishing is set up for the package
           npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}

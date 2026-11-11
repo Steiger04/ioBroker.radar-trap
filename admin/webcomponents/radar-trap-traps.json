@@ -1,0 +1,250 @@
+{
+    "$schema": "https://raw.githubusercontent.com/ioBroker/web-components/main/schemas/manifest.json",
+    "manifestVersion": 1,
+    "tag": "iob-radar-trap-traps",
+    "name": {
+        "en": "Radar traps",
+        "de": "Radarfallen",
+        "ru": "Радарные ловушки",
+        "pt": "Radares",
+        "nl": "Flitsers",
+        "fr": "Radars",
+        "it": "Autovelox",
+        "es": "Radares",
+        "pl": "Fotoradary",
+        "uk": "Радарні пастки",
+        "zh-cn": "测速陷阱"
+    },
+    "description": {
+        "en": "The speed cameras and other traps on a route or in an area",
+        "de": "Blitzer und andere Fallen auf einer Route oder in einem Gebiet",
+        "ru": "Камеры контроля скорости и другие ловушки на маршруте или в районе",
+        "pt": "Radares de velocidade e outras armadilhas numa rota ou numa área",
+        "nl": "Flitsers en andere controles op een route of in een gebied",
+        "fr": "Les radars et autres contrôles sur un itinéraire ou dans une zone",
+        "it": "Autovelox e altri controlli su un percorso o in una zona",
+        "es": "Radares de velocidad y otros controles en una ruta o en una zona",
+        "pl": "Fotoradary i inne kontrole na trasie lub w obszarze",
+        "uk": "Камери контролю швидкості та інші пастки на маршруті або в районі",
+        "zh-cn": "路线或区域内的测速摄像头和其他检查点"
+    },
+    "icon": "../dm-widgets/radar-trap.png",
+    "module": "radar-trap-traps.js",
+    "size": {
+        "width": 320,
+        "height": 300
+    },
+    "settings": {
+        "type": "panel",
+        "items": {
+            "device": {
+                "type": "objectId",
+                "types": "device",
+                "root": "radar-trap",
+                "label": {
+                    "en": "Route or area",
+                    "de": "Strecke oder Gebiet",
+                    "ru": "Маршрут или область",
+                    "pt": "Rota ou área",
+                    "nl": "Route of gebied",
+                    "fr": "Itinéraire ou zone",
+                    "it": "Percorso o zona",
+                    "es": "Ruta o zona",
+                    "pl": "Trasa lub obszar",
+                    "uk": "Маршрут або область",
+                    "zh-cn": "路线或区域"
+                },
+                "help": {
+                    "en": "The device of the route or area: radar-trap.0.<ID>",
+                    "de": "Das Gerät der Strecke oder des Gebiets: radar-trap.0.<ID>",
+                    "ru": "Устройство маршрута или области: radar-trap.0.<ID>",
+                    "pt": "O dispositivo da rota ou área: radar-trap.0.<ID>",
+                    "nl": "Het apparaat van de route of het gebied: radar-trap.0.<ID>",
+                    "fr": "L'appareil de l'itinéraire ou de la zone : radar-trap.0.<ID>",
+                    "it": "Il dispositivo del percorso o della zona: radar-trap.0.<ID>",
+                    "es": "El dispositivo de la ruta o zona: radar-trap.0.<ID>",
+                    "pl": "Urządzenie trasy lub obszaru: radar-trap.0.<ID>",
+                    "uk": "Пристрій маршруту або області: radar-trap.0.<ID>",
+                    "zh-cn": "路线或区域的设备：radar-trap.0.<ID>"
+                }
+            },
+            "title": {
+                "type": "text",
+                "label": {
+                    "en": "Name",
+                    "de": "Name",
+                    "ru": "Название",
+                    "pt": "Nome",
+                    "nl": "Naam",
+                    "fr": "Nom",
+                    "it": "Nome",
+                    "es": "Nombre",
+                    "pl": "Nazwa",
+                    "uk": "Назва",
+                    "zh-cn": "名称"
+                },
+                "help": {
+                    "en": "Instead of the name of the route or area",
+                    "de": "Statt des Namens der Strecke oder des Gebiets",
+                    "ru": "Вместо названия маршрута или области",
+                    "pt": "Em vez do nome da rota ou área",
+                    "nl": "In plaats van de naam van de route of het gebied",
+                    "fr": "Au lieu du nom de l'itinéraire ou de la zone",
+                    "it": "Al posto del nome del percorso o della zona",
+                    "es": "En lugar del nombre de la ruta o zona",
+                    "pl": "Zamiast nazwy trasy lub obszaru",
+                    "uk": "Замість назви маршруту або області",
+                    "zh-cn": "代替路线或区域的名称"
+                }
+            },
+            "content": {
+                "type": "select",
+                "label": {
+                    "en": "Content",
+                    "de": "Inhalt",
+                    "ru": "Содержимое",
+                    "pt": "Conteúdo",
+                    "nl": "Inhoud",
+                    "fr": "Contenu",
+                    "it": "Contenuto",
+                    "es": "Contenido",
+                    "pl": "Zawartość",
+                    "uk": "Вміст",
+                    "zh-cn": "内容"
+                },
+                "help": {
+                    "en": "Automatic: a small box shows the number, a click opens the list",
+                    "de": "Automatisch: eine kleine Fläche zeigt die Anzahl, ein Klick öffnet die Liste",
+                    "ru": "Автоматически: маленькое поле показывает количество, щелчок открывает список",
+                    "pt": "Automático: uma caixa pequena mostra o número, um clique abre a lista",
+                    "nl": "Automatisch: een klein vak toont het aantal, een klik opent de lijst",
+                    "fr": "Automatique : une petite zone affiche le nombre, un clic ouvre la liste",
+                    "it": "Automatico: un riquadro piccolo mostra il numero, un clic apre l’elenco",
+                    "es": "Automático: un recuadro pequeño muestra el número, un clic abre la lista",
+                    "pl": "Automatycznie: małe pole pokazuje liczbę, kliknięcie otwiera listę",
+                    "uk": "Автоматично: маленьке поле показує кількість, клік відкриває список",
+                    "zh-cn": "自动：小区域显示数量，点击打开列表"
+                },
+                "default": "auto",
+                "options": [
+                    {
+                        "value": "auto",
+                        "label": {
+                            "en": "Automatic",
+                            "de": "Automatisch",
+                            "ru": "Автоматически",
+                            "pt": "Automático",
+                            "nl": "Automatisch",
+                            "fr": "Automatique",
+                            "it": "Automatico",
+                            "es": "Automático",
+                            "pl": "Automatycznie",
+                            "uk": "Автоматично",
+                            "zh-cn": "自动"
+                        }
+                    },
+                    {
+                        "value": "summary",
+                        "label": {
+                            "en": "Number of traps only",
+                            "de": "Nur die Anzahl",
+                            "ru": "Только количество",
+                            "pt": "Apenas o número",
+                            "nl": "Alleen het aantal",
+                            "fr": "Nombre seulement",
+                            "it": "Solo il numero",
+                            "es": "Solo el número",
+                            "pl": "Tylko liczba",
+                            "uk": "Лише кількість",
+                            "zh-cn": "仅数量"
+                        }
+                    },
+                    {
+                        "value": "list",
+                        "label": {
+                            "en": "List of traps",
+                            "de": "Liste der Hindernisse",
+                            "ru": "Список ловушек",
+                            "pt": "Lista de armadilhas",
+                            "nl": "Lijst van vallen",
+                            "fr": "Liste des pièges",
+                            "it": "Elenco delle trappole",
+                            "es": "Lista de trampas",
+                            "pl": "Lista pułapek",
+                            "uk": "Список пасток",
+                            "zh-cn": "陷阱列表"
+                        }
+                    }
+                ]
+            },
+            "onlyNew": {
+                "type": "checkbox",
+                "label": {
+                    "en": "only new traps",
+                    "de": "nur neue Hindernisse",
+                    "ru": "только новые ловушки",
+                    "pt": "apenas novas armadilhas",
+                    "nl": "alleen nieuwe vallen",
+                    "fr": "seulement de nouveaux pièges",
+                    "it": "solo nuove trappole",
+                    "es": "solo trampas nuevas",
+                    "pl": "tylko nowe pułapki",
+                    "uk": "тільки нові пастки",
+                    "zh-cn": "只有新的陷阱"
+                },
+                "default": false
+            },
+            "showHotspots": {
+                "type": "checkbox",
+                "label": {
+                    "en": "Show mobile speed camera hotspots",
+                    "de": "Hotspots mobiler Blitzer anzeigen",
+                    "ru": "Показывать горячие точки мобильных камер",
+                    "pt": "Mostrar pontos quentes de radares móveis",
+                    "nl": "Hotspots van mobiele flitsers tonen",
+                    "fr": "Afficher les zones fréquentes de radars mobiles",
+                    "it": "Mostrare gli hotspot degli autovelox mobili",
+                    "es": "Mostrar puntos calientes de radares móviles",
+                    "pl": "Pokaż miejsca częstych kontroli mobilnych",
+                    "uk": "Показувати гарячі точки мобільних камер",
+                    "zh-cn": "显示流动测速热点"
+                },
+                "default": false
+            },
+            "showArchive": {
+                "type": "checkbox",
+                "label": {
+                    "en": "Show archived police reports",
+                    "de": "Archivierte Polizeimeldungen anzeigen",
+                    "ru": "Показывать архивные сообщения полиции",
+                    "pt": "Mostrar relatórios policiais arquivados",
+                    "nl": "Gearchiveerde politiemeldingen tonen",
+                    "fr": "Afficher les rapports de police archivés",
+                    "it": "Mostrare le segnalazioni della polizia archiviate",
+                    "es": "Mostrar informes policiales archivados",
+                    "pl": "Pokaż zarchiwizowane zgłoszenia policji",
+                    "uk": "Показувати архівні повідомлення поліції",
+                    "zh-cn": "显示已归档的警方报告"
+                },
+                "default": false
+            },
+            "showRefresh": {
+                "type": "checkbox",
+                "label": {
+                    "en": "Show refresh button",
+                    "de": "Schaltfläche „Aktualisieren“ anzeigen",
+                    "ru": "Показывать кнопку «Обновить»",
+                    "pt": "Mostrar o botão \"Atualizar\"",
+                    "nl": "Knop \"Vernieuwen\" tonen",
+                    "fr": "Afficher le bouton « Actualiser »",
+                    "it": "Mostrare il pulsante \"Aggiorna\"",
+                    "es": "Mostrar el botón \"Actualizar\"",
+                    "pl": "Pokaż przycisk „Odśwież”",
+                    "uk": "Показувати кнопку «Оновити»",
+                    "zh-cn": "显示“刷新”按钮"
+                },
+                "default": true
+            }
+        }
+    }
+}

@@ -14,6 +14,48 @@
 
 [English radar-trap Wiki](https://github.com/Steiger04/ioBroker.radar-trap/wiki/radar-trap-Adapter-(english))
 
+## Configuration
+The configuration is a JSON-Config page and needs **admin 8.3.10** or newer. Its maps are drawn with MapLibre, by
+default on OpenStreetMap; with a mapbox token the styles of mapbox can be chosen as well.
+
+- **Map**: shows a route or an area of the running instance with its traps.
+- **Routes**: start and destination (searched with mapbox, or with Photon/OpenStreetMap without a token), the
+  profile, the excluded road types, the maximal distance of a trap from the route and the schedule.
+- **Areas**: drawn as a polygon or a circle, or taken from a German county, with their schedule.
+- **Settings**: the mapbox token, the style of the maps and the port of the internal server.
+
+Routes and areas are now stored in the configuration of the instance. On the first start after the update the
+instance takes over the routes and areas of its database and restarts once. When the configuration is saved, the
+instance computes new or changed routes and areas; computing a route needs the mapbox token.
+
+## Widgets
+The adapter brings its widgets itself:
+
+- **vis-2**: the widget set "Radar trap" with the map of an area, the map of a route and the list of the traps (as
+  the former adapter `vis-2-widgets-radar-trap`, which is no longer needed). Widgets made with the former adapter keep
+  their settings; uninstall it, so that the widgets are not there twice. The maps need a running instance and a
+  mapbox token.
+- **Devices app**: the tile "Radar traps" shows the number of traps of a route or an area, by category, and the list
+  of them.
+- **Web component** `<iob-radar-trap-traps>`: the same for every host of web components (vis-2, devices, Aura,
+  admin).
+
+The tile and the web component read the states of the route or area, so they need neither the port of the
+internal server nor a mapbox token.
+
+## Data source
+The traps, hazards, reports of the police and closed roads come from the map of
+[blitzer.de](https://www.blitzer.de/karte/). There is no official, documented API: the adapter reads what that map
+reads, as it read the server of atudo, the company behind blitzer.de, before. The answer may change at any time.
+
+- The terms of use of blitzer.de allow only the private use of their apps, and the use of their data only with their
+  written consent. Use the adapter at your own risk.
+- blitzer.de blocks an address that asks too often. Keep the schedule of the routes and areas at once an hour (the
+  default, `10 * * * *`) or rarer. A computation asks once per part of the route or area, and more often where many
+  traps lie close together - at most 300 times. After a refusal or no answer the adapter does not ask for 15 minutes.
+- The archive of the reports of the police and the lines of jams and section controls are no longer delivered; a jam
+  is still shown by its end.
+
 ---
 
 ## Changelog
@@ -21,6 +63,21 @@
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### **WORK IN PROGRESS**
+* (GermanBluefox) The vis-2 widgets of `vis-2-widgets-radar-trap` were moved into the adapter; the separate adapter is no longer needed
+* (GermanBluefox) Added a tile for the devices app and the web component `<iob-radar-trap-traps>`
+* (GermanBluefox) The configuration was rewritten as JSON-Config with web components (needs admin 8.3.10); its maps use MapLibre and OpenStreetMap, mapbox is optional there
+* (GermanBluefox) Routes and areas are stored in the configuration of the instance; the ones of the database are taken over automatically
+* (GermanBluefox) Breaking: requires Node.js 22.19, js-controller 6.0.11 and admin 8.3.10 or newer
+* (GermanBluefox) The adapter was refactored: TypeScript 6, ESLint 9 with `@iobroker/eslint-config`, build with `tasks.ts`, tests with `@iobroker/testing` 6; it can be installed from npm only (`build/` is no longer committed)
+* (GermanBluefox) Fixed the start error "Cannot find module '@turf/helpers'": the packages that the adapter imports directly are declared as dependencies
+* (GermanBluefox) Added the map of a route or an area as a widget for devices, vis-2 and aura (web component `<iob-radar-trap-map>`), optionally with the live traffic (jams) of mapbox
+* (GermanBluefox) The route or area of the devices tile and of the vis-2 widgets is chosen from a drop-down list; the vis-2 settings no longer need the feathers port
+* (GermanBluefox) The 1x1 devices tile keeps its icon below the star and the settings button
+* (GermanBluefox) The traps come from the map of blitzer.de: the server of atudo (`cdn2.atudo.net`) does not answer since October 2026, so no traps were found anymore. The closed roads come with the traps; the archive of the reports of the police and the lines of jams are no longer delivered
+* (GermanBluefox) blitzer.de is asked one request after the other, at most 300 times per computation; after a failure it is not asked for 15 minutes, and a warning says why and until when instead of an empty result without a word
+* (GermanBluefox) On the first start after the update the routes and areas are computed again: what was computed from atudo stayed empty until its next scheduled run. Every computation logs how many traps it found; errors while computing a route or an area (from mapbox too) are logged instead of only printed to the console
+* (GermanBluefox) The map widget fills its whole box in vis-2 and devices
 ### 2.2.2 (2024-08-04)
 * (Steiger04) Deprecated createState, createChannel, createDevice replaced with setObject and delDevice replaced with delObject
 

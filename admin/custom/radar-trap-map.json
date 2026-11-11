@@ -1,0 +1,251 @@
+{
+    "manifestVersion": 1,
+    "tag": "iob-radar-trap-map",
+    "module": "./radar-trap-map.js",
+    "name": {
+        "en": "Map of radar traps",
+        "de": "Karte der Blitzer",
+        "ru": "Карта камер",
+        "pt": "Mapa de radares",
+        "nl": "Kaart van flitsers",
+        "fr": "Carte des radars",
+        "it": "Mappa degli autovelox",
+        "es": "Mapa de radares",
+        "pl": "Mapa fotoradarów",
+        "uk": "Карта камер",
+        "zh-cn": "测速摄像头地图"
+    },
+    "description": {
+        "en": "A route or an area of radar-trap on a map: the traps, closures and, with a Mapbox token, the traffic",
+        "de": "Eine Strecke oder ein Gebiet von radar-trap auf der Karte: Blitzer, Sperrungen und mit Mapbox-Token die Verkehrslage",
+        "ru": "Маршрут или область radar-trap на карте: камеры, перекрытия и, с токеном Mapbox, пробки",
+        "pt": "Uma rota ou área do radar-trap num mapa: radares, cortes e, com um token Mapbox, o trânsito",
+        "nl": "Een route of gebied van radar-trap op een kaart: flitsers, afsluitingen en met een Mapbox-token het verkeer",
+        "fr": "Un itinéraire ou une zone de radar-trap sur une carte : radars, fermetures et, avec un jeton Mapbox, le trafic",
+        "it": "Un percorso o una zona di radar-trap su una mappa: autovelox, chiusure e, con un token Mapbox, il traffico",
+        "es": "Una ruta o zona de radar-trap en un mapa: radares, cortes y, con un token de Mapbox, el tráfico",
+        "pl": "Trasa lub obszar radar-trap na mapie: fotoradary, zamknięcia i, z tokenem Mapbox, ruch drogowy",
+        "uk": "Маршрут або область radar-trap на карті: камери, перекриття та, з токеном Mapbox, затори",
+        "zh-cn": "地图上的 radar-trap 路线或区域：测速摄像头、封路，以及（使用 Mapbox 令牌时）路况"
+    },
+    "icon": "../dm-widgets/radar-trap.png",
+    "size": {
+        "width": 480,
+        "height": 400
+    },
+    "settings": {
+        "type": "panel",
+        "items": {
+            "instance": {
+                "type": "instance",
+                "adapter": "radar-trap",
+                "label": {
+                    "en": "Instance",
+                    "de": "Instanz",
+                    "ru": "Экземпляр",
+                    "pt": "Instância",
+                    "nl": "Instantie",
+                    "fr": "Instance",
+                    "it": "Istanza",
+                    "es": "Instancia",
+                    "pl": "Instancja",
+                    "uk": "Екземпляр",
+                    "zh-cn": "实例"
+                },
+                "default": "radar-trap.0"
+            },
+            "source": {
+                "type": "objectId",
+                "types": "device",
+                "root": "radar-trap",
+                "label": {
+                    "en": "Route or area",
+                    "de": "Strecke oder Gebiet",
+                    "ru": "Маршрут или область",
+                    "pt": "Rota ou área",
+                    "nl": "Route of gebied",
+                    "fr": "Itinéraire ou zone",
+                    "it": "Percorso o zona",
+                    "es": "Ruta o zona",
+                    "pl": "Trasa lub obszar",
+                    "uk": "Маршрут або область",
+                    "zh-cn": "路线或区域"
+                },
+                "help": {
+                    "en": "Shown first. Empty: the one chosen last",
+                    "de": "Wird zuerst gezeigt. Leer: die zuletzt gewählte",
+                    "ru": "Показывается первым. Пусто: последний выбранный",
+                    "pt": "Mostrado primeiro. Vazio: o último escolhido",
+                    "nl": "Wordt eerst getoond. Leeg: de laatst gekozen",
+                    "fr": "Affiché en premier. Vide : le dernier choisi",
+                    "it": "Mostrato per primo. Vuoto: l'ultimo scelto",
+                    "es": "Se muestra primero. Vacío: la última elegida",
+                    "pl": "Pokazywane jako pierwsze. Puste: ostatnio wybrane",
+                    "uk": "Показується першим. Порожньо: останній вибраний",
+                    "zh-cn": "首先显示。留空：上次选择的"
+                }
+            },
+            "showSelect": {
+                "type": "checkbox",
+                "label": {
+                    "en": "Choice of route or area on the map",
+                    "de": "Auswahl der Strecke oder des Gebiets auf der Karte",
+                    "ru": "Выбор маршрута или области на карте",
+                    "pt": "Escolha da rota ou área no mapa",
+                    "nl": "Keuze van route of gebied op de kaart",
+                    "fr": "Choix de l'itinéraire ou de la zone sur la carte",
+                    "it": "Scelta del percorso o della zona sulla mappa",
+                    "es": "Selección de ruta o zona en el mapa",
+                    "pl": "Wybór trasy lub obszaru na mapie",
+                    "uk": "Вибір маршруту або області на карті",
+                    "zh-cn": "在地图上选择路线或区域"
+                },
+                "default": true
+            },
+            "traffic": {
+                "type": "checkbox",
+                "label": {
+                    "en": "Traffic of Mapbox (jams)",
+                    "de": "Verkehrslage von Mapbox (Staus)",
+                    "ru": "Пробки Mapbox",
+                    "pt": "Trânsito do Mapbox (filas)",
+                    "nl": "Verkeer van Mapbox (files)",
+                    "fr": "Trafic de Mapbox (bouchons)",
+                    "it": "Traffico di Mapbox (code)",
+                    "es": "Tráfico de Mapbox (atascos)",
+                    "pl": "Ruch drogowy Mapbox (korki)",
+                    "uk": "Затори Mapbox",
+                    "zh-cn": "Mapbox 路况（拥堵）"
+                },
+                "help": {
+                    "en": "Slow traffic and jams on all roads, live. Needs a Mapbox token",
+                    "de": "Zähfließender Verkehr und Staus auf allen Straßen, live. Braucht einen Mapbox-Token",
+                    "ru": "Медленное движение и пробки на всех дорогах в реальном времени. Нужен токен Mapbox",
+                    "pt": "Trânsito lento e filas em todas as estradas, ao vivo. Precisa de um token Mapbox",
+                    "nl": "Langzaam verkeer en files op alle wegen, live. Vereist een Mapbox-token",
+                    "fr": "Trafic ralenti et bouchons sur toutes les routes, en direct. Nécessite un jeton Mapbox",
+                    "it": "Traffico lento e code su tutte le strade, in tempo reale. Richiede un token Mapbox",
+                    "es": "Tráfico lento y atascos en todas las carreteras, en directo. Necesita un token de Mapbox",
+                    "pl": "Spowolniony ruch i korki na wszystkich drogach, na żywo. Wymaga tokena Mapbox",
+                    "uk": "Повільний рух і затори на всіх дорогах у реальному часі. Потрібен токен Mapbox",
+                    "zh-cn": "所有道路的实时缓行和拥堵。需要 Mapbox 令牌"
+                },
+                "default": false
+            },
+            "style": {
+                "type": "select",
+                "label": {
+                    "en": "Style of the map",
+                    "de": "Stil der Karte",
+                    "ru": "Стиль карты",
+                    "pt": "Estilo do mapa",
+                    "nl": "Stijl van de kaart",
+                    "fr": "Style de la carte",
+                    "it": "Stile della mappa",
+                    "es": "Estilo del mapa",
+                    "pl": "Styl mapy",
+                    "uk": "Стиль карти",
+                    "zh-cn": "地图样式"
+                },
+                "options": [
+                    {
+                        "value": "",
+                        "label": {
+                            "en": "As in the instance",
+                            "de": "Wie in der Instanz",
+                            "ru": "Как в экземпляре",
+                            "pt": "Como na instância",
+                            "nl": "Zoals in de instantie",
+                            "fr": "Comme dans l'instance",
+                            "it": "Come nell'istanza",
+                            "es": "Como en la instancia",
+                            "pl": "Jak w instancji",
+                            "uk": "Як в екземплярі",
+                            "zh-cn": "与实例相同"
+                        }
+                    },
+                    {
+                        "value": "osm",
+                        "label": "OpenStreetMap"
+                    },
+                    {
+                        "value": "osm-dark",
+                        "label": {
+                            "en": "OpenStreetMap, dark",
+                            "de": "OpenStreetMap, dunkel"
+                        }
+                    },
+                    {
+                        "value": "liberty",
+                        "label": "OpenFreeMap Liberty"
+                    },
+                    {
+                        "value": "positron",
+                        "label": "OpenFreeMap Positron"
+                    },
+                    {
+                        "value": "mapbox-streets-v12",
+                        "label": "Mapbox Streets"
+                    },
+                    {
+                        "value": "mapbox-outdoors-v12",
+                        "label": "Mapbox Outdoors"
+                    },
+                    {
+                        "value": "mapbox-light-v11",
+                        "label": "Mapbox Light"
+                    },
+                    {
+                        "value": "mapbox-dark-v11",
+                        "label": "Mapbox Dark"
+                    },
+                    {
+                        "value": "mapbox-satellite-streets-v12",
+                        "label": {
+                            "en": "Mapbox Satellite",
+                            "de": "Mapbox Satellit"
+                        }
+                    }
+                ],
+                "default": ""
+            },
+            "token": {
+                "type": "text",
+                "label": {
+                    "en": "Mapbox token",
+                    "de": "Mapbox-Token",
+                    "ru": "Токен Mapbox",
+                    "pt": "Token Mapbox",
+                    "nl": "Mapbox-token",
+                    "fr": "Jeton Mapbox",
+                    "it": "Token Mapbox",
+                    "es": "Token de Mapbox",
+                    "pl": "Token Mapbox",
+                    "uk": "Токен Mapbox",
+                    "zh-cn": "Mapbox 令牌"
+                },
+                "help": {
+                    "en": "Empty: the token of the instance",
+                    "de": "Leer: der Token der Instanz",
+                    "ru": "Пусто: токен экземпляра",
+                    "pt": "Vazio: o token da instância",
+                    "nl": "Leeg: het token van de instantie",
+                    "fr": "Vide : le jeton de l'instance",
+                    "it": "Vuoto: il token dell'istanza",
+                    "es": "Vacío: el token de la instancia",
+                    "pl": "Puste: token instancji",
+                    "uk": "Порожньо: токен екземпляра",
+                    "zh-cn": "留空：使用实例的令牌"
+                }
+            },
+            "changed": {
+                "type": "checkbox",
+                "hidden": "true"
+            },
+            "form": {
+                "type": "checkbox",
+                "hidden": "true"
+            }
+        }
+    }
+}

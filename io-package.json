@@ -140,24 +140,85 @@
     "extIcon": "https://raw.githubusercontent.com/Steiger04/ioBroker.radar-trap/master/admin/radar-trap.png",
     "readme": "https://github.com/Steiger04/ioBroker.radar-trap/blob/master/README.md",
     "loglevel": "info",
-    "ereaseUpload": true,
     "mode": "daemon",
     "type": "geoposition",
     "compact": true,
+    "nogit": true,
     "connectionType": "cloud",
     "dataSource": "poll",
     "singletonHost": true,
     "supportCustoms": false,
-    "jsonCustom": false,
     "eraseOnUpload": true,
     "dependencies": [
       {
-        "js-controller": ">=5.0.17"
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=8.3.10"
       }
     ],
     "adminUI": {
-      "config": "materialize"
-    }
+      "config": "json"
+    },
+    "restartAdapters": [
+      "vis-2"
+    ],
+    "visWidgets": {
+      "vis2RadarTrapAdapterWidgets": {
+        "i18n": "component",
+        "name": "vis2RadarTrapAdapterWidgets",
+        "url": "radar-trap/customWidgets.js",
+        "color": "#4169E1",
+        "bundlerType": "module",
+        "label": "radar_trap_set_label",
+        "components": [
+          "RadarTrapAreaWidget",
+          "RadarTrapRouteWidget",
+          "RadarTrapInfoWidget"
+        ]
+      }
+    },
+    "deviceWidgets": {
+      "components": [
+        {
+          "name": "RadarTrapComponent",
+          "label": {
+            "en": "Radar traps",
+            "de": "Radarfallen",
+            "ru": "Радарные ловушки",
+            "pt": "Radares",
+            "nl": "Flitsers",
+            "fr": "Radars",
+            "it": "Autovelox",
+            "es": "Radares",
+            "pl": "Fotoradary",
+            "uk": "Радарні пастки",
+            "zh-cn": "测速陷阱"
+          },
+          "description": {
+            "en": "The speed cameras and other traps on a route or in an area",
+            "de": "Blitzer und andere Fallen auf einer Route oder in einem Gebiet",
+            "ru": "Камеры контроля скорости и другие ловушки на маршруте или в районе",
+            "pt": "Radares de velocidade e outras armadilhas numa rota ou numa área",
+            "nl": "Flitsers en andere controles op een route of in een gebied",
+            "fr": "Les radars et autres contrôles sur un itinéraire ou dans une zone",
+            "it": "Autovelox e altri controlli su un percorso o in una zona",
+            "es": "Radares de velocidad y otros controles en una ruta o en una zona",
+            "pl": "Fotoradary i inne kontrole na trasie lub w obszarze",
+            "uk": "Камери контролю швидкості та інші пастки на маршруті або в районі",
+            "zh-cn": "路线或区域内的测速摄像头和其他检查点"
+          },
+          "icon": "radar-trap.png"
+        }
+      ]
+    },
+    "webComponents": [
+      "webcomponents/radar-trap-traps.json",
+      "custom/radar-trap-map.json"
+    ],
+    "messagebox": true
   },
   "native": {
     "settings": {
@@ -165,7 +226,11 @@
       "domains": "localhost",
       "feathersPort": 3040,
       "mbxAccessToken": ""
-    }
+    },
+    "mapStyle": "osm",
+    "routes": [],
+    "areas": [],
+    "dbMigrated": false
   },
   "objects": [],
   "instanceObjects": [

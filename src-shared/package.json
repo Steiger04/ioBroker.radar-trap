@@ -1,0 +1,7 @@
+{
+    "name": "iobroker-radar-trap-shared",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "description": "What the front-ends of ioBroker.radar-trap share. Not a package of its own: \"type\": \"module\" lets Node load these files as ES modules when a vite.config.ts imports them."
+}
